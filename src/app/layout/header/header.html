@@ -1,0 +1,38 @@
+<div class="header-inner">
+  <div class="header-lead">
+    <button
+      type="button"
+      class="nav-toggle"
+      (click)="layout.toggleNav()"
+      [attr.aria-expanded]="layout.navOpen()"
+      aria-label="Toggle navigation"
+    >
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <a class="wordmark" routerLink="/" aria-label="Ashen UI home">Ashen UI</a>
+  </div>
+  <div class="header-controls">
+    <nav class="theme-switcher" aria-label="Text direction">
+      @for (d of directions; track d.value) {
+        <button
+          class="theme-btn"
+          [class.active]="themeService.dir() === d.value"
+          (click)="themeService.setDir(d.value)"
+          [attr.aria-pressed]="themeService.dir() === d.value"
+        >{{ d.label }}</button>
+      }
+    </nav>
+    <nav class="theme-switcher" aria-label="Theme">
+      @for (t of themes; track t.value) {
+        <button
+          class="theme-btn"
+          [class.active]="themeService.theme() === t.value"
+          (click)="themeService.set(t.value)"
+          [attr.aria-pressed]="themeService.theme() === t.value"
+        >{{ t.label }}</button>
+      }
+    </nav>
+  </div>
+</div>

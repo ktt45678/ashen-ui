@@ -1,0 +1,108 @@
+@layer components {
+  .sn-menubar {
+    --sn-menubar-bg: var(--sn-surface-panel);
+    --sn-menubar-border: 1px solid var(--sn-border);
+    --sn-menubar-border-radius: var(--sn-radius-md);
+    --sn-menubar-shadow: var(--sn-glass-shadow, var(--sn-shadow-sm));
+    --sn-menubar-backdrop-filter: var(--sn-backdrop-filter, none);
+    --sn-menubar-padding: 4px 6px;
+    --sn-menubar-gap: 2px;
+    --sn-menubar-item-icon-size: 17px;
+    --sn-menubar-item-arrow-size: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: var(--sn-menubar-gap);
+    padding: var(--sn-menubar-padding);
+    background: var(--sn-menubar-bg);
+    backdrop-filter: var(--sn-menubar-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-menubar-backdrop-filter);
+    border: var(--sn-menubar-border);
+    border-radius: var(--sn-menubar-border-radius);
+    box-shadow: var(--sn-menubar-shadow);
+    box-sizing: border-box;
+  }
+
+  .sn-menubar-item-host {
+    display: contents;
+  }
+
+  .sn-menubar-item-btn {
+    --sn-menubar-item-color: var(--sn-text);
+    --sn-menubar-item-bg: transparent;
+    --sn-menubar-item-hover-bg: var(--sn-surface-hover);
+    --sn-menubar-item-open-bg: var(--sn-surface-hover);
+    --sn-menubar-item-font-size: var(--sn-text-sm);
+    --sn-menubar-item-font-family: var(--sn-font-ui);
+    --sn-menubar-item-font-weight: 500;
+    --sn-menubar-item-padding: 6px 10px;
+    --sn-menubar-item-gap: 6px;
+    --sn-menubar-item-border-radius: var(--sn-radius-sm);
+    --sn-menubar-item-icon-color: var(--sn-text-subtle);
+    --sn-menubar-item-disabled-opacity: var(--sn-disabled-opacity);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-menubar-item-gap);
+    padding: var(--sn-menubar-item-padding);
+    border: none;
+    background: var(--sn-menubar-item-bg);
+    color: var(--sn-menubar-item-color);
+    font-family: var(--sn-menubar-item-font-family);
+    font-size: var(--sn-menubar-item-font-size);
+    font-weight: var(--sn-menubar-item-font-weight);
+    border-radius: var(--sn-menubar-item-border-radius);
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: background-color var(--sn-motion-base);
+  }
+
+  .sn-menubar-item-btn:hover:not([disabled]):not([aria-disabled='true']) {
+    background-color: var(--sn-menubar-item-hover-bg);
+  }
+
+  .sn-menubar-item-btn:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-menubar-item-btn.sn-menubar-item-btn--open {
+    background-color: var(--sn-menubar-item-open-bg);
+  }
+
+  .sn-menubar-item-btn[disabled],
+  .sn-menubar-item-btn[aria-disabled='true'] {
+    opacity: var(--sn-menubar-item-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .sn-menubar-item-icon {
+    color: var(--sn-menubar-item-icon-color);
+    flex-shrink: 0;
+    font-size: var(--sn-menubar-item-icon-size);
+    width: var(--sn-menubar-item-icon-size);
+    height: var(--sn-menubar-item-icon-size);
+  }
+
+  .sn-menubar-item-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-menubar-item-arrow {
+    color: var(--sn-menubar-item-icon-color);
+    flex-shrink: 0;
+    font-size: var(--sn-menubar-item-arrow-size);
+    width: var(--sn-menubar-item-arrow-size);
+    height: var(--sn-menubar-item-arrow-size);
+  }
+
+  .sn-menubar-backdrop {
+    background: transparent;
+  }
+
+  /* Animation is handled by .sn-menu-panel (via menubar-item _hostAnimated/_hostAnimation). */
+  /* .sn-menubar-overlay-panel is kept as the panelClass for CDK/testing selectors. */
+}

@@ -1,0 +1,128 @@
+<header class="page-header">
+  <h1>Tab Nav</h1>
+  <p class="page-subtitle">
+    A row of navigation links styled as tabs, for pages where each tab is a URL.
+    Unlike <code>sn-tabs</code> it owns no panels: the router outlet shows the content.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example
+    heading="Router links"
+    description="Each link is a route. routerLinkActive marks the current one, so nothing else needs binding."
+    snippet="tab-nav/codeRouter"
+  >
+    <nav snTabNav class="demo-tab-nav" aria-label="Settings sections">
+      <a snTabLink [routerLink]="[]" [queryParams]="{}" routerLinkActive [routerLinkActiveOptions]="{ exact: true }">General</a>
+      <a snTabLink [routerLink]="[]" [queryParams]="{ section: 'appearance' }" routerLinkActive [routerLinkActiveOptions]="{ exact: true }">Appearance</a>
+      <a snTabLink [routerLink]="[]" [queryParams]="{ section: 'notifications' }" routerLinkActive [routerLinkActiveOptions]="{ exact: true }">Notifications</a>
+    </nav>
+  </doc-example>
+
+  <doc-example
+    heading="Buttons with a bound active state"
+    description="When the tab is app state rather than a URL, use buttons and bind [active]."
+    snippet="tab-nav/codeButtons"
+  >
+    <nav snTabNav class="demo-tab-nav" aria-label="Settings sections">
+      @for (section of sections; track section) {
+        <button type="button" snTabLink [active]="selectedSection() === section" (click)="selectedSection.set(section)">
+          {{ section }}
+        </button>
+      }
+    </nav>
+    <p class="demo-readout">Selected: {{ selectedSection() }}</p>
+  </doc-example>
+
+  <doc-example heading="With icons" snippet="tab-nav/codeWithIcons">
+    <nav snTabNav class="demo-tab-nav" aria-label="Library">
+      @for (tab of iconTabs; track tab.label) {
+        <button type="button" snTabLink [active]="selectedIconTab() === tab.label" (click)="selectedIconTab.set(tab.label)">
+          <sn-icon>{{ tab.icon }}</sn-icon>
+          {{ tab.label }}
+        </button>
+      }
+    </nav>
+  </doc-example>
+
+  <doc-example
+    heading="Scrolling overflow"
+    description="Links that outgrow the bar scroll. A scroll control appears at each end only while they overflow."
+    snippet="tab-nav/codeScrolling"
+  >
+    <nav snTabNav class="demo-tab-nav-narrow" aria-label="Workspace settings">
+      @for (link of manyLinks; track link) {
+        <button type="button" snTabLink [active]="selectedManyLink() === link" (click)="selectedManyLink.set(link)">
+          {{ link }}
+        </button>
+      }
+    </nav>
+  </doc-example>
+
+  <doc-example
+    heading="Vertical"
+    description="A vertical bar stacks the links as a side menu."
+    snippet="tab-nav/codeVertical"
+  >
+    <nav snTabNav orientation="vertical" class="demo-tab-nav-side" aria-label="Account settings">
+      @for (page of settingsPages; track page) {
+        <button type="button" snTabLink [active]="selectedSettingsPage() === page" (click)="selectedSettingsPage.set(page)">
+          {{ page }}
+        </button>
+      }
+    </nav>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tab-nav" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tab-nav" section="theming" />
+
+  <doc-example
+    heading="Custom re-skin via CSS variables"
+    description="Link tokens are set on the links. The indicator follows the primary color, so a tier-1 override on the bar recolors both."
+    snippet="tab-nav/codeReskin"
+  >
+    <nav snTabNav class="demo-tab-nav demo-tab-nav-reskin" aria-label="Reports">
+      <button type="button" snTabLink [active]="true">Daily</button>
+      <button type="button" snTabLink>Weekly</button>
+      <button type="button" snTabLink>Monthly</button>
+    </nav>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Tab Nav is a navigation landmark, not an ARIA tablist. Its links move between pages, so it
+    follows the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/" target="_blank" rel="noopener">navigation pattern</a>
+    rather than the tabs pattern. Use <code>sn-tabs</code> when the tabs switch panels on the
+    same page.
+  </p>
+  <ul>
+    <li>
+      Put it on a <code>&lt;nav&gt;</code> and give it an <code>aria-label</code> when the page
+      has more than one navigation landmark.
+    </li>
+    <li>
+      The active link gets <code>aria-current="page"</code> on an <code>&lt;a&gt;</code> and
+      <code>aria-current="true"</code> on a <code>&lt;button&gt;</code>.
+    </li>
+    <li>
+      Every link stays in the tab order, and <kbd>Tab</kbd> moves between them. There is no
+      arrow-key roving focus, because these are links, not tabs.
+    </li>
+    <li>
+      The scroll controls are hidden from assistive technology and skipped by the keyboard.
+      Focusing a link scrolls it into view, so they are a pointer convenience only.
+    </li>
+  </ul>
+</section>

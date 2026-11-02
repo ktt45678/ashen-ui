@@ -1,0 +1,7 @@
+@if (icon()) {
+  <span snPart="icon" class="sn-icon icon-ms sn-tag-icon" [class]="iconClassExtra()" aria-hidden="true">{{ icon() }}</span>
+}
+@if (value()) {
+  <span snPart="label" class="sn-tag-label" [class]="labelClassExtra()">{{ value() }}</span>
+}
+<ng-content />

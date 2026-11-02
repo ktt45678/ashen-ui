@@ -1,0 +1,35 @@
+<div class="sn-form-field-control" snPart="control" [class]="controlClassExtra()">
+  @if (floatLabel()) {
+    <div class="sn-form-field-outline" aria-hidden="true">
+      <div class="sn-form-field-outline-start"></div>
+      <div class="sn-form-field-outline-notch" [style.width.px]="notchWidth()"></div>
+      <div class="sn-form-field-outline-end"></div>
+    </div>
+  }
+  <ng-content select="sn-label" />
+  <div class="sn-form-field-flex">
+    <span
+      #prefixSlot
+      class="sn-form-field-affix sn-form-field-affix--prefix"
+      snPart="prefix"
+      [class]="prefixClassExtra()"
+    >
+      <ng-content select="[snPrefix]" />
+    </span>
+    <ng-content />
+    <span
+      #suffixSlot
+      class="sn-form-field-affix sn-form-field-affix--suffix"
+      snPart="suffix"
+      [class]="suffixClassExtra()"
+    >
+      <ng-content select="[snSuffix]" />
+    </span>
+  </div>
+</div>
+<div class="sn-form-field-subscript" snPart="subscript" [class]="subscriptClassExtra()">
+  <ng-content select="sn-hint" />
+  @if (errorsVisible()) {
+    <ng-content select="sn-error" />
+  }
+</div>

@@ -1,0 +1,52 @@
+@layer components {
+  /* Token defaults at :root (not on .sn-progress-spinner) so an app :root /
+     [data-theme] theme can override the spinner color and track. A declaration
+     on the component element would shadow the inherited theme value. */
+  :root {
+    --sn-progress-spinner-color: var(--sn-color-primary);
+    --sn-progress-spinner-track-color: var(--sn-border);
+    --sn-progress-spinner-rotate-duration: 0.8s;
+    --sn-progress-spinner-material-rotate-duration: 1.6s;
+    --sn-progress-spinner-material-arc-duration: 1.4s;
+  }
+
+  .sn-progress-spinner-svg--rotate {
+    animation: sn-spinner-rotate var(--sn-progress-spinner-rotate-duration) linear infinite;
+  }
+
+  @keyframes sn-spinner-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .sn-progress-spinner-svg--rotate-material {
+    animation: sn-spinner-rotate var(--sn-progress-spinner-material-rotate-duration) linear infinite;
+  }
+
+  .sn-progress-spinner-arc--material {
+    animation: sn-spinner-arc-material var(--sn-progress-spinner-material-arc-duration) ease-in-out infinite;
+  }
+
+  /* Dash period is 4 + 59 = 63, matching the -63 closing offset exactly, so
+     the loop restarts seamlessly (no visible jump between shrink and regrow). */
+  @keyframes sn-spinner-arc-material {
+    0%   { stroke-dasharray: 4 59; stroke-dashoffset: 0; }
+    50%  { stroke-dasharray: 44 59; stroke-dashoffset: -14; }
+    100% { stroke-dasharray: 4 59; stroke-dashoffset: -63; }
+  }
+
+  .sn-progress-spinner-fill {
+    transition: stroke-dasharray var(--sn-motion-slow);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-progress-spinner-svg--rotate,
+    .sn-progress-spinner-svg--rotate-material {
+      animation: none;
+    }
+
+    .sn-progress-spinner-arc--material {
+      animation: none;
+    }
+  }
+}

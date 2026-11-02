@@ -1,0 +1,25 @@
+<button
+  type="button"
+  class="sn-menubar-item-btn"
+  snPart="trigger"
+  [class]="triggerClassExtra()"
+  role="menuitem"
+  [attr.tabindex]="_tabIndex()"
+  [attr.aria-haspopup]="menuFor() ? 'menu' : null"
+  [attr.aria-expanded]="menuFor() ? _isOpen() : null"
+  [attr.aria-controls]="menuFor() ? _panelId : null"
+  [attr.disabled]="isDisabled() ? '' : null"
+  [attr.aria-disabled]="isDisabled() ? 'true' : null"
+  [class.sn-menubar-item-btn--open]="_isOpen()"
+  (click)="_onClick()"
+  (mouseenter)="_onMouseEnter()"
+  (keydown)="_onKeydown($event)"
+>
+  @if (icon()) {
+    <sn-icon class="sn-menubar-item-icon" snPart="icon" [class]="iconClassExtra()">{{ icon() }}</sn-icon>
+  }
+  <span class="sn-menubar-item-label" snPart="label" [class]="labelClassExtra()">{{ label() }}</span>
+  @if (menuFor()) {
+    <sn-icon class="sn-menubar-item-arrow" snPart="arrow" [class]="arrowClassExtra()">{{ icons.resolve('chevron-down') }}</sn-icon>
+  }
+</button>

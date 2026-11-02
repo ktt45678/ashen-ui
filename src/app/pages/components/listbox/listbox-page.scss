@@ -1,0 +1,19 @@
+.demo-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.demo-listbox {
+  max-width: 280px;
+  width: 100%;
+}
+
+.hint-text {
+  font-size: 0.875rem;
+  color: var(--sn-text-muted, #6b7280);
+}
+
+/* -- Standard doc-page styles (shared look across all component pages) -- */
+.code-block { background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); padding: var(--sn-space-3) var(--sn-space-4); font-family: var(--sn-font-mono); font-size: var(--sn-text-xs); color: var(--sn-text-muted); overflow-x: auto; }

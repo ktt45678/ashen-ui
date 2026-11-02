@@ -1,0 +1,8 @@
+@layer components {
+  .sn-infinite-scroll-sentinel {
+    width: 100%;
+    height: 1px;
+    flex-shrink: 0;
+    pointer-events: none;
+  }
+}

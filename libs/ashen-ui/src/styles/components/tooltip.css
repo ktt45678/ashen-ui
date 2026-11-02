@@ -1,0 +1,83 @@
+@layer components {
+  /* Component token defaults live at :root (not on .sn-tooltip-bubble) so an app
+     :root / [data-theme] theme can override them; a value declared on the bubble
+     element would shadow the inherited theme value and be unreachable. */
+  :root {
+    --sn-tooltip-bg: var(--sn-text);
+    --sn-tooltip-color: var(--sn-surface-panel);
+    --sn-tooltip-font-size: var(--sn-text-2xs);
+    --sn-tooltip-font-weight: var(--sn-font-weight-medium);
+    --sn-tooltip-font-family: var(--sn-font-ui);
+    --sn-tooltip-border-radius: var(--sn-radius-sm);
+    --sn-tooltip-padding: 4px 8px;
+    --sn-tooltip-shadow: var(--sn-shadow-sm);
+    --sn-tooltip-max-width: 20rem;
+  }
+
+  .sn-tooltip-bubble {
+    display: block;
+    padding: var(--sn-tooltip-padding);
+    background: var(--sn-tooltip-bg);
+    color: var(--sn-tooltip-color);
+    font-size: var(--sn-tooltip-font-size);
+    font-weight: var(--sn-tooltip-font-weight);
+    font-family: var(--sn-tooltip-font-family);
+    border-radius: var(--sn-tooltip-border-radius);
+    /* Wrap (not truncate) so the full text is visible and selectable for copying;
+       max-width keeps the bubble compact. */
+    white-space: normal;
+    overflow-wrap: break-word;
+    box-shadow: var(--sn-tooltip-shadow);
+    max-width: var(--sn-tooltip-max-width);
+    /* Interactive + selectable so users can move onto the bubble and copy text. */
+    pointer-events: auto;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .sn-tooltip-container {
+    pointer-events: none;
+  }
+
+  /* The visual gap between trigger and bubble is hoverable padding on the
+     container (offset side depends on placement), so the cursor never crosses
+     a dead zone when travelling from the trigger onto the bubble. */
+  .sn-tooltip-container.sn-tooltip-top { padding-bottom: var(--sn-tooltip-gap, 8px); }
+  .sn-tooltip-container.sn-tooltip-bottom { padding-top: var(--sn-tooltip-gap, 8px); }
+  .sn-tooltip-container.sn-tooltip-left { padding-right: var(--sn-tooltip-gap, 8px); }
+  .sn-tooltip-container.sn-tooltip-right { padding-left: var(--sn-tooltip-gap, 8px); }
+
+  .sn-tooltip-container.sn-tooltip-visible {
+    pointer-events: auto;
+    animation: sn-tooltip-fade-in var(--sn-tooltip-enter-duration, 0.15s) ease-out;
+  }
+
+  .sn-tooltip-container.sn-tooltip-hiding {
+    pointer-events: none;
+    animation: sn-tooltip-fade-out var(--sn-tooltip-exit-duration, 0.15s) ease-in forwards;
+  }
+
+  @keyframes sn-tooltip-fade-in {
+    from { opacity: 0; }
+  }
+
+  @keyframes sn-tooltip-fade-out {
+    to { opacity: 0; }
+  }
+
+  /* Dark theme: dark canvas bg, light text (stays dark-on-dark).
+     Root scoped, not on .sn-tooltip-bubble, so an app :root / [data-theme] theme
+     override is not shadowed by an element-level declaration. */
+
+  [data-theme|='dark'] {
+    --sn-tooltip-bg: var(--sn-surface-canvas);
+    --sn-tooltip-color: var(--sn-text);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-tooltip-container.sn-tooltip-visible,
+    .sn-tooltip-container.sn-tooltip-hiding {
+      animation: none;
+    }
+  }
+}

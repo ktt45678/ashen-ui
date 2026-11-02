@@ -1,0 +1,190 @@
+@if (section() === 'api' && data()) {
+  @if (importPath()) {
+    <p class="doc-api-import">
+      Import from <code>{{ importPath() }}</code>
+    </p>
+  }
+
+  @for (surface of documentedSurfaces(); track surface.symbol) {
+    <section class="doc-api-surface">
+      <header class="doc-api-surface-header">
+        <h3 class="doc-api-symbol">{{ surface.symbol }}</h3>
+        @if (surface.selector) {
+          <code class="doc-api-selector">{{ surface.selector }}</code>
+        }
+        <span class="doc-api-kind">{{ surface.kind }}</span>
+      </header>
+
+      @if (surface.inputs.length || surface.models.length) {
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Input</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of surface.inputs.concat(surface.models); track member.bindingName) {
+              <tr>
+                <td>
+                  <code class="doc-api-name">{{ member.bindingName }}</code>
+                  @if (member.required) {
+                    <span class="doc-api-required">required</span>
+                  }
+                </td>
+                <td>
+                  <code>{{ member.type }}</code>
+                  @if (unionFor(member.type); as union) {
+                    <span class="doc-api-values">
+                      @for (item of union.values; track item.value) {
+                        <code class="doc-api-value">'{{ item.value }}'</code>
+                      }
+                    </span>
+                  }
+                </td>
+                <td><code>{{ memberDefault(member) }}</code></td>
+                <td>
+                  @for (part of describe(member.description); track $index) {
+                    @if (part.code) {
+                      <code>{{ part.text }}</code>
+                    } @else {
+                      {{ part.text }}
+                    }
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+
+      @if (surface.outputs.length) {
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Output</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of surface.outputs; track member.bindingName) {
+              <tr>
+                <td><code class="doc-api-name">{{ member.bindingName }}</code></td>
+                <td><code>{{ member.type }}</code></td>
+                <td>
+                  @for (part of describe(member.description); track $index) {
+                    @if (part.code) {
+                      <code>{{ part.text }}</code>
+                    } @else {
+                      {{ part.text }}
+                    }
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </section>
+  }
+
+  @if (plainSurfaces().length) {
+    <section class="doc-api-surface">
+      <header class="doc-api-surface-header">
+        <h3 class="doc-api-symbol">Projected parts</h3>
+      </header>
+      <p class="doc-api-parts-note">
+        Content-only sub-components. Project them inside the host; they take no inputs of their own.
+      </p>
+      <ul class="doc-api-parts">
+        @for (surface of plainSurfaces(); track surface.symbol) {
+          <li>
+            <code class="doc-api-selector">{{ surface.selector }}</code>
+            <span class="doc-api-part-symbol">{{ surface.symbol }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+
+  @if (types().length) {
+    <section class="doc-api-surface">
+      <header class="doc-api-surface-header">
+        <h3 class="doc-api-symbol">Accepted values</h3>
+      </header>
+      @for (type of types(); track type.name) {
+        <table class="api-table doc-api-union">
+          <thead>
+            <tr>
+              <th>{{ type.name }}</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of type.values; track item.value) {
+              <tr>
+                <td><code class="doc-api-value">'{{ item.value }}'</code></td>
+                <td>{{ item.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </section>
+  }
+
+  <p class="doc-api-note">
+    Every component also accepts <code>snClass</code>, <code>snStyle</code> and
+    <code>snAttrs</code> to pass classes, styles and attributes through to its internal parts.
+  </p>
+
+  @if (intl().length) {
+    <section class="doc-api-surface">
+      <header class="doc-api-surface-header">
+        <h3 class="doc-api-symbol">Built-in text</h3>
+      </header>
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Group</th>
+            <th>Key</th>
+            <th>English default</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of intl(); track item.group + item.key) {
+            <tr>
+              <td><code>{{ item.group }}</code></td>
+              <td><code class="doc-api-name">{{ item.key }}</code></td>
+              <td>{{ item.englishDefault }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  }
+}
+
+@if (section() === 'theming' && data()) {
+  <table class="api-table">
+    <thead>
+      <tr>
+        <th>Token</th>
+        <th>Default</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (token of tokens(); track token.name) {
+        <tr>
+          <td><code class="doc-api-name">{{ token.name }}</code></td>
+          <td><code>{{ token.default ?? 'unset' }}</code></td>
+          <td>{{ token.source }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

@@ -1,0 +1,31 @@
+kbd { font-family: var(--sn-font-mono); font-size: 0.85em; background: var(--sn-surface-canvas); padding: 0.1em 0.35em; border-radius: var(--sn-radius-sm); border: 1px solid var(--sn-border); }
+a { color: var(--sn-color-primary); }
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sn-space-4);
+  padding: var(--sn-space-6) var(--sn-space-4);
+  min-height: 80px;
+  flex-wrap: wrap;
+}
+
+.demo-row--spaced {
+  justify-content: space-around;
+  padding: var(--sn-space-6) var(--sn-space-6);
+}
+
+.demo-span-target {
+  display: inline-block;
+  padding: var(--sn-space-2) var(--sn-space-4);
+  border: 1px dashed var(--sn-border-strong);
+  border-radius: var(--sn-radius-sm);
+  cursor: default;
+  color: var(--sn-text-muted);
+  font-size: var(--sn-text-sm);
+
+  &:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-offset);
+  }
+}

@@ -1,0 +1,204 @@
+@layer components {
+  :root {
+    --sn-date-picker-panel-width: 16.5rem;
+    --sn-date-picker-nav-icon-size: 18px;
+    --sn-date-picker-panel-padding: 10px;
+    --sn-date-picker-cell-radius: var(--sn-select-border-radius, 0.375rem);
+    --sn-date-picker-day-height: 28px;
+    --sn-date-picker-cell-height: 34px;
+    --sn-date-picker-nav-size: 26px;
+    --sn-date-picker-icon-size: 18px;
+    /* The today ring stays a solid accent line; the selected fill is a tint. */
+    --sn-date-picker-primary: var(--sn-color-primary);
+    --sn-date-picker-cell-selected-bg: var(--sn-selected-bg);
+    --sn-date-picker-cell-selected-color: var(--sn-selected-text);
+  }
+
+  /* Full width by default, declared as a layered rule (not on the unlayered
+     :host) so a consumer width utility overrides it with no !important. */
+  .sn-date-picker {
+    width: 100%;
+  }
+
+  /* The overlay is opened with matchOriginWidth, so the pane is sized to the
+     trigger; the panel fills it (width:100%) to match the input. The token width
+     becomes a floor so a narrow input can't crush the seven-column grid. */
+  .sn-date-picker-panel {
+    max-height: none;
+    overflow: visible;
+    padding: var(--sn-date-picker-panel-padding);
+    width: 100%;
+    min-width: var(--sn-date-picker-panel-width);
+    box-sizing: border-box;
+  }
+
+  .sn-date-picker-arrow {
+    transition: none;
+  }
+
+  .sn-date-picker-arrow > .sn-icon {
+    font-size: var(--sn-date-picker-icon-size);
+  }
+
+  .sn-select-trigger[aria-expanded='true'] .sn-date-picker-arrow {
+    transform: none;
+  }
+
+  .sn-date-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .sn-date-picker-header-center {
+    display: flex;
+    gap: 2px;
+  }
+
+  .sn-date-picker-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-date-picker-nav-size);
+    height: var(--sn-date-picker-nav-size);
+    border: none;
+    background: transparent;
+    color: var(--sn-text-subtle);
+    border-radius: var(--sn-date-picker-cell-radius);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color var(--sn-motion-base, 150ms ease);
+  }
+
+  .sn-date-picker-nav-btn:hover:not(:disabled) {
+    background-color: var(--sn-surface-hover);
+  }
+
+  .sn-date-picker-nav-btn:disabled {
+    color: var(--sn-text-disabled);
+    cursor: default;
+  }
+
+  .sn-date-picker-nav-btn sn-icon {
+    font-size: var(--sn-date-picker-nav-icon-size);
+  }
+
+  .sn-date-picker-head-btn {
+    border: none;
+    background: transparent;
+    padding: 3px 7px;
+    border-radius: var(--sn-date-picker-cell-radius);
+    cursor: pointer;
+    font-size: var(--sn-text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--sn-text);
+    font-family: var(--sn-font-ui, inherit);
+    transition: background-color var(--sn-motion-base, 150ms ease);
+  }
+
+  .sn-date-picker-head-btn:hover,
+  .sn-date-picker-head-btn-active {
+    background-color: var(--sn-surface-hover);
+  }
+
+  .sn-date-picker-head-range {
+    display: inline-block;
+    padding: 3px 7px;
+    font-size: var(--sn-text-sm, 0.875rem);
+    font-weight: 600;
+    color: var(--sn-text);
+    font-family: var(--sn-font-ui, inherit);
+  }
+
+  .sn-date-picker-grid {
+    display: grid;
+    gap: 2px;
+  }
+
+  /* The weeks are real elements so the grid can carry role=row, which a grid
+     needs in order to be one. That moves the seven columns down onto the row. */
+  .sn-date-picker-grid-days {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sn-date-picker-week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .sn-date-picker-grid-months,
+  .sn-date-picker-grid-years {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .sn-date-picker-weekday {
+    text-align: center;
+    font-size: var(--sn-text-2xs, 0.65rem);
+    font-weight: 600;
+    color: var(--sn-text-subtle);
+    padding: 2px 0;
+  }
+
+  .sn-date-picker-cell {
+    height: var(--sn-date-picker-day-height);
+    border: none;
+    border-radius: var(--sn-date-picker-cell-radius);
+    cursor: pointer;
+    padding: 0;
+    font-size: var(--sn-text-xs, 0.75rem);
+    font-family: var(--sn-font-ui, inherit);
+    background: transparent;
+    color: var(--sn-text);
+    font-weight: 400;
+    transition: background-color var(--sn-motion-base, 150ms ease);
+    width: 100%;
+  }
+
+  .sn-date-picker-cell:hover:not(.sn-date-picker-cell-selected, .sn-date-picker-cell-disabled) {
+    background-color: var(--sn-surface-hover);
+  }
+
+  /* Out of the min/max range. Still focusable, so it keeps the focus ring above
+     and only loses the affordances that would promise it can be picked. */
+  .sn-date-picker-cell-disabled {
+    color: var(--sn-text-disabled);
+    cursor: default;
+  }
+
+  /* Keyboard-only focus ring: a mouse click focuses the cell but should not draw
+     the ring on top of the selected fill. :focus-visible matches keyboard/arrow
+     navigation (cells take real focus via roving tabindex) but not a pointer
+     click. */
+  .sn-date-picker-cell:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-date-picker-cell-lg {
+    height: var(--sn-date-picker-cell-height);
+  }
+
+  .sn-date-picker-cell-today {
+    border: 1px solid var(--sn-date-picker-primary);
+    box-shadow: none;
+    font-weight: 600;
+  }
+
+  .sn-date-picker-cell-selected {
+    background: var(--sn-date-picker-cell-selected-bg);
+    color: var(--sn-date-picker-cell-selected-color);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-date-picker-nav-btn,
+    .sn-date-picker-head-btn,
+    .sn-date-picker-cell {
+      transition: none;
+    }
+  }
+}

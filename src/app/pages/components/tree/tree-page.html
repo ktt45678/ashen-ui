@@ -1,0 +1,93 @@
+<header class="page-header">
+  <h1>Tree</h1>
+  <p class="page-subtitle">
+    Hierarchical node list with chevron expand/collapse and single-row selection.
+    Nodes are supplied as a data array; children are revealed on expand.
+    Implements the WAI-ARIA APG TreeView pattern with roving tabindex keyboard navigation.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic file explorer" snippet="tree/codeBasic">
+    <div class="demo-tree-wrapper">
+      <sn-tree [nodes]="fileTree" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Selection binding" snippet="tree/codeSelection">
+    <div class="demo-tree-wrapper">
+      <sn-tree
+        [nodes]="fileTree"
+        [(selectedKey)]="selectedKey"
+        (nodeSelect)="onNodeSelect($event)"
+      />
+      @if (lastSelectedLabel()) {
+        <p class="demo-note">Selected: {{ lastSelectedLabel() }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Controlled expansion" snippet="tree/codeControlled">
+    <div class="demo-tree-wrapper">
+      <div class="tree-controls">
+        <button type="button" class="demo-btn" (click)="expandAll()">Expand all</button>
+        <button type="button" class="demo-btn" (click)="collapseAll()">Collapse all</button>
+      </div>
+      <sn-tree [nodes]="fileTree" [(expandedKeys)]="expandedKeys" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Expand on item click" snippet="tree/codeExpandOnClick">
+    <div class="demo-tree-wrapper">
+      <p class="hint-text">Single click anywhere on a parent item toggles it. Use <code>expandOnClick="double"</code> for double-click.</p>
+      <sn-tree [nodes]="fileTree" expandOnClick="single" />
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tree" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Implements the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/treeview/" target="_blank" rel="noopener">WAI-ARIA APG TreeView pattern</a>.</li>
+    <li>The host element carries <code>role="tree"</code> and <code>aria-label</code>.</li>
+    <li>Each visible node is a <code>role="treeitem"</code> div. The DOM is flat (no nested <code>role="group"</code>); positional context is conveyed via <code>aria-level</code>, <code>aria-setsize</code>, and <code>aria-posinset</code>.</li>
+    <li>Parent nodes carry <code>aria-expanded="true"</code> or <code>"false"</code>. Leaf nodes have no <code>aria-expanded</code>.</li>
+    <li>All nodes carry <code>aria-selected="true"</code> or <code>"false"</code> (single-select tree).</li>
+    <li>Focus is managed with <strong>roving tabindex</strong>: exactly one node has <code>tabindex="0"</code> at any time; all others are <code>tabindex="-1"</code>. Moving focus programmatically calls <code>.focus()</code> on the target element.</li>
+    <li>When the active node is hidden (e.g. its parent is collapsed), active focus moves to the collapsed ancestor.</li>
+    <li>The expand/collapse chevron is a real <code>&lt;button type="button" tabindex="-1"&gt;</code> with an <code>aria-label</code> of "Expand" / "Collapse".</li>
+  </ul>
+
+  <h3>Keyboard map</h3>
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>ArrowDown</kbd></td><td>Move focus to the next visible node.</td></tr>
+      <tr><td><kbd>ArrowUp</kbd></td><td>Move focus to the previous visible node.</td></tr>
+      <tr><td><kbd>ArrowRight</kbd></td><td>Collapsed parent: expand it. Expanded parent: move focus to first child. Leaf: no-op.</td></tr>
+      <tr><td><kbd>ArrowLeft</kbd></td><td>Expanded parent: collapse it. Leaf or collapsed node: move focus to parent (if any).</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>Move focus to the first visible node.</td></tr>
+      <tr><td><kbd>End</kbd></td><td>Move focus to the last visible node.</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Select the focused node.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="demo-note">
+    <strong>Note:</strong> Typeahead (jump to node by first character) is intentionally omitted
+    from this implementation. It can be added as a future enhancement.
+  </p>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tree" section="theming" />
+</section>

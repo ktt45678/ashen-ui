@@ -1,0 +1,35 @@
+<span
+  snPart="box"
+  class="sn-checkbox-box"
+  [class.sn-checkbox-box-sm]="size() === 'sm'"
+  [class.sn-checkbox-box-lg]="size() === 'lg'"
+  [class]="boxClassExtra()"
+  aria-hidden="true"
+>
+  @if (effectiveIndeterminate()) {
+    @if (indeterminateIconTpl()) {
+      <ng-container *ngTemplateOutlet="indeterminateIconTpl()!.templateRef" />
+    } @else {
+      <span
+        snPart="icon"
+        class="sn-icon icon-ms"
+        [class]="iconClassExtra()"
+        aria-hidden="true"
+        [style.font-size.px]="iconSize()"
+      >{{ icons.resolve('indeterminate') }}</span>
+    }
+  } @else if (checked()) {
+    @if (checkIconTpl()) {
+      <ng-container *ngTemplateOutlet="checkIconTpl()!.templateRef" />
+    } @else {
+      <span
+        snPart="icon"
+        class="sn-icon icon-ms"
+        [class]="iconClassExtra()"
+        aria-hidden="true"
+        [style.font-size.px]="iconSize()"
+      >{{ icons.resolve('check') }}</span>
+    }
+  }
+</span>
+<span snPart="label" class="sn-checkbox-label" [class]="labelClassExtra()"><ng-content /></span>

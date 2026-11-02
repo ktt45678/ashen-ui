@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="spark" viewBox="0 0 24 24">
+    <path d="M12 2 9.6 8.6 3 11l6.6 2.4L12 20l2.4-6.6L21 11l-6.6-2.4z" />
+  </symbol>
+  <symbol id="orbit" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="3.5" />
+    <path
+      d="M12 3.5c4.7 0 8.5 3.8 8.5 8.5s-3.8 8.5-8.5 8.5S3.5 16.7 3.5 12 7.3 3.5 12 3.5zm0 2A6.5 6.5 0 1 0 18.5 12 6.5 6.5 0 0 0 12 5.5z"
+    />
+  </symbol>
+  <symbol id="stack" viewBox="0 0 24 24">
+    <path d="M12 2 2 7l10 5 10-5zM2 12l10 5 10-5-2-1-8 4-8-4zM2 17l10 5 10-5-2-1-8 4-8-4z" />
+  </symbol>
+</svg>

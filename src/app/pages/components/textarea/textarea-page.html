@@ -1,0 +1,139 @@
+<header class="page-header">
+  <h1>Textarea</h1>
+  <p class="page-subtitle">
+    Directive on a native <code>&lt;textarea&gt;</code> element that applies Ashen UI styling
+    and wires into the surrounding <code>sn-form-field</code>. Vertically resizable by default.
+    Supports reactive forms and template-driven forms via the native element.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="textarea/codeBasic">
+    <div class="demo-stack">
+      <textarea snTextarea rows="3" placeholder='{ "action": "play" }'></textarea>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="textarea/codeSizes">
+    <div class="demo-stack">
+      <textarea snTextarea size="sm" rows="2" placeholder="Small (sm)"></textarea>
+      <textarea snTextarea rows="2" placeholder="Medium (md - default)"></textarea>
+      <textarea snTextarea size="lg" rows="2" placeholder="Large (lg)"></textarea>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Error state" snippet="textarea/codeError">
+    <div class="demo-stack">
+      <textarea snTextarea [invalid]="true" rows="3" placeholder="Invalid input"></textarea>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="textarea/codeDisabled">
+    <div class="demo-stack">
+      <textarea snTextarea disabled rows="3">Disabled value</textarea>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Read-only" snippet="textarea/codeReadonly">
+    <div class="demo-stack">
+      <textarea snTextarea readonly rows="3">Read-only value</textarea>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Inside FormField" snippet="textarea/codeInField">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Request body</sn-label>
+        <textarea snTextarea rows="3" placeholder='{ "action": "play" }'></textarea>
+        <sn-hint>Enter valid JSON</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form with validation"
+    description="The textarea turns red after it is touched and the field is empty."
+    snippet="textarea/codeReactive"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Notes</sn-label>
+        <textarea snTextarea [formControl]="notesCtrl" rows="4" placeholder="Enter your notes"></textarea>
+        <sn-error>Notes are required</sn-error>
+      </sn-form-field>
+      <p class="hint-text">Status: {{ notesCtrl.status }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Interactive validation"
+    description="Type something then clear the field to trigger the error."
+    snippet="textarea/codeInteractive"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Description</sn-label>
+        <textarea
+          snTextarea
+          rows="3"
+          [(ngModel)]="description"
+          required
+          placeholder="Describe the action"
+        ></textarea>
+        <sn-error>Description is required</sn-error>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="textarea/codeReskin">
+    <div class="demo-stack">
+      <textarea
+        snTextarea
+        rows="3"
+        placeholder="Custom resize and border radius"
+        style="--sn-textarea-resize: none; --sn-input-text-border-radius: var(--sn-radius-sm);"
+      ></textarea>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="textarea" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="textarea" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Uses a native <code>&lt;textarea&gt;</code> element - all browser and assistive technology
+      semantics are preserved without any wrapper.
+    </li>
+    <li>
+      When placed inside <code>sn-form-field</code>, the <code>id</code>, <code>aria-required</code>,
+      and <code>aria-describedby</code> attributes are managed automatically via the
+      <code>SN_FORM_FIELD</code> DI context.
+    </li>
+    <li>
+      <code>aria-invalid="true"</code> is applied when the <code>invalid</code> input is
+      <code>true</code> or when a bound <code>FormControl</code> is in an invalid state
+      and the user has interacted with the field (touched or dirty).
+    </li>
+    <li>
+      <code>disabled</code> and <code>readonly</code> states are handled entirely by native
+      HTML attributes - no Angular wrapping needed.
+    </li>
+    <li>
+      All <code>sn-hint</code> and <code>sn-error</code> ids are included in
+      <code>aria-describedby</code> simultaneously, so assistive technologies read all
+      relevant supplemental text.
+    </li>
+  </ul>
+</section>

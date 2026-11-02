@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  position: relative;
+  width: var(--sn-color-slider-rendered-width);
+  height: var(--sn-color-slider-rendered-height);
+  border-radius: var(--sn-radius-pill);
+  cursor: pointer;
+  touch-action: none;
+  background: var(--sn-color-slider-track);
+}
+
+.sn-color-slider-thumb {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid var(--sn-text-subtle);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-sizing: border-box;
+  box-shadow: var(--sn-shadow-sm);
+}

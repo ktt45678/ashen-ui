@@ -1,0 +1,17 @@
+@layer components {
+  .sn-textarea {
+    --sn-textarea-min-height: var(--sn-textarea-default-min-height, 4.5rem);
+    --sn-textarea-resize: vertical;
+    --sn-textarea-padding-block: var(--sn-input-spacing-sm);
+
+    resize: var(--sn-textarea-resize);
+    min-height: var(--sn-textarea-min-height);
+  }
+
+  /* Inputs drop block padding and centre one line in min-height. A textarea
+     grows with its rows, so without block padding the first line touches the
+     top border. */
+  .sn-input-text.sn-textarea {
+    padding-block: var(--sn-textarea-padding-block);
+  }
+}

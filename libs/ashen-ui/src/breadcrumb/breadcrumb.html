@@ -1,0 +1,47 @@
+<nav snPart="nav" class="sn-breadcrumb-nav" [class]="navClassExtra()" [attr.aria-label]="navLabel()">
+  <ol snPart="list" class="sn-breadcrumb-list" [class]="listClassExtra()">
+    @for (item of items(); track item; let last = $last) {
+      <li snPart="item" class="sn-breadcrumb-list-item" [class]="itemClassExtra()">
+        @if (item.icon()) {
+          <span snPart="itemIcon" class="sn-icon icon-ms sn-breadcrumb-item-icon" [class]="itemIconClassExtra()" aria-hidden="true">{{ item.icon() }}</span>
+        }
+        @if (item.routerLink() != null && !item.isCurrent()) {
+          <a
+            class="sn-breadcrumb-link"
+            [class]="item.linkClassExtra()"
+            [routerLink]="item.routerLink()"
+            [queryParams]="item.queryParams()"
+            [fragment]="item.fragment()"
+          >
+            <ng-container *ngTemplateOutlet="item.getContentTemplate()" />
+          </a>
+        } @else if (item.href() && !item.isCurrent()) {
+          <a
+            class="sn-breadcrumb-link"
+            [class]="item.linkClassExtra()"
+            [href]="item.href()"
+          >
+            <ng-container *ngTemplateOutlet="item.getContentTemplate()" />
+          </a>
+        } @else {
+          <span
+            class="sn-breadcrumb-link sn-breadcrumb-link--current"
+            [class]="item.linkClassExtra()"
+            [attr.aria-current]="item.isCurrent() ? 'page' : null"
+          >
+            <ng-container *ngTemplateOutlet="item.getContentTemplate()" />
+          </span>
+        }
+        @if (!last) {
+          <span snPart="separator" class="sn-breadcrumb-separator" [class]="separatorClassExtra()" aria-hidden="true">
+            @if (separatorTpl()) {
+              <ng-container *ngTemplateOutlet="separatorTpl()!.templateRef" />
+            } @else {
+              <span class="sn-icon icon-ms">{{ separatorIcon() }}</span>
+            }
+          </span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

@@ -1,0 +1,88 @@
+<div class="sn-tabs-scroller">
+  <!-- aria-hidden and out of the tab order on purpose: every tab is already
+       reachable with the arrow keys, which scroll the one they land on into
+       view, so these are a pointer affordance and nothing else. -->
+  @if (scrollable()) {
+    <button
+      type="button"
+      class="sn-tabs-scroll-btn sn-tabs-scroll-btn-back"
+      aria-hidden="true"
+      tabindex="-1"
+      [disabled]="!canScrollBack()"
+      (click)="scrollTabs(-1)"
+    >
+      <sn-icon>{{ backIcon() }}</sn-icon>
+    </button>
+  }
+  <div
+    #tabListEl
+    role="tablist"
+    snPart="list"
+    class="sn-tabs-list"
+    [class.sn-tabs-list-scrollable]="scrollable()"
+    [class]="listClassExtra()"
+    (scroll)="updateScrollState()"
+  >
+    @for (tab of tabItems(); track tab.tabId; let i = $index) {
+      <button
+        #tabBtn
+        type="button"
+        role="tab"
+        class="sn-tab-button"
+        [class]="tab.buttonClassExtra()"
+        [class.sn-tab-button--selected]="selectedIndex() === i"
+        [attr.id]="tab.buttonId"
+        [attr.aria-selected]="selectedIndex() === i"
+        [attr.aria-controls]="tab.panelId"
+        [attr.tabindex]="selectedIndex() === i ? 0 : -1"
+        [disabled]="tab.disabledInput() || null"
+        (click)="selectAndFocus(i)"
+      >
+        @if (tab.icon()) {
+          <sn-icon class="sn-tab-icon" [class]="tab.iconClassExtra()">{{ tab.icon() }}</sn-icon>
+        }
+        <span class="sn-tab-label" [class]="tab.labelClassExtra()">{{ tab.label() }}</span>
+      </button>
+    }
+    @if (indicatorVisible()) {
+      <span
+        aria-hidden="true"
+        snPart="indicator"
+        class="sn-tabs-indicator"
+        [class]="indicatorClassExtra()"
+        [style.left.px]="indicatorLeft()"
+        [style.width.px]="indicatorWidth()"
+      ></span>
+    }
+  </div>
+  @if (scrollable()) {
+    <button
+      type="button"
+      class="sn-tabs-scroll-btn sn-tabs-scroll-btn-forward"
+      aria-hidden="true"
+      tabindex="-1"
+      [disabled]="!canScrollForward()"
+      (click)="scrollTabs(1)"
+    >
+      <sn-icon>{{ forwardIcon() }}</sn-icon>
+    </button>
+  }
+</div>
+
+@for (tab of tabItems(); track tab.tabId; let i = $index) {
+  @if (selectedIndex() === i) {
+    <div
+      role="tabpanel"
+      snPart="panel"
+      class="sn-tabs-panel"
+      [class]="panelClassExtra()"
+      [attr.id]="tab.panelId"
+      [attr.aria-labelledby]="tab.buttonId"
+      tabindex="0"
+    >
+      @if (tab.getContentTemplate()) {
+        <ng-container *ngTemplateOutlet="tab.getContentTemplate()!" />
+      }
+    </div>
+  }
+}

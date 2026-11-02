@@ -1,0 +1,41 @@
+<div snPart="header" class="sn-panel-header" [class]="headerClassExtra()" [class.sn-panel-header--collapsed]="collapsed()">
+  @if (icon()) {
+    <sn-icon snPart="icon" class="sn-panel-icon" [class]="iconClassExtra()">{{ icon() }}</sn-icon>
+  }
+  <span snPart="title" class="sn-panel-title" [class]="titleClassExtra()">
+    <ng-content select="[snPanelTitle]">{{ header() }}</ng-content>
+  </span>
+  <span snPart="actions" class="sn-panel-actions" [class]="actionsClassExtra()">
+    <ng-content select="[snPanelActions]" />
+  </span>
+  @if (toggleable()) {
+    <button
+      type="button"
+      snPart="toggle"
+      class="sn-panel-toggle"
+      [class]="toggleClassExtra()"
+      [attr.aria-expanded]="!collapsed()"
+      [attr.aria-controls]="contentId"
+      [attr.aria-label]="toggleAriaLabel()"
+      (click)="toggle()"
+    >
+      @if (toggleIconTpl()) {
+        <ng-container *ngTemplateOutlet="toggleIconTpl()!.templateRef" />
+      } @else {
+        <sn-icon class="sn-panel-toggle-icon" [class.sn-panel-toggle-icon--collapsed]="collapsed()">{{ icons.resolve('chevron-down') }}</sn-icon>
+      }
+    </button>
+  }
+</div>
+<div
+  class="sn-panel-content-wrapper"
+  [class.sn-panel-content-wrapper--expanded]="!collapsed()"
+  [class.sn-panel-content-wrapper--animated]="_animated()"
+  [attr.inert]="collapsed() ? '' : null"
+>
+  <div snPart="content" class="sn-panel-content" [class]="contentClassExtra()" [id]="contentId">
+    <div class="sn-panel-content-body">
+      <ng-content />
+    </div>
+  </div>
+</div>

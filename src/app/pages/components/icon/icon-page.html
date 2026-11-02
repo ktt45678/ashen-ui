@@ -1,0 +1,116 @@
+<header class="page-header">
+  <h1>Icon</h1>
+  <p class="page-subtitle">
+    Material Symbols Outlined icon. Use for every icon in Ashen UI - never emoji or hand-rolled
+    SVG. Render by projecting a ligature name (<code>&lt;sn-icon&gt;settings&lt;/sn-icon&gt;</code>)
+    or by the <code>icon</code> input / <code>.sn-icon-&lt;name&gt;</code> class (codepoint mode).
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Default (md, outline)" snippet="icon/codeDefault">
+    <sn-icon>settings</sn-icon>
+    <sn-icon>grid_view</sn-icon>
+    <sn-icon>edit</sn-icon>
+    <sn-icon>play_arrow</sn-icon>
+    <sn-icon>favorite</sn-icon>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="icon/codeSizes">
+    <sn-icon size="sm">star</sn-icon>
+    <sn-icon>star</sn-icon>
+    <sn-icon size="lg">star</sn-icon>
+  </doc-example>
+
+  <doc-example heading="Filled (FILL axis = 1)" snippet="icon/codeFilled">
+    <sn-icon fill>favorite</sn-icon>
+    <sn-icon fill>star</sn-icon>
+    <sn-icon fill>thumb_up</sn-icon>
+    <sn-icon>favorite</sn-icon>
+    <sn-icon>star</sn-icon>
+    <sn-icon>thumb_up</sn-icon>
+  </doc-example>
+
+  <doc-example heading="Weight axis" snippet="icon/codeWeight">
+    <sn-icon [weight]="300">settings</sn-icon>
+    <sn-icon [weight]="400">settings</sn-icon>
+    <sn-icon [weight]="500">settings</sn-icon>
+    <sn-icon [weight]="600">settings</sn-icon>
+  </doc-example>
+
+  <doc-example heading="Accessible (labeled icon)" snippet="icon/codeA11y">
+    <sn-icon ariaLabel="Settings">settings</sn-icon>
+  </doc-example>
+
+  <doc-example heading="Icon grid" snippet="icon/codeGrid">
+    @for (name of iconNames; track name) {
+      <sn-icon>{{ name }}</sn-icon>
+    }
+  </doc-example>
+
+  <doc-example heading="By name (codepoint class mode)" snippet="icon/codeClassMode">
+    <sn-icon icon="grid_view" />
+    <sn-icon icon="settings" />
+    <sn-icon icon="edit" />
+    <sn-icon icon="favorite" fill />
+    <sn-icon icon="rocket_launch" />
+  </doc-example>
+
+  <doc-example heading="By .sn-icon-<name> class (no component)" snippet="icon/codeClassRaw">
+    <span class="sn-icon sn-icon-home"></span>
+    <span class="sn-icon sn-icon-search"></span>
+    <span class="sn-icon sn-icon-download"></span>
+  </doc-example>
+
+  <doc-example
+    heading="Ligature set (a name chosen at runtime)"
+    description="This page registers set='ms' as a ligature set. Pick a name: nothing safelists it, and it resolves anyway."
+    snippet="icon/codeSetUse"
+  >
+    <div class="demo-row">
+      @for (name of dynamicChoices; track name) {
+        <button
+          snButton
+          size="sm"
+          [variant]="dynamicName() === name ? 'base' : 'outlined'"
+          (click)="dynamicName.set(name)"
+        >{{ name }}</button>
+      }
+      <sn-icon set="ms" [icon]="dynamicName()" size="lg" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Sprite set"
+    description="set='demo' points at a same-origin SVG sprite. No HTML is injected, so nothing has to be trusted."
+    snippet="icon/codeSetUse-2"
+  >
+    <div class="demo-row">
+      @for (name of spriteNames; track name) {
+        <sn-icon set="demo" [icon]="name" size="lg" />
+      }
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="icon" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="icon" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Icons are decorative by default (<code>aria-hidden="true"</code>). When used standalone
+    without a visible text label nearby, provide <code>ariaLabel</code> so screen readers
+    announce the icon's meaning. The component then sets <code>role="img"</code> and
+    <code>aria-label</code> on the host element.
+  </p>
+</section>

@@ -1,0 +1,46 @@
+<div snPart="track" class="sn-slider-track" [class]="trackClassExtra()">
+  @if (bufferPct() !== null) {
+    <div
+      snPart="buffer"
+      class="sn-slider-buffer"
+      [class]="bufferClassExtra()"
+      [style.width.%]="bufferWidth()"
+      [style.height.%]="bufferHeight()"
+    ></div>
+  }
+  <div
+    snPart="fill"
+    class="sn-slider-fill"
+    [class]="fillClassExtra()"
+    [style.width.%]="fillWidth()"
+    [style.height.%]="fillHeight()"
+  ></div>
+  <div
+    snPart="thumb"
+    class="sn-slider-thumb"
+    [class]="thumbClassExtra()"
+    [style.inset-inline-start.%]="thumbInlineStart()"
+    [style.bottom.%]="thumbBottom()"
+  ></div>
+  <input
+    type="range"
+    snPart="input"
+    class="sn-slider-input"
+    [class]="inputClassExtra()"
+    [min]="min()"
+    [max]="max()"
+    [step]="step()"
+    [value]="value()"
+    [disabled]="isDisabled() || null"
+    [attr.id]="controlId()"
+    [attr.aria-describedby]="ariaDescribedBy()"
+    [attr.aria-orientation]="isVertical() ? 'vertical' : null"
+    [attr.aria-valuetext]="formatValue() ? displayValue() : null"
+    (input)="onInput($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  />
+</div>
+@if (showValue()) {
+  <span snPart="value" class="sn-slider-value" [class]="valueClassExtra()">{{ displayValue() }}</span>
+}

@@ -1,0 +1,40 @@
+<header class="page-header">
+  <h1 class="page-title">LLM documentation</h1>
+  <p class="page-lead">
+    Ashen UI exposes its guides and component references as Markdown for language models, search
+    tools, and documentation workflows.
+  </p>
+</header>
+
+<section class="doc-section">
+  <h2 class="section-title">Published Markdown</h2>
+  <p class="doc-p">
+    Append <code>.md</code> to any component or guide route to receive its generated Markdown.
+    For example, <code>/components/button.md</code> and <code>/guides/theming.md</code> return
+    the same examples, API facts, theming tokens, and accessibility notes as the interactive page.
+  </p>
+  <p class="doc-p">
+    <code>/llms.txt</code> is the grouped index. <code>/llms-full.txt</code> concatenates every
+    generated guide and component page for tools that accept a single source document.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Use the documentation</h2>
+  <pre class="code-block"><code>curl https://docs.example.com/llms.txt
+curl https://docs.example.com/components/button.md</code></pre>
+  <p class="doc-p">
+    Set <code>DOCS_SITE_URL</code> in production builds so the index uses canonical absolute links.
+    Static hosting must serve <code>.md</code> files before an application fallback rewrites the
+    request to the Angular shell.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Source guarantees</h2>
+  <ul class="doc-list">
+    <li>Example HTML is extracted from the live demo markup.</li>
+    <li>Selectors, inputs, models, outputs, tokens, and built-in text defaults are generated from library source.</li>
+    <li><code>pnpm docs:check</code> rejects stale generated API and example artifacts before Markdown is emitted.</li>
+  </ul>
+</section>

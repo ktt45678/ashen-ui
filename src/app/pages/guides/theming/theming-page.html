@@ -1,0 +1,208 @@
+<header class="page-header">
+  <h1 class="page-title">Theming</h1>
+  <p class="page-lead">
+        Ashen UI uses a two-tier CSS custom property system to keep every visual value
+        customizable without selectors into component internals.
+  </p>
+</header>
+
+<section class="doc-section">
+  <h2 class="section-title">Two tiers of tokens</h2>
+      <p class="doc-p"><strong>Tier 1 - global tokens</strong> (<code>ashen-ui/styles/index.css</code>)
+        define every color, radius, spacing value, and typography size. The library ships two
+        variants: light (<code>:root</code>) and dark (<code>[data-theme="dark"]</code>). Glass
+        (<code>[data-theme="glass"]</code>) is a theme of this documentation app, built on the
+        same contract, a worked example of the section below rather than part of the
+        package.</p>
+      <p class="doc-p"><strong>Tier 2 - component tokens</strong> are declared by each component class
+        and default to the relevant global tokens. They are the only values the component's
+        CSS rules consume, and they are settable on the element that carries them:</p>
+  <pre class="code-block"><code>/* every card */
+sn-card &#123;
+  --sn-card-bg: var(--sn-color-primary-soft);
+&#125;
+
+/* the cards in one section */
+.summary sn-card &#123;
+  --sn-card-bg: var(--sn-color-primary-soft);
+&#125;</code></pre>
+      <p class="doc-p">That reaches any element your own template renders, including the host of a
+        component you use. It does not reach <em>inside</em> that component: Angular's emulated
+        encapsulation scopes your stylesheet to your own elements, so a rule naming an inner class
+        such as <code>.sn-form-field-label</code> never matches from a component stylesheet. For a
+        token declared on an inner part, use <code>snStyle</code>, which sets it on the part
+        directly and needs no CSS at all:</p>
+  <pre class="code-block"><code>&lt;sn-label required [snStyle]="&#123;
+  root: &#123; '--sn-form-field-label-color': 'var(--sn-color-primary)' &#125;,
+  requiredIndicator: &#123; '--sn-form-field-required-color': 'var(--sn-color-warning)' &#125;,
+&#125;"&gt;Email&lt;/sn-label&gt;</code></pre>
+      <p class="doc-p">A global stylesheet (<code>styles.css</code>) is unencapsulated, so there a
+        selector naming the inner class does work. Both are supported; <code>snStyle</code> keeps
+        the change next to the markup it applies to.</p>
+      <p class="doc-p">The two tiers differ in <strong>reach</strong>, and picking the right one is the
+        whole technique. A tier-1 token inherits, so setting one on a container restyles
+        everything below it, including components that carry a variant class. A tier-2 token is
+        declared on its element, so it is set on that element and does not inherit from a wrapper
+        around it.</p>
+      <pre class="code-block"><code>/* a danger zone: tier 1, so every control inside follows, variants included */
+.danger-zone &#123;
+  --sn-color-primary-solid: var(--sn-color-error-solid);
+  --sn-color-primary-solid-hover: var(--sn-color-error-solid-hover);
+&#125;</code></pre>
+      <p class="doc-p">Setting a tier-2 token on a wrapper has no effect: the component declares that
+        token on itself, and a declaration on the element always beats a value inherited from an
+        ancestor. Name the element (<code>.danger-zone sn-button</code>), pass
+        <code>snStyle</code>, or reach for the tier-1 token the component reads.</p>
+      <p class="doc-p">Either way you are setting variables, never fighting the library's own rules,
+        so there is no <code>::ng-deep</code>, no <code>!important</code>, and no view encapsulation
+        fights. The library ships inside <code>@layer components</code>, so ordinary unlayered app
+        CSS wins on the element without needing extra specificity.</p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Theme switching</h2>
+  <p class="doc-p">
+        Set <code>data-theme</code> on <code>document.documentElement</code> at runtime.
+        Removing the attribute reverts to light (the <code>:root</code> definition).
+  </p>
+  <pre class="code-block"><code>// switch to dark
+document.documentElement.setAttribute('data-theme', 'dark');
+
+// switch to glass
+document.documentElement.setAttribute('data-theme', 'glass');
+
+// back to light
+document.documentElement.removeAttribute('data-theme');</code></pre>
+  <p class="doc-p">
+        The theme switcher in this documentation app does exactly this and persists the
+        selection to <code>localStorage</code>. You can inspect the source at
+    <code>src/app/core/theme.service.ts</code>.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Writing a theme: the contract</h2>
+  <p class="doc-p">
+        A theme is a <code>[data-theme='name']</code> block that overrides the global colour
+        tokens. The catch is what happens when you miss one: it does not fall back to something
+        neutral, it inherits the value from <code>:root</code>, which is the <em>light</em> theme.
+        A dark theme missing <code>--sn-menu-bg</code> gets a white menu, and nothing reports it.
+  </p>
+  <p class="doc-p">
+        So the required set is enforced rather than documented. <code>theme:check</code>,
+        already part of <code>test:lib</code>, holds every theme to the same contract:
+  </p>
+  <pre class="code-block"><code>pnpm theme:check
+
+theme contract satisfied (78 tokens, 2 theme(s) checked).</code></pre>
+  <p class="doc-p">
+        The contract is derived, not hand-maintained: it is exactly the set of tokens the
+        built-in dark theme overrides, so it cannot drift from the library. To start a theme,
+        copy <code>ashen-ui/styles/themes/_template.css</code>, which is generated from that same
+        set, lists every required token, and shows the dark value beside each one as a
+        reference. Rename the selector, fill in the values, and put the file where the validator
+        can see it.
+  </p>
+  <p class="doc-p">
+    This is not theoretical. The first run against the glass theme on this site found
+        <strong>24 missing tokens</strong>: the message panels, the scrollbar, and the dialog,
+        drawer and menu backgrounds were all rendering light-theme values on a dark canvas.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Keeping a theme current</h2>
+  <p class="doc-p">
+        A theme written against one version drifts from the next: a token gets renamed, the
+        contract grows, or a value sits in a block that cannot reach the element it belongs to.
+        None of that reports itself, because CSS has no error for a custom property nobody reads.
+  </p>
+  <pre class="code-block"><code>ng generate ashen-ui:theme-sync src/styles/my-theme.css
+
+Remove 1 token(s) the library no longer defines:
+  line 145  --sn-input-border  (did you mean --sn-input-text-border, --sn-border?)
+
+Re-run with --apply to write these changes.</code></pre>
+  <p class="doc-p">
+        It reads the token layout out of the installed package's own stylesheets, so it cannot
+        disagree with the version you have, and it reports three things: tokens the library no
+        longer defines, tokens set where they cannot reach the element that declares them, and
+        contract tokens that are missing. Nothing is written until you pass <code>--apply</code>,
+        and even then your values and comments are preserved - a moved token keeps its value, and
+        a rename is only ever suggested, never applied, because picking the replacement is a
+        judgement call. Add <code>--check</code> to fail a build when a theme falls behind.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Elevation and selection</h2>
+  <p class="doc-p">
+    Surfaces that float over the page carry an elevation shadow and no outline:
+        <code>--sn-shadow-overlay</code> for menus, popovers, toasts and every dropdown
+        panel, <code>--sn-shadow-modal</code> for dialogs and drawers,
+        <code>--sn-shadow-sm</code> for cards and accordions. The ramp follows Material's
+        steps, so a dialog always sits above a dropdown. Components that are part of the
+        page rather than over it stay flat: panel, scroll panel, tabs, table, breadcrumb,
+        chip, badge, and every input-based control, which keep the 1&nbsp;px field border
+        that makes them legible as controls.
+  </p>
+  <p class="doc-p">
+        Each of those borders is still a token set to <code>none</code> or
+        <code>transparent</code>, so an outlined look is one declaration away:
+        <code>--sn-card-border-color</code>, <code>--sn-dialog-border</code>,
+        <code>--sn-menu-border</code>, <code>--sn-select-panel-border</code> and their
+        siblings. Border widths were left in place, so switching one on shifts nothing.
+  </p>
+  <p class="doc-p">
+        A selected row, cell or segment is a 16% tint of the accent rather than a fill of
+        it: <code>--sn-selected-bg</code>, <code>--sn-selected-bg-hover</code> and
+        <code>--sn-selected-text</code>. All three derive from
+        <code>--sn-color-primary</code>, so a theme picks them up by setting that one
+        token, and neither the contract nor a per-mode block needs to mention them.
+        Selection outranks hover: a selected row keeps its tint under the pointer.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">The glass theme</h2>
+  <p class="doc-p">
+        Glass uses <code>backdrop-filter: blur(24px)</code> and translucent panel
+        backgrounds (<code>rgba(255,255,255,0.08)</code>) over a dark canvas
+        (<code>rgb(10,10,18)</code>). For full visual fidelity, the app-level background
+        should also include the ambient mesh gradient - three blurred radial blobs in
+        red, indigo, and cyan. See the <code>--sn-backdrop-filter</code> and
+    <code>--sn-glass-shadow</code> tokens.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Tailwind integration</h2>
+  <p class="doc-p">
+    Import <code>ashen-ui/styles/tailwind.css</code> in your app's stylesheet after
+        <code>&#64;import "tailwindcss"</code>. It maps every public <code>--sn-*</code> token
+        into Tailwind's theme namespace so you get utilities like <code>bg-sn-primary</code>,
+        <code>text-sn-error</code>, <code>rounded-sn-md</code>, and <code>font-sn-ui</code>.
+        The library itself never uses Tailwind - plain CSS consumers simply omit this file.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Token reference</h2>
+  <p class="doc-p">The full token set is defined in <code>ashen-ui/styles/tokens/</code>:</p>
+  <table class="token-table">
+    <thead>
+      <tr>
+        <th>File</th>
+        <th>Contents</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr><td><code>colors.css</code></td><td>Semantic colors, surfaces, borders, inputs, focus ring, disabled states - three themes</td></tr>
+          <tr><td><code>typography.css</code></td><td>Font families, type scale, weights, leading</td></tr>
+          <tr><td><code>spacing.css</code></td><td>Space scale, radius, control sizes, motion durations</td></tr>
+          <tr><td><code>components.css</code></td><td>Per-component dimension tokens (padding, border-radius, z-index)</td></tr>
+          <tr><td><code>fonts.css</code></td><td>Material Symbols Outlined <code>&#64;font-face</code> and base icon classes</td></tr>
+          <tr><td><code>base.css</code></td><td>Minimal body reset using token values</td></tr>
+    </tbody>
+  </table>
+</section>

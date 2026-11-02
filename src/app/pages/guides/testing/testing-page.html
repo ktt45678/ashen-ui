@@ -1,0 +1,147 @@
+<header class="page-header">
+  <h1 class="page-title">Testing</h1>
+  <p class="page-lead">
+    <code>ashen-ui/testing</code> ships component harnesses, so your tests drive Ashen
+    components the way a user does instead of reaching into markup they do not own.
+  </p>
+</header>
+
+<section class="doc-section">
+  <h2 class="section-title">Why</h2>
+  <p class="doc-p">
+    A test that queries <code>.sn-select-trigger</code> turns this library's internals into
+    API it can never change. It also has to know that the panel renders in the overlay
+    container, that the option list is elsewhere in the DOM, and when to call
+    <code>detectChanges</code>. None of that is your application's business.
+  </p>
+  <pre class="code-block"><code>{{ codeWithout }}</code></pre>
+  <p class="doc-p">The same test through a harness:</p>
+  <pre class="code-block"><code>{{ codeWith }}</code></pre>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Setup</h2>
+  <pre class="code-block"><code>{{ codeSetup }}</code></pre>
+  <p class="doc-p">
+    <strong>Provide <code>provideSnAnimations('disabled')</code>.</strong> Overlays and toasts
+    detach when their exit animation ends. The harnesses wait for the real
+    state either way, so a test is correct without it; it is just slower, by the length of
+    every animation it triggers.
+  </p>
+  <p class="doc-p">
+    Harnesses work under zoneless change detection. Every read stabilizes the fixture first,
+    so a state change made outside the harness needs no <code>detectChanges()</code>:
+  </p>
+  <pre class="code-block"><code>{{ codeNoDetectChanges }}</code></pre>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Finding things</h2>
+  <pre class="code-block"><code>{{ codeFilters }}</code></pre>
+  <p class="doc-p">
+    Filters match on what a user perceives, a label or the visible text, not on structure. A
+    filter that matches nothing throws with the value it looked for, so a renamed option
+    fails loudly rather than silently doing nothing.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Keyboard</h2>
+  <p class="doc-p">
+    Components where selection follows focus expose <code>sendKey()</code>, taking the CDK's
+    <code>TestKey</code>. It goes through the CDK's own key dispatch, which sets the
+    properties a component reads; a hand-built <code>KeyboardEvent</code> does not.
+  </p>
+  <pre class="code-block"><code>{{ codeKeyboard }}</code></pre>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">What ships</h2>
+  <table class="token-table">
+    <thead>
+      <tr><th>Harness</th><th>Drives</th><th>Notable</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>SnCheckboxHarness</code></td>
+        <td><code>sn-checkbox</code></td>
+        <td><code>check</code>, <code>uncheck</code>, <code>isIndeterminate</code></td>
+      </tr>
+      <tr>
+        <td><code>SnToggleHarness</code></td>
+        <td><code>sn-toggle</code></td>
+        <td><code>check</code>, <code>uncheck</code>, both idempotent</td>
+      </tr>
+      <tr>
+        <td><code>SnRadioGroupHarness</code>, <code>SnRadioButtonHarness</code></td>
+        <td><code>sn-radio-group</code>, <code>sn-radio</code></td>
+        <td><code>checkByLabel</code>, <code>getCheckedLabel</code>, <code>sendKey</code></td>
+      </tr>
+      <tr>
+        <td><code>SnTabsHarness</code>, <code>SnTabHarness</code></td>
+        <td><code>sn-tabs</code></td>
+        <td><code>selectTab</code>, <code>getPanelText</code>, <code>sendKey</code></td>
+      </tr>
+      <tr>
+        <td><code>SnSelectHarness</code></td>
+        <td><code>sn-select</code></td>
+        <td><code>selectOption</code> closes the panel, as it does for a user</td>
+      </tr>
+      <tr>
+        <td><code>SnMultiSelectHarness</code></td>
+        <td><code>sn-multi-select</code></td>
+        <td><code>selectOptions</code> keeps it open; <code>getChipTexts</code></td>
+      </tr>
+      <tr>
+        <td><code>SnAutocompleteHarness</code></td>
+        <td><code>sn-autocomplete</code></td>
+        <td><code>type</code> filters; the panel only exists while it matches</td>
+      </tr>
+      <tr>
+        <td><code>SnDatePickerHarness</code></td>
+        <td><code>sn-date-picker</code></td>
+        <td><code>pickDay</code>, <code>next</code>, <code>previous</code>, <code>getHeaderText</code></td>
+      </tr>
+      <tr>
+        <td><code>SnMenuHarness</code>, <code>SnMenuItemHarness</code></td>
+        <td>any <code>[snMenuTriggerFor]</code></td>
+        <td>Found from the trigger, which is where a test starts</td>
+      </tr>
+      <tr>
+        <td><code>SnDialogHarness</code></td>
+        <td><code>sn-dialog</code></td>
+        <td><code>clickFooterButton</code>; a closed dialog is not in the DOM</td>
+      </tr>
+      <tr>
+        <td><code>SnToastOutletHarness</code>, <code>SnToastHarness</code></td>
+        <td><code>sn-toast</code></td>
+        <td><code>getSummaries</code>, <code>dismiss</code>, <code>getSeverity</code></td>
+      </tr>
+      <tr>
+        <td><code>SnTableHarness</code>, <code>SnTableRowHarness</code></td>
+        <td><code>sn-table</code></td>
+        <td><code>getCellTexts</code>, <code>sortBy</code>, <code>toggleSelectAll</code></td>
+      </tr>
+      <tr>
+        <td><code>SnOptionHarness</code></td>
+        <td>Any option list</td>
+        <td>Shared by Select, MultiSelect, AutoComplete and Listbox</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="doc-p">
+    Text getters exclude icons. A Material Symbols glyph is drawn from a ligature, so its own
+    text is the icon's name: a selected option's raw <code>textContent</code> reads
+    <code>"Englishcheck"</code>. What a harness returns is the label.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Playwright</h2>
+  <p class="doc-p">
+    These are TestBed harnesses. The CDK ships no Playwright environment, so end-to-end tests
+    still use locators. Prefer role and label selectors there for the same reason harnesses
+    exist here: <code>getByRole('option', &#123; name: 'English' &#125;)</code> survives a
+    markup change that <code>.sn-listbox-option:nth-child(2)</code> does not.
+  </p>
+</section>

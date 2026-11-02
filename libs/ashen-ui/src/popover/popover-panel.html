@@ -1,0 +1,16 @@
+<div
+  [id]="panelId()"
+  snPart="panel"
+  role="dialog"
+  class="sn-popover-panel"
+  [class]="panelClass()"
+  [style.animation]="panelAnimation()"
+  (click)="onPanelClick($event)"
+>
+  @if (contentTemplate()) {
+    <ng-container
+      [ngTemplateOutlet]="contentTemplate()!"
+      [ngTemplateOutletContext]="templateContext()"
+    />
+  }
+</div>

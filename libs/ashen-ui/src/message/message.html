@@ -1,0 +1,20 @@
+@if (visible()) {
+  @if (!simple()) {
+    <sn-icon snPart="icon" class="sn-message-icon" [class]="iconClassExtra()">{{ effectiveIcon() }}</sn-icon>
+  }
+  <div snPart="content" class="sn-message-content" [class]="contentClassExtra()">
+    <ng-content />
+  </div>
+  @if (closable() && !simple()) {
+    <button
+      type="button"
+      snPart="closeButton"
+      class="sn-message-close"
+      [class]="closeButtonClassExtra()"
+      [attr.aria-label]="intl.close"
+      (click)="onClose()"
+    >
+      <sn-icon>{{ icons.resolve('close') }}</sn-icon>
+    </button>
+  }
+}

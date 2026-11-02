@@ -1,0 +1,30 @@
+@for (item of items(); track item.id) {
+  <div
+    snPart="item"
+    [class]="itemClass(item)"
+    [attr.data-sn-toast-id]="item.id"
+    [style.animation]="!_animated() ? 'none' : (item.state === 'hiding' ? (animation()?.exit ?? null) : (animation()?.enter ?? null))"
+    [attr.role]="item.severity === 'error' || item.severity === 'warning' ? 'alert' : 'status'"
+    (mouseenter)="pauseTimer(item)"
+    (mouseleave)="resumeTimer(item)"
+  >
+    <sn-icon snPart="icon" class="sn-toast-icon">{{ iconFor(item.severity) }}</sn-icon>
+    <div snPart="content" class="sn-toast-content">
+      <div snPart="summary" class="sn-toast-summary">{{ item.summary }}</div>
+      @if (item.detail) {
+        <div snPart="detail" class="sn-toast-detail">{{ item.detail }}</div>
+      }
+    </div>
+    @if (item.closable) {
+      <button
+        snPart="closeButton"
+        type="button"
+        class="sn-toast-close"
+        [attr.aria-label]="intl.close"
+        (click)="requestClose(item.id)"
+      >
+        <sn-icon>{{ icons.resolve('close') }}</sn-icon>
+      </button>
+    }
+  </div>
+}

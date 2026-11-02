@@ -1,0 +1,71 @@
+<ol
+  snPart="list"
+  class="sn-stepper-list"
+  [class]="listClassExtra()"
+  [attr.aria-label]="listLabel()"
+>
+  @for (step of stepItems(); track step.stepId; let i = $index; let last = $last) {
+    <li class="sn-stepper-item" [class.sn-stepper-item--completed]="getStepState(i) === 'completed'" [class.sn-stepper-item--active]="getStepState(i) === 'active'" [class.sn-stepper-item--upcoming]="getStepState(i) === 'upcoming'">
+      <button
+        #stepBtn
+        snPart="header"
+        type="button"
+        class="sn-step-header"
+        [class]="step.buttonClassExtra()"
+        [class.sn-step-header--completed]="getStepState(i) === 'completed'"
+        [class.sn-step-header--active]="getStepState(i) === 'active'"
+        [class.sn-step-header--upcoming]="getStepState(i) === 'upcoming'"
+        [class.sn-step-header--disabled]="step.disabledInput()"
+        [attr.id]="step.buttonId"
+        [attr.aria-current]="getStepState(i) === 'active' ? 'step' : null"
+        [attr.aria-controls]="step.panelId"
+        [attr.tabindex]="activeStep() === i ? 0 : -1"
+        [disabled]="step.disabledInput() || !isStepClickable(i) || null"
+        (click)="selectAndFocus(i)"
+      >
+        <span snPart="marker" class="sn-step-marker" [class]="step.markerClassExtra()" aria-hidden="true">
+          @if (getStepState(i) === 'completed') {
+            <sn-icon class="sn-step-marker-icon">{{ icons.resolve('check') }}</sn-icon>
+          } @else if (step.icon()) {
+            <sn-icon class="sn-step-marker-icon">{{ step.icon() }}</sn-icon>
+          } @else {
+            <span class="sn-step-number">{{ i + 1 }}</span>
+          }
+        </span>
+        <span snPart="label" class="sn-step-label" [class]="step.labelClassExtra()">{{ step.label() }}</span>
+      </button>
+      @if (!last) {
+        <span snPart="connector" class="sn-step-connector" aria-hidden="true" [class.sn-step-connector--completed]="getStepState(i) === 'completed'"></span>
+      }
+      @if (orientation() === 'vertical' && activeStep() === i && step.getContentTemplate()) {
+        <div
+          snPart="panel"
+          role="region"
+          class="sn-step-panel"
+          [class]="step.panelClassExtra()"
+          [attr.id]="step.panelId"
+          [attr.aria-labelledby]="step.buttonId"
+        >
+          <ng-container *ngTemplateOutlet="step.getContentTemplate()!" />
+        </div>
+      }
+    </li>
+  }
+</ol>
+
+@if (orientation() === 'horizontal') {
+  @for (step of stepItems(); track step.stepId; let i = $index) {
+    @if (activeStep() === i && step.getContentTemplate()) {
+      <div
+        snPart="panel"
+        role="region"
+        class="sn-step-panel"
+        [class]="step.panelClassExtra()"
+        [attr.id]="step.panelId"
+        [attr.aria-labelledby]="step.buttonId"
+      >
+        <ng-container *ngTemplateOutlet="step.getContentTemplate()!" />
+      </div>
+    }
+  }
+}

@@ -1,0 +1,77 @@
+.page-header { margin-bottom: var(--sn-space-6); }
+.page-title {
+  margin: 0 0 var(--sn-space-3);
+  font-family: var(--sn-font-display);
+  font-size: var(--sn-text-2xl);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+  line-height: var(--sn-leading-tight);
+}
+.page-lead {
+  margin: 0;
+  font-size: var(--sn-text-md);
+  color: var(--sn-text-muted);
+  line-height: var(--sn-leading-normal);
+  max-width: 60ch;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sn-space-3);
+  margin-bottom: var(--sn-space-6);
+}
+.feature-card {
+  display: block;
+  padding: var(--sn-space-4);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-tile);
+  background: var(--sn-surface-panel);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--sn-motion-fast), background var(--sn-motion-fast);
+}
+.feature-card:hover {
+  border-color: var(--sn-color-primary-border);
+  background: var(--sn-surface-hover);
+}
+.card-title {
+  margin: 0 0 var(--sn-space-2);
+  font-size: var(--sn-text-sm);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-color-primary);
+}
+.card-desc {
+  margin: 0;
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text-muted);
+  line-height: var(--sn-leading-normal);
+}
+.info-section { margin-bottom: var(--sn-space-6); }
+.section-title {
+  margin: 0 0 var(--sn-space-3);
+  font-size: var(--sn-text-lg);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+}
+.principle-list {
+  margin: 0;
+  padding: 0 0 0 var(--sn-space-4);
+  list-style: disc;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sn-space-2);
+}
+.principle-list li {
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text-muted);
+  line-height: var(--sn-leading-normal);
+}
+.principle-list strong { color: var(--sn-text); }
+code {
+  font-family: var(--sn-font-mono);
+  font-size: 0.9em;
+  background: var(--sn-surface-elevated);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  padding: 0.1em 0.3em;
+}

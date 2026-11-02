@@ -1,0 +1,64 @@
+<button
+  #triggerBtn
+  snPart="trigger"
+  type="button"
+  class="sn-select-trigger"
+  [class]="triggerClassExtra()"
+  [id]="triggerId()"
+  role="combobox"
+  [attr.aria-expanded]="isOpen()"
+  aria-haspopup="listbox"
+  [attr.aria-controls]="panelId"
+  [attr.aria-activedescendant]="activeOptionId()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-describedby]="ariaDescribedBy()"
+  [disabled]="isDisabled() || null"
+  (click)="onTriggerClick()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span
+    snPart="value"
+    class="sn-select-value sn-multi-select-value"
+    [class]="valueClassExtra()"
+    [class.sn-select-placeholder]="!hasChips()"
+  >
+    @if (hasChips()) {
+      <span class="sn-multi-select-chips" (click)="onChipContainerClick($event)">
+        @for (opt of shownChips(); track opt.value()) {
+          <sn-chip
+            [label]="opt.getLabel()"
+            [removable]="!isDisabled()"
+            [snClass]="chipClassExtra()"
+            [snStyle]="chipStyleExtra()"
+            [snAttrs]="chipAttrsExtra()"
+            (removed)="toggleChip(opt.value())"
+          />
+        }
+        @if (hiddenCount() > 0) {
+          <span class="sn-multi-select-more">+{{ hiddenCount() }} more</span>
+        }
+      </span>
+    } @else {
+      {{ effectivePlaceholder() }}
+    }
+  </span>
+  <span snPart="arrow" class="sn-select-arrow" [class]="arrowClassExtra()">
+    <sn-icon>{{ icons.resolve('chevron-down') }}</sn-icon>
+  </span>
+</button>
+
+<ng-template #panelTpl>
+  <div
+    snPart="panel"
+    class="sn-select-panel"
+    [class]="panelClassExtra()"
+    [class.sn-select-panel-closing]="isClosing()"
+    role="listbox"
+    aria-multiselectable="true"
+    [id]="panelId"
+    [attr.aria-label]="ariaLabel() || null"
+    [style.animation]="panelAnimation()"
+  >
+    <ng-content />
+  </div>
+</ng-template>

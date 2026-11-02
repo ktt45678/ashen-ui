@@ -1,0 +1,156 @@
+@layer components {
+  /* Component-token tier - override these to re-skin */
+  sn-slider,
+  .sn-slider-wrapper {
+    --sn-slider-track-height: 0.5rem;
+    /* Length of a vertical track. A horizontal one takes its length from the
+       container, but a column has nothing to stretch against. */
+    --sn-slider-length: 10rem;
+    --sn-slider-thumb-size: 1.25rem;
+    --sn-slider-value-gap: 1rem;
+    --sn-slider-value-min-width: 3rem;
+    --sn-slider-track-bg: var(--sn-border);
+    --sn-slider-buffer-bg: color-mix(in srgb, var(--sn-color-primary) 30%, transparent);
+    --sn-slider-fill-bg: var(--sn-color-primary);
+    --sn-slider-thumb-bg: var(--sn-color-primary);
+    --sn-slider-focus-ring: 0 0 0 3px color-mix(in srgb, var(--sn-color-primary) 30%, transparent);
+  }
+
+  .sn-slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-slider-value-gap);
+    width: 100%;
+  }
+
+  .sn-slider-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .sn-slider-track {
+    position: relative;
+    flex: 1;
+    height: var(--sn-slider-track-height);
+    background-color: var(--sn-slider-track-bg);
+    border-radius: var(--sn-radius-pill);
+  }
+
+  .sn-slider-buffer,
+  .sn-slider-fill {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    height: 100%;
+    border-radius: var(--sn-radius-pill);
+    pointer-events: none;
+  }
+
+  .sn-slider-buffer {
+    background-color: var(--sn-slider-buffer-bg);
+  }
+
+  .sn-slider-fill {
+    background-color: var(--sn-slider-fill-bg);
+  }
+
+  .sn-slider-thumb {
+    position: absolute;
+    top: 50%;
+    width: var(--sn-slider-thumb-size);
+    height: var(--sn-slider-thumb-size);
+    border-radius: 50%;
+    background: var(--sn-slider-thumb-bg);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    /* Centred on the value by pulling back half its own width. A
+       `translateX(-50%)` would do it too, but it is physical, and in RTL the
+       thumb has to shift the other way; `margin-inline-start` mirrors itself. */
+    margin-inline-start: calc(var(--sn-slider-thumb-size) / -2);
+    transform: translateY(-50%);
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+
+  /* Focus ring on thumb when range is focused */
+  .sn-slider-track:focus-within .sn-slider-thumb {
+    box-shadow: var(--sn-slider-focus-ring);
+  }
+
+  .sn-slider-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: auto;
+
+    /* Ensure extended hit area covers thumb overhang */
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .sn-slider-input:disabled {
+    cursor: not-allowed;
+  }
+
+  /* Vertical
+     The track turns, the fill grows from the bottom, and the thumb rides the
+     block axis. The input keeps its own rules below: a rotated horizontal
+     range, not a vertical one. */
+  .sn-slider-vertical {
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+  }
+
+  /* The length belongs to the TRACK, not the wrapper, and the track does not
+     flex. A flexing track would share the wrapper's height with the value
+     readout, leaving the rotated input below longer than the track it covers. */
+  .sn-slider-vertical .sn-slider-track {
+    width: var(--sn-slider-track-height);
+    height: var(--sn-slider-length);
+    flex: none;
+  }
+
+  .sn-slider-vertical .sn-slider-buffer,
+  .sn-slider-vertical .sn-slider-fill {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .sn-slider-vertical .sn-slider-thumb {
+    top: auto;
+    inset-inline-start: 50%;
+    transform: none;
+    margin-block-end: calc(var(--sn-slider-thumb-size) / -2);
+  }
+
+  /* Rotated rather than `writing-mode: vertical-*`, for the keyboard: a
+     horizontal range already binds Up and Right to an increase and Down and
+     Left to a decrease, which is what a vertical slider wants. Turning the
+     element instead of the writing mode keeps those bindings and maps a drag up
+     the track to a rise in value. `bottom left` origin plus the rotation lands
+     the box back over the track, centred on it. */
+  .sn-slider-vertical .sn-slider-input {
+    inset: 50% auto auto 50%;
+    width: var(--sn-slider-length);
+    height: var(--sn-slider-thumb-size);
+    transform: translate(-50%, -50%) rotate(-90deg);
+  }
+
+  /* Fixed width, not min-width: a value that grows with its own text (currency,
+     long numbers) would otherwise steal width from the flex:1 track and make it
+     shrink and jump as the value changes. Size the reserve for the widest value
+     via --sn-slider-value-min-width. */
+  .sn-slider-value {
+    font-size: var(--sn-text-sm);
+    color: var(--sn-text);
+    width: var(--sn-slider-value-min-width);
+    text-align: end;
+    flex: none;
+  }
+}

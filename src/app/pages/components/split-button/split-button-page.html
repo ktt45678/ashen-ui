@@ -1,0 +1,93 @@
+<header class="page-header">
+  <h1>Split Button</h1>
+  <p class="page-subtitle">
+    A composite of a primary action button and a chevron trigger that opens a
+    <code>sn-menu</code> of related secondary commands. Reuses <code>Button</code> and
+    <code>MenuTrigger</code> wholesale - no reimplementation of overlay or keyboard logic.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="split-button/codeBasic">
+    <sn-split-button [menuFor]="basicMenu" (clicked)="save()">Save</sn-split-button>
+    <sn-menu #basicMenu>
+      <button snMenuItem>Save as draft</button>
+      <sn-menu-separator />
+      <button snMenuItem>Discard</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Colors" snippet="split-button/codeColors">
+    <sn-split-button color="primary" [menuFor]="colorMenu">Primary</sn-split-button>
+    <sn-split-button color="secondary" [menuFor]="colorMenu">Secondary</sn-split-button>
+    <sn-split-button color="success" [menuFor]="colorMenu">Success</sn-split-button>
+    <sn-split-button color="error" [menuFor]="colorMenu">Error</sn-split-button>
+    <sn-split-button color="warning" [menuFor]="colorMenu">Warning</sn-split-button>
+    <sn-split-button color="info" [menuFor]="colorMenu">Info</sn-split-button>
+    <sn-menu #colorMenu>
+      <button snMenuItem>Option A</button>
+      <button snMenuItem>Option B</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="split-button/codeSizes">
+    <sn-split-button size="sm" [menuFor]="sizeMenu">Small</sn-split-button>
+    <sn-split-button size="md" [menuFor]="sizeMenu">Medium</sn-split-button>
+    <sn-split-button size="lg" [menuFor]="sizeMenu">Large</sn-split-button>
+    <sn-menu #sizeMenu>
+      <button snMenuItem>Option</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="split-button/codeDisabled">
+    <sn-split-button [disabled]="true" [menuFor]="disabledMenu">Disabled</sn-split-button>
+    <sn-menu #disabledMenu>
+      <button snMenuItem>Option</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="With main-button icon" snippet="split-button/codeIcon">
+    <sn-split-button icon="save" [menuFor]="iconMenu" (clicked)="save()">Save</sn-split-button>
+    <sn-menu #iconMenu>
+      <button snMenuItem>Save as copy</button>
+      <button snMenuItem>Export…</button>
+    </sn-menu>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="split-button" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="split-button" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The trigger button receives <code>aria-haspopup="menu"</code>, <code>aria-expanded</code>,
+      and <code>aria-controls</code> automatically via the <code>MenuTrigger</code> directive
+      (APG Menu Button pattern).
+    </li>
+    <li>
+      Keyboard: <kbd>Enter</kbd>, <kbd>Space</kbd>, or <kbd>ArrowDown</kbd> on the trigger opens
+      the menu and focuses the first item; <kbd>ArrowUp</kbd> focuses the last item.
+      <kbd>Escape</kbd> closes and returns focus to the trigger.
+    </li>
+    <li>
+      The trigger's accessible name defaults to <code>'More actions'</code> (via
+      <code>SnSplitButtonIntl.more</code>) and can be overridden with
+      <code>dropdownAriaLabel</code> or globally via <code>provideSnIntl(&#123; splitButton: &#123; more: '…' &#125; &#125;)</code>.
+    </li>
+    <li>
+      When <code>disabled</code>, native <code>disabled</code> attributes are set on both
+      buttons so browsers block interaction and screen readers announce the state.
+    </li>
+  </ul>
+</section>

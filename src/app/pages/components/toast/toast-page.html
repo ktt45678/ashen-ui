@@ -1,0 +1,134 @@
+<sn-toast position="top-right" />
+
+<header class="page-header">
+  <h1>Toast</h1>
+  <p class="page-subtitle">
+    Service-driven transient notification stack - slide-in/out at a screen corner, auto-dismisses after
+    <code>life</code> ms, supports severity accents, hover-pause, and sticky mode.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Severities</h2>
+
+  <doc-example
+    heading="All four severities"
+    description="Click each button to show a toast. Toasts auto-dismiss after 3 s and can be closed manually."
+    snippet="toast/codeSeverities"
+  >
+    <div class="button-row">
+      <button snButton variant="outlined" (click)="showInfo()">Info</button>
+      <button snButton variant="outlined" (click)="showSuccess()">Success</button>
+      <button snButton variant="outlined" (click)="showWarn()">Warning</button>
+      <button snButton variant="outlined" (click)="showError()">Error</button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>Sticky &amp; non-closable</h2>
+
+  <doc-example
+    heading="Sticky toast"
+    description="Set sticky: true to prevent auto-dismiss. The user must click the close button."
+    snippet="toast/codeSticky"
+  >
+    <div class="button-row">
+      <button snButton variant="outlined" (click)="showSticky()">Show sticky</button>
+      <button snButton variant="outlined" (click)="showNoClose()">No close button</button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>Duplicate suppression</h2>
+
+  <doc-example
+    heading="preventDuplicates"
+    description="Set preventDuplicates: true and a toast identical to one already on screen is dropped, returning the existing id instead of stacking a second. Identity is the severity, summary and detail together; pass a key when the text varies but the event does not."
+    snippet="toast/codeDuplicates"
+  >
+    <div class="button-row">
+      <button snButton variant="outlined" (click)="showRetryStack()">
+        Fire 3 identical, stacking
+      </button>
+      <button snButton variant="outlined" (click)="showRetrySuppressed()">
+        Fire 3 identical, suppressed
+      </button>
+      <button snButton variant="outlined" (click)="showRetryKeyed()">
+        Fire 3 with a shared key
+      </button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>Positions</h2>
+
+  <doc-example
+    heading="Corner positions"
+    description="Place the &lt;sn-toast&gt; outlet with a position input. Four corners are supported."
+    snippet="toast/codePositions"
+  >
+    <div class="button-row">
+      <button snButton variant="outlined" (click)="showInfo()">Show toast (top-right)</button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>Dismiss all</h2>
+
+  <doc-example
+    heading="Programmatic dismiss"
+    description="Call toast.dismiss() without arguments to clear all active toasts at once."
+    snippet="toast/codeClearAll"
+  >
+    <div class="button-row">
+      <button snButton variant="outlined" (click)="showInfo()">Add toast</button>
+      <button snButton variant="outlined" (click)="showSuccess()">Add another</button>
+      <button snButton variant="outlined" (click)="clearAll()">Clear all</button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="toast" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="toast" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The <code>sn-toast</code> container carries <code>aria-live="polite"</code> and
+      <code>aria-atomic="false"</code> so screen readers announce new toasts without interrupting
+      the user's current reading flow.
+    </li>
+    <li>
+      Each toast card has <code>role="status"</code> for <code>info</code> and
+      <code>success</code> severities, and <code>role="alert"</code> for <code>warning</code> and
+      <code>error</code> - matching WAI-ARIA live-region semantics (polite vs. assertive).
+    </li>
+    <li>
+      Toasts <strong>never steal focus</strong>. They appear visually without moving keyboard focus
+      away from the user's current position.
+    </li>
+    <li>
+      The close button has an <code>aria-label</code> provided by <code>SnToastIntl.close</code>
+      (default: "Close notification"). Customise via <code>provideSnIntl()</code>.
+    </li>
+    <li>
+      Hovering over a toast pauses the auto-dismiss timer; the remaining time is tracked and
+      resumed when the cursor leaves, preventing accidental dismissal while reading.
+    </li>
+    <li>
+      All animations are suppressed when <code>prefers-reduced-motion: reduce</code> is set.
+    </li>
+  </ul>
+</section>

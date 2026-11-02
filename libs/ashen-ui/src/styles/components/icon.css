@@ -1,0 +1,95 @@
+@layer components {
+  /* Restates the global icon sizes so they can be overridden per element. */
+  .sn-icon {
+    /* fill/weight/opsz are driven via CSS custom properties set by host bindings */
+
+    /* Structural / display */
+    color: var(--sn-icon-color, inherit);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Material Symbols font. A registered icon set overrides the family per
+       element, which is how a second font, or a subsetted build under its own
+       @font-face name, gets drawn without restating this rule. */
+    font-family: var(--sn-icon-font-family, 'Material Symbols Outlined Variable');
+    font-weight: normal;
+    font-style: normal;
+    font-size: var(--sn-icon-size-md);
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    user-select: none;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+
+    /* Variable font axes (driven by host-bound CSS custom properties) */
+    font-variation-settings:
+      'FILL' var(--sn-icon-fill, 0),
+      'wght' var(--sn-icon-weight, 300),
+      'GRAD' var(--sn-icon-grad, 0),
+      'opsz' var(--sn-icon-opsz, 24);
+  }
+
+  .sn-icon.sn-size-sm {
+    font-size: var(--sn-icon-size-sm);
+    --sn-icon-opsz: 24;
+  }
+
+  /* .sn-icon (no size class) = md, opsz 24 - no extra rule needed */
+
+  .sn-icon.sn-size-lg {
+    font-size: var(--sn-icon-size-lg);
+    --sn-icon-opsz: 48;
+  }
+
+  /* A sprite-set glyph. Sized in `em` so it tracks the font-size the size
+     classes set, and painted with `currentColor` so it inherits like a glyph. */
+  .sn-icon-svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+  }
+
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='empty'],
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='empty'],
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='placeholder'],
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='placeholder'] {
+    inline-size: 1em;
+    block-size: 1em;
+    flex: 0 0 1em;
+    overflow: hidden;
+  }
+
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='empty'],
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='empty'],
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='placeholder'],
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='placeholder'] {
+    color: transparent;
+  }
+
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='placeholder']::after,
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='placeholder']::after {
+    content: '';
+    display: block;
+    inline-size: min(100%, var(--sn-icon-loading-placeholder-size, var(--sn-icon-size-md)));
+    block-size: min(100%, var(--sn-icon-loading-placeholder-size, var(--sn-icon-size-md)));
+    border-radius: var(--sn-icon-loading-placeholder-radius, var(--sn-radius-sm));
+    background: var(--sn-icon-loading-placeholder-color, var(--sn-border));
+  }
+
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='text']::before,
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='text']::before {
+    content: none;
+  }
+
+  sn-icon[data-sn-icon-font-state='pending'][data-sn-icon-loading-fallback='text'],
+  sn-icon[data-sn-icon-font-state='failed'][data-sn-icon-loading-fallback='text'],
+  .sn-icon-fallback-text {
+    font-family: var(--sn-icon-loading-text-font-family, var(--sn-font-ui));
+    font-variation-settings: normal;
+  }
+}

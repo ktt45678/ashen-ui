@@ -1,0 +1,57 @@
+@if (format() === 'rgb') {
+  <div class="sn-color-input-rgb-row">
+    <label class="sn-color-input-rgb-field">
+      <input
+        snInputText
+        [class]="fieldClassExtra()"
+        type="number"
+        min="0"
+        max="255"
+        [value]="rgb().r"
+        [attr.aria-label]="intl.inputRed"
+        (change)="onRgbChange('r', $event)"
+        (blur)="onRgbChange('r', $event)"
+      />
+      <span class="sn-color-input-rgb-label">R</span>
+    </label>
+    <label class="sn-color-input-rgb-field">
+      <input
+        snInputText
+        [class]="fieldClassExtra()"
+        type="number"
+        min="0"
+        max="255"
+        [value]="rgb().g"
+        [attr.aria-label]="intl.inputGreen"
+        (change)="onRgbChange('g', $event)"
+        (blur)="onRgbChange('g', $event)"
+      />
+      <span class="sn-color-input-rgb-label">G</span>
+    </label>
+    <label class="sn-color-input-rgb-field">
+      <input
+        snInputText
+        [class]="fieldClassExtra()"
+        type="number"
+        min="0"
+        max="255"
+        [value]="rgb().b"
+        [attr.aria-label]="intl.inputBlue"
+        (change)="onRgbChange('b', $event)"
+        (blur)="onRgbChange('b', $event)"
+      />
+      <span class="sn-color-input-rgb-label">B</span>
+    </label>
+  </div>
+} @else {
+  <input
+    snInputText
+    [class]="fieldClassExtra()"
+    [value]="effectiveHex()"
+    [attr.aria-label]="intl.inputHex"
+    spellcheck="false"
+    (input)="onHexInput($event)"
+    (blur)="onHexBlur($event)"
+    (keydown)="onHexKeydown($event)"
+  />
+}

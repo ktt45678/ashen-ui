@@ -1,0 +1,177 @@
+<header class="page-header">
+  <h1>Tabs</h1>
+  <p class="page-subtitle">
+    Underline tab bar with a sliding indicator and lazy content panel. Consumer writes
+    <code>sn-tab</code> children in the template - no data-array input required.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic tabs" snippet="tabs/codeBasic">
+    <div class="demo-tabs">
+      <sn-tabs>
+        <sn-tab label="General">
+          Name, type, position, and size of the tile.
+        </sn-tab>
+        <sn-tab label="Appearance">
+          Icon, colors, and opacity.
+        </sn-tab>
+        <sn-tab label="Options">
+          Zoom effect and color feedback.
+        </sn-tab>
+      </sn-tabs>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With icons" snippet="tabs/codeWithIcons">
+    <div class="demo-tabs">
+      <sn-tabs>
+        <sn-tab label="General" icon="tune">
+          Name, type, position, and size of the tile.
+        </sn-tab>
+        <sn-tab label="Appearance" icon="palette">
+          Icon, colors, and opacity.
+        </sn-tab>
+        <sn-tab label="Options" icon="touch_app">
+          Zoom effect and color feedback.
+        </sn-tab>
+      </sn-tabs>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With a disabled tab" snippet="tabs/codeWithDisabled">
+    <div class="demo-tabs">
+      <sn-tabs>
+        <sn-tab label="General" icon="tune">
+          Name, type, position, and size of the tile.
+        </sn-tab>
+        <sn-tab label="Appearance" icon="palette" [disabled]="true">
+          This tab is disabled.
+        </sn-tab>
+        <sn-tab label="Options" icon="touch_app">
+          Zoom effect and color feedback.
+        </sn-tab>
+      </sn-tabs>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Controlled via [(selectedIndex)]" snippet="tabs/codeControlled">
+    <div class="demo-tabs">
+      <sn-tabs [(selectedIndex)]="controlledIndex">
+        <sn-tab label="General">General settings content.</sn-tab>
+        <sn-tab label="Appearance">Visual settings content.</sn-tab>
+        <sn-tab label="Options">Advanced options content.</sn-tab>
+      </sn-tabs>
+      <p class="demo-readout">Active tab index: {{ controlledIndex() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Controlled via [(value)]" snippet="tabs/codeValue">
+    <div class="demo-tabs">
+      <sn-tabs [(value)]="controlledValue">
+        <sn-tab label="General" value="general">General settings content.</sn-tab>
+        <sn-tab label="Appearance" value="appearance">Visual settings content.</sn-tab>
+        <sn-tab label="Options" value="options">Advanced options content.</sn-tab>
+      </sn-tabs>
+      <p class="demo-readout">Active tab value: {{ controlledValue() }}</p>
+      <p class="hint-text">
+        A value survives tabs being reordered or inserted, which an index does not. Writing
+        either one moves the selection and the other follows.
+      </p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Scrollable" snippet="tabs/codeScrollable">
+    <div class="demo-tabs demo-tabs-narrow">
+      <sn-tabs scrollable>
+        @for (label of manyTabs; track label) {
+          <sn-tab [label]="label">{{ label }} content.</sn-tab>
+        }
+      </sn-tabs>
+    </div>
+    <p class="hint-text">
+      The list scrolls instead of the buttons squeezing. The controls are pointer-only: arrow
+      keys already reach every tab and scroll the one they land on into view.
+    </p>
+  </doc-example>
+
+  <doc-example heading="snClass pass-through" snippet="tabs/codeSnClass">
+    <div class="demo-tabs">
+      <sn-tabs snClass="demo-custom-tabs">
+        <sn-tab
+          label="General"
+          [snClass]="{ tab: 'demo-custom-tab' }"
+        >
+          General content with custom tab button class.
+        </sn-tab>
+        <sn-tab label="Appearance">Appearance content.</sn-tab>
+      </sn-tabs>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tabs" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tabs" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Follows the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">WAI-ARIA APG Tabs pattern</a>
+    with <strong>automatic activation</strong> (selection follows focus).
+  </p>
+  <ul>
+    <li>
+      The tab list has <code>role="tablist"</code>. Each tab button is a native
+      <code>&lt;button type="button" role="tab"&gt;</code> with <code>aria-selected</code>,
+      <code>aria-controls</code> pointing to the panel id, and roving <code>tabindex</code>
+      (0 for active, -1 for others).
+    </li>
+    <li>
+      The active content panel has <code>role="tabpanel"</code>, <code>tabindex="0"</code>, and
+      <code>aria-labelledby</code> pointing to the active tab button's id.
+    </li>
+    <li>
+      Inactive panels are removed from the DOM (not merely hidden), keeping the accessibility tree clean and
+      panel content lazily instantiated.
+    </li>
+    <li>
+      Disabled tabs receive the native <code>disabled</code> attribute on their button and are skipped by
+      keyboard navigation.
+    </li>
+    <li>
+      The sliding indicator is purely decorative (<code>aria-hidden="true"</code>); the active
+      <code>aria-selected</code> attribute on the button communicates selection state to assistive technology.
+    </li>
+    <li>
+      <strong>SSR note:</strong> The indicator's geometry is measured from the DOM via
+      <code>afterNextRender</code> and a signal <code>effect</code> - both run only in the
+      browser, so a server-rendered or prerendered app does not attempt DOM measurement and the
+      indicator is not rendered server-side. On first client render it appears immediately without
+      layout shift.
+    </li>
+  </ul>
+
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Arrow Right</code></td><td>Move focus and selection to the next tab (skips disabled, wraps to first).</td></tr>
+      <tr><td><code>Arrow Left</code></td><td>Move focus and selection to the previous tab (skips disabled, wraps to last).</td></tr>
+      <tr><td><code>Home</code></td><td>Move focus and selection to the first enabled tab.</td></tr>
+      <tr><td><code>End</code></td><td>Move focus and selection to the last enabled tab.</td></tr>
+      <tr><td><code>Tab</code></td><td>Move focus into the active tab panel.</td></tr>
+      <tr><td><code>Enter</code> / <code>Space</code></td><td>Select the focused tab (native button behavior).</td></tr>
+    </tbody>
+  </table>
+</section>

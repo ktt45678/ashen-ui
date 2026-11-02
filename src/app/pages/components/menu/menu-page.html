@@ -1,0 +1,172 @@
+<header class="page-header">
+  <h1>Menu</h1>
+  <p class="page-subtitle">
+    Command list panel that opens in a CDK overlay anchored to a trigger element.
+    Supports icons, keyboard shortcuts, separators, danger variants, disabled items, and nested sub-menus.
+    Full APG Menu Button keyboard navigation with typeahead.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="menu/codeBasic">
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start;">
+      <button
+        style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+        [snMenuTriggerFor]="basicMenu"
+      >Options</button>
+      <sn-menu #basicMenu>
+        <button snMenuItem (click)="lastAction.set('Edit')">Edit</button>
+        <button snMenuItem (click)="lastAction.set('Duplicate')">Duplicate</button>
+        <button snMenuItem (click)="lastAction.set('Archive')">Archive</button>
+      </sn-menu>
+      @if (lastAction()) {
+        <span style="font-size: var(--sn-text-sm); color: var(--sn-text-subtle); align-self: center;">Last: {{ lastAction() }}</span>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="With icons" snippet="menu/codeWithIcons">
+    <button
+      style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+      [snMenuTriggerFor]="iconMenu"
+    >File</button>
+    <sn-menu #iconMenu>
+      <button snMenuItem icon="edit">Rename</button>
+      <button snMenuItem icon="content_copy">Duplicate</button>
+      <button snMenuItem icon="drive_file_move">Move to…</button>
+      <button snMenuItem icon="download">Download</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="With keyboard shortcuts" snippet="menu/codeWithShortcut">
+    <button
+      style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+      [snMenuTriggerFor]="shortcutMenu"
+    >Edit</button>
+    <sn-menu #shortcutMenu>
+      <button snMenuItem icon="undo" shortcut="⌘Z">Undo</button>
+      <button snMenuItem icon="redo" shortcut="⌘⇧Z">Redo</button>
+      <button snMenuItem icon="content_cut" shortcut="⌘X">Cut</button>
+      <button snMenuItem icon="content_copy" shortcut="⌘C">Copy</button>
+      <button snMenuItem icon="content_paste" shortcut="⌘V">Paste</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="With separators" snippet="menu/codeWithSeparator">
+    <button
+      style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+      [snMenuTriggerFor]="separatorMenu"
+    >Actions</button>
+    <sn-menu #separatorMenu>
+      <button snMenuItem icon="edit">Edit</button>
+      <button snMenuItem icon="content_copy">Duplicate</button>
+      <sn-menu-separator />
+      <button snMenuItem icon="share">Share</button>
+      <button snMenuItem icon="link">Copy link</button>
+      <sn-menu-separator />
+      <button snMenuItem icon="delete" danger>Delete</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Danger items" snippet="menu/codeWithDanger">
+    <button
+      style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+      [snMenuTriggerFor]="dangerMenu"
+    >More</button>
+    <sn-menu #dangerMenu>
+      <button snMenuItem icon="flag">Report</button>
+      <button snMenuItem icon="block" danger>Block user</button>
+      <button snMenuItem icon="delete" danger>Delete permanently</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Disabled items" snippet="menu/codeWithDisabled">
+    <button
+      style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+      [snMenuTriggerFor]="disabledMenu"
+    >Permission-gated</button>
+    <sn-menu #disabledMenu>
+      <button snMenuItem icon="edit">Edit</button>
+      <button snMenuItem icon="content_copy" disabled>Duplicate (no permission)</button>
+      <button snMenuItem icon="drive_file_move">Move</button>
+      <button snMenuItem icon="delete" disabled danger>Delete (read-only)</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Sub-menus" snippet="menu/codeWithSubmenu">
+    <button
+      style="padding: 7px 14px; border-radius: var(--sn-radius-md); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm); font-family: var(--sn-font-ui);"
+      [snMenuTriggerFor]="fileMenuDemo"
+    >File</button>
+    <sn-menu #fileMenuDemo>
+      <button snMenuItem icon="note_add" [snSubmenuTriggerFor]="newMenuDemo">New</button>
+      <button snMenuItem icon="folder_open">Open…</button>
+      <sn-menu-separator />
+      <button snMenuItem icon="save" shortcut="⌘S">Save</button>
+    </sn-menu>
+    <sn-menu #newMenuDemo>
+      <button snMenuItem icon="description">Blank document</button>
+      <button snMenuItem icon="table_chart">Spreadsheet</button>
+      <button snMenuItem icon="slideshow">Presentation</button>
+    </sn-menu>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="menu" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="menu" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Implements the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener">WAI-ARIA Menu Button pattern</a>
+    and
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu/" target="_blank" rel="noopener">Menu pattern</a>.
+  </p>
+  <ul>
+    <li>
+      The trigger element receives <code>aria-haspopup="menu"</code>,
+      <code>aria-expanded</code>, and <code>aria-controls</code> pointing to the panel.
+    </li>
+    <li>
+      The overlay panel has <code>role="menu"</code>. Each item has <code>role="menuitem"</code>
+      and <code>tabindex="-1"</code>; focus is managed by <code>FocusKeyManager</code>
+      (roving tabindex, not tab stops).
+    </li>
+    <li>
+      Separators have <code>role="separator"</code> and <code>aria-orientation="horizontal"</code>.
+    </li>
+    <li>
+      Disabled items set <code>disabled</code> and <code>aria-disabled="true"</code>; they are
+      skipped by keyboard navigation and typeahead.
+    </li>
+  </ul>
+
+  <h3>Keyboard map</h3>
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>Click</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>, <kbd>↓</kbd> (on trigger)</td><td>Open menu; focus first item</td></tr>
+      <tr><td><kbd>↑</kbd> (on trigger)</td><td>Open menu; focus last item</td></tr>
+      <tr><td><kbd>↓</kbd> (in menu)</td><td>Focus next item (wraps to first)</td></tr>
+      <tr><td><kbd>↑</kbd> (in menu)</td><td>Focus previous item (wraps to last)</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>Focus first item</td></tr>
+      <tr><td><kbd>End</kbd></td><td>Focus last item</td></tr>
+      <tr><td>Printable character</td><td>Typeahead: jump to next item whose label starts with that character</td></tr>
+      <tr><td><kbd>Enter</kbd>, <kbd>Space</kbd> (on item)</td><td>Activate item; close menu</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Close menu; return focus to trigger</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Close menu; move focus to next focusable element in page</td></tr>
+    </tbody>
+  </table>
+</section>

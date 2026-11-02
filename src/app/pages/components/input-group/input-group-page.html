@@ -1,0 +1,119 @@
+<header class="page-header">
+  <h1>Input Group</h1>
+  <p class="page-subtitle">
+    Composable wrapper that groups addons - text labels, icon glyphs, or buttons - flush against
+    a form control with shared borders and outer-radius-only styling.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Leading text addon" snippet="input-group/codeLeadingText">
+    <div class="demo-stack">
+      <sn-input-group>
+        <sn-input-group-addon>https://</sn-input-group-addon>
+        <input snInputText placeholder="example.com" />
+      </sn-input-group>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Trailing icon addon" snippet="input-group/codeTrailingIcon">
+    <div class="demo-stack">
+      <sn-input-group>
+        <input snInputText placeholder="Search…" />
+        <sn-input-group-addon icon="search" />
+      </sn-input-group>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Addons on both sides" snippet="input-group/codeBothSides">
+    <div class="demo-stack">
+      <sn-input-group>
+        <sn-input-group-addon icon="person" />
+        <input snInputText placeholder="Username" />
+        <sn-input-group-addon>&#64;domain.com</sn-input-group-addon>
+      </sn-input-group>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Button addon (trailing)" snippet="input-group/codeButtonAddon">
+    <div class="demo-stack">
+      <sn-input-group>
+        <input snInputText placeholder="Enter promo code" />
+        <button snButton variant="raised">Apply</button>
+      </sn-input-group>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Button addon (leading)" snippet="input-group/codeLeadingButton">
+    <div class="demo-stack">
+      <sn-input-group>
+        <button snButton variant="outlined" [snClass]="'sn-input-group-addon'">
+          <span class="sn-icon icon-ms" aria-hidden="true">attach_file</span>
+        </button>
+        <input snInputText placeholder="File path…" />
+      </sn-input-group>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside FormField with validation"
+    description="The sn-input-group sits inside sn-form-field; the outer form-field manages the label and error message."
+    snippet="input-group/codeInFormField"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Website</sn-label>
+        <sn-input-group>
+          <sn-input-group-addon>https://</sn-input-group-addon>
+          <input snInputText [formControl]="urlCtrl" placeholder="example.com" />
+        </sn-input-group>
+        <sn-error>Website is required</sn-error>
+      </sn-form-field>
+      <p class="hint-text">Status: {{ urlCtrl.status }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="input-group/codeReskin">
+    <div class="demo-stack">
+      <sn-input-group style="--sn-input-group-border-radius: 9999px;">
+        <sn-input-group-addon icon="search" />
+        <input snInputText placeholder="Pill search…" />
+      </sn-input-group>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="input-group" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="input-group" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      <code>sn-input-group</code> sets <code>role="group"</code> on the host so screen readers
+      announce the grouping relationship between addons and the control.
+    </li>
+    <li>
+      Icon addons render with <code>aria-hidden="true"</code> because they are decorative;
+      ensure the associated <code>input</code> has a visible label or <code>aria-label</code>.
+    </li>
+    <li>
+      Button addons receive focus in normal tab order; give them a descriptive accessible name
+      (visible text or <code>aria-label</code>).
+    </li>
+    <li>
+      Wrap the group inside <code>sn-form-field</code> to get automatic label association,
+      <code>aria-describedby</code> for hints/errors, and <code>aria-required</code>/<code>aria-invalid</code>
+      propagation to the input.
+    </li>
+  </ul>
+</section>

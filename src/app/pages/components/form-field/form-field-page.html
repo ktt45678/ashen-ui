@@ -1,0 +1,270 @@
+<header class="page-header">
+  <h1>Form Field</h1>
+  <p class="page-subtitle">
+    Wrapper that pairs a label, a form control, and optional hint or error text.
+    Associates label and control via <code>for</code>/<code>id</code> and wires
+    <code>aria-describedby</code> to hint and error regions automatically.
+    All regions are separate sub-components projected by the consumer.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="form-field/codeBasic">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Name</sn-label>
+        <input snInputText placeholder="Enter item name" />
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Prefix and suffix" snippet="form-field/codeAffix">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Amount</sn-label>
+        <sn-icon snPrefix>attach_money</sn-icon>
+        <input snInputText type="number" placeholder="0.00" />
+        <sn-hint>The icon sits inside the border and doesn't take the click.</sn-hint>
+      </sn-form-field>
+
+      <sn-form-field>
+        <sn-label>Search</sn-label>
+        <input snInputText placeholder="Find anything" />
+        <sn-icon snSuffix>search</sn-icon>
+      </sn-form-field>
+
+      <sn-form-field floatLabel="auto">
+        <sn-label>Website</sn-label>
+        <sn-icon snPrefix>link</sn-icon>
+        <input snInputText />
+        <sn-icon snSuffix>open_in_new</sn-icon>
+      </sn-form-field>
+
+      <sn-form-field>
+        <sn-label>Price</sn-label>
+        <span snPrefix>USD</span>
+        <input snInputText type="number" placeholder="0" />
+        <sn-hint>Text affix: the room is measured, nothing to configure.</sn-hint>
+      </sn-form-field>
+
+      <sn-form-field [style]="{ '--sn-form-field-affix-width': '3.5rem' }">
+        <sn-label>Aligned</sn-label>
+        <sn-icon snPrefix>tag</sn-icon>
+        <input snInputText placeholder="0" />
+        <sn-hint>--sn-form-field-affix-width sets a minimum gutter.</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With hint" snippet="form-field/codeHint">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Label</sn-label>
+        <input snInputText placeholder="Optional label" />
+        <sn-hint>Shown under the tile icon</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Error state (manual)"
+    description="autoDisplayErrors is on by default; set [autoDisplayErrors]=&quot;false&quot; to force an error visible for illustration or to control visibility yourself."
+    snippet="form-field/codeError"
+  >
+    <div class="demo-stack">
+      <sn-form-field [autoDisplayErrors]="false">
+        <sn-label required>Name</sn-label>
+        <input snInputText [invalid]="true" placeholder="Enter item name" />
+        <sn-error>Name is required</sn-error>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Multiple errors" snippet="form-field/codeMultipleErrors">
+    <div class="demo-stack">
+      <sn-form-field [autoDisplayErrors]="false">
+        <sn-label required>File</sn-label>
+        <input snInputText [invalid]="true" placeholder="Choose a file" />
+        <sn-error>File is too large (max 10 MB)</sn-error>
+        <sn-error>Unsupported file type</sn-error>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Automatic error display (default)"
+    description="By default the field hides sn-error until the control is invalid AND touched/dirty (or the form is submitted), like Angular Material's ErrorStateMatcher. Just render sn-error; no @if needed. Focus the field and blur it while empty."
+    snippet="form-field/codeInteractive"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Username</sn-label>
+        <input snInputText [(ngModel)]="username" required placeholder="Enter username" />
+        <sn-error>Username is required</sn-error>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive forms"
+    description="The automatic behaviour works the same with a reactive FormControl."
+    snippet="form-field/codeAuto"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Username</sn-label>
+        <input snInputText [formControl]="autoCtrl" placeholder="Enter username" />
+        <sn-error>Username is required</sn-error>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="No label (control only)" snippet="form-field/codeNoLabel">
+    <div class="demo-stack">
+      <sn-form-field>
+        <input snInputText placeholder="Search files…" />
+        <sn-hint>Search by file name or path</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Floating label"
+    description="Set floatLabel to 'auto' - the label sits inside the control and floats up on focus or when filled."
+    snippet="form-field/codeFloat"
+  >
+    <div class="demo-stack">
+      <sn-form-field floatLabel="auto">
+        <sn-label>Full name</sn-label>
+        <input snInputText [(ngModel)]="floatName" />
+        <sn-hint>Floats up once you focus or type</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Floating label - always"
+    description="floatLabel='always' keeps the label floated regardless of focus or value."
+    snippet="form-field/codeFloatAlways"
+  >
+    <div class="demo-stack">
+      <sn-form-field floatLabel="always">
+        <sn-label>Email</sn-label>
+        <input snInputText placeholder="name@example.com" />
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Floating label - invalid"
+    description="The label takes the invalid color wherever it is sitting, so a field that is already invalid reads as invalid before it is focused."
+    snippet="form-field/codeFloatInvalid"
+  >
+    <div class="demo-stack">
+      <sn-form-field floatLabel="auto" [autoDisplayErrors]="false">
+        <sn-label required>Account name</sn-label>
+        <input snInputText [invalid]="true" [(ngModel)]="invalidFloatName" />
+        <sn-error>Account name is required</sn-error>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Subscript sizing"
+    description="'fixed' (default) reserves a line for hint/error so the layout never shifts. 'dynamic' collapses the space when empty - toggle the error to compare."
+    snippet="form-field/codeSubscript"
+  >
+    <div class="demo-stack">
+      <button type="button" class="demo-toggle" (click)="showSubError.set(!showSubError())">
+        {{ showSubError() ? 'Hide' : 'Show' }} error
+      </button>
+      <div class="demo-row">
+        <sn-form-field subscriptSizing="fixed" style="flex: 1;">
+          <sn-label>Fixed</sn-label>
+          <input snInputText placeholder="Reserves space" />
+          @if (showSubError()) {
+            <sn-error>Something went wrong</sn-error>
+          }
+        </sn-form-field>
+        <sn-form-field subscriptSizing="dynamic" style="flex: 1;">
+          <sn-label>Dynamic</sn-label>
+          <input snInputText placeholder="Collapses when empty" />
+          @if (showSubError()) {
+            <sn-error>Something went wrong</sn-error>
+          }
+        </sn-form-field>
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Your own ids"
+    description="Set id on the control and the label's for follows it, so nothing has to be guessed from outside. An aria-describedby you write is kept and the field's hint and error ids are added to it."
+    snippet="form-field/codeAuthoredIds"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Email</sn-label>
+        <input snInputText id="signup-email" aria-describedby="signup-legend" />
+        <sn-hint id="signup-email-hint">We only use this to sign you in</sn-hint>
+      </sn-form-field>
+      <p id="signup-legend" class="demo-note">Referenced by aria-describedby from outside the field.</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Re-skin via CSS variables"
+    description="Both tokens are declared on the parts that use them, so they are set on those parts by name. Setting them on a wrapper would not reach: a declaration on the element beats a value inherited from an ancestor."
+    snippet="form-field/codeReskin"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required [snStyle]="labelSkin">Custom label color</sn-label>
+        <input snInputText placeholder="Value" />
+        <sn-hint>Required field indicator is orange</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="form-field" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="form-field" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The <code>&lt;label&gt;</code> element inside <code>sn-label</code> has its <code>for</code>
+      attribute wired to the control's <code>id</code> automatically via the
+      <code>SN_FORM_FIELD</code> DI context - no manual id management needed.
+    </li>
+    <li>
+      When <code>required</code> is set on <code>sn-label</code>, the child
+      <code>input[snInputText]</code> receives <code>aria-required="true"</code> automatically.
+    </li>
+    <li>
+      The control's <code>aria-describedby</code> lists all registered hint and error ids,
+      updated whenever <code>sn-hint</code> or <code>sn-error</code> elements are added or
+      removed (e.g. via <code>&#64;if</code>). Multiple errors and multiple hints are all
+      included simultaneously.
+    </li>
+    <li>
+      Each <code>sn-error</code> renders a <code>role="alert"</code> element, which triggers
+      a live-region announcement when the error appears.
+    </li>
+    <li>
+      The <code>*</code> required indicator is marked <code>aria-hidden="true"</code>
+      - the label text and <code>aria-required</code> convey the requirement to assistive
+      technology without duplicating it.
+    </li>
+  </ul>
+</section>

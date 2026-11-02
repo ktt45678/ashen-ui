@@ -1,0 +1,3 @@
+a { color: var(--sn-color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+kbd { font-family: var(--sn-font-mono); font-size: 0.8em; background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); padding: 0.1em 0.35em; border-radius: var(--sn-radius-sm); }

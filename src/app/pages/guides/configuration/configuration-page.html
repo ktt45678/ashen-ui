@@ -1,0 +1,352 @@
+<header class="page-header">
+  <h1 class="page-title">Configuration</h1>
+  <p class="page-lead">
+    Set application-wide component defaults, the motion policy, the validation display policy
+    and every string the library renders, in one call, or one token at a time.
+  </p>
+</header>
+
+<section class="doc-section">
+  <h2 class="section-title">provideAshenUI</h2>
+  <p class="doc-p">
+    Every default in the library is a literal on an input, which means a value you use
+    everywhere has to be repeated everywhere. <code>provideAshenUI()</code> moves those
+    decisions to one place.
+  </p>
+  <pre class="code-block"><code>{{ codeProvide }}</code></pre>
+  <p class="doc-p">
+    Only the keys you pass are configured. Anything you leave out keeps the component's own
+    default, so a partial object is normal: <code>button: &#123; size: 'sm' &#125;</code>
+    changes the size and nothing else.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">What each key covers</h2>
+  <table class="token-table">
+    <thead>
+      <tr><th>Key</th><th>Token</th><th>Applies to</th><th>Fields</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>button</code></td>
+        <td><code>SN_BUTTON_DEFAULTS</code></td>
+        <td><code>[snButton]</code>, <code>sn-split-button</code></td>
+        <td>variant, color, size, loadingVariant, iconPosition</td>
+      </tr>
+      <tr>
+        <td><code>input</code></td>
+        <td><code>SN_INPUT_DEFAULTS</code></td>
+        <td>
+          <code>sn-input-text</code>, <code>sn-textarea</code>,
+          <code>sn-input-password</code>, <code>sn-input-tags</code>
+        </td>
+        <td>size</td>
+      </tr>
+      <tr>
+        <td><code>dialog</code></td>
+        <td><code>SN_DIALOG_DEFAULTS</code></td>
+        <td><code>sn-dialog</code></td>
+        <td>size, animation</td>
+      </tr>
+      <tr>
+        <td><code>drawer</code></td>
+        <td><code>SN_DRAWER_DEFAULTS</code></td>
+        <td><code>sn-drawer</code></td>
+        <td>position, width, height, mask, lockScroll, animation</td>
+      </tr>
+      <tr>
+        <td><code>toast</code></td>
+        <td><code>SN_TOAST_DEFAULTS</code></td>
+        <td><code>sn-toast</code>, <code>ToastService</code></td>
+        <td>position, animation, severity, life, sticky, closable</td>
+      </tr>
+      <tr>
+        <td><code>tooltip</code></td>
+        <td><code>SN_TOOLTIP_DEFAULTS</code></td>
+        <td><code>[snTooltip]</code></td>
+        <td>position, showDelay, hideDelay, animation</td>
+      </tr>
+      <tr>
+        <td><code>paginator</code></td>
+        <td><code>SN_PAGINATOR_DEFAULTS</code></td>
+        <td><code>sn-paginator</code></td>
+        <td>rows, rowsPerPageOptions, siblings, showEdges</td>
+      </tr>
+      <tr>
+        <td><code>table</code></td>
+        <td><code>SN_TABLE_DEFAULTS</code></td>
+        <td><code>sn-table</code></td>
+        <td>striped, hover, layout, stickyHeader, responsive, rowHeight, overscan</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="doc-p">
+    <code>sn-split-button</code> reads the button token rather than owning one: it renders a
+    button, so an app that says buttons are small means these too.
+  </p>
+  <p class="doc-p">
+    <code>ToastService</code> is provided in root, so the service-side toast fields
+    (<code>severity</code>, <code>life</code>, <code>sticky</code>, <code>closable</code>) only
+    take effect from a root-level provider. The outlet-side fields
+    (<code>position</code>, <code>animation</code>) resolve through the
+    <code>&lt;sn-toast&gt;</code> element and can be scoped.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Scoping a default</h2>
+  <p class="doc-p">
+    <code>provideAshenUI()</code> is sugar over the individual tokens, and the tokens are the
+    real API. Because they are DI tokens, a default can belong to a component subtree rather
+    than to the whole application.
+  </p>
+  <pre class="code-block"><code>{{ codeToken }}</code></pre>
+  <p class="doc-p">Or to a route, which is where a whole dense section of an app belongs:</p>
+  <pre class="code-block"><code>{{ codeRoute }}</code></pre>
+  <p class="doc-p">
+    <code>provideAshenUI()</code> returns <code>EnvironmentProviders</code>, so it belongs in
+    <code>bootstrapApplication</code> or a route's <code>providers</code>. It cannot be used in
+    a component's <code>providers</code>. That is what the raw tokens are for.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">A default is only a default</h2>
+  <p class="doc-p">A value written on the element always wins.</p>
+  <pre class="code-block"><code>{{ codeOverride }}</code></pre>
+  <p class="doc-p">
+    Falsy values are configurable too. <code>life: 0</code> means "never auto-dismiss",
+    <code>mask: false</code> means "no backdrop", <code>closable: false</code> means "no close
+    button". None of them fall back to the library default.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Motion</h2>
+  <p class="doc-p">
+    <code>animations</code> takes <code>'enabled'</code>, <code>'disabled'</code> or
+    <code>'reduced-motion'</code>. With nothing configured the library already follows the
+    user's <code>prefers-reduced-motion</code> setting, tracked live, so
+    <code>'reduced-motion'</code> only makes that explicit. <code>'enabled'</code> overrides an
+    accessibility preference, so use it sparingly.
+  </p>
+  <p class="doc-p">
+    The setting turns off the CSS transitions and stops overlays from waiting for their exit
+    animation, which is what makes overlay teardown synchronous. Angular's
+    <code>provideNoopAnimations()</code> is honoured for free.
+  </p>
+  <pre class="code-block"><code>{{ codeMotion }}</code></pre>
+  <p class="doc-p">
+    Each component that shows and hides also has an <code>animated</code> input. A component
+    animates only when its own input and the application setting agree.
+  </p>
+  <p class="doc-p">
+    Enter and exit durations are CSS tokens, for example
+    <code>--sn-dialog-exit-duration</code> or <code>--sn-popover-exit-duration</code>. A closing
+    overlay waits for its running exit animation to finish before it is removed, so a theme can
+    change these tokens without any TypeScript setting.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">When a control looks errored</h2>
+  <p class="doc-p">
+    <code>SnErrorStateMatcher</code> decides when a form control is displayed as invalid. The
+    default is Angular Material's policy: invalid <strong>and</strong> (touched, dirty, or the
+    form was submitted). Two alternatives ship with the library.
+  </p>
+  <table class="token-table">
+    <thead>
+      <tr><th>Class</th><th>Shows errors when</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>SnErrorStateMatcher</code></td>
+        <td>invalid and (touched or dirty or submitted), the default</td>
+      </tr>
+      <tr>
+        <td><code>SnTouchedErrorStateMatcher</code></td>
+        <td>invalid and touched: errors appear on blur, not while typing</td>
+      </tr>
+      <tr>
+        <td><code>SnImmediateErrorStateMatcher</code></td>
+        <td>invalid, before any interaction: for forms seeded with stale data</td>
+      </tr>
+    </tbody>
+  </table>
+  <pre class="code-block"><code>{{ codeMatcher }}</code></pre>
+  <p class="doc-p">Subclass it for anything else:</p>
+  <pre class="code-block"><code>{{ codeCustomMatcher }}</code></pre>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Text and translation</h2>
+  <p class="doc-p">
+    Every string the library renders (button labels, placeholders, aria-labels, month names)
+    comes from a text service. There is one per component family, so translating the paginator
+    does not mean touching carousel, tree and colour-picker strings, and an app only ships the
+    services for the components it uses.
+  </p>
+  <pre class="code-block"><code>{{ codeIntl }}</code></pre>
+  <p class="doc-p">
+    Only the groups you name are provided, and inside them only the keys you set change. The
+    group names are
+    <code>common</code>, <code>select</code>, <code>listbox</code>, <code>password</code>,
+    <code>inputTags</code>, <code>chip</code>, <code>dialog</code>, <code>drawer</code>,
+    <code>confirm</code>, <code>message</code>, <code>toast</code>, <code>breadcrumb</code>,
+    <code>paginator</code>, <code>splitButton</code>, <code>panel</code>,
+    <code>splitter</code>, <code>tree</code>, <code>carousel</code>,
+    <code>datePicker</code> and <code>colorPicker</code>, each backed by a service named
+    after it (<code>SnPaginatorIntl</code>, <code>SnDatePickerIntl</code>, …). Each component
+    page lists its own keys.
+  </p>
+  <p class="doc-p">
+    The date picker's month and weekday names can be derived rather than written out:
+  </p>
+  <pre class="code-block"><code>{{ codeIntlLocale }}</code></pre>
+  <p class="doc-p">
+    Because these are ordinary injectables, a service can also be replaced wholesale, the way
+    to make labels follow a language the user switches at runtime:
+  </p>
+  <pre class="code-block"><code>{{ codeIntlInject }}</code></pre>
+  <p class="doc-p">
+    <strong>Migrating.</strong> These services replace the single <code>SnIntl</code> class,
+    which carried all 57 keys. <code>SnIntl</code> still exists as a deprecated read-only view
+    over them, and <code>provideSnIntl()</code> still accepts the old flat keys
+    (<code>paginatorFirst</code> rather than <code>paginator: &#123; first &#125;</code>) and
+    routes them to the right service. What no longer works is
+    <code>&#123; provide: SnIntl, useClass: … &#125;</code>. No component reads that class any
+    more.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Icons the library draws for itself</h2>
+  <p class="doc-p">
+    A select's chevron, a dialog's close button, a table's sort arrow: glyphs no app asked
+    for, that components pick on their own behalf. They resolve through
+    <code>SnIconRegistry</code> by <em>semantic</em> name, so remapping one re-skins every
+    component that draws it: one <code>close</code> entry covers Dialog, Drawer, Toast and
+    Message at once.
+  </p>
+  <pre class="code-block"><code>{{ codeIcons }}</code></pre>
+  <p class="doc-p">
+    Keys you leave out keep their default. The defaults are Material Symbols ligature names,
+    matching the font the library ships with.
+  </p>
+
+  <h3>The names</h3>
+  <table class="token-table">
+    <thead>
+      <tr><th>Semantic name</th><th>Default glyph</th><th>Drawn by</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>chevron-down</code></td>
+        <td><code>keyboard_arrow_down</code></td>
+        <td>Select, MultiSelect, TreeSelect, CascadeSelect, Menubar, Panel, ExpansionPanel, Paginator, Carousel, SplitButton</td>
+      </tr>
+      <tr>
+        <td><code>chevron-up</code></td>
+        <td><code>expand_less</code></td>
+        <td>Carousel (vertical)</td>
+      </tr>
+      <tr>
+        <td><code>chevron-left</code></td>
+        <td><code>chevron_left</code></td>
+        <td>DatePicker, Carousel</td>
+      </tr>
+      <tr>
+        <td><code>chevron-right</code></td>
+        <td><code>chevron_right</code></td>
+        <td>DatePicker, Carousel, Menu (submenu), Tree, TreeTable, Table (row expand), CascadeSelect</td>
+      </tr>
+      <tr>
+        <td><code>check</code></td>
+        <td><code>check</code></td>
+        <td>ListOption, Stepper, Checkbox</td>
+      </tr>
+      <tr>
+        <td><code>indeterminate</code></td>
+        <td><code>remove</code></td>
+        <td>Checkbox (indeterminate state)</td>
+      </tr>
+      <tr>
+        <td><code>close</code></td>
+        <td><code>close</code></td>
+        <td>Dialog, Drawer, Toast, Message</td>
+      </tr>
+      <tr>
+        <td><code>chip-remove</code></td>
+        <td><code>close</code></td>
+        <td>Chip, AutoComplete (remove a value)</td>
+      </tr>
+      <tr>
+        <td><code>calendar</code></td>
+        <td><code>calendar_month</code></td>
+        <td>DatePicker</td>
+      </tr>
+      <tr>
+        <td><code>eyedropper</code></td>
+        <td><code>colorize</code></td>
+        <td>ColorPicker</td>
+      </tr>
+      <tr>
+        <td><code>help</code></td>
+        <td><code>help</code></td>
+        <td>ConfirmDialog, ConfirmPopup (default <code>icon</code>)</td>
+      </tr>
+      <tr>
+        <td><code>sort-ascending</code> / <code>sort-descending</code></td>
+        <td><code>arrow_upward</code> / <code>arrow_downward</code></td>
+        <td>Table</td>
+      </tr>
+      <tr>
+        <td><code>info</code> / <code>success</code> / <code>warning</code> / <code>error</code></td>
+        <td><code>info</code> / <code>check_circle</code> / <code>warning</code> / <code>error</code></td>
+        <td>Message, Toast (by severity)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Changing them after bootstrap</h3>
+  <p class="doc-p">
+    The glyph map is a signal, so an alias set at runtime repaints components that are already
+    on screen.
+  </p>
+  <pre class="code-block"><code>{{ codeIconsRuntime }}</code></pre>
+  <p class="doc-p">
+    <code>provideSnIcons()</code> is app-wide, because <code>SnIconRegistry</code> is a root singleton,
+    so providing overrides in a route or a component is too late to be read. Use
+    <code>alias()</code> for anything that changes later.
+  </p>
+
+  <h3>This is not how you change your own icons</h3>
+  <p class="doc-p">
+    Three mechanisms exist and they don't overlap. Pick by scope:
+  </p>
+  <table class="token-table">
+    <thead>
+      <tr><th>You want to…</th><th>Use</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Change one instance's glyph</td>
+        <td>the component's own input, <code>&lt;sn-button icon="save"&gt;</code></td>
+      </tr>
+      <tr>
+        <td>Put arbitrary markup there: an SVG, a spinner, a badge</td>
+        <td><code>IconTemplate</code> (<code>*snIcon</code>)</td>
+      </tr>
+      <tr>
+        <td>Re-skin a glyph everywhere the library draws it</td>
+        <td><code>provideSnIcons()</code> / <code>SnIconRegistry.alias()</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="doc-p">
+    Resolution runs in that order: an instance template wins over an instance input, which wins
+    over the registry.
+  </p>
+</section>

@@ -1,0 +1,213 @@
+<header class="page-header">
+  <h1>Carousel</h1>
+  <p class="page-subtitle">
+    Content slider with prev/next arrow buttons and stretching dot indicators.
+    Each child <code>sn-carousel-item</code> becomes one slide. A single
+    <code>options</code> object (Swiper-compatible) tunes autoplay, loop, slides-per-view,
+    spacing, direction and more, and navigation can be fully customised or placed anywhere.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic slides" snippet="carousel/codeBasic">
+    <div class="carousel-demo-wrap">
+      <sn-carousel>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--1">Slide 1</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--2">Slide 2</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--3">Slide 3</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--4">Slide 4</div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Card slides" snippet="carousel/codeCards">
+    <div class="carousel-demo-wrap">
+      <sn-carousel>
+        <sn-carousel-item>
+          <div class="demo-card">
+            <strong>Ocean Breeze</strong>
+            <p>A calming coastal view at dawn with soft pastel tones.</p>
+          </div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-card">
+            <strong>Mountain Peak</strong>
+            <p>Snow-capped summit above the clouds at golden hour.</p>
+          </div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-card">
+            <strong>Desert Dunes</strong>
+            <p>Warm sand ripples stretching to the horizon at sunset.</p>
+          </div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Two-way activeIndex binding" snippet="carousel/codeBinding">
+    <div class="carousel-demo-wrap">
+      <sn-carousel [(activeIndex)]="activeIndex">
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--1">First</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--2">Second</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--3">Third</div>
+        </sn-carousel-item>
+      </sn-carousel>
+      <p class="demo-binding-info">Active index: {{ activeIndex() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Autoplay + loop" snippet="carousel/codeAutoplay">
+    <div class="carousel-demo-wrap">
+      <sn-carousel
+        [options]="{
+          autoplay: { delay: 2500, pauseOnMouseEnter: true, disableOnInteraction: false },
+          loop: true,
+          pagination: { clickable: true }
+        }"
+      >
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--1">Slide 1</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--2">Slide 2</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--3">Slide 3</div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Multiple slides per view + group sliding" snippet="carousel/codeMultiView">
+    <div class="carousel-demo-wrap">
+      <sn-carousel [options]="{ slidesPerView: 3, spaceBetween: 12, slidesPerGroup: 3 }">
+        @for (n of [1, 2, 3, 4, 5, 6]; track n) {
+          <sn-carousel-item>
+            <div class="demo-slide demo-slide--{{ n }}">{{ n }}</div>
+          </sn-carousel-item>
+        }
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom navigation placed anywhere" snippet="carousel/codeCustomNav">
+    <div class="carousel-demo-wrap">
+      <div class="demo-carousel-toolbar">
+        <button snButton variant="icon" icon="arrow_back" aria-label="Previous" [snCarouselPrev]="c"></button>
+        <sn-carousel-pagination [carousel]="c" />
+        <button snButton variant="icon" icon="arrow_forward" aria-label="Next" [snCarouselNext]="c"></button>
+      </div>
+      <sn-carousel #c [options]="{ navigation: false, pagination: false }">
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--1">Slide 1</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--2">Slide 2</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--3">Slide 3</div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Vertical direction" snippet="carousel/codeVertical">
+    <div class="carousel-demo-wrap">
+      <sn-carousel [options]="{ direction: 'vertical' }">
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--1">Slide 1</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--2">Slide 2</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--3">Slide 3</div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Seamless loop"
+    description="Wrapping from the last slide back to the first keeps moving in the same (forward) direction. Try dragging: the track follows the pointer live and snaps on release."
+    snippet="carousel/codeLoop"
+  >
+    <div class="carousel-demo-wrap">
+      <sn-carousel [options]="{ loop: true }">
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--1">Slide 1</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--2">Slide 2</div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-slide demo-slide--3">Slide 3</div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Selectable content (snCarouselNoSwipe)"
+    description="Drag the slide to move it, but the text region below is exempt, so select it or drag inside it without switching slides. Other slide content is non-selectable so swiping never highlights text."
+    snippet="carousel/codeNoSwipe"
+  >
+    <div class="carousel-demo-wrap">
+      <sn-carousel [options]="{ loop: true }">
+        <sn-carousel-item>
+          <div class="demo-card">
+            <strong>Drag the slide to move it</strong>
+            <p snCarouselNoSwipe>You can select this text or drag inside it freely without switching slides.</p>
+          </div>
+        </sn-carousel-item>
+        <sn-carousel-item>
+          <div class="demo-card">
+            <strong>Second slide</strong>
+            <p snCarouselNoSwipe>This paragraph is also selectable and swipe-exempt.</p>
+          </div>
+        </sn-carousel-item>
+      </sn-carousel>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="carousel" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="carousel" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>The carousel host has <code>role="region"</code> and <code>aria-roledescription="carousel"</code>.</li>
+    <li>The region is labelled via <code>aria-label</code> (defaults to "Carousel" via <code>SnCarouselIntl</code>).</li>
+    <li>Each slide has <code>role="group"</code>, <code>aria-roledescription="slide"</code>, and a "Slide n of m" <code>aria-label</code>.</li>
+    <li>Inactive slides are marked <code>aria-hidden="true"</code> and receive the <code>inert</code> attribute so their contents are unreachable by keyboard.</li>
+    <li>Prev/next buttons use <code>&lt;button type="button"&gt;</code> with accessible labels from <code>SnCarouselIntl</code>.</li>
+    <li>Dot indicators have per-dot <code>aria-label</code> ("Go to slide n") and <code>aria-current="true"</code> on the active dot.</li>
+    <li><kbd>ArrowLeft</kbd> / <kbd>ArrowRight</kbd> on the carousel region move the active slide.</li>
+    <li>Autoplay pauses while keyboard focus is inside the carousel. For a visible rotation control, bind a button to the <code>playing</code> signal and the <code>pause()</code> / <code>play()</code> methods (WCAG 2.2.2).</li>
+    <li>Pointer swipe on the track supports touch, mouse and pen: the track follows the pointer live and snaps to the nearest slide on release. Use <code>[snCarouselNoSwipe]</code> to exempt interactive/selectable regions, or <code>allowTouchMove: false</code> to disable dragging entirely.</li>
+  </ul>
+</section>

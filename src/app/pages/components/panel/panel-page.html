@@ -1,0 +1,111 @@
+<header class="page-header">
+  <h1>Panel</h1>
+  <p class="page-subtitle">
+    A bordered section container with a header row (icon, title, actions) and an optional
+    collapse toggle. Use it to group related settings or content that may be shown or hidden.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic panel" snippet="panel/codeBasic">
+    <div class="demo-panels">
+      <sn-panel header="Grid Settings">
+        Grids hold button and widget tiles. Drag to move, pull a handle to resize.
+      </sn-panel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With leading icon" snippet="panel/codeWithIcon">
+    <div class="demo-panels">
+      <sn-panel header="Visual Appearance" icon="palette">
+        Configure the visual appearance of the selected tile.
+      </sn-panel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Toggleable (collapsed by default)" snippet="panel/codeToggleable">
+    <div class="demo-panels">
+      <sn-panel header="Interactive Options" icon="touch_app" toggleable [collapsed]="true">
+        Zoom effect and color feedback settings.
+      </sn-panel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With actions slot" snippet="panel/codeWithActions">
+    <div class="demo-panels">
+      <sn-panel header="Grid Settings" toggleable>
+        <div snPanelActions>
+          <button snButton variant="text" size="sm">Edit</button>
+        </div>
+        Grids hold button and widget tiles. Drag to move, pull a handle to resize.
+      </sn-panel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom projected title" snippet="panel/codeCustomTitle">
+    <div class="demo-panels">
+      <sn-panel toggleable>
+        <span snPanelTitle style="color: var(--sn-color-primary)">Custom Title</span>
+        Panel content goes here.
+      </sn-panel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom chevron via snIcon template" snippet="panel/codeCustomChevron">
+    <div class="demo-panels">
+      <sn-panel header="Custom Chevron" toggleable>
+        <ng-template snIcon="toggle">
+          <sn-icon icon="chevron_right" />
+        </ng-template>
+        Content with a custom toggle icon.
+      </sn-panel>
+    </div>
+  </doc-example>
+
+  <doc-example heading="snClass pass-through" snippet="panel/codeSnClass">
+    <div class="demo-panels">
+      <sn-panel header="Styled Panel" [snClass]="{ root: 'demo-highlighted-panel' }">
+        Root element receives the <code>demo-highlighted-panel</code> class.
+      </sn-panel>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="panel" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="panel" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the WAI-ARIA Disclosure (Show/Hide) pattern. The toggle is a native
+      <code>&lt;button type="button"&gt;</code> with <code>aria-expanded</code> reflecting
+      the current state and <code>aria-controls</code> pointing at the content region's id.
+    </li>
+    <li>
+      The toggle's <code>aria-label</code> switches between the <code>expandLabel</code>
+      and <code>collapseLabel</code> values so screen readers announce the action.
+    </li>
+    <li>
+      When collapsed, the content wrapper receives the <code>inert</code> attribute, removing it from
+      the accessibility tree while keeping it in the DOM for smooth animation.
+    </li>
+    <li>
+      The default chevron icon has <code>aria-hidden</code> set by the icon component - it is
+      purely decorative; the toggle's <code>aria-label</code> provides the accessible name.
+    </li>
+    <li>
+      The toggle button has a visible <code>:focus-visible</code> ring styled with
+      <code>--sn-focus-ring-*</code> tokens.
+    </li>
+  </ul>
+</section>

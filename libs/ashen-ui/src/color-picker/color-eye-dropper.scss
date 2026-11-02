@@ -1,0 +1,28 @@
+:host {
+  display: inline-flex;
+}
+
+.sn-color-eye-dropper-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--sn-text);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-md);
+  cursor: pointer;
+  transition: background-color var(--sn-motion-base);
+
+  &:hover:not(:disabled) {
+    background: var(--sn-surface-hover);
+  }
+
+  &:disabled {
+    opacity: var(--sn-disabled-opacity);
+    cursor: not-allowed;
+  }
+}

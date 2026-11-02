@@ -1,0 +1,392 @@
+@layer components {
+  .sn-button {
+    --sn-button-spinner-rotate-duration: 0.8s;
+    --sn-button-spinner-material-rotate-duration: 1.6s;
+    --sn-button-spinner-material-arc-duration: 1.4s;
+    --sn-button-solid-bg: var(--sn-color-primary-solid);
+    --sn-button-solid-hover-bg: var(--sn-color-primary-solid-hover);
+    --sn-button-solid-active-bg: var(--sn-color-primary-solid-active);
+    --sn-button-solid-text: var(--sn-text-on-primary);
+    --sn-button-accent: var(--sn-color-primary);
+    --sn-button-accent-hover: var(--sn-color-primary-hover);
+    --sn-button-accent-active: var(--sn-color-primary-active);
+    --sn-button-soft-bg: var(--sn-color-primary-soft);
+    /* Pressed fill of outlined and text buttons. Themes can make it stronger than hover. */
+    --sn-button-soft-active-bg: var(--sn-button-soft-bg);
+    --sn-button-bg: var(--sn-button-solid-bg);
+    --sn-button-hover-bg: var(--sn-button-solid-hover-bg);
+    --sn-button-active-bg: var(--sn-button-solid-active-bg);
+    --sn-button-text: var(--sn-button-solid-text);
+    --sn-button-disabled-bg: var(--sn-disabled-bg);
+    --sn-button-disabled-text: var(--sn-disabled-text);
+    --sn-button-disabled-border: var(--sn-disabled-border);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    min-height: var(--sn-button-min-height-md);
+    padding: var(--sn-button-vertical-padding-md) var(--sn-button-horizontal-padding-md);
+    font-size: var(--sn-button-font-size-md);
+    font-family: var(--sn-font-ui);
+    font-weight: var(--sn-font-weight-medium);
+    line-height: var(--sn-button-line-height);
+    color: var(--sn-button-text);
+
+    cursor: pointer;
+    background-color: var(--sn-button-bg);
+    border: 1px solid transparent;
+    border-radius: var(--sn-button-border-radius);
+    user-select: none;
+    text-decoration: none;
+  }
+
+  .sn-button.sn-button-animate {
+    transition:
+      background-color var(--sn-motion-slow),
+      border-color var(--sn-motion-slow),
+      color var(--sn-motion-slow);
+  }
+
+  .sn-button:hover:not(:disabled) {
+    background-color: var(--sn-button-hover-bg);
+  }
+
+  .sn-button:active:not(:disabled) {
+    background-color: var(--sn-button-active-bg);
+  }
+
+  .sn-button:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-button:disabled {
+    opacity: 1;
+    cursor: not-allowed;
+    background-color: var(--sn-button-disabled-bg);
+    border-color: var(--sn-button-disabled-border);
+    color: var(--sn-button-disabled-text);
+  }
+
+  .sn-button.sn-color-secondary {
+    --sn-button-solid-bg: var(--sn-color-secondary-solid);
+    --sn-button-solid-hover-bg: var(--sn-color-secondary-solid-hover);
+    --sn-button-solid-active-bg: var(--sn-color-secondary-solid-active);
+    --sn-button-solid-text: var(--sn-text-on-secondary);
+    --sn-button-accent: var(--sn-color-secondary);
+    --sn-button-accent-hover: var(--sn-color-secondary-hover);
+    --sn-button-accent-active: var(--sn-color-secondary-active);
+    --sn-button-soft-bg: var(--sn-color-secondary-soft);
+  }
+
+  .sn-button.sn-color-success {
+    --sn-button-solid-bg: var(--sn-color-success-solid);
+    --sn-button-solid-hover-bg: var(--sn-color-success-solid-hover);
+    --sn-button-solid-active-bg: var(--sn-color-success-solid-active);
+    --sn-button-solid-text: var(--sn-text-on-success);
+    --sn-button-accent: var(--sn-color-success);
+    --sn-button-accent-hover: var(--sn-color-success-hover);
+    --sn-button-accent-active: var(--sn-color-success-active);
+    --sn-button-soft-bg: var(--sn-color-success-soft);
+  }
+
+  .sn-button.sn-color-error {
+    --sn-button-solid-bg: var(--sn-color-error-solid);
+    --sn-button-solid-hover-bg: var(--sn-color-error-solid-hover);
+    --sn-button-solid-active-bg: var(--sn-color-error-solid-active);
+    --sn-button-solid-text: var(--sn-text-on-error);
+    --sn-button-accent: var(--sn-color-error);
+    --sn-button-accent-hover: var(--sn-color-error-hover);
+    --sn-button-accent-active: var(--sn-color-error-active);
+    --sn-button-soft-bg: var(--sn-color-error-soft);
+  }
+
+  .sn-button.sn-color-warning {
+    --sn-button-solid-bg: var(--sn-color-warning-solid);
+    --sn-button-solid-hover-bg: var(--sn-color-warning-solid-hover);
+    --sn-button-solid-active-bg: var(--sn-color-warning-solid-active);
+    --sn-button-solid-text: var(--sn-text-on-warning);
+    --sn-button-accent: var(--sn-color-warning);
+    --sn-button-accent-hover: var(--sn-color-warning-hover);
+    --sn-button-accent-active: var(--sn-color-warning-active);
+    --sn-button-soft-bg: var(--sn-color-warning-soft);
+  }
+
+  .sn-button.sn-color-info {
+    --sn-button-solid-bg: var(--sn-color-info-solid);
+    --sn-button-solid-hover-bg: var(--sn-color-info-solid-hover);
+    --sn-button-solid-active-bg: var(--sn-color-info-solid-active);
+    --sn-button-solid-text: var(--sn-text-on-info);
+    --sn-button-accent: var(--sn-color-info);
+    --sn-button-accent-hover: var(--sn-color-info-hover);
+    --sn-button-accent-active: var(--sn-color-info-active);
+    --sn-button-soft-bg: var(--sn-color-info-soft);
+  }
+
+  .sn-button.sn-color-none {
+    --sn-button-solid-bg: transparent;
+    --sn-button-solid-hover-bg: var(--sn-surface-hover);
+    --sn-button-solid-active-bg: var(--sn-surface-hover);
+    --sn-button-accent: var(--sn-text);
+    --sn-button-accent-hover: var(--sn-text);
+    --sn-button-accent-active: var(--sn-text);
+    --sn-button-soft-bg: var(--sn-surface-hover);
+    --sn-button-text: var(--sn-text);
+  }
+
+  .sn-raised-button {
+    box-shadow: var(--sn-shadow-sm);
+  }
+
+  .sn-raised-button:hover:not(:disabled) {
+    box-shadow: var(--sn-shadow-md);
+  }
+
+  .sn-outlined-button {
+    background-color: transparent;
+    border-color: var(--sn-button-accent);
+    color: var(--sn-button-accent);
+  }
+
+  .sn-outlined-button:hover:not(:disabled) {
+    background-color: var(--sn-button-soft-bg);
+    color: var(--sn-button-accent-hover);
+    border-color: var(--sn-button-accent-hover);
+  }
+  .sn-outlined-button:disabled {
+    background-color: transparent;
+  }
+
+  .sn-outlined-button:active:not(:disabled) {
+    background-color: var(--sn-button-soft-active-bg);
+    color: var(--sn-button-accent-active);
+  }
+
+  .sn-text-button {
+    background-color: transparent;
+    color: var(--sn-button-accent);
+  }
+
+  .sn-text-button:hover:not(:disabled) {
+    background-color: var(--sn-button-soft-bg);
+    color: var(--sn-button-accent-hover);
+  }
+
+  .sn-text-button:active:not(:disabled) {
+    background-color: var(--sn-button-soft-active-bg);
+    color: var(--sn-button-accent-active);
+  }
+  .sn-text-button:disabled {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .sn-icon-button {
+    padding: 0.5rem;
+    width: var(--sn-control-height-md);
+    height: var(--sn-control-height-md);
+    background-color: transparent;
+    color: var(--sn-text);
+    border-radius: var(--sn-radius-pill);
+  }
+
+  .sn-icon-button:hover:not(:disabled) {
+    background-color: var(--sn-surface-hover);
+  }
+
+  .sn-icon-button:active:not(:disabled) {
+    background-color: var(--sn-surface-hover);
+  }
+
+  /* A plain icon button has no container, so a disabled one only dims its icon. */
+  .sn-icon-button:disabled:not(.sn-icon-filled-button, .sn-outlined-button) {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  /* Filled icon buttons rest on the solid fill, like the solid text button. */
+  .sn-icon-filled-button {
+    background-color: var(--sn-button-solid-bg);
+    color: var(--sn-button-solid-text);
+  }
+
+  .sn-icon-filled-button:hover:not(:disabled) {
+    background-color: var(--sn-button-solid-hover-bg);
+  }
+
+  .sn-icon-filled-button:active:not(:disabled) {
+    background-color: var(--sn-button-solid-active-bg);
+  }
+
+  .sn-icon-button.sn-outlined-button:hover:not(:disabled) {
+    background-color: var(--sn-button-soft-bg);
+    color: var(--sn-button-accent-hover);
+    border-color: var(--sn-button-accent-hover);
+  }
+
+  .sn-icon-button.sn-outlined-button:active:not(:disabled) {
+    background-color: var(--sn-button-soft-active-bg);
+    color: var(--sn-button-accent-active);
+  }
+
+  .sn-icon-button.sn-text-button:hover:not(:disabled) {
+    background-color: var(--sn-button-soft-bg);
+    color: var(--sn-button-accent-hover);
+  }
+
+  .sn-icon-button.sn-text-button:active:not(:disabled) {
+    background-color: var(--sn-button-soft-active-bg);
+    color: var(--sn-button-accent-active);
+  }
+
+  .sn-button.sn-button-xs {
+    min-height: var(--sn-button-min-height-xs);
+    padding: var(--sn-button-vertical-padding-xs) var(--sn-button-horizontal-padding-xs);
+    font-size: var(--sn-button-font-size-xs);
+  }
+
+  .sn-button.sn-button-sm {
+    min-height: var(--sn-button-min-height-sm);
+    padding: var(--sn-button-vertical-padding-sm) var(--sn-button-horizontal-padding-sm);
+    font-size: var(--sn-button-font-size-sm);
+  }
+
+  .sn-button.sn-button-lg {
+    min-height: var(--sn-button-min-height-lg);
+    padding: var(--sn-button-vertical-padding-lg) var(--sn-button-horizontal-padding-lg);
+    font-size: var(--sn-button-font-size-lg);
+  }
+
+  .sn-button:not(.sn-icon-button) > .sn-icon {
+    font-size: var(--sn-button-icon-size-md);
+  }
+  .sn-button-xs:not(.sn-icon-button) > .sn-icon {
+    font-size: var(--sn-button-icon-size-xs);
+  }
+  .sn-button-sm:not(.sn-icon-button) > .sn-icon {
+    font-size: var(--sn-button-icon-size-sm);
+  }
+  .sn-button-lg:not(.sn-icon-button) > .sn-icon {
+    font-size: var(--sn-button-icon-size-lg);
+  }
+  /* Icon variants and iconOnly buttons share one glyph size per button size. */
+  .sn-icon-button,
+  .sn-button-icon-only {
+    --sn-icon-button-icon-size: var(--sn-icon-button-icon-size-md);
+  }
+  .sn-icon-button.sn-button-xs,
+  .sn-button-icon-only.sn-button-xs {
+    --sn-icon-button-icon-size: var(--sn-icon-button-icon-size-xs);
+  }
+  .sn-icon-button.sn-button-sm,
+  .sn-button-icon-only.sn-button-sm {
+    --sn-icon-button-icon-size: var(--sn-icon-button-icon-size-sm);
+  }
+  .sn-icon-button.sn-button-lg,
+  .sn-button-icon-only.sn-button-lg {
+    --sn-icon-button-icon-size: var(--sn-icon-button-icon-size-lg);
+  }
+  /* Kept low so an icon's own size input and component rules still win. */
+  :where(.sn-icon-button) > .sn-icon:not(.sn-size-sm, .sn-size-lg) {
+    font-size: var(--sn-icon-button-icon-size);
+  }
+  /* Matches the label icon size rules above in specificity and comes after them. */
+  .sn-button.sn-button-icon-only > .sn-icon {
+    font-size: var(--sn-icon-button-icon-size);
+  }
+
+  .sn-icon-button.sn-button-xs {
+    padding: 0.25rem;
+    width: var(--sn-control-height-xs);
+    height: var(--sn-control-height-xs);
+  }
+
+  .sn-icon-button.sn-button-sm {
+    padding: 0.375rem;
+    width: var(--sn-control-height-sm);
+    height: var(--sn-control-height-sm);
+  }
+
+  /* Overrides the radius token rather than reading a shape-specific one: a pill
+     is defined by its geometry, so there is nothing left for a theme to vary. */
+  .sn-button.sn-button-pill {
+    border-radius: var(--sn-radius-pill);
+  }
+
+  /* iconOnly gives a non-icon variant the icon button's square footprint.
+     Set explicitly because CSS cannot tell a lone icon from icon + text. */
+  .sn-button.sn-button-icon-only {
+    width: var(--sn-control-height-md);
+    height: var(--sn-control-height-md);
+    padding: 0;
+  }
+  .sn-button.sn-button-icon-only.sn-button-xs {
+    width: var(--sn-control-height-xs);
+    height: var(--sn-control-height-xs);
+  }
+  .sn-button.sn-button-icon-only.sn-button-sm {
+    width: var(--sn-control-height-sm);
+    height: var(--sn-control-height-sm);
+  }
+  .sn-button.sn-button-icon-only.sn-button-lg {
+    width: var(--sn-control-height-lg);
+    height: var(--sn-control-height-lg);
+  }
+
+  .sn-icon-button.sn-button-lg {
+    padding: 0.625rem;
+    width: var(--sn-control-height-lg);
+    height: var(--sn-control-height-lg);
+  }
+
+  .sn-spin {
+    animation: sn-spin var(--sn-button-spinner-rotate-duration) linear infinite;
+  }
+
+  @keyframes sn-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .sn-button-spinner {
+    width: 1.15em;
+    height: 1.15em;
+    flex-shrink: 0;
+    animation: sn-button-spinner-rotate var(--sn-button-spinner-material-rotate-duration) linear infinite;
+  }
+
+  .sn-button-spinner-arc {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transform-origin: center;
+    animation: sn-button-spinner-arc var(--sn-button-spinner-material-arc-duration) ease-in-out infinite;
+  }
+
+  @keyframes sn-button-spinner-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Dash period 4 + 59 = 63 == the -63 closing offset, so the arc loop is seamless. */
+  @keyframes sn-button-spinner-arc {
+    0%   { stroke-dasharray: 4 59; stroke-dashoffset: 0; }
+    50%  { stroke-dasharray: 44 59; stroke-dashoffset: -14; }
+    100% { stroke-dasharray: 4 59; stroke-dashoffset: -63; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-spin,
+    .sn-button-spinner,
+    .sn-button-spinner-arc {
+      animation: none;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+@if (heading() || description()) {
+  <div class="doc-example-header">
+    @if (heading()) {
+      <h3 class="doc-example-title">{{ heading() }}</h3>
+    }
+    @if (description()) {
+      <p class="doc-example-description">{{ description() }}</p>
+    }
+  </div>
+}
+
+<div class="doc-example-demo">
+  <ng-content />
+</div>
+
+@if (files().length) {
+  <div class="doc-example-source" [class.doc-example-source--open]="showCode()">
+    <div class="doc-example-bar">
+      <button
+        type="button"
+        class="doc-example-toggle"
+        (click)="toggleCode()"
+        [attr.aria-expanded]="showCode()"
+      >
+        <span class="doc-example-caret" aria-hidden="true"></span>
+        {{ showCode() ? 'Hide source' : 'View source' }}
+      </button>
+      @if (showCode() && files().length > 1) {
+        <div class="doc-example-tabs" role="tablist">
+          @for (file of files(); track file.name; let i = $index) {
+            <button
+              type="button"
+              role="tab"
+              class="doc-example-tab"
+              [class.doc-example-tab--active]="activeTab() === i"
+              [attr.aria-selected]="activeTab() === i"
+              (click)="selectTab(i)"
+            >
+              {{ file.name }}
+            </button>
+          }
+        </div>
+      } @else if (showCode()) {
+        <span class="doc-example-filename">{{ active().name }}</span>
+      }
+    </div>
+
+    @if (showCode() && active(); as file) {
+      <doc-code-block [code]="file.code" [lang]="activeLang()" />
+    }
+  </div>
+}

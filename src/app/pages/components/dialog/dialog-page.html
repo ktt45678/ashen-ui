@@ -1,0 +1,158 @@
+<header class="page-header">
+  <h1>Dialog</h1>
+  <p class="page-subtitle">
+    A centered modal panel rendered over a dark backdrop. Use Dialog for confirmations,
+    form editing, and contextual actions that require the user's full attention before continuing.
+    The dialog traps focus, blocks body scroll, and closes on <kbd>Escape</kbd>, backdrop click,
+    or the built-in close button.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="dialog/codeBasic">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="basicOpen.set(true)">Open Dialog</button>
+      <sn-dialog [(open)]="basicOpen" title="Edit Profile">
+        <p style="margin:0;color:var(--sn-text-muted)">Update your profile details below.</p>
+      </sn-dialog>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With footer actions" snippet="dialog/codeFooter">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="footerOpen.set(true)">Open Dialog</button>
+      <sn-dialog [(open)]="footerOpen" title="Edit Tile">
+        <p style="margin:0;color:var(--sn-text-muted)">Make changes to your tile. Click save when done.</p>
+        <div snDialogFooter>
+          <button snButton variant="text" (click)="footerOpen.set(false)">Cancel</button>
+          <button snButton (click)="footerOpen.set(false)">Save</button>
+        </div>
+      </sn-dialog>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Directive close - snDialogClose" snippet="dialog/codeDirectiveClose">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="directiveCloseOpen.set(true)">Open Dialog</button>
+      <sn-dialog [(open)]="directiveCloseOpen" title="Save changes">
+        <p style="margin:0;color:var(--sn-text-muted)">Apply these changes to your configuration?</p>
+        <div snDialogFooter>
+          <button snButton variant="text" snDialogClose>Cancel</button>
+          <button snButton snDialogClose>Save</button>
+        </div>
+      </sn-dialog>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Destructive action (error color)" snippet="dialog/codeDelete">
+    <div class="demo-row">
+      <button snButton color="error" (click)="deleteOpen.set(true)">Delete item</button>
+      <sn-dialog [(open)]="deleteOpen" title="Delete item">
+        <p style="margin:0;color:var(--sn-text-muted)">
+          This removes the tile from the grid. This action cannot be undone.
+        </p>
+        <div snDialogFooter>
+          <button snButton variant="text" (click)="deleteOpen.set(false)">Cancel</button>
+          <button snButton color="error" (click)="deleteOpen.set(false)">Delete</button>
+        </div>
+      </sn-dialog>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Size variants" snippet="dialog/codeSizes">
+    <div class="demo-row demo-row--spaced">
+      <button snButton variant="outlined" (click)="smOpen.set(true)">Small</button>
+      <button snButton variant="outlined" (click)="basicOpen.set(true)">Medium (default)</button>
+      <button snButton variant="outlined" (click)="lgOpen.set(true)">Large</button>
+
+      <sn-dialog [(open)]="smOpen" title="Confirm action" size="sm">
+        <p style="margin:0;color:var(--sn-text-muted)">Small dialog - compact for brief messages.</p>
+        <div snDialogFooter>
+          <button snButton variant="text" (click)="smOpen.set(false)">Cancel</button>
+          <button snButton (click)="smOpen.set(false)">Confirm</button>
+        </div>
+      </sn-dialog>
+
+      <sn-dialog [(open)]="basicOpen" title="Edit Profile">
+        <p style="margin:0;color:var(--sn-text-muted)">Medium dialog - the default size.</p>
+      </sn-dialog>
+
+      <sn-dialog [(open)]="lgOpen" title="Advanced Settings" size="lg">
+        <p style="margin:0;color:var(--sn-text-muted)">Large dialog - use for complex forms or content-rich panels.</p>
+      </sn-dialog>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom title slot" snippet="dialog/codeRichTitle">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="richTitleOpen.set(true)">Open with icon title</button>
+      <sn-dialog [(open)]="richTitleOpen">
+        <div snDialogTitle style="display:flex;align-items:center;gap:0.5rem">
+          <sn-icon style="font-size:1.25rem">settings</sn-icon>
+          <span>Settings</span>
+        </div>
+        <p style="margin:0;color:var(--sn-text-muted)">Configure your application preferences.</p>
+        <div snDialogFooter>
+          <button snButton variant="text" (click)="richTitleOpen.set(false)">Cancel</button>
+          <button snButton (click)="richTitleOpen.set(false)">Save</button>
+        </div>
+      </sn-dialog>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Dynamic (imperative) dialog" snippet="dialog/codeDynamic">
+    <div class="demo-row demo-row--spaced">
+      <button snButton variant="outlined" (click)="openDynamic()">Open imperatively</button>
+      <button snButton variant="outlined" color="error" (click)="openConfirm()">Confirm…</button>
+      @if (lastResult()) {
+        <span style="align-self:center;color:var(--sn-text-muted)">Result: {{ lastResult() }}</span>
+      }
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="dialog" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="dialog" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">WAI-ARIA Modal Dialog Pattern</a>.
+      The panel has <code>role="dialog"</code>, <code>aria-modal="true"</code>, and
+      <code>aria-labelledby</code> pointing to the title element.
+    </li>
+    <li>
+      Focus moves into the first focusable element in the panel on open
+      (via CDK <code>ConfigurableFocusTrapFactory</code>).
+    </li>
+    <li>
+      Focus is trapped within the dialog - <kbd>Tab</kbd> cycles through the panel's focusable elements
+      and cannot reach elements behind the backdrop.
+    </li>
+    <li>
+      Focus returns to the element that had focus before the dialog opened.
+    </li>
+    <li>
+      <kbd>Escape</kbd> closes the dialog and restores focus.
+    </li>
+    <li>
+      Clicking the backdrop closes the dialog (CDK <code>backdropClick()</code> subscription).
+    </li>
+    <li>
+      Body scroll is blocked while the dialog is open (CDK <code>BlockScrollStrategy</code>).
+    </li>
+    <li>
+      The close button's <code>aria-label</code> defaults to <code>'Close'</code> (overridable via <code>closeLabel</code> input or <code>provideSnIntl()</code>).
+    </li>
+  </ul>
+</section>

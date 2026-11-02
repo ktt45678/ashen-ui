@@ -1,0 +1,10 @@
+@if (icon()) {
+  <sn-icon class="sn-menu-item-icon">{{ icon() }}</sn-icon>
+}
+<span class="sn-menu-item-label"><ng-content /></span>
+@if (shortcut()) {
+  <span class="sn-menu-shortcut">{{ shortcut() }}</span>
+}
+@if (_hasSubmenu) {
+  <sn-icon class="sn-menu-item-submenu-icon">{{ icons.resolve('chevron-right') }}</sn-icon>
+}

@@ -1,0 +1,233 @@
+<table
+  snPart="table"
+  class="sn-table-inner"
+  [class]="tableClassExtra()"
+  [attr.role]="flexRole() ? 'table' : null"
+>
+  @if (caption()) {
+    <caption class="sn-table-caption" [class]="captionClassExtra()">{{ caption() }}</caption>
+  }
+  <thead #head [attr.role]="flexRole() ? 'rowgroup' : null">
+    <tr
+      snPart="header"
+      class="sn-table-header-row"
+      [class]="headerClassExtra()"
+      [attr.role]="flexRole() ? 'row' : null"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      [cdkDropListDisabled]="!columnReorder()"
+      (cdkDropListDropped)="onColumnDrop($event)"
+    >
+      @if (hasSelectColumn()) {
+        <th
+          #headerCell
+          scope="col"
+          class="sn-table-th sn-table-th--select"
+          [attr.role]="flexRole() ? 'columnheader' : null"
+        >
+          <sn-checkbox
+            class="sn-table-checkbox"
+            size="sm"
+            [checked]="allSelected()"
+            [indeterminate]="someSelected() && !allSelected()"
+            (checkedChange)="toggleAll()"
+            [attr.aria-label]="selectAllAriaLabel()"
+          />
+        </th>
+      }
+      @if (hasExpansion()) {
+        <th
+          #headerCell
+          scope="col"
+          class="sn-table-th sn-table-th--expand"
+          [attr.role]="flexRole() ? 'columnheader' : null"
+        ></th>
+      }
+      @for (col of displayColumns(); track col.columnId) {
+        <th
+          #headerCell
+          scope="col"
+          class="sn-table-th"
+          cdkDrag
+          [cdkDragDisabled]="!columnReorder()"
+          [class.sn-table-th--sorted]="isSorted(col)"
+          [class.sn-table-th--actions]="col.type() === 'actions'"
+          [class.sn-table-cell--sticky-start]="stickySide(col) === 'start'"
+          [class.sn-table-cell--sticky-end]="stickySide(col) === 'end'"
+          [class.sn-table-th--draggable]="columnReorder()"
+          [style.width]="col.width()"
+          [style.text-align]="col.align()"
+          [style.inset-inline-start.px]="stickyInlineStart(col)"
+          [style.inset-inline-end.px]="stickyInlineEnd(col)"
+          [attr.aria-sort]="ariaSort(col)"
+          [attr.role]="flexRole() ? 'columnheader' : null"
+        >
+          @if (col.sortable() && col.type() !== 'actions') {
+            <button
+              type="button"
+              class="sn-table-sort"
+              (click)="cycleSort(col)"
+            >
+              <span class="sn-table-sort-label">{{ col.header() }}</span>
+              @if (sortOrder() === 'desc' && isSorted(col)) {
+                <sn-icon class="sn-table-sort-icon">{{ icons.resolve('sort-descending') }}</sn-icon>
+              } @else {
+                <sn-icon
+                  class="sn-table-sort-icon"
+                  [class.sn-table-sort-icon--inactive]="!isSorted(col)"
+                >{{ icons.resolve('sort-ascending') }}</sn-icon>
+              }
+            </button>
+          } @else {
+            <span class="sn-table-header-text">{{ col.header() }}</span>
+          }
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody
+    [attr.role]="flexRole() ? 'rowgroup' : null"
+    cdkDropList
+    [cdkDropListDisabled]="!rowReorder()"
+    (cdkDropListDropped)="onRowDrop($event)"
+  >
+    @if (value().length === 0) {
+      <tr [attr.role]="flexRole() ? 'row' : null">
+        <td
+          [attr.colspan]="totalColumnCount()"
+          class="sn-table-empty"
+          [class.sn-table-empty--loading]="loading()"
+          [attr.role]="flexRole() ? 'cell' : null"
+        >
+          @if (!loading()) {
+            {{ resolvedEmptyMessage() }}
+          }
+        </td>
+      </tr>
+    } @else {
+      @if (virtual() && topSpacerHeight() > 0) {
+        <tr class="sn-table-spacer" aria-hidden="true">
+          <td
+            class="sn-table-spacer-cell"
+            [attr.colspan]="totalColumnCount()"
+            [style.height.px]="topSpacerHeight()"
+          ></td>
+        </tr>
+      }
+      @for (entry of renderedRows(); track trackRow(entry); let ri = $index) {
+        <tr
+          snPart="row"
+          class="sn-table-row"
+          [class]="rowClassExtra()"
+          cdkDrag
+          [cdkDragDisabled]="!rowReorder()"
+          [class.sn-table-row--selected]="isRowHighlighted(entry)"
+          [class.sn-table-row--striped]="isStripedRow(absoluteIndex(ri))"
+          [class.sn-table-row--hover]="hover() && !isRowHighlighted(entry)"
+          [class.sn-table-row--selectable]="rowsInteractive()"
+          [class.sn-table-row--draggable]="rowReorder()"
+          [style.height.px]="virtual() ? rowHeight() : null"
+          [attr.tabindex]="rowsInteractive() ? 0 : null"
+          [attr.aria-current]="isSelected(entry.index) ? 'true' : null"
+          [attr.aria-selected]="selectionMode() !== 'none' ? isRowSelected(entry.row) : null"
+          [attr.role]="flexRole() ? 'row' : null"
+          (mousedown)="suppressRangeTextSelection($event)"
+          (click)="onRowClick(entry, $event)"
+          (keydown)="rowsInteractive() ? onRowKeydown($event, entry) : null"
+        >
+          @if (hasSelectColumn()) {
+            <td
+              snPart="cell"
+              class="sn-table-td sn-table-td--select"
+              [attr.role]="flexRole() ? 'cell' : null"
+              (click)="$event.stopPropagation()"
+            >
+              <sn-checkbox
+                class="sn-table-checkbox"
+                size="sm"
+                [checked]="isRowSelected(entry.row)"
+                (checkedChange)="toggleRowSelection(entry.row)"
+                [attr.aria-label]="selectRowAriaLabel()"
+              />
+            </td>
+          }
+          @if (hasExpansion()) {
+            <td
+              class="sn-table-td sn-table-td--expand"
+              [attr.role]="flexRole() ? 'cell' : null"
+            >
+              <button
+                type="button"
+                class="sn-table-expand-btn"
+                [attr.aria-expanded]="isRowExpanded(entry.row)"
+                [attr.aria-controls]="expansionRowId(entry)"
+                [attr.aria-label]="expandRowAriaLabel()"
+                (click)="toggleRowExpansion(entry.row); $event.stopPropagation()"
+              >
+                <sn-icon
+                  class="sn-table-expand-icon"
+                  [class.sn-table-expand-icon--open]="isRowExpanded(entry.row)"
+                >{{ icons.resolve('chevron-right') }}</sn-icon>
+              </button>
+            </td>
+          }
+          @for (col of displayColumns(); track col.columnId) {
+            <td
+              snPart="cell"
+              class="sn-table-td"
+              [class]="cellClassExtra()"
+              [class.sn-table-td--actions]="col.type() === 'actions'"
+              [class.sn-table-cell--sticky-start]="stickySide(col) === 'start'"
+              [class.sn-table-cell--sticky-end]="stickySide(col) === 'end'"
+              [style.text-align]="col.align()"
+              [style.inset-inline-start.px]="stickyInlineStart(col)"
+              [style.inset-inline-end.px]="stickyInlineEnd(col)"
+              [attr.role]="flexRole() ? 'cell' : null"
+            >
+              @if (col.cellDef(); as cellDef) {
+                <ng-template
+                  [ngTemplateOutlet]="cellDef.templateRef"
+                  [ngTemplateOutletContext]="{ $implicit: entry.row, index: entry.index }"
+                />
+              } @else {
+                {{ getCellValue(entry.row, col.field()) }}
+              }
+            </td>
+          }
+        </tr>
+        @if (hasExpansion() && isRowExpanded(entry.row)) {
+          <tr
+            class="sn-table-expansion-row"
+            [id]="expansionRowId(entry)"
+            [attr.role]="flexRole() ? 'row' : null"
+          >
+            <td
+              class="sn-table-expansion-cell"
+              [attr.colspan]="totalColumnCount()"
+              [attr.role]="flexRole() ? 'cell' : null"
+            >
+              <ng-template
+                [ngTemplateOutlet]="expansionDef()!.templateRef"
+                [ngTemplateOutletContext]="{ $implicit: entry.row, index: entry.index }"
+              />
+            </td>
+          </tr>
+        }
+      }
+      @if (virtual() && bottomSpacerHeight() > 0) {
+        <tr class="sn-table-spacer" aria-hidden="true">
+          <td
+            class="sn-table-spacer-cell"
+            [attr.colspan]="totalColumnCount()"
+            [style.height.px]="bottomSpacerHeight()"
+          ></td>
+        </tr>
+      }
+    }
+  </tbody>
+</table>
+@if (loading()) {
+  <div class="sn-table-loading" [style.top.px]="loadingTop()">
+    <sn-progress-spinner [size]="40" />
+  </div>
+}

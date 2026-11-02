@@ -1,0 +1,3 @@
+.code-block { margin: 0 0 var(--sn-space-3); padding: var(--sn-space-3); background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); overflow-x: auto; font-size: var(--sn-text-xs); }
+.code-block code { background: none; padding: 0; }
+.demo-row { display: flex; align-items: center; gap: var(--sn-space-3); flex-wrap: wrap; }

@@ -1,0 +1,144 @@
+<header class="page-header">
+  <h1>Menubar</h1>
+  <p class="page-subtitle">
+    Horizontal application menu bar. Top-level items open dropdown submenus below them.
+    Implements the WAI-ARIA Menubar pattern with roving tabindex, hover-open mode, and full
+    keyboard navigation (ArrowLeft/Right across items, ArrowDown into the submenu, Escape to
+    close).
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="menubar/codeBasic">
+    <sn-menubar>
+      <sn-menubar-item label="File" [menuFor]="fileMenu" />
+      <sn-menubar-item label="Edit" [menuFor]="editMenu" />
+      <sn-menubar-item label="Help" (activated)="lastAction.set('Help')" />
+    </sn-menubar>
+
+    <sn-menu #fileMenu>
+      <button snMenuItem icon="add" (click)="lastAction.set('New')">New</button>
+      <button snMenuItem icon="folder_open" (click)="lastAction.set('Open')">Open…</button>
+      <button snMenuItem icon="save" (click)="lastAction.set('Save')">Save</button>
+      <sn-menu-separator />
+      <button snMenuItem icon="close" danger (click)="lastAction.set('Close')">Close</button>
+    </sn-menu>
+
+    <sn-menu #editMenu>
+      <button snMenuItem icon="undo" shortcut="⌘Z" (click)="lastAction.set('Undo')">Undo</button>
+      <button snMenuItem icon="redo" shortcut="⌘⇧Z" (click)="lastAction.set('Redo')">Redo</button>
+      <sn-menu-separator />
+      <button snMenuItem icon="content_cut" shortcut="⌘X" (click)="lastAction.set('Cut')">Cut</button>
+      <button snMenuItem icon="content_copy" shortcut="⌘C" (click)="lastAction.set('Copy')">Copy</button>
+      <button snMenuItem icon="content_paste" shortcut="⌘V" (click)="lastAction.set('Paste')">Paste</button>
+    </sn-menu>
+
+    @if (lastAction()) {
+      <p style="margin-top: 12px; font-size: var(--sn-text-sm); color: var(--sn-text-subtle);">
+        Last action: <strong>{{ lastAction() }}</strong>
+      </p>
+    }
+  </doc-example>
+
+  <doc-example heading="With icons on top-level items" snippet="menubar/codeWithIcons">
+    <sn-menubar>
+      <sn-menubar-item label="File" icon="folder" [menuFor]="iconFileMenu" />
+      <sn-menubar-item label="View" icon="visibility" [menuFor]="iconViewMenu" />
+      <sn-menubar-item label="About" icon="info" (activated)="lastAction.set('About')" />
+    </sn-menubar>
+
+    <sn-menu #iconFileMenu>
+      <button snMenuItem icon="add">New</button>
+      <button snMenuItem icon="folder_open">Open…</button>
+      <button snMenuItem icon="save">Save</button>
+    </sn-menu>
+
+    <sn-menu #iconViewMenu>
+      <button snMenuItem icon="zoom_in">Zoom in</button>
+      <button snMenuItem icon="zoom_out">Zoom out</button>
+      <button snMenuItem icon="fit_screen">Fit to screen</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="Items without submenus (activated event)" snippet="menubar/codeActivated">
+    <sn-menubar>
+      <sn-menubar-item label="Docs" (activated)="lastAction.set('Docs')" />
+      <sn-menubar-item label="Changelog" (activated)="lastAction.set('Changelog')" />
+      <sn-menubar-item label="Support" (activated)="lastAction.set('Support')" />
+    </sn-menubar>
+
+    @if (lastAction()) {
+      <p style="margin-top: 12px; font-size: var(--sn-text-sm); color: var(--sn-text-subtle);">
+        Clicked: <strong>{{ lastAction() }}</strong>
+      </p>
+    }
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="menubar" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="menubar" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Implements the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/" target="_blank" rel="noopener">
+      WAI-ARIA Menubar pattern
+    </a>.
+  </p>
+  <ul>
+    <li>
+      <code>sn-menubar</code> has <code>role="menubar"</code>.
+    </li>
+    <li>
+      Each top-level item button has <code>role="menuitem"</code>, <code>aria-haspopup="menu"</code>
+      (when it has a submenu), <code>aria-expanded</code>, and <code>aria-controls</code> pointing to
+      the open panel.
+    </li>
+    <li>
+      Only one item at a time has <code>tabindex="0"</code> (roving tabindex managed by
+      <code>FocusKeyManager</code> with horizontal orientation and wrap).
+    </li>
+    <li>
+      While a submenu is open, ArrowLeft/Right closes it and moves to the adjacent top-level
+      item (opening that item's submenu if it has one).
+    </li>
+    <li>
+      Submenu keyboard behavior (ArrowDown/Up, Home, End, Enter, Space, Escape, typeahead) is
+      identical to the standalone <code>sn-menu</code> component.
+    </li>
+  </ul>
+
+  <h3>Keyboard map</h3>
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Context</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>Tab</kbd></td><td>Menubar</td><td>Enter/leave the menubar; move to next/prev focusable page element</td></tr>
+      <tr><td><kbd>→</kbd></td><td>Menubar (no submenu open)</td><td>Move to next top-level item</td></tr>
+      <tr><td><kbd>←</kbd></td><td>Menubar (no submenu open)</td><td>Move to previous top-level item</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>Menubar</td><td>Move to first top-level item</td></tr>
+      <tr><td><kbd>End</kbd></td><td>Menubar</td><td>Move to last top-level item</td></tr>
+      <tr><td><kbd>Enter</kbd>, <kbd>Space</kbd>, <kbd>↓</kbd></td><td>Top-level item with submenu</td><td>Open the submenu; focus first item</td></tr>
+      <tr><td><kbd>Click</kbd></td><td>Top-level item</td><td>Toggle submenu (if has one) or emit activated</td></tr>
+      <tr><td><kbd>→</kbd></td><td>While submenu is open</td><td>Close submenu; move to next top-level item; open its submenu if any</td></tr>
+      <tr><td><kbd>←</kbd></td><td>While submenu is open</td><td>Close submenu; move to previous top-level item; open its submenu if any</td></tr>
+      <tr><td><kbd>↓</kbd> / <kbd>↑</kbd></td><td>Submenu</td><td>Move focus between items (wraps)</td></tr>
+      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Submenu</td><td>Focus first / last item</td></tr>
+      <tr><td>Printable char</td><td>Submenu</td><td>Typeahead to matching item</td></tr>
+      <tr><td><kbd>Enter</kbd>, <kbd>Space</kbd></td><td>Submenu item</td><td>Activate item; close submenu</td></tr>
+      <tr><td><kbd>Esc</kbd></td><td>Submenu</td><td>Close submenu; return focus to top-level item</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Submenu</td><td>Close submenu; move to next focusable element</td></tr>
+    </tbody>
+  </table>
+</section>

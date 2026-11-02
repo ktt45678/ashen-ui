@@ -1,0 +1,7 @@
+a { color: var(--sn-color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.demo-tabs { max-width: 480px; }
+
+/* Narrow enough that eight tabs cannot fit, which is the point of the demo. */
+.demo-tabs-narrow { max-width: 22rem; }
+.demo-readout { margin-top: var(--sn-space-3); font-size: var(--sn-text-xs); color: var(--sn-text-subtle); }

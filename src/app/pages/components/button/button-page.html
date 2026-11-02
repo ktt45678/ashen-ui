@@ -1,0 +1,100 @@
+<header class="page-header">
+  <h1>Button</h1>
+  <p class="page-subtitle">
+    12px radius, 14px medium text, semantic color variants. Hover darkens one step, press
+    darkens two. Applied to native <code>&lt;button&gt;</code> or <code>&lt;a&gt;</code>
+    elements via the <code>snButton</code> attribute.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Solid (base) - color variants" snippet="button/codeSolid">
+    <button snButton>Save</button>
+    <button snButton color="secondary">Cancel</button>
+    <button snButton color="success">Apply</button>
+    <button snButton color="error">Delete</button>
+    <button snButton color="warning">Reset</button>
+    <button snButton color="info">Info</button>
+  </doc-example>
+
+  <doc-example heading="Variants" snippet="button/codeVariants">
+    <button snButton variant="raised">Raised</button>
+    <button snButton variant="outlined">Outlined</button>
+    <button snButton variant="text">Text</button>
+    <button snButton variant="icon" icon="settings" aria-label="Settings"></button>
+    <button snButton variant="icon-filled" icon="edit" aria-label="Edit"></button>
+    <button snButton variant="icon-outlined" icon="delete" aria-label="Delete"></button>
+    <button snButton variant="icon-text" icon="more_vert" aria-label="More actions"></button>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="button/codeSizes">
+    <button snButton size="xs">Extra small</button>
+    <button snButton size="sm">Small</button>
+    <button snButton>Medium</button>
+    <button snButton size="lg">Large</button>
+    <button snButton icon="add">With icon</button>
+  </doc-example>
+
+  <doc-example heading="Pill shape" snippet="button/codeShape">
+    <button snButton shape="pill">Pill</button>
+    <button snButton shape="pill" size="xs">Extra small pill</button>
+    <button snButton shape="pill" variant="outlined">Outlined pill</button>
+    <button snButton shape="pill" variant="text">Text pill</button>
+    <button snButton shape="pill" icon="add">Pill with icon</button>
+    <button snButton shape="pill" variant="outlined" icon="close" iconOnly aria-label="Close"></button>
+  </doc-example>
+
+  <doc-example heading="States" snippet="button/codeStates">
+    <button snButton disabled>Disabled</button>
+    <button snButton loading>Saving</button>
+    <button snButton variant="outlined" disabled>Disabled outlined</button>
+  </doc-example>
+
+  <doc-example heading="Loading spinner variants" snippet="button/codeLoading">
+    <button snButton loading>Default</button>
+    <button snButton loading loadingVariant="material">Material</button>
+    <button snButton variant="outlined" loading loadingVariant="material">Material</button>
+    <button snButton variant="icon" loading loadingVariant="material" aria-label="Loading"></button>
+  </doc-example>
+
+  <doc-example heading="Icons - start (default) and end" snippet="button/codeIcons">
+    <button snButton icon="save">Save</button>
+    <button snButton icon="download" iconPosition="end">Export</button>
+    <button snButton variant="text" icon="delete" color="error">Delete</button>
+  </doc-example>
+
+  <doc-example heading="Outlined - color variants" snippet="button/codeOutlined">
+    <button snButton variant="outlined">Primary</button>
+    <button snButton variant="outlined" color="secondary">Secondary</button>
+    <button snButton variant="outlined" color="success">Success</button>
+    <button snButton variant="outlined" color="error">Error</button>
+  </doc-example>
+
+  <doc-example heading="Anchor button" snippet="button/codeAnchor">
+    <a snButton href="#">Home</a>
+    <a snButton variant="outlined" href="#">Docs</a>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="button" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="button" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Uses native <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> semantics - no ARIA role required.</li>
+    <li>The <code>disabled</code> attribute is reflected to the native element so browsers block interaction and screen readers announce the state.</li>
+    <li>When <code>loading</code>, <code>aria-busy="true"</code> is set so screen readers can convey the pending state.</li>
+    <li>For an icon variant, always provide <code>aria-label</code> on the <code>&lt;button&gt;</code> element for an accessible name.</li>
+    <li>Focus ring uses <code>--sn-focus-ring-*</code> tokens and is visible only for keyboard navigation (<code>:focus-visible</code>).</li>
+  </ul>
+</section>

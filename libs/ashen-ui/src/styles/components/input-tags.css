@@ -1,0 +1,73 @@
+@layer components {
+  .sn-input-tags {
+    --sn-input-tags-gap: var(--sn-space-1);
+    --sn-input-tags-padding: var(--sn-input-spacing-md);
+    --sn-input-tags-min-height: var(--sn-input-min-height-md);
+    --sn-input-tags-field-min-width: 8rem;
+
+    display: block;
+    width: 100%;
+  }
+
+  .sn-input-tags-shell {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sn-input-tags-gap);
+    padding-block: var(--sn-space-1);
+    padding-inline: var(--sn-input-tags-padding);
+    min-height: var(--sn-input-tags-min-height);
+    cursor: text;
+    height: auto;
+  }
+
+  .sn-input-tags-shell.sn-input-text-sm {
+    --sn-input-tags-padding: var(--sn-input-spacing-sm);
+    --sn-input-tags-min-height: var(--sn-input-min-height-sm);
+  }
+
+  .sn-input-tags-shell.sn-input-text-lg {
+    --sn-input-tags-padding: var(--sn-input-spacing-lg);
+    --sn-input-tags-min-height: var(--sn-input-min-height-lg);
+  }
+
+  /* The shell is a div - focus lands on the inner field, so the input-text
+     :focus border never fires. Mirror it via :focus-within (+ hover hint). */
+  .sn-input-tags-shell:hover:not(.sn-input-tags--disabled):not(:focus-within) {
+    border-color: var(--sn-border-strong, var(--sn-border));
+  }
+
+  .sn-input-tags-shell:focus-within {
+    border-color: var(--sn-input-text-focus-border, var(--sn-border-focus));
+    /* Focus lands on the inner field; ring the shell via :focus-within. */
+    box-shadow: var(--sn-input-focus-shadow);
+  }
+
+  .sn-input-tags-shell.sn-input-tags--disabled {
+    opacity: var(--sn-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .sn-input-tags-field {
+    flex: 1;
+    min-width: var(--sn-input-tags-field-min-width);
+    border: none;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    line-height: var(--sn-leading-normal);
+  }
+
+  .sn-input-tags-field::placeholder {
+    color: var(--sn-input-placeholder);
+  }
+
+  .sn-input-tags-field:disabled {
+    cursor: not-allowed;
+  }
+}

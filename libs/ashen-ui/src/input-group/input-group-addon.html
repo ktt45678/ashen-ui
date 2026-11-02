@@ -1,0 +1,5 @@
+@if (icon()) {
+  <span class="sn-icon icon-ms" [class]="iconClassExtra()" aria-hidden="true">{{ icon() }}</span>
+} @else {
+  <ng-content />
+}

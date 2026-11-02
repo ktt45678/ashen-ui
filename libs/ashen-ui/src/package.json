@@ -1,0 +1,44 @@
+{
+  "name": "ashen-ui",
+  "version": "0.1.0",
+  "description": "Angular component library built on signals and the CDK, zoneless and OnPush, themed through CSS custom properties.",
+  "keywords": [
+    "angular",
+    "components",
+    "ui",
+    "cdk",
+    "signals",
+    "zoneless",
+    "design-system",
+    "tailwind"
+  ],
+  "license": "MIT",
+  "author": "ktt45678",
+  "homepage": "https://github.com/ktt45678/ashen-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ktt45678/ashen-ui.git",
+    "directory": "libs/ashen-ui"
+  },
+  "bugs": {
+    "url": "https://github.com/ktt45678/ashen-ui/issues"
+  },
+  "peerDependencies": {
+    "@angular/cdk": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "rxjs": "^7.8.0",
+    "@angular/router": "^22.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ]
+}

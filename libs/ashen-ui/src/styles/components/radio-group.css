@@ -1,0 +1,99 @@
+@layer components {
+  .sn-radio-group-wrapper {
+    --sn-radio-button-size: var(--sn-radio-button-size-md);
+    --sn-radio-button-dot-size: var(--sn-radio-button-dot-size-md);
+    --sn-radio-button-border: var(--sn-border-strong);
+    --sn-radio-button-checked-border: var(--sn-color-primary);
+    --sn-radio-button-dot-color: var(--sn-color-primary);
+    --sn-radio-button-label-color: var(--sn-text);
+    --sn-radio-button-label-size: var(--sn-label-size);
+    --sn-radio-button-gap: 0.75rem;
+    --sn-radio-button-transition: var(--sn-motion-slow);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sn-radio-group-gap);
+  }
+
+  .sn-radio-group-wrapper.sn-radio-group-horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+  }
+
+  .sn-radio-button-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-radio-button-gap);
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+  }
+
+  .sn-radio-button-wrapper:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+    border-radius: var(--sn-radius-sm);
+  }
+
+  .sn-radio-button-wrapper.sn-radio-button-disabled {
+    cursor: not-allowed;
+    opacity: var(--sn-disabled-opacity);
+  }
+
+  .sn-radio-button-circle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--sn-radio-button-border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    width: var(--sn-radio-button-size);
+    height: var(--sn-radio-button-size);
+    box-sizing: border-box;
+  }
+
+  .sn-radio-button-wrapper.sn-radio-button-checked .sn-radio-button-circle {
+    border-color: var(--sn-radio-button-checked-border);
+  }
+
+  /* Dot - fills the circle content box; scale(0.625) produces the
+     correct dot diameter without off-center positioning issues. */
+  .sn-radio-button-dot {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--sn-radio-button-dot-color);
+    transform: scale(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-radio-button-wrapper.sn-radio-button-animate .sn-radio-button-dot {
+      transition: none;
+    }
+
+    .sn-radio-button-wrapper.sn-radio-button-animate .sn-radio-button-circle {
+      transition: none;
+    }
+  }
+
+  .sn-radio-button-wrapper.sn-radio-button-checked .sn-radio-button-dot {
+    transform: scale(0.625);
+  }
+
+  /* Gate state-driven transitions until after first render so a preselected
+     radio value snaps into place instead of animating from the unchecked state. */
+  .sn-radio-button-wrapper.sn-radio-button-animate .sn-radio-button-circle {
+    transition: border-color var(--sn-radio-button-transition);
+  }
+
+  .sn-radio-button-wrapper.sn-radio-button-animate .sn-radio-button-dot {
+    transition: transform var(--sn-radio-button-transition);
+  }
+
+  .sn-radio-button-label {
+    font-size: var(--sn-radio-button-label-size);
+    color: var(--sn-radio-button-label-color);
+  }
+}

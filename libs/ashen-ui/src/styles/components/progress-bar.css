@@ -1,0 +1,121 @@
+@layer components {
+  .sn-progress-bar {
+    --sn-progress-bar-color: var(--sn-color-primary);
+    --sn-progress-bar-indeterminate-duration: 1.2s;
+    --sn-progress-bar-material-duration: 2.4s;
+    --sn-progress-bar-track-bg: var(--sn-border);
+    --sn-progress-bar-track-height: 8px;
+    --sn-progress-bar-material-height: 6px;
+    --sn-progress-bar-radius: var(--sn-radius-pill);
+    --sn-progress-bar-value-font-size: var(--sn-text-xs);
+    --sn-progress-bar-value-color: var(--sn-text-muted);
+    --sn-progress-bar-value-min-width: 34px;
+    --sn-progress-bar-transition: width var(--sn-motion-slow);
+    --sn-progress-bar-stop-dot-size: 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .sn-progress-bar-track {
+    position: relative;
+    flex: 1;
+    height: var(--sn-progress-bar-track-height);
+    border-radius: var(--sn-progress-bar-radius);
+    background: var(--sn-progress-bar-track-bg);
+    overflow: hidden;
+  }
+
+  .sn-progress-bar-fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: 0;
+    border-radius: var(--sn-progress-bar-radius);
+    background: var(--sn-progress-bar-color);
+    transition: var(--sn-progress-bar-transition);
+  }
+
+  .sn-progress-bar-fill--indeterminate {
+    width: 35%;
+    animation: sn-progress-slide var(--sn-progress-bar-indeterminate-duration) ease-in-out infinite;
+  }
+
+  @keyframes sn-progress-slide {
+    from { left: -35%; }
+    to { left: 100%; }
+  }
+
+  .sn-progress-bar-track--material {
+    height: var(--sn-progress-bar-material-height);
+    background: transparent;
+    /* Clip the indeterminate sliding fill (right: -50% at keyframe peaks) so it
+       never spills past the rounded track edge. */
+    overflow: hidden;
+  }
+
+  .sn-progress-bar-track-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--sn-progress-bar-radius);
+    background: var(--sn-progress-bar-track-bg);
+  }
+
+  .sn-progress-bar-fill--material {
+    transition: var(--sn-progress-bar-transition);
+  }
+
+  .sn-progress-bar-track-remainder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-end: 10px;
+    border-radius: var(--sn-progress-bar-radius);
+    background: var(--sn-progress-bar-track-bg);
+    transition: inset-inline-start var(--sn-motion-slow);
+  }
+
+  .sn-progress-bar-stop-dot {
+    position: absolute;
+    top: 1px;
+    inset-inline-end: 0;
+    width: var(--sn-progress-bar-stop-dot-size);
+    height: var(--sn-progress-bar-stop-dot-size);
+    border-radius: 50%;
+    background: var(--sn-progress-bar-color);
+  }
+
+  .sn-progress-bar-fill--indeterminate-material {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: var(--sn-progress-bar-radius);
+    background: var(--sn-progress-bar-color);
+    animation: sn-progress-material var(--sn-progress-bar-material-duration) linear infinite;
+  }
+
+  @keyframes sn-progress-material {
+    0%     { left: -20%; right: 100%; }
+    49.99% { left: 100%; right: -50%; }
+    50%    { left: -20%; right: 100%; }
+    100%   { left: 100%; right: -50%; }
+  }
+
+  .sn-progress-bar-value {
+    font-size: var(--sn-progress-bar-value-font-size);
+    color: var(--sn-progress-bar-value-color);
+    min-width: var(--sn-progress-bar-value-min-width);
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-progress-bar-fill--indeterminate,
+    .sn-progress-bar-fill--indeterminate-material {
+      animation: none;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@if (icon()) {
+  <span snPart="icon" class="sn-icon icon-ms sn-chip-icon" [class]="iconClassExtra()" aria-hidden="true">{{ icon() }}</span>
+}
+@if (label()) {
+  <span snPart="label" class="sn-chip-label" [class]="labelClassExtra()">{{ label() }}</span>
+} @else {
+  <span snPart="label" class="sn-chip-label" [class]="labelClassExtra()"><ng-content /></span>
+}
+@if (removable()) {
+  <button
+    type="button"
+    snPart="remove"
+    class="sn-chip-remove"
+    [class]="removeClassExtra()"
+    [attr.aria-label]="effectiveRemoveLabel()"
+    (click)="onRemoveClick($event)"
+  >
+    @if (removeIconTpl()) {
+      <ng-container *ngTemplateOutlet="removeIconTpl()!.templateRef" />
+    } @else {
+      <span class="sn-icon icon-ms sn-chip-remove-icon" aria-hidden="true">{{ icons.resolve('chip-remove') }}</span>
+    }
+  </button>
+}

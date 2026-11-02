@@ -1,0 +1,9 @@
+<button
+  type="button"
+  class="sn-color-eye-dropper-btn"
+  [attr.aria-label]="label()"
+  [disabled]="isDisabled() || null"
+  (click)="pick()"
+>
+  <sn-icon>{{ icons.resolve('eyedropper') }}</sn-icon>
+</button>

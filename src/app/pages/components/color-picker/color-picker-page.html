@@ -1,0 +1,115 @@
+<header class="page-header">
+  <h1>Color Picker</h1>
+  <p class="page-subtitle">
+    Composable color picker with HSVA state. The default layout covers most cases; compose
+    <code>ColorArea</code>, <code>ColorSlider</code>, <code>ColorInput</code>, and
+    <code>ColorEyeDropper</code> children for a custom arrangement. Implements
+    <code>ControlValueAccessor</code> for reactive forms and <code>ngModel</code>. Emits
+    <code>#rrggbb</code>, or <code>#rrggbbaa</code> when alpha &lt; 1.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Default inline layout" snippet="color-picker/codeBasic">
+    <div class="demo-row">
+      <sn-color-picker [(value)]="basicValue"></sn-color-picker>
+      <p class="hint-text">Value: {{ basicValue() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="With alpha + eye dropper"
+    description="Enable the alpha slider and eye dropper button in the default layout."
+    snippet="color-picker/codeAlpha"
+  >
+    <div class="demo-row">
+      <sn-color-picker
+        [(value)]="alphaValue"
+        [showAlpha]="true"
+        [showEyeDropper]="true"
+      ></sn-color-picker>
+      <p class="hint-text">Value: {{ alphaValue() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Popover mode"
+    description="Renders a square swatch + hex input. Clicking the swatch opens the picker in a CDK overlay."
+    snippet="color-picker/codePopover"
+  >
+    <div class="demo-row">
+      <sn-color-picker [(value)]="popoverValue" [popover]="true"></sn-color-picker>
+      <p class="hint-text">Value: {{ popoverValue() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Custom layout"
+    description="Area + vertical hue/alpha sliders side by side, eye dropper + RGB input below."
+    snippet="color-picker/codeCustom"
+  >
+    <div class="demo-row">
+      <sn-color-picker [(value)]="customValue">
+        <div style="display:flex;gap:10px">
+          <sn-color-area height="10rem" />
+          <sn-color-slider channel="hue" orientation="vertical" />
+          <sn-color-slider channel="alpha" orientation="vertical" />
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <sn-color-eye-dropper />
+          <sn-color-input format="rgb" />
+        </div>
+      </sn-color-picker>
+      <p class="hint-text">Value: {{ customValue() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl. Disabled state propagates from FormControl.disable()."
+    snippet="color-picker/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-color-picker [formControl]="formCtrl"></sn-color-picker>
+      <p class="hint-text">FormControl value: {{ formCtrl.value }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="color-picker/codeDisabled">
+    <div class="demo-row">
+      <sn-color-picker [disabled]="true" [(value)]="disabledValue"></sn-color-picker>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="color-picker" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li><strong>ColorArea</strong> has <code>role="slider"</code>, <code>tabindex="0"</code>, and <code>aria-valuetext</code> announcing saturation and brightness. Arrow keys move in 1% steps (Shift: 10%).</li>
+    <li><strong>ColorSlider</strong> has <code>role="slider"</code>, <code>aria-valuemin/max/now</code>, and <code>aria-orientation</code>. Arrow keys and Home/End navigate the channel value.</li>
+    <li><strong>ColorEyeDropper</strong> is automatically <code>disabled</code> when the EyeDropper API is not supported in the current browser (e.g. Firefox, Safari).</li>
+    <li>The popover swatch button has <code>aria-expanded</code> and <code>aria-label</code> from <code>SnColorPickerIntl</code>. Escape closes the overlay.</li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming tokens</h2>
+  <table class="api-table">
+    <thead>
+      <tr><th>Token</th><th>Default</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>--sn-color-picker-width</td><td>14rem</td><td>Inline picker width</td></tr>
+      <tr><td>--sn-color-picker-preview-height</td><td>4rem</td><td>Preview bar height</td></tr>
+      <tr><td>--sn-color-picker-sv-area-height</td><td>10rem</td><td>Saturation/brightness pad height</td></tr>
+      <tr><td>--sn-color-picker-slider-height</td><td>1.5rem</td><td>Horizontal slider track height</td></tr>
+    </tbody>
+  </table>
+</section>

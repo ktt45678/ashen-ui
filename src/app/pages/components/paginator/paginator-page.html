@@ -1,0 +1,109 @@
+<header class="page-header">
+  <h1>Paginator</h1>
+  <p class="page-subtitle">
+    Page navigation with numbered buttons, interactive ellipsis jump panel, and an Ashen-styled
+    rows-per-page dropdown. Accepts a model-driven API - page numbers are computed from
+    <code>totalRecords</code> and <code>rows</code>. The record report is localizable and can be
+    replaced with a typed projected template.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic paginator (10 pages)" snippet="paginator/codeBasic">
+    <sn-paginator [page]="page()" [totalRecords]="100" [rows]="10" (pageChange)="onPageChange($event)" />
+  </doc-example>
+
+  <doc-example heading="Projected record report" snippet="paginator/codeReport">
+    <sn-paginator [page]="1" [totalRecords]="45" [rows]="10">
+      <ng-template
+        snPaginatorReport
+        let-first="first"
+        let-last="last"
+        let-total="total"
+        let-page="page"
+        let-pageCount="pageCount"
+      >
+        Showing {{ first }} to {{ last }} of {{ total }}
+        (page {{ page + 1 }} of {{ pageCount }})
+      </ng-template>
+    </sn-paginator>
+  </doc-example>
+
+  <doc-example heading="Middle page with siblings and ellipsis jump panel" snippet="paginator/codeMiddle">
+    <sn-paginator [page]="pageMiddle()" [totalRecords]="120" [rows]="10" [siblings]="1" (pageChange)="onMiddlePageChange($event)" />
+  </doc-example>
+
+  <doc-example heading="Without edge (first / last) buttons" snippet="paginator/codeNoEdges">
+    <sn-paginator [page]="0" [totalRecords]="100" [rows]="10" [showEdges]="false" />
+  </doc-example>
+
+  <doc-example heading="With styled rows-per-page selector" snippet="paginator/codeRowsSelect">
+    <sn-paginator
+      [page]="pageRows()"
+      [totalRecords]="200"
+      [rows]="rowsValue()"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
+      (pageChange)="onRowsPageChange($event)"
+    />
+  </doc-example>
+
+  <doc-example heading="snClass pass-through" snippet="paginator/codeSnClass">
+    <sn-paginator
+      [page]="pageSnClass()"
+      [totalRecords]="100"
+      [rows]="10"
+      [snClass]="{ root: 'my-paginator', pages: 'my-pages' }"
+      (pageChange)="pageSnClass.set($event.page)"
+    />
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="paginator" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="paginator" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Follows the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html" target="_blank" rel="noopener">WAI-ARIA Navigation Landmark pattern</a>.
+  </p>
+  <ul>
+    <li>
+      The entire widget is wrapped in a <code>&lt;nav aria-label&gt;</code> landmark.
+      The label defaults to <code>'Pagination'</code>, overridable via the <code>ariaLabel</code>
+      input or <code>provideSnIntl(&#123; paginator: '…' &#125;)</code>.
+    </li>
+    <li>
+      The active page button has <code>aria-current="page"</code>.
+      All page buttons have an <code>aria-label</code> of the form <code>"Page N"</code>.
+    </li>
+    <li>
+      First, Previous, Next, and Last buttons have descriptive <code>aria-label</code>s
+      (overridable via <code>firstLabel</code>, <code>prevLabel</code>, <code>nextLabel</code>,
+      <code>lastLabel</code> inputs or <code>provideSnIntl()</code>).
+    </li>
+    <li>Navigation buttons use the native <code>disabled</code> attribute when at a boundary.</li>
+    <li>
+      The ellipsis button has <code>aria-haspopup="dialog"</code> and
+      <code>aria-expanded</code> toggled on open. The jump panel is <code>role="dialog"</code>
+      containing a <code>role="listbox"</code> grid. Pressing Escape closes the panel and
+      returns focus to the triggering ellipsis button.
+    </li>
+    <li>
+      The rows-per-page trigger has <code>aria-haspopup="listbox"</code> and
+      <code>aria-expanded</code>. The options panel is <code>role="listbox"</code> with each
+      option having <code>role="option"</code> and <code>aria-selected</code>. Pressing Escape
+      closes the panel and returns focus to the trigger.
+    </li>
+    <li>All icons are rendered in ligature mode with <code>aria-hidden="true"</code>.</li>
+  </ul>
+</section>

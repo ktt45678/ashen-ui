@@ -1,0 +1,18 @@
+@if (showImage()) {
+  <img
+    snPart="image"
+    class="sn-avatar-image"
+    [class]="imageClassExtra()"
+    [src]="image()"
+    [alt]="imageAlt()"
+    (error)="onImageError()"
+  />
+} @else if (initialsText()) {
+  <span snPart="initials" class="sn-avatar-initials" [class]="initialsClassExtra()">{{ initialsText() }}</span>
+} @else if (iconTpl()) {
+  <ng-container *ngTemplateOutlet="iconTpl()!.templateRef" />
+} @else {
+  <span snPart="icon" class="sn-icon icon-ms sn-avatar-icon" [class]="iconClassExtra()" aria-hidden="true">{{
+    effectiveIcon()
+  }}</span>
+}

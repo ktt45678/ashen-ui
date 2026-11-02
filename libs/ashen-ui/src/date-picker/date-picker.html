@@ -1,0 +1,177 @@
+<button
+  #triggerBtn
+  type="button"
+  class="sn-select-trigger sn-date-picker-trigger"
+  [class]="triggerClassExtra()"
+  [id]="triggerId()"
+  [attr.aria-haspopup]="'dialog'"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="panelId"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-describedby]="ariaDescribedBy()"
+  [disabled]="isDisabled() || null"
+  (click)="onTriggerClick()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span
+    class="sn-select-value"
+    [class]="valueClassExtra()"
+    [class.sn-select-placeholder]="formattedValue() === null"
+  >
+    {{ formattedValue() !== null ? formattedValue() : effectivePlaceholder() }}
+  </span>
+  <span class="sn-select-arrow sn-date-picker-arrow" [class]="arrowClassExtra()">
+    <sn-icon>{{ icons.resolve('calendar') }}</sn-icon>
+  </span>
+</button>
+
+<ng-template #panelTpl>
+  <div
+    class="sn-select-panel sn-date-picker-panel"
+    [class]="panelClassExtra()"
+    snPart="panel"
+    [class.sn-select-panel-closing]="isClosing()"
+    [id]="panelId"
+    role="dialog"
+    [attr.aria-label]="effectivePanelLabel()"
+    [style.animation]="panelAnimation()"
+  >
+    <div class="sn-date-picker-header" snPart="header" [class]="headerClassExtra()">
+      <button
+        type="button"
+        class="sn-date-picker-nav-btn"
+        snPart="nav"
+        [class]="navClassExtra()"
+        [attr.aria-label]="intl.previous"
+        [disabled]="!canShiftBack()"
+        (click)="shift(-1)"
+      >
+        <sn-icon>{{ prevIcon() }}</sn-icon>
+      </button>
+
+      <span class="sn-date-picker-header-center">
+        @if (mode() === 'years') {
+          <span class="sn-date-picker-head-range" snPart="title" [class]="titleClassExtra()">{{ headerLabel() }}</span>
+        } @else {
+          <button
+            type="button"
+            class="sn-date-picker-head-btn"
+            snPart="title"
+            [class]="titleClassExtra()"
+            [class.sn-date-picker-head-btn-active]="mode() === 'months'"
+            [attr.aria-label]="intl.chooseMonth"
+            (click)="toggleMonthMode()"
+          >
+            {{ intl.months[viewMonth()] }}
+          </button>
+          <button
+            type="button"
+            class="sn-date-picker-head-btn"
+            snPart="title"
+            [class]="titleClassExtra()"
+            [attr.aria-label]="intl.chooseYear"
+            (click)="setYearsMode()"
+          >
+            {{ viewYear() }}
+          </button>
+        }
+      </span>
+
+      <button
+        type="button"
+        class="sn-date-picker-nav-btn"
+        snPart="nav"
+        [class]="navClassExtra()"
+        [attr.aria-label]="intl.next"
+        [disabled]="!canShiftForward()"
+        (click)="shift(1)"
+      >
+        <sn-icon>{{ nextIcon() }}</sn-icon>
+      </button>
+    </div>
+
+    @if (mode() === 'days') {
+      <div class="sn-date-picker-grid sn-date-picker-grid-days" role="grid" snPart="grid" [class]="gridClassExtra()">
+        <div class="sn-date-picker-week" role="row">
+          @for (wd of weekdayLabels; track wd) {
+            <div class="sn-date-picker-weekday" role="columnheader" snPart="weekday" [class]="weekdayClassExtra()">{{ wd }}</div>
+          }
+        </div>
+        @for (week of dayRows(); track $index) {
+          <div class="sn-date-picker-week" role="row">
+            @for (cell of week; track $index) {
+              @if (cell === null) {
+                <div class="sn-date-picker-cell-blank" role="gridcell"></div>
+              } @else {
+                <button
+                  type="button"
+                  role="gridcell"
+                  class="sn-date-picker-cell"
+                  snPart="day"
+                  [class]="dayClassExtra()"
+                  [class.sn-date-picker-cell-today]="isDayToday(cell) && !isDaySelected(cell)"
+                  [class.sn-date-picker-cell-selected]="isDaySelected(cell)"
+                  [class.sn-date-picker-cell-disabled]="isDayDisabled(cell)"
+                  [attr.aria-selected]="isDaySelected(cell)"
+                  [attr.aria-disabled]="isDayDisabled(cell) ? 'true' : null"
+                  [attr.data-sn-disabled]="isDayDisabled(cell) ? '' : null"
+                  [attr.aria-label]="makeDate(cell).toDateString()"
+                  [attr.tabindex]="isDayFocused(cell) ? 0 : -1"
+                  [attr.data-day]="cell"
+                  (click)="pickDay(makeDate(cell))"
+                  (keydown)="onDayKeydown($event, cell)"
+                >{{ cell }}</button>
+              }
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (mode() === 'months') {
+      <div class="sn-date-picker-grid sn-date-picker-grid-months" snPart="grid" [class]="gridClassExtra()">
+        @for (m of intl.monthsShort; track $index) {
+          <button
+            type="button"
+            class="sn-date-picker-cell sn-date-picker-cell-lg"
+            snPart="day"
+            [class]="dayClassExtra()"
+            [class.sn-date-picker-cell-today]="isMonthCurrent($index) && !isMonthSelected($index)"
+            [class.sn-date-picker-cell-selected]="isMonthSelected($index)"
+            [class.sn-date-picker-cell-disabled]="isMonthDisabled($index)"
+            [attr.aria-disabled]="isMonthDisabled($index) ? 'true' : null"
+            [attr.data-sn-disabled]="isMonthDisabled($index) ? '' : null"
+            [attr.aria-label]="intl.months[$index] + ' ' + viewYear()"
+            [attr.tabindex]="focusedMonthIndex() === $index ? 0 : -1"
+            [attr.data-month]="$index"
+            (click)="pickMonth($index)"
+            (keydown)="onMonthKeydown($event, $index)"
+          >{{ m }}</button>
+        }
+      </div>
+    }
+
+    @if (mode() === 'years') {
+      <div class="sn-date-picker-grid sn-date-picker-grid-years" snPart="grid" [class]="gridClassExtra()">
+        @for (y of years(); track y; let i = $index) {
+          <button
+            type="button"
+            class="sn-date-picker-cell sn-date-picker-cell-lg"
+            snPart="day"
+            [class]="dayClassExtra()"
+            [class.sn-date-picker-cell-today]="isYearCurrent(y) && !isYearSelected(y)"
+            [class.sn-date-picker-cell-selected]="isYearSelected(y)"
+            [class.sn-date-picker-cell-disabled]="isYearDisabled(y)"
+            [attr.aria-disabled]="isYearDisabled(y) ? 'true' : null"
+            [attr.data-sn-disabled]="isYearDisabled(y) ? '' : null"
+            [attr.aria-label]="'' + y"
+            [attr.tabindex]="focusedYearIndex() === i ? 0 : -1"
+            [attr.data-year-index]="i"
+            (click)="pickYear(y)"
+            (keydown)="onYearKeydown($event, i)"
+          >{{ y }}</button>
+        }
+      </div>
+    }
+  </div>
+</ng-template>

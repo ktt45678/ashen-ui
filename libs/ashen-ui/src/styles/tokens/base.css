@@ -1,0 +1,128 @@
+@layer base {
+  /* Direction sign
+     +1 in LTR, -1 in RTL. The escape hatch for the few places a logical
+     property does not reach: `transform: translateX()`, and any calc() whose
+     sign has to flip. Multiply the physical value by it:
+
+       transform: translateX(calc(100% * var(--sn-dir)));
+
+     Every `dir` boundary redeclares it, so nested subtrees resolve correctly
+     through inheritance. It follows the `dir` ATTRIBUTE; a bare
+     `direction: rtl` declaration is invisible to it, and to `snDirection()`. */
+  :root,
+  [dir='ltr'] {
+    --sn-dir: 1;
+  }
+
+  [dir='rtl'] {
+    --sn-dir: -1;
+  }
+
+  /* Device-pixel snap for box-shadow rings
+     css-values-4 has the browser rewrite `border` and `outline` widths so they
+     land on whole device pixels; `box-shadow` is not in that list. A 1px ring
+     therefore paints across 1.25 or 1.5 device pixels under fractional display
+     scaling and trails a soft fringe the equivalent border does not have.
+
+     Multiply a ring width by this to get the same treatment: it is
+     floor(dpr)/dpr, so the ring keeps its intended weight in whole device
+     pixels and is exactly 1 at integer ratios, where nothing needs correcting.
+     Only ratios Windows and Android actually use are listed; anything else
+     falls through to 1 and behaves as before. */
+  :root {
+    --sn-ring-snap: 1;
+  }
+
+  @media (resolution: 1.25dppx) {
+    :root { --sn-ring-snap: 0.8; }
+  }
+
+  @media (resolution: 1.5dppx) {
+    :root { --sn-ring-snap: 0.666667; }
+  }
+
+  @media (resolution: 1.75dppx) {
+    :root { --sn-ring-snap: 0.571429; }
+  }
+
+  @media (resolution: 2.25dppx) {
+    :root { --sn-ring-snap: 0.888889; }
+  }
+
+  @media (resolution: 2.5dppx) {
+    :root { --sn-ring-snap: 0.8; }
+  }
+
+  @media (resolution: 2.75dppx) {
+    :root { --sn-ring-snap: 0.727273; }
+  }
+
+  @media (resolution: 3.5dppx) {
+    :root { --sn-ring-snap: 0.857143; }
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--sn-font-ui);
+    color: var(--sn-text);
+    background-color: var(--sn-surface-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  *:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  /* Scrollbars
+     Themeable via --sn-scrollbar-{size,track,thumb,thumb-hover}. Applied to
+     the library's own scroll surfaces plus a `.sn-scrollbar` opt-in class apps
+     can put on their own containers.
+
+     Wrapped in :where() so the whole block has zero specificity - an app's own
+     scrollbar rule always wins, without !important.
+
+     `scrollbar-width`/`scrollbar-color` is the standard property (Firefox, and
+     Chromium 121+); the ::-webkit-scrollbar rules cover older WebKit. Both are
+     declared; the standard one takes effect where supported. */
+  :where(
+    .sn-scrollbar,
+    .sn-dialog-body,
+    .sn-drawer-body,
+    .sn-listbox,
+    .sn-menu-panel,
+    .sn-paginator-jump-panel,
+    .sn-select-panel,
+    .sn-multi-select-panel,
+    .sn-autocomplete-panel,
+    .sn-cascade-select-panel,
+    .sn-tree-select-panel,
+    .sn-splitter-panel,
+    .sn-table-inner
+  ) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sn-scrollbar-thumb) var(--sn-scrollbar-track);
+
+    &::-webkit-scrollbar {
+      width: var(--sn-scrollbar-size);
+      height: var(--sn-scrollbar-size);
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--sn-scrollbar-track);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--sn-scrollbar-thumb);
+      border-radius: var(--sn-radius-pill);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--sn-scrollbar-thumb-hover);
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: var(--sn-scrollbar-track);
+    }
+  }
+}

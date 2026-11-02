@@ -1,0 +1,69 @@
+@if (popover()) {
+  <div class="sn-color-picker-popover-trigger">
+    <button
+      #swatchBtn
+      type="button"
+      class="sn-color-picker-swatch"
+      [class]="swatchClassExtra()"
+      [style.background]="previewBg()"
+      [attr.aria-label]="openLabel()"
+      [attr.aria-expanded]="isOpen()"
+      [disabled]="isDisabled() || null"
+      (click)="openPanel()"
+    ></button>
+    @if (showInput()) {
+      <sn-color-input format="hex" />
+    }
+  </div>
+
+  <ng-template #panelTpl>
+    <div
+      class="sn-color-picker-panel"
+      [class]="panelClassExtra()"
+      [class.sn-color-picker-panel-closing]="isClosing()"
+      [style.animation]="panelAnimation()"
+    >
+      @if (hasCustomLayout()) {
+        <ng-content />
+      } @else {
+        <sn-color-area />
+        <div class="sn-color-picker-sliders-row">
+          @if (showEyeDropper()) {
+            <sn-color-eye-dropper />
+          }
+          <div class="sn-color-picker-sliders-col">
+            <sn-color-slider channel="hue" />
+            @if (showAlpha()) {
+              <sn-color-slider channel="alpha" />
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </ng-template>
+} @else {
+  @if (hasCustomLayout()) {
+    <ng-content />
+  } @else {
+    @if (showPreview()) {
+      <div
+        class="sn-color-picker-preview"
+        [class]="previewClassExtra()"
+        [style.background]="previewBg()"
+      ></div>
+    }
+    <sn-color-area />
+    <div class="sn-color-picker-sliders-row">
+      @if (showEyeDropper()) {
+        <sn-color-eye-dropper />
+      }
+      <div class="sn-color-picker-sliders-col">
+        <sn-color-slider channel="hue" />
+        @if (showAlpha()) {
+          <sn-color-slider channel="alpha" />
+        }
+      </div>
+    </div>
+    <sn-color-input format="hex" />
+  }
+}

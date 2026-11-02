@@ -1,0 +1,11 @@
+<span
+  snPart="track"
+  class="sn-toggle-track"
+  [class.sn-toggle-track-sm]="size() === 'sm'"
+  [class.sn-toggle-track-lg]="size() === 'lg'"
+  [class]="trackClassExtra()"
+  aria-hidden="true"
+>
+  <span snPart="thumb" class="sn-toggle-thumb" [class]="thumbClassExtra()"></span>
+</span>
+<span snPart="label" class="sn-toggle-label" [class]="labelClassExtra()"><ng-content /></span>

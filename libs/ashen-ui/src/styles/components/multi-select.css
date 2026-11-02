@@ -1,0 +1,59 @@
+@layer components {
+  :root {
+    --sn-multi-select-chip-padding-v: 0.375rem;
+  }
+
+  /* Full width by default, declared as a layered rule (not on the unlayered
+     :host) so a consumer width utility overrides it with no !important. */
+  .sn-multi-select {
+    width: 100%;
+  }
+
+  .sn-multi-select--has-chips .sn-select-trigger {
+    padding-top: var(--sn-multi-select-chip-padding-v);
+    padding-bottom: var(--sn-multi-select-chip-padding-v);
+    align-items: flex-start;
+  }
+
+  /* The trigger tops-aligns its content so wrapped chips stack from the top, but
+     the dropdown arrow should stay vertically centred against the whole trigger. */
+  .sn-multi-select--has-chips .sn-select-arrow {
+    align-self: center;
+  }
+
+  .sn-multi-select-value {
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .sn-multi-select-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  /* Each chip stands for one selected value, so it reads like the selection it
+     came from rather than like a neutral tag. */
+  .sn-multi-select-chips .sn-chip {
+    --sn-chip-bg: var(--sn-selected-bg);
+    --sn-chip-border: transparent;
+    --sn-chip-text: var(--sn-selected-text);
+  }
+
+  .sn-multi-select-more {
+    font-size: var(--sn-text-xs, 0.75rem);
+    color: var(--sn-text-subtle);
+    align-self: center;
+    white-space: nowrap;
+  }
+
+  .sn-select-panel[aria-multiselectable='true'] .sn-listbox-option-selected {
+    background: transparent;
+    color: inherit;
+  }
+
+  .sn-select-panel[aria-multiselectable='true'] .sn-listbox-option-selected:hover {
+    background: var(--sn-surface-hover, rgba(0, 0, 0, 0.04));
+  }
+}

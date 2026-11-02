@@ -1,0 +1,148 @@
+<div
+  #wrapperEl
+  class="sn-autocomplete-wrapper"
+  [class.sn-autocomplete-wrapper-multiple]="multiple()"
+>
+  @if (showValues()) {
+    <div
+      snPart="selectedValues"
+      class="sn-autocomplete-selected-values"
+      [class]="selectedValuesClassExtra()"
+    >
+      @for (option of visibleValues(); track option; let index = $index) {
+        <span snPart="chip" class="sn-autocomplete-chip" [class]="chipClassExtra()">
+          <span
+            snPart="chipLabel"
+            class="sn-autocomplete-chip-label"
+            [class]="chipLabelClassExtra()"
+          >
+            @if (selectedValueTemplate()) {
+              <ng-container
+                *ngTemplateOutlet="
+                  selectedValueTemplate()!.templateRef;
+                  context: selectedValueContext(option, index)
+                "
+              />
+            } @else {
+              {{ labelOf(option) }}
+            }
+          </span>
+          @if (removable()) {
+            <button
+              snPart="remove"
+              type="button"
+              class="sn-autocomplete-chip-remove"
+              [class]="removeClassExtra()"
+              [attr.aria-label]="effectiveRemoveLabel(option)"
+              [disabled]="isDisabled() || null"
+              (mousedown)="$event.preventDefault()"
+              (click)="removeValue(option)"
+            >
+              @if (removeIconTemplate()) {
+                <ng-container *ngTemplateOutlet="removeIconTemplate()!.templateRef" />
+              } @else {
+                <sn-icon aria-hidden="true">{{ icons.resolve('chip-remove') }}</sn-icon>
+              }
+            </button>
+          }
+        </span>
+      }
+      @if (hiddenValues().length > 0 && summaryTemplate()) {
+        <span class="sn-autocomplete-summary">
+          <ng-container
+            *ngTemplateOutlet="summaryTemplate()!.templateRef; context: summaryContext()"
+          />
+        </span>
+      }
+    </div>
+  }
+  <input
+    #inputEl
+    snPart="input"
+    snInputText
+    class="sn-autocomplete-input"
+    [class]="inputClassExtra()"
+    type="text"
+    role="combobox"
+    [attr.aria-expanded]="showPanel()"
+    aria-autocomplete="list"
+    [attr.aria-controls]="panelId"
+    [attr.aria-activedescendant]="activeOptionId()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.aria-describedby]="ariaDescribedBy()"
+    [attr.id]="inputId()"
+    [placeholder]="showValues() && !keepPlaceholder() ? '' : (placeholder() ?? '')"
+    [value]="queryText()"
+    [disabled]="isDisabled() || null"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (input)="onInputEvent($event)"
+    (keydown)="onKeydown($event)"
+  />
+</div>
+
+<ng-template #panelTpl>
+  @if (showPanel()) {
+    <div
+      snPart="panel"
+      class="sn-select-panel"
+      [class]="panelClassExtra()"
+      [class.sn-select-panel-closing]="isClosingPanel()"
+      role="listbox"
+      [id]="panelId"
+      [attr.aria-label]="ariaLabel() || null"
+      [style.animation]="panelAnimation()"
+      (scroll)="onPanelScroll($event)"
+    >
+      @if (topSpacerHeight() > 0) {
+        <div [style.height.px]="topSpacerHeight()" aria-hidden="true"></div>
+      }
+      @for (entry of renderedMatches(); track entry.index) {
+        <div
+          snPart="option"
+          role="option"
+          class="sn-listbox-option"
+          [class.sn-listbox-option-selected]="isOptionSelected(entry.option)"
+          [class.sn-listbox-option-active]="entry.index === activeIndex()"
+          [class]="optionClassBase()"
+          [id]="panelId + '-opt-' + entry.index"
+          [style.height.px]="virtual() ? optionHeight() : null"
+          [style.box-sizing]="virtual() ? 'border-box' : null"
+          [attr.aria-selected]="optionAriaSelected(entry.option, entry.index)"
+          (mousedown)="$event.preventDefault()"
+          (click)="pick(entry.option)"
+        >
+          @if (optionTemplate()) {
+            <ng-container
+              *ngTemplateOutlet="
+                optionTemplate()!.templateRef;
+                context: optionContext(entry.option, entry.index)
+              "
+            />
+          } @else {
+            {{ labelOf(entry.option) }}
+          }
+          @if (checkmark() && isOptionSelected(entry.option)) {
+            <sn-icon
+              snPart="check"
+              class="sn-listbox-option-check"
+              aria-hidden="true"
+            >{{ icons.resolve('check') }}</sn-icon>
+          }
+        </div>
+      }
+      @if (showEmpty()) {
+        <div
+          snPart="empty"
+          class="sn-autocomplete-empty"
+          [class]="emptyClassExtra()"
+          role="option"
+          aria-disabled="true"
+        >{{ effectiveEmptyMessage() }}</div>
+      }
+      @if (bottomSpacerHeight() > 0) {
+        <div [style.height.px]="bottomSpacerHeight()" aria-hidden="true"></div>
+      }
+    </div>
+  }
+</ng-template>

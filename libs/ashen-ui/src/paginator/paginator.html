@@ -1,0 +1,155 @@
+<nav snPart="nav" class="sn-paginator-nav" [class]="navClassExtra()" [attr.aria-label]="navLabel()">
+  @if (rowsPerPageOptions()?.length) {
+    <div snPart="rowsSelect" class="sn-paginator-rows-select" [class]="rowsSelectClassExtra()">
+      @if (showRowsLabel()) {
+        <span class="sn-paginator-rows-label">{{ rowsPerPageAriaLabel() }}</span>
+      }
+      <button
+        type="button"
+        #rowsTrigger
+        snPart="rowsTrigger"
+        class="sn-paginator-rows-trigger"
+        [class]="rowsTriggerClassExtra()"
+        [attr.aria-label]="rowsPerPageAriaLabel()"
+        [attr.aria-haspopup]="'listbox'"
+        [attr.aria-expanded]="rowsPanelOpen()"
+        (click)="openRowsPanel(rowsTrigger)"
+      >
+        <span class="sn-paginator-rows-value">{{ rows() }}</span>
+        <sn-icon size="sm">{{ icons.resolve('chevron-down') }}</sn-icon>
+      </button>
+    </div>
+  }
+
+  <div snPart="controls" class="sn-paginator-controls">
+    @if (showEdges()) {
+      <button
+        snButton
+        variant="icon"
+        size="sm"
+        [icon]="firstIcon()"
+        snPart="first"
+        class="sn-paginator-first"
+        [attr.aria-label]="firstAriaLabel()"
+        [disabled]="isFirst()"
+        (click)="goTo(0)"
+      ></button>
+    }
+
+    <button
+      snButton
+      variant="icon"
+      size="sm"
+      [icon]="prevIcon()"
+      snPart="prev"
+      class="sn-paginator-prev"
+      [attr.aria-label]="prevAriaLabel()"
+      [disabled]="isFirst()"
+      (click)="goTo(page() - 1)"
+    ></button>
+
+    <div snPart="pages" class="sn-paginator-pages" [class]="pagesClassExtra()">
+      @for (item of pageItems(); track $index) {
+        @if (isEllipsis(item)) {
+          <button
+            type="button"
+            #ellipsisTrigger
+            snPart="ellipsis"
+            class="sn-paginator-ellipsis"
+            [attr.aria-label]="jumpAriaLabel()"
+            aria-haspopup="dialog"
+            [attr.aria-expanded]="jumpPanelOpen()"
+            (click)="openJumpPanel(ellipsisTrigger)"
+          >…</button>
+        } @else {
+          <button
+            type="button"
+            snPart="page"
+            class="sn-paginator-page"
+            [class]="pageClass(item)"
+            [class.sn-paginator-page--current]="item === page()"
+            [attr.aria-label]="pageLabel(item)"
+            [attr.aria-current]="item === page() ? 'page' : null"
+            (click)="goTo(item)"
+          >{{ item + 1 }}</button>
+        }
+      }
+    </div>
+
+    <button
+      snButton
+      variant="icon"
+      size="sm"
+      [icon]="nextIcon()"
+      snPart="next"
+      class="sn-paginator-next"
+      [attr.aria-label]="nextAriaLabel()"
+      [disabled]="isLast()"
+      (click)="goTo(page() + 1)"
+    ></button>
+
+    @if (showEdges()) {
+      <button
+        snButton
+        variant="icon"
+        size="sm"
+        [icon]="lastIcon()"
+        snPart="last"
+        class="sn-paginator-last"
+        [attr.aria-label]="lastAriaLabel()"
+        [disabled]="isLast()"
+        (click)="goTo(totalPages() - 1)"
+      ></button>
+    }
+  </div>
+
+  @if (showReport() && totalRecords() > 0) {
+    <span snPart="report" class="sn-paginator-report" [class]="reportClassExtra()">
+      @if (reportTemplate(); as template) {
+        <ng-template
+          [ngTemplateOutlet]="template.templateRef"
+          [ngTemplateOutletContext]="reportContext()"
+        />
+      } @else {
+        {{ report() }}
+      }
+    </span>
+  }
+</nav>
+
+<ng-template #jumpPanelTpl>
+  <div snPart="jumpPanel" class="sn-paginator-jump-panel" [class]="jumpPanelClassExtra()" [class.sn-paginator-panel-closing]="jumpClosing()" role="dialog" [attr.aria-label]="jumpAriaLabel()">
+    <div class="sn-paginator-jump-grid" role="listbox" [attr.aria-label]="jumpAriaLabel()">
+      @for (p of allPages(); track p) {
+        <button
+          type="button"
+          role="option"
+          class="sn-paginator-jump-page"
+          [class.sn-paginator-jump-page--current]="p === page()"
+          [attr.aria-selected]="p === page()"
+          [attr.aria-label]="pageLabel(p)"
+          (click)="selectPage(p)"
+          (keydown.enter)="selectPage(p)"
+          (keydown.space)="selectPage(p)"
+        >{{ p + 1 }}</button>
+      }
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #rowsPanelTpl>
+  <div snPart="rowsPanel" class="sn-paginator-rows-panel" [class]="rowsPanelClassExtra()" [class.sn-paginator-panel-closing]="rowsClosing()" role="listbox" [attr.aria-label]="rowsPerPageAriaLabel()">
+    @for (opt of rowsPerPageOptions(); track opt) {
+      <button
+        type="button"
+        role="option"
+        class="sn-paginator-rows-option"
+        [class.sn-paginator-rows-option--selected]="opt === rows()"
+        [attr.aria-selected]="opt === rows()"
+        (click)="onRowsOptionClick(opt)"
+        (keydown.enter)="onRowsOptionClick(opt)"
+        (keydown.space)="onRowsOptionClick(opt)"
+      >{{ opt }}</button>
+    }
+  </div>
+</ng-template>

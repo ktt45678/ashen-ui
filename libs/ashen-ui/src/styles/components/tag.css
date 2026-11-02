@@ -1,0 +1,43 @@
+@layer components {
+  .sn-tag {
+    --sn-tag-color: var(--sn-color-primary);
+    --sn-tag-icon-size: 13px;
+    --sn-tag-bg: color-mix(in srgb, var(--sn-tag-color) 14%, transparent);
+  }
+
+  .sn-tag.sn-tag-secondary { --sn-tag-color: var(--sn-color-secondary); }
+  .sn-tag.sn-tag-success    { --sn-tag-color: var(--sn-color-success); }
+  .sn-tag.sn-tag-error      { --sn-tag-color: var(--sn-color-error); }
+  .sn-tag.sn-tag-warning    { --sn-tag-color: var(--sn-color-warning); }
+  .sn-tag.sn-tag-info       { --sn-tag-color: var(--sn-color-info); }
+
+  .sn-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-tag-gap, 4px);
+    padding: var(--sn-tag-padding, 2px 8px);
+    border-radius: var(--sn-tag-border-radius, var(--sn-radius-sm));
+
+    background: var(--sn-tag-bg);
+    color: var(--sn-tag-color);
+
+    font-size: var(--sn-text-2xs);
+    font-weight: var(--sn-font-weight-semibold);
+    font-family: var(--sn-font-ui);
+    letter-spacing: 0.02em;
+
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  /* Label line box equals the em box so flex centering centers the glyphs. */
+  .sn-tag-label {
+    line-height: 1;
+  }
+
+  .sn-tag-icon {
+    font-size: var(--sn-tag-icon-size);
+    line-height: 1;
+    color: inherit;
+  }
+}

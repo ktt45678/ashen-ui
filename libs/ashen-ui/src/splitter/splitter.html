@@ -1,0 +1,19 @@
+<ng-content />
+<div
+  #gutter
+  snPart="gutter"
+  class="sn-splitter-gutter"
+  [class]="gutterClassExtra()"
+  role="separator"
+  tabindex="0"
+  [attr.aria-orientation]="ariaOrientation()"
+  [attr.aria-valuenow]="ariaValueNow()"
+  [attr.aria-valuemin]="ariaValueMin()"
+  [attr.aria-valuemax]="ariaValueMax()"
+  [attr.aria-controls]="firstPanelId"
+  [attr.aria-label]="resolvedLabel()"
+  (pointerdown)="onGutterPointerDown($event)"
+  (keydown)="onGutterKeydown($event)"
+>
+  <span snPart="handle" class="sn-splitter-gutter-handle" [class]="handleClassExtra()"></span>
+</div>

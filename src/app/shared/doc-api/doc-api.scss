@@ -1,0 +1,119 @@
+:host {
+  display: block;
+}
+
+.doc-api-import {
+  margin: 0 0 var(--sn-space-5);
+  color: var(--sn-text-muted);
+  font-size: var(--sn-text-xs);
+}
+
+.doc-api-surface {
+  margin-bottom: var(--sn-space-6);
+}
+
+.doc-api-surface-header {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sn-space-2);
+  margin-bottom: var(--sn-space-2);
+}
+
+.doc-api-symbol {
+  margin: 0;
+  font-size: var(--sn-text-sm);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+}
+
+.doc-api-selector {
+  padding: 0.1em 0.4em;
+  border-radius: var(--sn-radius-sm);
+  background: var(--sn-color-primary-soft);
+  color: var(--sn-color-primary);
+  font-family: var(--sn-font-mono);
+  font-size: var(--sn-text-xs);
+}
+
+.doc-api-kind {
+  color: var(--sn-text-subtle);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.doc-api-name {
+  color: var(--sn-text);
+  font-weight: var(--sn-font-weight-medium);
+  white-space: nowrap;
+}
+
+.doc-api-required {
+  margin-inline-start: var(--sn-space-2);
+  color: var(--sn-color-error);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* The literals a union accepts, so the type name is not a dead end. */
+.doc-api-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+}
+
+.doc-api-value {
+  padding: 0.05em 0.35em;
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  background: var(--sn-surface-canvas);
+  font-family: var(--sn-font-mono);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.doc-api-union th:first-child {
+  color: var(--sn-text);
+  font-family: var(--sn-font-mono);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--sn-text-xs);
+}
+
+.doc-api-note {
+  margin: 0 0 var(--sn-space-6);
+  padding: var(--sn-space-3);
+  border-inline-start: 2px solid var(--sn-border);
+  color: var(--sn-text-subtle);
+  font-size: var(--sn-text-xs);
+  line-height: var(--sn-leading-normal);
+}
+
+.doc-api-parts-note {
+  margin: 0 0 var(--sn-space-2);
+  color: var(--sn-text-muted);
+  font-size: var(--sn-text-xs);
+}
+
+.doc-api-parts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sn-space-2) var(--sn-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc-api-parts li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--sn-space-2);
+}
+
+.doc-api-part-symbol {
+  color: var(--sn-text-subtle);
+  font-size: var(--sn-text-xs);
+}

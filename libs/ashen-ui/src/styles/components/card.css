@@ -1,0 +1,76 @@
+@layer components {
+  .sn-card {
+    --sn-card-bg: var(--sn-surface-panel);
+    --sn-card-border-color: transparent;
+    --sn-card-border-width: 1px;
+    --sn-card-border-radius: var(--sn-radius-tile);
+    --sn-card-shadow: var(--sn-glass-shadow, var(--sn-shadow-sm));
+    --sn-card-backdrop-filter: var(--sn-backdrop-filter, none);
+
+    --sn-card-header-padding: 0;
+
+    --sn-card-title-padding: var(--sn-space-3) var(--sn-space-4) 0;
+    --sn-card-title-font-family: var(--sn-font-display);
+    --sn-card-title-font-size: var(--sn-text-md);
+    --sn-card-title-font-weight: var(--sn-font-weight-semibold);
+    --sn-card-title-color: var(--sn-text);
+
+    --sn-card-subtitle-padding: 0 var(--sn-space-4);
+    --sn-card-subtitle-font-size: var(--sn-text-xs);
+    --sn-card-subtitle-color: var(--sn-text-subtle);
+    --sn-card-subtitle-margin-top: 2px;
+
+    --sn-card-content-padding: var(--sn-space-3) var(--sn-space-4);
+    --sn-card-content-font-size: var(--sn-text-sm);
+    --sn-card-content-color: var(--sn-text-muted);
+
+    --sn-card-footer-padding: 10px var(--sn-space-4);
+    --sn-card-footer-border-color: var(--sn-border);
+    --sn-card-footer-gap: var(--sn-space-2);
+
+    background: var(--sn-card-bg);
+    border: var(--sn-card-border-width) solid var(--sn-card-border-color);
+    border-radius: var(--sn-card-border-radius);
+    box-shadow: var(--sn-card-shadow);
+    backdrop-filter: var(--sn-card-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-card-backdrop-filter);
+    overflow: hidden;
+  }
+
+  .sn-card-header {
+    display: block;
+    padding: var(--sn-card-header-padding);
+  }
+
+  .sn-card-title {
+    display: block;
+    padding: var(--sn-card-title-padding);
+    font-family: var(--sn-card-title-font-family);
+    font-size: var(--sn-card-title-font-size);
+    font-weight: var(--sn-card-title-font-weight);
+    color: var(--sn-card-title-color);
+  }
+
+  .sn-card-subtitle {
+    display: block;
+    padding: var(--sn-card-subtitle-padding);
+    font-size: var(--sn-card-subtitle-font-size);
+    color: var(--sn-card-subtitle-color);
+    margin-top: var(--sn-card-subtitle-margin-top);
+  }
+
+  .sn-card-content {
+    display: block;
+    padding: var(--sn-card-content-padding);
+    font-size: var(--sn-card-content-font-size);
+    color: var(--sn-card-content-color);
+  }
+
+  .sn-card-footer {
+    display: flex;
+    gap: var(--sn-card-footer-gap);
+    justify-content: flex-end;
+    padding: var(--sn-card-footer-padding);
+    border-top: 1px solid var(--sn-card-footer-border-color);
+  }
+}

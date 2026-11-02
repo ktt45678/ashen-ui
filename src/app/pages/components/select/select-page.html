@@ -1,0 +1,200 @@
+<header class="page-header">
+  <h1>Select</h1>
+  <p class="page-subtitle">
+    An input-styled trigger that opens a floating option panel. Implements the WAI-ARIA APG
+    Select-Only Combobox pattern - focus stays on the trigger while
+    <code>aria-activedescendant</code> tracks the highlighted option. Consumer-projected
+    <code>&lt;sn-list-option&gt;</code> children (shared from <code>ashen-ui/listbox</code>).
+    Implements <code>ControlValueAccessor</code> for reactive forms and <code>ngModel</code>.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic select with placeholder" snippet="select/codeBasic">
+    <div class="demo-row">
+      <sn-select [(value)]="basicValue" placeholder="Pick a framework…" class="demo-select">
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+      </sn-select>
+      <p class="hint-text">Value: {{ basicValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Check mark on the selected option"
+    description="Off by default: the selected row is tinted, which already reads as selected. Set checkmark to add a trailing mark, aligned to the end of the row."
+    snippet="select/codeCheckmark"
+  >
+    <div class="demo-row">
+      <sn-select [(value)]="checkmarkValue" checkmark placeholder="Pick a framework…" class="demo-select">
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+      </sn-select>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Clearable selection"
+    description="The clear action commits null through the same model and forms path, keeps focus on the trigger, and does not open the option panel."
+    snippet="select/codeClearable"
+  >
+    <div class="demo-row">
+      <sn-select
+        [(value)]="clearableValue"
+        clearable
+        clearLabel="Clear framework"
+        class="demo-select"
+      >
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+        <ng-template snIcon="clear">
+          <span class="sn-icon icon-ms">backspace</span>
+        </ng-template>
+      </sn-select>
+      <p class="hint-text">Value: {{ clearableValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form with disabled option"
+    description="Bind to a FormControl. Individual options can also be disabled."
+    snippet="select/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-select [formControl]="formCtrl" class="demo-select">
+        @for (s of sizes; track s.value) {
+          <sn-list-option [value]="s.value" [disabled]="s.value === 'lg'">{{ s.label }}</sn-list-option>
+        }
+      </sn-select>
+      <p class="hint-text">Value: {{ formCtrl.value | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside Form Field"
+    description="Compose with sn-form-field for a label, hint text, and focus styling."
+    snippet="select/codeFormField"
+  >
+    <div class="demo-row">
+      <sn-form-field class="demo-select">
+        <sn-label>Framework</sn-label>
+        <sn-select [(value)]="formFieldValue">
+          @for (fw of frameworks; track fw.value) {
+            <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+          }
+        </sn-select>
+        <sn-hint>Choose your preferred framework</sn-hint>
+      </sn-form-field>
+      <p class="hint-text">Value: {{ formFieldValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled select"
+    description="Set disabled=true to prevent interaction."
+    snippet="select/codeDisabled"
+  >
+    <div class="demo-row">
+      <sn-select [disabled]="true" [(value)]="basicValue" class="demo-select">
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+      </sn-select>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Pre-selected value"
+    description="The CVA writeValue / model binding works immediately - the label shows before the panel is ever opened."
+    snippet="select/codePreselected"
+  >
+    <div class="demo-row">
+      <sn-select [(value)]="preselectedValue" class="demo-select">
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+      </sn-select>
+      <p class="hint-text">Value: {{ preselectedValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Style and attribute pass-through"
+    description="Target documented internal sections without adding component-specific inputs. Library-owned roles, state attributes, and event handlers cannot be replaced."
+    snippet="select/codePassThrough"
+  >
+    <div class="demo-row">
+      <sn-select
+        [snStyle]="{ panel: { minWidth: '18rem' } }"
+        [snAttrs]="{ panel: { 'data-testid': 'framework-panel' } }"
+        class="demo-select"
+      >
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+      </sn-select>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="select" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the WAI-ARIA APG <strong>Select-Only Combobox</strong> pattern.
+    </li>
+    <li>
+      The trigger button has <code>role="combobox"</code>, <code>aria-haspopup="listbox"</code>,
+      <code>aria-expanded</code>, and <code>aria-controls</code> pointing to the panel id.
+    </li>
+    <li>
+      Focus stays on the trigger while the panel is open. The highlighted option is communicated
+      via <code>aria-activedescendant</code> on the trigger, pointing to the option's id.
+    </li>
+    <li>
+      The panel has <code>role="listbox"</code>. Each option has <code>role="option"</code>,
+      <code>aria-selected</code>, and <code>aria-disabled</code> when applicable.
+    </li>
+    <li>
+      <strong>Keyboard - trigger closed:</strong> Enter, Space, ArrowDown, ArrowUp, Home, End all open the panel.
+    </li>
+    <li>
+      <strong>Keyboard - panel open:</strong> ArrowDown/Up move the active descendant; Home/End jump to first/last;
+      Enter/Space select the active option and close; Escape closes without change; Tab closes and moves focus naturally.
+    </li>
+    <li>
+      <strong>Typeahead:</strong> typing characters while the panel is open highlights the first matching option.
+    </li>
+    <li>
+      Disabled options have <code>aria-disabled="true"</code> and are skipped by the key manager.
+    </li>
+    <li>
+      The clear action is a labelled button. Pointer activation is isolated from the trigger,
+      clearing does not open the panel, and focus returns to the combobox trigger.
+    </li>
+    <li>
+      When used inside <code>&lt;sn-form-field&gt;</code>, the trigger receives the form field's
+      <code>controlId</code> (so the label's <code>for</code> attribute connects correctly) and
+      reports filled/unfilled state to the field.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - disabled state propagates from
+      <code>FormControl.disable()</code>.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="select" section="theming" />
+</section>

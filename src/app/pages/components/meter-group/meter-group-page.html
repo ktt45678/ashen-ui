@@ -1,0 +1,100 @@
+<header class="page-header">
+  <h1>Meter Group</h1>
+  <p class="page-subtitle">
+    Stacked measurement bar with dot legend - for disk, CPU, or quota-style breakdowns
+    where segments sum within a known range.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="meter-group/codeBasic">
+    <sn-meter-group style="width: 100%;">
+      <sn-meter [value]="42" label="Apps" color="var(--sn-color-primary)" />
+      <sn-meter [value]="23" label="Media" color="var(--sn-color-info)" />
+      <sn-meter [value]="12" label="System" color="var(--sn-color-warning)" />
+    </sn-meter-group>
+  </doc-example>
+
+  <doc-example
+    heading="Custom max and unit"
+    description="Set max to a value other than 100 and provide a unit string per meter."
+    snippet="meter-group/codeCustomMax"
+  >
+    <sn-meter-group [max]="500" label="Storage (GB)" style="width: 100%;">
+      <sn-meter [value]="210" label="Documents" unit="GB" color="var(--sn-color-primary)" />
+      <sn-meter [value]="95"  label="Media"     unit="GB" color="var(--sn-color-info)" />
+      <sn-meter [value]="38"  label="System"    unit="GB" color="var(--sn-color-warning)" />
+    </sn-meter-group>
+  </doc-example>
+
+  <doc-example
+    heading="Without legend"
+    description="Set showLegend to false to render only the bar."
+    snippet="meter-group/codeNoLegend"
+  >
+    <sn-meter-group [showLegend]="false" style="width: 100%;">
+      <sn-meter [value]="64" label="Used" color="var(--sn-color-primary)" />
+      <sn-meter [value]="14" label="Reserved" color="var(--sn-color-warning)" />
+    </sn-meter-group>
+  </doc-example>
+
+  <doc-example
+    heading="Default color cycle"
+    description="When color is omitted, meters cycle through the semantic palette: primary, info, warning, success, error."
+    snippet="meter-group/codeDefaultColors"
+  >
+    <sn-meter-group style="width: 100%;">
+      <sn-meter [value]="35" label="CPU" />
+      <sn-meter [value]="28" label="Memory" />
+      <sn-meter [value]="15" label="Disk I/O" />
+    </sn-meter-group>
+  </doc-example>
+
+  <doc-example
+    heading="Custom bar dimensions via CSS variables"
+    snippet="meter-group/codeCustomToken"
+  >
+    <sn-meter-group style="width: 100%; --sn-meter-group-bar-height: 12px; --sn-meter-group-bar-radius: var(--sn-radius-sm);">
+      <sn-meter [value]="42" label="Apps" color="var(--sn-color-primary)" />
+      <sn-meter [value]="23" label="Media" color="var(--sn-color-info)" />
+    </sn-meter-group>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="meter-group" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="meter-group" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Each bar segment carries <code>role="meter"</code> with <code>aria-valuenow</code>,
+      <code>aria-valuemin="0"</code>, and <code>aria-valuemax</code> set to the group's
+      <code>max</code> value, per the WAI-ARIA meter role guidance.
+    </li>
+    <li>
+      Each segment's <code>aria-label</code> is set to the meter's <code>label</code> input,
+      identifying the segment for screen readers.
+    </li>
+    <li>
+      Set the <code>label</code> input on <code>sn-meter-group</code> to provide an
+      <code>aria-label</code> for the whole measurement group (e.g. "Storage usage").
+    </li>
+    <li>
+      Segment width transitions are disabled when <code>prefers-reduced-motion: reduce</code> is set.
+    </li>
+    <li>
+      The <code>sn-meter</code> elements themselves are hidden via <code>display: none</code>
+      - they are data-holder components; all visual structure is rendered by the parent.
+    </li>
+  </ul>
+</section>

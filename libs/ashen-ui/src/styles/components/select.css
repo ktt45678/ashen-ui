@@ -1,0 +1,227 @@
+@layer components {
+  .sn-select {
+    --sn-select-arrow-icon-size: 20px;
+    --sn-select-arrow-color: var(--sn-text-subtle);
+    --sn-select-clear-size: var(--sn-icon-size-md);
+    --sn-select-clear-icon-size: var(--sn-icon-size-sm);
+    --sn-select-clear-color: var(--sn-text-subtle);
+    --sn-select-clear-hover-color: var(--sn-text);
+    --sn-select-clear-bg: transparent;
+    --sn-select-clear-hover-bg: var(--sn-surface-hover);
+    --sn-select-clear-radius: var(--sn-radius-sm);
+    --sn-select-clear-gap: var(--sn-space-1);
+    --sn-select-clear-inset-inline-end: calc(var(--sn-select-padding-inline-end) + var(--sn-select-arrow-icon-size) + var(--sn-select-clear-gap));
+    --sn-select-clear-transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+  }
+
+  /* Full width by default, declared as a layered rule (not on the unlayered
+     :host) so a consumer width utility such as w-56 or w-1/2 overrides it with
+     no !important. The :host keeps only structural display/position. */
+  .sn-select {
+    width: 100%;
+  }
+
+  .sn-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--sn-select-padding);
+    /* Separate so the arrow and the clear button move together. */
+    padding-inline-end: var(--sn-select-padding-inline-end);
+    font-size: var(--sn-select-font-size);
+    font-family: var(--sn-font-ui, inherit);
+    color: var(--sn-text);
+    background-color: var(--sn-input-bg);
+    backdrop-filter: var(--sn-backdrop-filter, none);
+    -webkit-backdrop-filter: var(--sn-backdrop-filter, none);
+    border: 1px solid var(--sn-input-border);
+    border-radius: var(--sn-select-border-radius);
+    cursor: pointer;
+    box-shadow: var(--sn-input-focus-shadow-rest);
+    transition: border-color var(--sn-motion-slow, 200ms ease),
+      box-shadow var(--sn-input-focus-shadow-transition);
+    min-height: var(--sn-select-min-height);
+    outline: none;
+  }
+
+  .sn-select-trigger:focus,
+  .sn-select-trigger:focus-visible {
+    border-color: var(--sn-border-focus);
+    box-shadow: var(--sn-input-focus-shadow);
+  }
+
+  .sn-select-trigger[disabled],
+  .sn-select-trigger:disabled {
+    opacity: var(--sn-disabled-opacity);
+    cursor: not-allowed;
+  }
+
+  .sn-select-trigger[aria-expanded='true'] {
+    /* Hold the focus border and ring while open, for components that move focus
+       into the panel (tree-select, date-picker). */
+    border-color: var(--sn-border-focus);
+    box-shadow: var(--sn-input-focus-shadow);
+  }
+
+  .sn-select-trigger[aria-expanded='true'] .sn-select-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* The clear button sits just before the arrow. The arrow keeps its place and
+     its margin keeps the value text out from under the button. */
+  .sn-select-trigger-clearable .sn-select-arrow {
+    margin-inline-start: calc(0.5rem + var(--sn-select-clear-size) + var(--sn-select-clear-gap));
+  }
+
+  .sn-select-value {
+    flex: 1;
+    text-align: start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sn-select-placeholder {
+    color: var(--sn-input-placeholder);
+  }
+
+  .sn-select-arrow {
+    flex-shrink: 0;
+    margin-inline-start: 0.5rem;
+    transition: transform var(--sn-motion-slow, 200ms ease);
+    color: var(--sn-select-arrow-color, var(--sn-text-subtle));
+    display: inline-flex;
+    font-size: var(--sn-select-arrow-icon-size);
+    line-height: 1;
+  }
+
+  .sn-select-arrow > *,
+  .sn-select-clear > * {
+    flex: none;
+    width: 1em;
+    height: 1em;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  .sn-select-arrow > svg:not([fill='none']),
+  .sn-select-clear > svg:not([fill='none']) {
+    fill: currentColor;
+  }
+
+  .sn-select-arrow > svg[fill='none'],
+  .sn-select-clear > svg[fill='none'] {
+    stroke: currentColor;
+  }
+
+  .sn-select-clear {
+    position: absolute;
+    z-index: 1;
+    inset-inline-end: var(--sn-select-clear-inset-inline-end);
+    top: 50%;
+    width: var(--sn-select-clear-size);
+    height: var(--sn-select-clear-size);
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--sn-select-clear-radius);
+    background: var(--sn-select-clear-bg);
+    color: var(--sn-select-clear-color);
+    font-size: var(--sn-select-clear-icon-size);
+    line-height: 1;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: var(--sn-select-clear-transition);
+  }
+
+  .sn-select-clear:hover {
+    background: var(--sn-select-clear-hover-bg);
+    color: var(--sn-select-clear-hover-color);
+  }
+
+  .sn-select-clear:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-select-panel {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: var(--sn-select-font-size);
+    background-color: var(--sn-select-panel-bg);
+    backdrop-filter: var(--sn-backdrop-filter, none);
+    -webkit-backdrop-filter: var(--sn-backdrop-filter, none);
+    color: var(--sn-text);
+    border: var(--sn-select-panel-border, none);
+    border-radius: var(--sn-select-border-radius);
+    box-shadow: var(--sn-glass-shadow, var(--sn-shadow-overlay));
+    max-height: var(--sn-select-panel-max-height, 15rem);
+    overflow-y: auto;
+    transform-origin: top center;
+    animation: sn-select-panel-in var(--sn-motion-base, 150ms ease);
+  }
+
+  .sn-select-panel-closing {
+    animation: sn-select-panel-out var(--sn-select-panel-exit-duration, 0.12s) ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes sn-select-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes sn-select-panel-out {
+    to {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  /* Panel above the trigger
+     When the overlay flips above the trigger the growth direction flips with it:
+     the panel grows upward from its bottom edge. The overlay primitive stamps the
+     resolved side on the pane. */
+  /* Direct child of the pane only: a cascade-select flyout is also a
+     .sn-select-panel but nested deeper, and must keep its own animation
+     regardless of which way the main panel opened. */
+  [data-sn-overlay-side='above'] > .sn-select-panel {
+    transform-origin: bottom center;
+    animation-name: sn-select-panel-in-above;
+  }
+
+  [data-sn-overlay-side='above'] > .sn-select-panel-closing {
+    animation-name: sn-select-panel-out-above;
+  }
+
+  @keyframes sn-select-panel-in-above {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  @keyframes sn-select-panel-out-above {
+    to {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  .sn-listbox-option-active:not(.sn-listbox-option-selected) {
+    background-color: var(--sn-surface-hover);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-select-panel,
+    .sn-select-panel-closing {
+      animation: none;
+    }
+  }
+}

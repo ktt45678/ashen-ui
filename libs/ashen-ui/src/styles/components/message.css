@@ -1,0 +1,119 @@
+@layer components {
+  .sn-message {
+    --sn-message-gap: 10px;
+    --sn-message-padding: 10px 12px;
+    --sn-message-radius: var(--sn-radius-md);
+    --sn-message-font-size: var(--sn-text-sm);
+    --sn-message-font-family: var(--sn-font-ui);
+    /* Severity variants below point these at the global --sn-message-<sev>-*
+       tokens, so a theme can set flat pastels the color-mix cannot reach. */
+    --sn-message-bg: var(--sn-message-info-bg);
+    --sn-message-text-color: var(--sn-message-info-text);
+    --sn-message-icon-size: 18px;
+    --sn-message-close-size: 20px;
+    --sn-message-close-icon-size: 15px;
+    --sn-message-close-color: var(--sn-text-subtle);
+    --sn-message-color: var(--sn-color-info);
+
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sn-message-gap);
+    padding: var(--sn-message-padding);
+    border-radius: var(--sn-message-radius);
+    border: 1px solid var(--sn-message-color);
+    background: var(--sn-message-bg);
+    color: var(--sn-message-text-color);
+    font-size: var(--sn-message-font-size);
+    font-family: var(--sn-message-font-family);
+  }
+
+  .sn-message--info {
+    --sn-message-color: var(--sn-color-info);
+    --sn-message-bg: var(--sn-message-info-bg);
+    --sn-message-text-color: var(--sn-message-info-text);
+  }
+
+  .sn-message--success {
+    --sn-message-color: var(--sn-color-success);
+    --sn-message-bg: var(--sn-message-success-bg);
+    --sn-message-text-color: var(--sn-message-success-text);
+  }
+
+  .sn-message--warning {
+    --sn-message-color: var(--sn-color-warning);
+    --sn-message-bg: var(--sn-message-warning-bg);
+    --sn-message-text-color: var(--sn-message-warning-text);
+  }
+
+  .sn-message--error {
+    --sn-message-color: var(--sn-color-error);
+    --sn-message-bg: var(--sn-message-error-bg);
+    --sn-message-text-color: var(--sn-message-error-text);
+  }
+
+  .sn-message--simple {
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    gap: 6px;
+    align-items: center;
+    line-height: 1.3;
+  }
+
+  .sn-message--hidden {
+    display: none;
+  }
+
+  .sn-icon.sn-message-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--sn-message-color);
+    font-size: var(--sn-message-icon-size);
+    width: var(--sn-message-icon-size);
+    height: var(--sn-message-icon-size);
+  }
+
+  .sn-message-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-message-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--sn-message-close-size);
+    height: var(--sn-message-close-size);
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--sn-message-close-color);
+    cursor: pointer;
+    border-radius: var(--sn-radius-sm);
+    transition: color var(--sn-motion-fast), background var(--sn-motion-fast);
+  }
+
+  .sn-message-close .sn-icon {
+    font-size: var(--sn-message-close-icon-size);
+    width: var(--sn-message-close-icon-size);
+    height: var(--sn-message-close-icon-size);
+  }
+
+  .sn-message-close:hover {
+    background: var(--sn-surface-hover);
+    color: var(--sn-text-muted);
+  }
+
+  .sn-message-close:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-message-close {
+      transition: none;
+    }
+  }
+}

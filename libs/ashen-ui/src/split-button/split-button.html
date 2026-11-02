@@ -1,0 +1,23 @@
+<button
+  type="button"
+  snButton
+  [variant]="variant()"
+  [color]="color()"
+  [size]="size()"
+  [disabled]="disabled()"
+  [icon]="icon()"
+  class="sn-split-button-main"
+  (click)="clicked.emit($event)"
+><ng-content /></button>
+<button
+  type="button"
+  snButton
+  [variant]="variant()"
+  [color]="color()"
+  [size]="size()"
+  [disabled]="disabled()"
+  [icon]="icons.resolve('chevron-down')"
+  class="sn-split-button-trigger"
+  [snMenuTriggerFor]="menuFor()"
+  [attr.aria-label]="_triggerAriaLabel()"
+></button>

@@ -1,0 +1,132 @@
+/* Starting point for a new Ashen UI theme. GENERATED, do not edit by hand.
+   Regenerate with: node scripts/validate-theme.mjs
+
+   Copy this file, rename the selector, and give every token a value. Each one
+   is listed because the built-in dark theme overrides it, which means it
+   carries light/dark meaning: leave one out and it silently inherits the light
+   value from :root.
+
+   Values shown in comments are the dark theme's, for reference.
+
+   Then add your theme to the validator's reach by placing it in
+   styles/themes/, and `pnpm theme:check` will hold it to this contract. */
+
+[data-theme='my-theme'] {
+  --sn-backdrop-filter: ; /* dark: none */
+  --sn-border: ; /* dark: rgb(59, 68, 81) */
+  --sn-border-focus: ; /* dark: var(--sn-color-primary) */
+  --sn-border-invalid: ; /* dark: var(--sn-color-error) */
+  --sn-border-strong: ; /* dark: rgb(103, 116, 136) */
+  --sn-border-subtle: ; /* dark: rgb(43, 50, 61) */
+  --sn-color-error: ; /* dark: rgb(255, 139, 151) */
+  --sn-color-error-active: ; /* dark: rgb(255, 193, 201) */
+  --sn-color-error-border: ; /* dark: var(--sn-color-error-hover) */
+  --sn-color-error-focus: ; /* dark: var(--sn-color-error-active) */
+  --sn-color-error-hover: ; /* dark: rgb(255, 166, 176) */
+  --sn-color-error-soft: ; /* dark: rgba(255, 139, 151, 0.16) */
+  --sn-color-error-solid: ; /* dark: rgb(190, 57, 74) */
+  --sn-color-error-solid-active: ; /* dark: rgb(128, 31, 45) */
+  --sn-color-error-solid-hover: ; /* dark: rgb(160, 43, 59) */
+  --sn-color-info: ; /* dark: rgb(112, 218, 235) */
+  --sn-color-info-active: ; /* dark: rgb(174, 239, 249) */
+  --sn-color-info-border: ; /* dark: var(--sn-color-info-hover) */
+  --sn-color-info-focus: ; /* dark: var(--sn-color-info-active) */
+  --sn-color-info-hover: ; /* dark: rgb(143, 229, 242) */
+  --sn-color-info-soft: ; /* dark: rgba(112, 218, 235, 0.16) */
+  --sn-color-info-solid: ; /* dark: rgb(0, 117, 143) */
+  --sn-color-info-solid-active: ; /* dark: rgb(0, 74, 91) */
+  --sn-color-info-solid-hover: ; /* dark: rgb(0, 94, 115) */
+  --sn-color-invalid: ; /* dark: var(--sn-color-error) */
+  --sn-color-primary: ; /* dark: rgb(112, 174, 255) */
+  --sn-color-primary-active: ; /* dark: rgb(166, 207, 255) */
+  --sn-color-primary-border: ; /* dark: var(--sn-color-primary-hover) */
+  --sn-color-primary-focus: ; /* dark: var(--sn-color-primary-active) */
+  --sn-color-primary-hover: ; /* dark: rgb(139, 191, 255) */
+  --sn-color-primary-soft: ; /* dark: rgba(112, 174, 255, 0.16) */
+  --sn-color-primary-solid: ; /* dark: rgb(36, 100, 180) */
+  --sn-color-primary-solid-active: ; /* dark: rgb(23, 60, 128) */
+  --sn-color-primary-solid-hover: ; /* dark: rgb(29, 78, 166) */
+  --sn-color-secondary: ; /* dark: rgb(174, 188, 204) */
+  --sn-color-secondary-active: ; /* dark: rgb(215, 224, 234) */
+  --sn-color-secondary-border: ; /* dark: var(--sn-color-secondary-hover) */
+  --sn-color-secondary-focus: ; /* dark: var(--sn-color-secondary-active) */
+  --sn-color-secondary-hover: ; /* dark: rgb(193, 205, 218) */
+  --sn-color-secondary-soft: ; /* dark: rgba(174, 188, 204, 0.16) */
+  --sn-color-secondary-solid: ; /* dark: rgb(82, 91, 101) */
+  --sn-color-secondary-solid-active: ; /* dark: rgb(52, 60, 70) */
+  --sn-color-secondary-solid-hover: ; /* dark: rgb(66, 75, 86) */
+  --sn-color-success: ; /* dark: rgb(112, 211, 157) */
+  --sn-color-success-active: ; /* dark: rgb(166, 236, 196) */
+  --sn-color-success-border: ; /* dark: var(--sn-color-success-hover) */
+  --sn-color-success-focus: ; /* dark: var(--sn-color-success-active) */
+  --sn-color-success-hover: ; /* dark: rgb(139, 225, 177) */
+  --sn-color-success-soft: ; /* dark: rgba(112, 211, 157, 0.16) */
+  --sn-color-success-solid: ; /* dark: rgb(34, 121, 75) */
+  --sn-color-success-solid-active: ; /* dark: rgb(17, 77, 48) */
+  --sn-color-success-solid-hover: ; /* dark: rgb(24, 98, 61) */
+  --sn-color-warning: ; /* dark: rgb(255, 204, 103) */
+  --sn-color-warning-active: ; /* dark: rgb(255, 230, 174) */
+  --sn-color-warning-border: ; /* dark: var(--sn-color-warning-hover) */
+  --sn-color-warning-focus: ; /* dark: var(--sn-color-warning-active) */
+  --sn-color-warning-hover: ; /* dark: rgb(255, 218, 139) */
+  --sn-color-warning-soft: ; /* dark: rgba(255, 204, 103, 0.16) */
+  --sn-color-warning-solid: ; /* dark: rgb(145, 95, 0) */
+  --sn-color-warning-solid-active: ; /* dark: rgb(94, 61, 0) */
+  --sn-color-warning-solid-hover: ; /* dark: rgb(119, 78, 0) */
+  --sn-control-border: ; /* dark: rgb(96, 109, 127) */
+  --sn-dialog-bg: ; /* dark: var(--sn-surface-panel) */
+  --sn-disabled-bg: ; /* dark: rgb(38, 44, 55) */
+  --sn-disabled-border: ; /* dark: rgb(66, 76, 91) */
+  --sn-disabled-opacity: ; /* dark: 0.5 */
+  --sn-disabled-text: ; /* dark: rgb(127, 140, 157) */
+  --sn-drawer-bg: ; /* dark: var(--sn-surface-panel) */
+  --sn-focus-ring-applied-offset: ; /* dark: var(--sn-focus-ring-offset) */
+  --sn-focus-ring-color: ; /* dark: rgba(100, 170, 255, 0.6) */
+  --sn-focus-ring-inset-offset: ; /* dark: calc(-1 * var(--sn-focus-ring-width)) */
+  --sn-focus-ring-offset: ; /* dark: 2px */
+  --sn-focus-ring-style: ; /* dark: outline */
+  --sn-focus-ring-width: ; /* dark: 2px */
+  --sn-input-bg: ; /* dark: rgb(20, 24, 32) */
+  --sn-input-placeholder: ; /* dark: rgb(145, 159, 176) */
+  --sn-menu-bg: ; /* dark: var(--sn-surface-panel) */
+  --sn-message-error-bg: ; /* dark: color-mix(in srgb, var(--sn-color-error) 14%, var(--sn-surface-panel)) */
+  --sn-message-error-text: ; /* dark: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-error) 45%) */
+  --sn-message-info-bg: ; /* dark: color-mix(in srgb, var(--sn-color-info) 14%, var(--sn-surface-panel)) */
+  --sn-message-info-text: ; /* dark: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-info) 45%) */
+  --sn-message-success-bg: ; /* dark: color-mix(in srgb, var(--sn-color-success) 14%, var(--sn-surface-panel)) */
+  --sn-message-success-text: ; /* dark: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-success) 45%) */
+  --sn-message-warning-bg: ; /* dark: color-mix(in srgb, var(--sn-color-warning) 14%, var(--sn-surface-panel)) */
+  --sn-message-warning-text: ; /* dark: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-warning) 45%) */
+  --sn-scrollbar-size: ; /* dark: 10px */
+  --sn-scrollbar-thumb: ; /* dark: rgb(82, 82, 82) */
+  --sn-scrollbar-thumb-hover: ; /* dark: rgb(110, 110, 110) */
+  --sn-scrollbar-track: ; /* dark: transparent */
+  --sn-select-panel-bg: ; /* dark: var(--sn-surface-elevated) */
+  --sn-surface-canvas: ; /* dark: rgb(17, 20, 25) */
+  --sn-surface-elevated: ; /* dark: rgb(35, 40, 50) */
+  --sn-surface-glass: ; /* dark: rgba(35, 40, 50, 0.70) */
+  --sn-surface-grid: ; /* dark: rgb(20, 27, 38) */
+  --sn-surface-hover: ; /* dark: rgb(43, 50, 61) */
+  --sn-surface-overlay: ; /* dark: rgba(4, 7, 12, 0.68) */
+  --sn-surface-panel: ; /* dark: rgb(26, 30, 37) */
+  --sn-surface-tile: ; /* dark: rgb(55, 68, 87) */
+  --sn-surface-tile-active: ; /* dark: rgb(73, 88, 110) */
+  --sn-surface-tile-editing: ; /* dark: rgba(112, 174, 255, 0.16) */
+  --sn-text: ; /* dark: rgb(232, 236, 242) */
+  --sn-text-disabled: ; /* dark: rgb(105, 119, 136) */
+  --sn-text-inverse: ; /* dark: rgb(17, 24, 39) */
+  --sn-text-muted: ; /* dark: rgb(184, 195, 208) */
+  --sn-text-on-error: ; /* dark: var(--sn-text-on-primary) */
+  --sn-text-on-error-soft: ; /* dark: var(--sn-color-error) */
+  --sn-text-on-info: ; /* dark: var(--sn-text-on-primary) */
+  --sn-text-on-info-soft: ; /* dark: var(--sn-color-info) */
+  --sn-text-on-primary: ; /* dark: rgb(245, 247, 250) */
+  --sn-text-on-primary-soft: ; /* dark: var(--sn-color-primary) */
+  --sn-text-on-secondary: ; /* dark: var(--sn-text-on-primary) */
+  --sn-text-on-secondary-soft: ; /* dark: var(--sn-color-secondary) */
+  --sn-text-on-success: ; /* dark: var(--sn-text-on-primary) */
+  --sn-text-on-success-soft: ; /* dark: var(--sn-color-success) */
+  --sn-text-on-warning: ; /* dark: var(--sn-text-on-primary) */
+  --sn-text-on-warning-soft: ; /* dark: var(--sn-color-warning) */
+  --sn-text-subtle: ; /* dark: rgb(145, 159, 176) */
+}

@@ -1,0 +1,77 @@
+@layer components {
+  .sn-input-text {
+    --sn-input-text-padding: var(--sn-input-spacing-md);
+    --sn-input-text-font-size: var(--sn-input-font-size-md);
+    --sn-input-text-color: var(--sn-text);
+    --sn-input-text-bg: var(--sn-input-bg);
+    --sn-input-text-border: var(--sn-input-border);
+    --sn-input-text-border-radius: var(--sn-input-border-radius);
+    --sn-input-text-placeholder: var(--sn-input-placeholder);
+    --sn-input-text-focus-border: var(--sn-border-focus);
+    --sn-input-text-error-border: var(--sn-border-invalid);
+
+    /* No block padding: min-height (the input height token) sets the box
+       height and the single-line value centres, so inputs match the select
+       triggers and buttons at every size instead of running taller. */
+    padding-block: 0;
+    padding-inline: var(--sn-input-text-padding);
+    min-height: var(--sn-input-min-height-md);
+    font-size: var(--sn-input-text-font-size);
+    font-family: var(--sn-font-ui);
+    color: var(--sn-input-text-color);
+    background-color: var(--sn-input-text-bg);
+    backdrop-filter: var(--sn-backdrop-filter, none);
+    border: 1px solid var(--sn-input-text-border);
+    border-radius: var(--sn-input-text-border-radius);
+    box-shadow: var(--sn-input-focus-shadow-rest);
+    transition: border-color var(--sn-motion-slow),
+      box-shadow var(--sn-input-focus-shadow-transition);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sn-input-text::placeholder {
+    color: var(--sn-input-text-placeholder);
+  }
+
+  .sn-input-text:focus {
+    border-color: var(--sn-input-text-focus-border);
+    outline: none;
+    box-shadow: var(--sn-input-focus-shadow);
+  }
+
+  .sn-input-text:disabled {
+    opacity: var(--sn-disabled-opacity);
+    cursor: not-allowed;
+  }
+
+  .sn-input-text-xs {
+    padding-block: 0;
+    padding-inline: var(--sn-input-spacing-xs);
+    min-height: var(--sn-input-min-height-xs);
+    font-size: var(--sn-input-font-size-xs);
+  }
+
+  .sn-input-text-sm {
+    padding-block: 0;
+    padding-inline: var(--sn-input-spacing-sm);
+    min-height: var(--sn-input-min-height-sm);
+    font-size: var(--sn-input-font-size-sm);
+  }
+
+  .sn-input-text-lg {
+    padding-block: 0;
+    padding-inline: var(--sn-input-spacing-lg);
+    min-height: var(--sn-input-min-height-lg);
+    font-size: var(--sn-input-font-size-lg);
+  }
+
+  .sn-input-text-error,
+  .sn-input-text-error:focus {
+    border-color: var(--sn-input-text-error-border);
+  }
+
+  .sn-input-text-error:focus {
+    box-shadow: var(--sn-input-focus-shadow-invalid);
+  }
+}

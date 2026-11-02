@@ -1,0 +1,154 @@
+<header class="page-header">
+  <h1>Cascade Select</h1>
+  <p class="page-subtitle">
+    A Select-style trigger that opens a nested option tree with flyout submenus.
+    Hover a parent row to reveal its children; click a leaf to select its value.
+    Follows the WAI-ARIA combobox + tree popup pattern with activedescendant keyboard navigation.
+    Implements <code>ControlValueAccessor</code> for reactive forms and <code>ngModel</code>.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic with ngModel" snippet="cascade-select/codeBasic">
+    <div class="demo-row">
+      <sn-cascade-select
+        [(value)]="basicValue"
+        [options]="countryOptions"
+        placeholder="Select a city…"
+        class="demo-select"
+      ></sn-cascade-select>
+      <p class="hint-text">Value: "{{ basicValue() }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl. The value is the leaf's value property."
+    snippet="cascade-select/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-cascade-select
+        [formControl]="formCtrl"
+        [options]="mediaOptions"
+        placeholder="Select an action…"
+        class="demo-select"
+      ></sn-cascade-select>
+      <p class="hint-text">FormControl value: "{{ formCtrl.value }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside Form Field"
+    description="Compose with sn-form-field for label, hint, and focus styling."
+    snippet="cascade-select/codeFormField"
+  >
+    <div class="demo-row">
+      <sn-form-field class="demo-select">
+        <sn-label>Target city</sn-label>
+        <sn-cascade-select
+          [(value)]="formFieldValue"
+          [options]="countryOptions"
+          placeholder="Select a city…"
+        ></sn-cascade-select>
+        <sn-hint>Navigate continent → country → city</sn-hint>
+      </sn-form-field>
+      <p class="hint-text">Value: "{{ formFieldValue() }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled"
+    description="Set disabled=true to prevent interaction. Propagates from FormControl.disable()."
+    snippet="cascade-select/codeDisabled"
+  >
+    <div class="demo-row">
+      <sn-cascade-select
+        [disabled]="true"
+        [(value)]="disabledValue"
+        [options]="countryOptions"
+        class="demo-select"
+      ></sn-cascade-select>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Preselected deep leaf"
+    description="The trigger label resolves recursively via findLabel, so deep selections display correctly."
+    snippet="cascade-select/codePreselected"
+  >
+    <div class="demo-row">
+      <sn-cascade-select
+        [(value)]="preselectedValue"
+        [options]="mediaOptions"
+        class="demo-select"
+      ></sn-cascade-select>
+      <p class="hint-text">Value: "{{ preselectedValue() }}"</p>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="cascade-select" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Trigger has <code>role="combobox"</code>, <code>aria-haspopup="tree"</code>,
+      <code>aria-expanded</code>, <code>aria-controls</code> pointing to the panel id,
+      and <code>aria-activedescendant</code> reflecting the keyboard-active option while open.
+    </li>
+    <li>
+      The root panel has <code>role="tree"</code>; each option row has <code>role="treeitem"</code>.
+      Parent rows carry <code>aria-expanded</code>; selected leaves carry <code>aria-selected="true"</code>.
+    </li>
+    <li>
+      Focus stays on the trigger (activedescendant pattern) - no focus moves into the flyout tree.
+    </li>
+    <li>
+      <strong>Trigger - closed:</strong> Enter, Space, ArrowDown, ArrowUp open the panel and
+      move the active item to the first root option.
+    </li>
+    <li>
+      <strong>ArrowDown / ArrowUp</strong> - move within the current level (clamped, no wrap).
+    </li>
+    <li>
+      <strong>ArrowRight</strong> - on a parent: opens its flyout and moves active to its first child.
+    </li>
+    <li>
+      <strong>ArrowLeft</strong> - when inside a flyout: moves active back to the parent and closes the flyout.
+    </li>
+    <li>
+      <strong>Home / End</strong> - jump to first / last option at the current level.
+    </li>
+    <li>
+      <strong>Enter / Space</strong> - on a leaf: picks the value and closes. On a parent: toggles the flyout.
+    </li>
+    <li>
+      <strong>Escape</strong> - closes the panel without changing the value and returns focus to the trigger.
+    </li>
+    <li>
+      <strong>Tab</strong> - closes the panel and moves focus naturally to the next focusable element.
+    </li>
+    <li>
+      <strong>Mouse hover</strong> - hovering a parent opens its flyout; hovering another option closes siblings.
+    </li>
+    <li>
+      When used inside <code>&lt;sn-form-field&gt;</code>, the trigger receives the field's
+      <code>controlId</code> and reports filled/unfilled state.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - disabled state propagates from
+      <code>FormControl.disable()</code>.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="cascade-select" section="theming" />
+</section>

@@ -1,0 +1,296 @@
+@layer components {
+  .sn-drawer {
+    display: contents;
+  }
+
+  .sn-drawer-container {
+    position: fixed;
+    inset: 0;
+    z-index: var(--sn-z-index-modal, 1000);
+    /* none so that with mask=false the page behind stays interactive; the mask
+       and panel each re-enable pointer events for themselves. */
+    pointer-events: none;
+  }
+
+  .sn-drawer-mask {
+    position: absolute;
+    inset: 0;
+    background: var(--sn-surface-overlay);
+    pointer-events: auto;
+    animation: sn-drawer-backdrop-in var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-mask {
+    animation: sn-drawer-backdrop-out var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-panel {
+    /* --sn-drawer-bg is global; restating it here would hide it from :root themes. */
+    --sn-drawer-color: var(--sn-text);
+    --sn-drawer-font-family: var(--sn-font-ui);
+    --sn-drawer-border: none;
+    --sn-drawer-shadow: var(--sn-glass-shadow, var(--sn-shadow-modal));
+    --sn-drawer-backdrop-filter: var(--sn-backdrop-filter, none);
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background: var(--sn-drawer-bg);
+    backdrop-filter: var(--sn-drawer-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-drawer-backdrop-filter);
+    color: var(--sn-drawer-color);
+    font-family: var(--sn-drawer-font-family);
+    box-shadow: var(--sn-drawer-shadow);
+    overflow: hidden;
+    pointer-events: auto;
+    box-sizing: border-box;
+    z-index: 1;
+  }
+
+  .sn-drawer-panel--start,
+  .sn-drawer-panel--end,
+  .sn-drawer-panel--right,
+  .sn-drawer-panel--left {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: min(var(--sn-drawer-width, 20rem), calc(100vw - var(--sn-drawer-viewport-gutter, 3rem)));
+  }
+
+  /* The logical pair rides `--sn-dir` because `translateX` is physical and
+     there is no logical transform to slide a panel in from its own edge. */
+  .sn-drawer-panel--start {
+    inset-inline-start: 0;
+    border-inline-end: var(--sn-drawer-border);
+    animation: sn-drawer-in-start var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-panel--end {
+    inset-inline-end: 0;
+    border-inline-start: var(--sn-drawer-border);
+    animation: sn-drawer-in-end var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--start {
+    animation: sn-drawer-out-start var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--end {
+    animation: sn-drawer-out-end var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-panel--right {
+    right: 0;
+    border-left: var(--sn-drawer-border);
+    animation: sn-drawer-in-right var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-panel--left {
+    left: 0;
+    border-right: var(--sn-drawer-border);
+    animation: sn-drawer-in-left var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--right {
+    animation: sn-drawer-out-right var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--left {
+    animation: sn-drawer-out-left var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-panel--top,
+  .sn-drawer-panel--bottom {
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: var(--sn-drawer-height, 40vh);
+  }
+
+  .sn-drawer-panel--top {
+    top: 0;
+    border-bottom: var(--sn-drawer-border);
+    animation: sn-drawer-in-top var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-panel--bottom {
+    bottom: 0;
+    border-top: var(--sn-drawer-border);
+    animation: sn-drawer-in-bottom var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--top {
+    animation: sn-drawer-out-top var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--bottom {
+    animation: sn-drawer-out-bottom var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-panel--fullscreen {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: none;
+    animation: sn-drawer-in-fullscreen var(--sn-drawer-enter-duration, 0.2s) ease-out;
+  }
+
+  .sn-drawer-container--hiding .sn-drawer-panel--fullscreen {
+    animation: sn-drawer-out-fullscreen var(--sn-drawer-exit-duration, 0.2s) ease-in forwards;
+  }
+
+  .sn-drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sn-drawer-header-padding, 1.25rem 1.5rem);
+    border-bottom: var(--sn-drawer-header-border, 1px solid var(--sn-border));
+    flex-shrink: 0;
+  }
+
+  .sn-drawer-title {
+    margin: 0;
+    font-family: var(--sn-font-display, var(--sn-font-ui));
+    font-size: var(--sn-drawer-title-font-size, 1.125rem);
+    font-weight: var(--sn-drawer-title-font-weight, 600);
+    color: var(--sn-text);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-drawer-close-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-drawer-close-size, 2rem);
+    height: var(--sn-drawer-close-size, 2rem);
+    border: none;
+    background: transparent;
+    color: var(--sn-text-muted);
+    border-radius: var(--sn-drawer-close-radius, var(--sn-radius-sm, 0.25rem));
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-inline-start: 0.75rem;
+    transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+  }
+
+  .sn-drawer-close-button:hover {
+    background-color: var(--sn-surface-hover);
+    color: var(--sn-text);
+  }
+
+  .sn-drawer-close-button:focus-visible {
+    /* An outline, not a box-shadow: box-shadow is stripped in forced-colors /
+       Windows High Contrast mode, so the shadow form left these two buttons
+       with no visible focus indicator at all there. */
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-drawer-body {
+    padding: var(--sn-drawer-content-padding, 1.5rem);
+    overflow: auto;
+    flex: 1;
+    font-size: var(--sn-text-sm, 0.875rem);
+    color: var(--sn-text-muted);
+  }
+
+  .sn-drawer-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: var(--sn-drawer-footer-padding, 1.25rem 1.5rem);
+    border-top: 1px solid var(--sn-border);
+    flex-shrink: 0;
+  }
+
+  /* The projected [snDrawerFooter] wrapper collapses so its buttons become
+     direct flex children of the footer and pick up its gap/justification. */
+  .sn-drawer-footer-slot {
+    display: contents;
+  }
+
+  @keyframes sn-drawer-backdrop-in {
+    from { opacity: 0; }
+  }
+
+  @keyframes sn-drawer-backdrop-out {
+    to { opacity: 0; }
+  }
+
+  @keyframes sn-drawer-in-start {
+    from { transform: translateX(calc(-100% * var(--sn-dir, 1))); }
+  }
+
+  @keyframes sn-drawer-out-start {
+    to { transform: translateX(calc(-100% * var(--sn-dir, 1))); }
+  }
+
+  @keyframes sn-drawer-in-end {
+    from { transform: translateX(calc(100% * var(--sn-dir, 1))); }
+  }
+
+  @keyframes sn-drawer-out-end {
+    to { transform: translateX(calc(100% * var(--sn-dir, 1))); }
+  }
+
+  @keyframes sn-drawer-in-right {
+    from { transform: translateX(100%); }
+  }
+
+  @keyframes sn-drawer-out-right {
+    to { transform: translateX(100%); }
+  }
+
+  @keyframes sn-drawer-in-left {
+    from { transform: translateX(-100%); }
+  }
+
+  @keyframes sn-drawer-out-left {
+    to { transform: translateX(-100%); }
+  }
+
+  @keyframes sn-drawer-in-top {
+    from { transform: translateY(-100%); }
+  }
+
+  @keyframes sn-drawer-out-top {
+    to { transform: translateY(-100%); }
+  }
+
+  @keyframes sn-drawer-in-bottom {
+    from { transform: translateY(100%); }
+  }
+
+  @keyframes sn-drawer-out-bottom {
+    to { transform: translateY(100%); }
+  }
+
+  @keyframes sn-drawer-in-fullscreen {
+    from { opacity: 0; transform: scale(0.96); }
+  }
+
+  @keyframes sn-drawer-out-fullscreen {
+    to { opacity: 0; transform: scale(0.96); }
+  }
+
+  /* (dark-theme --sn-drawer-bg override removed - the token is global now) */
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-drawer-panel--right,
+    .sn-drawer-panel--left,
+    .sn-drawer-panel--top,
+    .sn-drawer-panel--bottom,
+    .sn-drawer-panel--fullscreen,
+    .sn-drawer-container--hiding .sn-drawer-panel--right,
+    .sn-drawer-container--hiding .sn-drawer-panel--left,
+    .sn-drawer-container--hiding .sn-drawer-panel--top,
+    .sn-drawer-container--hiding .sn-drawer-panel--bottom,
+    .sn-drawer-container--hiding .sn-drawer-panel--fullscreen,
+    .sn-drawer-mask,
+    .sn-drawer-container--hiding .sn-drawer-mask {
+      animation: none;
+    }
+  }
+}

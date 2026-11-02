@@ -1,0 +1,55 @@
+@layer components {
+  .sn-divider {
+    /* Component token tier */
+    --sn-divider-color: var(--sn-border);
+    --sn-divider-margin: 0.75rem;
+    --sn-divider-gap: 0.625rem;
+    --sn-divider-label-size: var(--sn-text-2xs, 0.625rem);
+    --sn-divider-vertical-margin: 0.75rem;
+
+    /* Layout: flex so lines and label share a row */
+    display: flex;
+    align-items: center;
+    gap: var(--sn-divider-gap);
+    width: 100%;
+    margin: var(--sn-divider-margin) 0;
+  }
+
+  .sn-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--sn-divider-color);
+  }
+
+  /* Hide the second line when there is no label - produces a single full-width rule */
+  .sn-divider:not(.sn-divider--labeled) .sn-divider-line:last-child {
+    display: none;
+  }
+
+  .sn-divider:not(.sn-divider--labeled) .sn-divider-line {
+    flex: unset;
+    width: 100%;
+  }
+
+  .sn-divider-label {
+    font-size: var(--sn-divider-label-size);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sn-text-subtle);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .sn-divider--vertical {
+    display: inline-block;
+    width: 1px;
+    height: auto;
+    align-self: stretch;
+    background: var(--sn-divider-color);
+    margin: 0 var(--sn-divider-vertical-margin);
+    /* Reset horizontal properties */
+    min-height: 0;
+    flex: unset;
+  }
+}

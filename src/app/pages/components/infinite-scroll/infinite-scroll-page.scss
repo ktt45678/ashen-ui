@@ -1,0 +1,112 @@
+:host {
+  display: block;
+}
+
+.scroll-container {
+  height: 240px;
+  overflow-y: auto;
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  background: var(--sn-input-bg);
+  max-width: 420px;
+}
+
+.list-item {
+  padding: 8px 12px;
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text);
+  border-bottom: 1px solid var(--sn-border-subtle);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.loading-row {
+  padding: 8px 12px;
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.demo-count {
+  margin-top: 6px;
+  font-size: var(--sn-text-xs);
+  color: var(--sn-text-muted);
+
+  &.muted {
+    opacity: 0.5;
+  }
+}
+
+.chat-container {
+  height: 260px;
+  overflow-y: auto;
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  background: var(--sn-input-bg);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 480px;
+}
+
+.chat-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-start;
+  max-width: 80%;
+
+  &.is-me {
+    align-self: flex-end;
+    align-items: flex-end;
+
+    .chat-text {
+      background: var(--sn-color-primary-soft);
+    }
+  }
+}
+
+.chat-author {
+  font-size: var(--sn-text-xs);
+  color: var(--sn-text-muted);
+  padding: 0 4px;
+}
+
+.chat-text {
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text);
+  background: var(--sn-surface-raised);
+  border-radius: var(--sn-radius-sm);
+  padding: 6px 10px;
+  line-height: 1.4;
+}
+
+.table-scroll-wrap {
+  height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  max-width: 700px;
+}
+
+.doc-callout {
+  padding: 12px 16px;
+  border-left: 3px solid var(--sn-color-primary);
+  background: var(--sn-color-primary-soft);
+  border-radius: var(--sn-radius-sm);
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text);
+  line-height: 1.6;
+
+  code {
+    font-family: var(--sn-font-mono);
+    background: transparent;
+  }
+}
+
+/* -- Standard doc-page styles (shared look across all component pages) -- */
+.code-block { background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); padding: var(--sn-space-3) var(--sn-space-4); font-family: var(--sn-font-mono); font-size: var(--sn-text-xs); color: var(--sn-text-muted); overflow-x: auto; }

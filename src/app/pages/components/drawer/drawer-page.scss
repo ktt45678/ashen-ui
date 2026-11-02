@@ -1,0 +1,12 @@
+kbd { font-family: var(--sn-font-mono); font-size: 0.85em; background: var(--sn-surface-canvas); padding: 0.1em 0.35em; border-radius: var(--sn-radius-sm); border: 1px solid var(--sn-border); }
+a { color: var(--sn-color-primary); }
+em { font-style: italic; color: var(--sn-text-subtle); }
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sn-space-4);
+  padding: var(--sn-space-6) var(--sn-space-4);
+  min-height: 80px;
+  flex-wrap: wrap;
+}

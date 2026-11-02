@@ -1,0 +1,47 @@
+<div
+  class="sn-dialog-container"
+  [class.sn-dialog-container--hiding]="hiding()"
+  [class.sn-dialog-container--fullscreen]="config.fullscreen"
+>
+  @if (hasBackdrop) {
+    <div class="sn-dialog-mask" (click)="onMaskClick()"></div>
+  }
+  <div
+    #panel
+    [id]="panelId"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="showHeader && config.header ? titleId : null"
+    [attr.aria-label]="config.ariaLabel ?? null"
+    class="sn-dialog-panel"
+    [class.sn-dialog-panel--sm]="config.size === 'sm'"
+    [class.sn-dialog-panel--lg]="config.size === 'lg'"
+    [class.sn-dialog-panel--custom-width]="config.width != null"
+    [class]="panelClassStr"
+    [style.width]="config.width ?? null"
+    [style.max-width]="config.maxWidth ?? null"
+    [class.sn-dialog-panel--compact]="config.density === 'compact'"
+    [class.sn-dialog-panel--untitled]="!config.header"
+    [style.height]="config.height ?? null"
+    [style.max-height]="config.maxHeight ?? null"
+  >
+    @if (showHeader) {
+      <div class="sn-dialog-header" [class]="headerClassStr">
+        <h2 [id]="titleId" class="sn-dialog-title" [class]="titleClassStr">{{ config.header }}</h2>
+        @if (closable) {
+          <button
+            type="button"
+            class="sn-dialog-close-button"
+            [attr.aria-label]="effectiveCloseLabel"
+            (click)="onCloseClick()"
+          >
+            <sn-icon>{{ icons.resolve('close') }}</sn-icon>
+          </button>
+        }
+      </div>
+    }
+    <div class="sn-dialog-body" [class]="bodyClassStr">
+      <ng-template cdkPortalOutlet></ng-template>
+    </div>
+  </div>
+</div>

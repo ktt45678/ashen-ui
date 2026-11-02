@@ -1,0 +1,42 @@
+@for (entry of visibleEntries(); track entry.key) {
+  <div
+    role="treeitem"
+    class="sn-tree-node"
+    snPart="node"
+    [class]="nodeClassExtra()"
+    [class.sn-tree-node--selected]="entry.key === selectedKey()"
+    [attr.aria-level]="entry.level"
+    [attr.aria-setsize]="entry.setsize"
+    [attr.aria-posinset]="entry.posinset"
+    [attr.aria-expanded]="entry.hasChildren ? (entry.expanded ? 'true' : 'false') : null"
+    [attr.aria-busy]="isLoading(entry.key) ? 'true' : null"
+    [attr.aria-selected]="entry.key === selectedKey() ? 'true' : 'false'"
+    [attr.tabindex]="isActive(entry.key) ? 0 : -1"
+    [style.padding-left.px]="8 + entry.depth * 18"
+    [attr.data-key]="entry.key"
+    (click)="selectNode(entry)"
+    (dblclick)="onNodeDblClick(entry)"
+    (focus)="onNodeFocus(entry.key)"
+    (keydown)="onNodeKeydown($event, entry)"
+  >
+    @if (entry.hasChildren) {
+      <button
+        type="button"
+        tabindex="-1"
+        class="sn-tree-toggle"
+        snPart="toggle"
+        [class]="toggleClassExtra()"
+        [attr.aria-label]="getToggleLabel(entry.expanded)"
+        (click)="toggleExpand(entry.key, $event)"
+      >
+        <sn-icon class="sn-tree-toggle-icon" [class.sn-tree-toggle-icon--open]="entry.expanded" [class.sn-tree-toggle-icon--loading]="isLoading(entry.key)">{{ icons.resolve('chevron-right') }}</sn-icon>
+      </button>
+    } @else {
+      <span class="sn-tree-spacer"></span>
+    }
+    @if (entry.node.icon) {
+      <sn-icon class="sn-tree-node-icon" snPart="nodeIcon" [class]="nodeIconClassExtra()">{{ entry.node.icon }}</sn-icon>
+    }
+    <span class="sn-tree-label" snPart="nodeLabel" [class]="nodeLabelClassExtra()">{{ entry.node.label }}</span>
+  </div>
+}

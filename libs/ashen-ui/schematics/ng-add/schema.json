@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "AshenUiNgAdd",
+  "title": "Ashen UI ng-add",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The application to set up. Defaults to the workspace's default project.",
+      "$default": { "$source": "projectName" }
+    },
+    "styles": {
+      "type": "boolean",
+      "default": true,
+      "description": "Import ashen-ui/styles/index.css into the project's global stylesheet."
+    },
+    "tailwind": {
+      "type": "boolean",
+      "default": false,
+      "description": "Also import the Tailwind bridge, ashen-ui/styles/tailwind.css."
+    },
+    "bootGuard": {
+      "type": "boolean",
+      "default": false,
+      "description": "Insert the app-wide data-sn-app-boot snippet into index.html and its global stylesheet, which hides the app until the first render so zoneless host bindings don't flash."
+    }
+  },
+  "required": []
+}

@@ -1,0 +1,107 @@
+<header class="page-header">
+  <h1>Message</h1>
+  <p class="page-subtitle">
+    Inline severity message - tinted background with a colored border, severity icon, and
+    optional close affordance. Supports info, success, warning, and error severities.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Severities" snippet="message/codeSeverities">
+    <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+      <sn-message severity="info">Widgets refresh every second</sn-message>
+      <sn-message severity="success">Grid saved</sn-message>
+      <sn-message severity="warning">Grid 2 has overlapping tiles</sn-message>
+      <sn-message severity="error">Name is required</sn-message>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Closable"
+    description="Set closable to show a close button. The component hides itself when closed and emits a closed event."
+    snippet="message/codeClosable"
+  >
+    @if (showClosable()) {
+      <sn-message severity="success" [closable]="true" (closed)="onClosed()">
+        Grid saved
+      </sn-message>
+    } @else {
+      <span style="font-size: var(--sn-text-sm); color: var(--sn-text-muted);">Message closed - reappearing…</span>
+    }
+  </doc-example>
+
+  <doc-example
+    heading="Simple (text only)"
+    description="The simple variant renders only severity-tinted text - no icon, container, border, or background."
+    snippet="message/codeSimple"
+  >
+    <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+      <sn-message severity="info" simple>Widgets refresh every second</sn-message>
+      <sn-message severity="success" simple>Grid saved</sn-message>
+      <sn-message severity="warning" simple>Grid 2 has overlapping tiles</sn-message>
+      <sn-message severity="error" simple>Name is required</sn-message>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Custom icon"
+    description="Override the default severity icon with any Material Symbols ligature name."
+    snippet="message/codeCustomIcon"
+  >
+    <sn-message severity="info" icon="notifications">
+      You have 3 pending notifications
+    </sn-message>
+  </doc-example>
+
+  <doc-example
+    heading="Rich content"
+    description="Project arbitrary HTML into the message content slot."
+    snippet="message/codeProjected"
+  >
+    <sn-message severity="warning">
+      <strong>Overlapping tiles detected</strong> - open the layout editor to resolve conflicts.
+    </sn-message>
+  </doc-example>
+
+  <doc-example
+    heading="Custom color via CSS variable"
+    description="Override --sn-message-color on the element or any ancestor."
+    snippet="message/codeCustomColor"
+  >
+    <sn-message severity="error" style="--sn-message-color: var(--sn-color-primary);">
+      Custom color override
+    </sn-message>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="message" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="message" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The host element carries <code>role="alert"</code> for <code>warning</code> and
+      <code>error</code> severities, triggering an immediate screen-reader announcement.
+      Info and success use <code>role="status"</code>, which is a polite live region.
+    </li>
+    <li>
+      The close button has an <code>aria-label</code> sourced from
+      <code>SnMessageIntl.close</code> (default: "Close message"). Override it with
+      <code>provideSnIntl(&#123; message: &#123; close: '…' &#125; &#125;)</code>.
+    </li>
+    <li>
+      When closed, the host receives <code>.sn-message--hidden</code> which applies
+      <code>display: none</code>, removing the element from the accessibility tree.
+    </li>
+  </ul>
+</section>

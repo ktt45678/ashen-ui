@@ -1,0 +1,86 @@
+<button
+  #triggerBtn
+  snPart="trigger"
+  type="button"
+  class="sn-select-trigger"
+  [class]="triggerClassExtra()"
+  [id]="triggerId()"
+  role="combobox"
+  [attr.aria-expanded]="isOpen()"
+  aria-haspopup="tree"
+  [attr.aria-controls]="panelId"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-describedby]="ariaDescribedBy()"
+  [attr.aria-activedescendant]="isOpen() ? activeDescendant() : null"
+  [disabled]="isDisabled() || null"
+  (click)="onTriggerClick()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span
+    snPart="value"
+    class="sn-select-value sn-cascade-select-value"
+    [class]="valueClassExtra()"
+    [class.sn-select-placeholder]="selectedLabel() === null"
+  >
+    {{ selectedLabel() !== null ? selectedLabel() : effectivePlaceholder() }}
+  </span>
+  <span snPart="arrow" class="sn-select-arrow" [class]="arrowClassExtra()">
+    <sn-icon>{{ icons.resolve('chevron-down') }}</sn-icon>
+  </span>
+</button>
+
+<ng-template #panelTpl>
+  <div
+    snPart="panel"
+    class="sn-select-panel sn-cascade-select-panel"
+    [class]="panelClassExtra()"
+    [class.sn-select-panel-closing]="isClosing()"
+    [id]="panelId"
+    role="tree"
+    [attr.aria-label]="ariaLabel() || null"
+    [style.animation]="panelAnimation()"
+  >
+    <ng-container
+      *ngTemplateOutlet="optionList; context: { opts: options(), path: [] }"
+    ></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #optionList let-opts="opts" let-path="path">
+  @for (opt of opts; track opt.label; let i = $index) {
+    @let optPath = [...path, i];
+    <div
+      class="sn-listbox-option sn-cascade-select-option"
+      [class.sn-listbox-option-selected]="isSelected(opt)"
+      [class.sn-listbox-option-active]="isActive(optPath)"
+      [id]="optionId(optPath)"
+      role="treeitem"
+      [attr.aria-level]="optPath.length"
+      [attr.aria-setsize]="opts.length"
+      [attr.aria-posinset]="i + 1"
+      [attr.aria-expanded]="isParent(opt) ? isFlyoutOpen(optPath) : null"
+      [attr.aria-selected]="isSelected(opt) ? true : null"
+      (mouseenter)="onOptionMouseenter(optPath)"
+      (click)="onOptionClick(opt, optPath)"
+    >
+      <span class="sn-cascade-select-option-content">
+        @if (opt.icon) {
+          <sn-icon class="sn-cascade-select-option-icon">{{ opt.icon }}</sn-icon>
+        }
+        <span>{{ opt.label }}</span>
+      </span>
+      @if (isParent(opt)) {
+        <sn-icon class="sn-cascade-select-chevron">{{ icons.resolve('chevron-right') }}</sn-icon>
+      }
+      @if (isParent(opt) && isFlyoutOpen(optPath)) {
+        <!-- A treeitem owns its children through a group. Without the role the
+             nested items hang off a generic div and the level is lost. -->
+        <div class="sn-select-panel sn-cascade-select-flyout" role="group">
+          <ng-container
+            *ngTemplateOutlet="optionList; context: { opts: opt.children, path: optPath }"
+          ></ng-container>
+        </div>
+      }
+    </div>
+  }
+</ng-template>

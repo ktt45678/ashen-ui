@@ -1,0 +1,54 @@
+<header class="page-header">
+  <h1 class="page-title">Getting started</h1>
+  <p class="page-lead">Install Ashen UI and add your first component in under five minutes.</p>
+</header>
+
+<section class="doc-section">
+  <h2 class="section-title">Installation</h2>
+  <p class="doc-p">Install the package and its peer dependency (<code>@angular/cdk</code>) using your package manager:</p>
+  <pre class="code-block"><code>pnpm add ashen-ui @angular/cdk</code></pre>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Import the styles</h2>
+  <p class="doc-p">
+    Add the design tokens to your app's global stylesheet. If you use Tailwind CSS 4, also
+    import the theme integration file.
+  </p>
+  <pre class="code-block"><code>/* src/styles.css */
+@import "tailwindcss";                        /* optional, only if you use Tailwind */
+@import "ashen-ui/styles/index.css";          /* design tokens + base styles */
+@import "ashen-ui/styles/tailwind.css";       /* optional Tailwind theme vars */</code></pre>
+  <p class="doc-p">
+    For the icon font (Material Symbols Outlined) to load correctly, import
+    <code>ashen-ui/styles/tokens/fonts.css</code>. This file's <code>&#64;font-face</code>
+    references <code>ashen-ui/styles/fonts/material-symbols-outlined.woff2</code> - make sure
+    your bundler resolves paths from <code>node_modules</code>.
+  </p>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Configure the app</h2>
+  <p class="doc-p">Ashen UI requires Angular's zoneless change detection (Angular 19+):</p>
+  <pre class="code-block"><code>// app.config.ts
+import &#123; provideZonelessChangeDetection &#125; from '&#64;angular/core';
+
+export const appConfig: ApplicationConfig = &#123;
+  providers: [
+    provideZonelessChangeDetection(),
+    // …
+  ]
+&#125;;</code></pre>
+</section>
+
+<section class="doc-section">
+  <h2 class="section-title">Use a component</h2>
+  <p class="doc-p">Each component is a secondary entry point. Import exactly what you need:</p>
+  <pre class="code-block"><code>import &#123; Button &#125; from 'ashen-ui/button';
+
+@Component(&#123;
+  imports: [Button],
+  template: `&lt;button snButton&gt;Save&lt;/button&gt;`,
+&#125;)
+export class MyComponent &#123;&#125;</code></pre>
+</section>

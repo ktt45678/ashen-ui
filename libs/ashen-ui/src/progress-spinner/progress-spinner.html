@@ -1,0 +1,71 @@
+@if (variant() === 'material') {
+  <svg
+    viewBox="0 0 24 24"
+    snPart="svg"
+    [attr.width]="size()"
+    [attr.height]="size()"
+    [class]="svgClass() + ' ' + svgClassExtra()"
+    [style.transform]="svgStyle()"
+    aria-hidden="true"
+  >
+    @if (isDeterminate()) {
+      @if (pctFraction() < 1) {
+        <circle
+          cx="12" cy="12" r="10"
+          fill="none"
+          stroke="var(--sn-progress-spinner-track-color)"
+          [attr.stroke-width]="strokeWidth()"
+          stroke-linecap="round"
+          [attr.stroke-dasharray]="trackDash()"
+          [attr.stroke-dashoffset]="trackDashOffset()"
+        />
+      }
+      @if (pctFraction() > 0) {
+        <circle
+          cx="12" cy="12" r="10"
+          fill="none"
+          [attr.stroke]="fillColor()"
+          [attr.stroke-width]="strokeWidth()"
+          stroke-linecap="round"
+          [attr.stroke-dasharray]="fillDash()"
+          class="sn-progress-spinner-fill"
+        />
+      }
+    } @else {
+      <circle
+        class="sn-progress-spinner-arc--material"
+        cx="12" cy="12" r="10"
+        fill="none"
+        [attr.stroke]="fillColor()"
+        [attr.stroke-width]="strokeWidth()"
+        stroke-linecap="round"
+      />
+    }
+  </svg>
+} @else {
+  <svg
+    viewBox="0 0 24 24"
+    snPart="svg"
+    [attr.width]="size()"
+    [attr.height]="size()"
+    [class]="svgClass() + ' ' + svgClassExtra()"
+    [style.transform]="svgStyle()"
+    aria-hidden="true"
+  >
+    <circle
+      cx="12" cy="12" r="10"
+      fill="none"
+      stroke="var(--sn-progress-spinner-track-color)"
+      [attr.stroke-width]="strokeWidth()"
+    />
+    <circle
+      cx="12" cy="12" r="10"
+      fill="none"
+      [attr.stroke]="fillColor()"
+      [attr.stroke-width]="strokeWidth()"
+      stroke-linecap="round"
+      [attr.stroke-dasharray]="fillDash()"
+      [style.transition]="isDeterminate() ? 'stroke-dasharray var(--sn-motion-slow)' : null"
+    />
+  </svg>
+}

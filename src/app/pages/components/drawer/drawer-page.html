@@ -1,0 +1,182 @@
+<header class="page-header">
+  <h1>Drawer</h1>
+  <p class="page-subtitle">
+    An edge-anchored modal panel that slides in from any side of the viewport, or covers it
+    entirely. Use Drawer for inspectors, settings panels, and editing surfaces that stay open
+    while the user works. The drawer traps focus, blocks body scroll, and closes on
+    <kbd>Escape</kbd>, backdrop click, or the built-in close button.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic (right, default)" snippet="drawer/codeBasic">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="basicOpen.set(true)">Open Drawer</button>
+      <sn-drawer [(open)]="basicOpen" title="Edit Tile">
+        <p style="margin:0;color:var(--sn-text-muted)">Make changes to your tile below.</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Left position" snippet="drawer/codeLeft">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="leftOpen.set(true)">Open Left Drawer</button>
+      <sn-drawer [(open)]="leftOpen" title="Navigation" position="left">
+        <p style="margin:0;color:var(--sn-text-muted)">Left-anchored drawer. Typically used for navigation panels.</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Start and end positions"
+    description="The logical pair follows the reading direction, so a start drawer opens from the right in RTL. Flip the LTR/RTL switch in the header to see it."
+    snippet="drawer/codeLogical"
+  >
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="startOpen.set(true)">Open Start Drawer</button>
+      <sn-drawer [(open)]="startOpen" title="Start" position="start">
+        <p style="margin:0;color:var(--sn-text-muted)">Anchored to the edge the content starts from.</p>
+      </sn-drawer>
+      <button snButton variant="outlined" (click)="endOpen.set(true)">Open End Drawer</button>
+      <sn-drawer [(open)]="endOpen" title="End" position="end">
+        <p style="margin:0;color:var(--sn-text-muted)">Anchored to the edge the content ends at.</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="With footer actions" snippet="drawer/codeFooter">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="footerOpen.set(true)">Open Drawer</button>
+      <sn-drawer [(open)]="footerOpen" title="Edit Tile">
+        <p style="margin:0;color:var(--sn-text-muted)">Make changes to your tile. Click save when done.</p>
+        <div snDrawerFooter>
+          <button snButton variant="text" (click)="footerOpen.set(false)">Cancel</button>
+          <button snButton (click)="footerOpen.set(false)">Save</button>
+        </div>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Without mask (no backdrop dim)" snippet="drawer/codeNoMask">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="noMaskOpen.set(true)">Open Without Mask</button>
+      <sn-drawer [(open)]="noMaskOpen" title="Inspector" [mask]="false">
+        <p style="margin:0;color:var(--sn-text-muted)">
+          No dimming backdrop. <kbd>Escape</kbd> and the close button still dismiss the drawer.
+        </p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom title slot" snippet="drawer/codeRichTitle">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="richTitleOpen.set(true)">Open with icon title</button>
+      <sn-drawer [(open)]="richTitleOpen">
+        <div snDrawerTitle style="display:flex;align-items:center;gap:0.5rem">
+          <sn-icon style="font-size:1.125rem">settings</sn-icon>
+          <span>Settings</span>
+        </div>
+        <p style="margin:0;color:var(--sn-text-muted)">Configure your application preferences.</p>
+        <div snDrawerFooter>
+          <button snButton variant="text" (click)="richTitleOpen.set(false)">Cancel</button>
+          <button snButton (click)="richTitleOpen.set(false)">Save</button>
+        </div>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Top position" snippet="drawer/codeTop">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="topOpen.set(true)">Open Top Drawer</button>
+      <sn-drawer [(open)]="topOpen" title="Notifications" position="top" height="50vh">
+        <p style="margin:0;color:var(--sn-text-muted)">Slides in from the top edge. Use the <code>height</code> input to control the panel size.</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Bottom position" snippet="drawer/codeBottom">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="bottomOpen.set(true)">Open Bottom Drawer</button>
+      <sn-drawer [(open)]="bottomOpen" title="Share" position="bottom">
+        <p style="margin:0;color:var(--sn-text-muted)">Slides in from the bottom edge. Defaults to <code>var(--sn-drawer-height)</code> (40 vh).</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Fullscreen" snippet="drawer/codeFullscreen">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="fullscreenOpen.set(true)">Open Fullscreen</button>
+      <sn-drawer [(open)]="fullscreenOpen" title="Full Page Editor" position="fullscreen">
+        <p style="margin:0;color:var(--sn-text-muted)">Covers the entire viewport - useful for immersive editing flows. Fades and scales in.</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="lockScroll=false (page stays scrollable)" snippet="drawer/codeNoLockScroll">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="noLockScrollOpen.set(true)">Open (scroll unlocked)</button>
+      <sn-drawer [(open)]="noLockScrollOpen" title="Side Panel" [lockScroll]="false">
+        <p style="margin:0;color:var(--sn-text-muted)">The page behind the drawer remains scrollable. Useful for side-by-side inspect flows.</p>
+      </sn-drawer>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Directive close - snDrawerClose" snippet="drawer/codeDirectiveClose">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="directiveCloseOpen.set(true)">Open Drawer</button>
+      <sn-drawer [(open)]="directiveCloseOpen" title="Edit Tile">
+        <p style="margin:0;color:var(--sn-text-muted)">Make changes to your tile. Click save when done.</p>
+        <div snDrawerFooter>
+          <button snButton variant="text" snDrawerClose>Cancel</button>
+          <button snButton snDrawerClose>Save</button>
+        </div>
+      </sn-drawer>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="drawer" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="drawer" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">WAI-ARIA Modal Dialog Pattern</a>.
+      The panel has <code>role="dialog"</code>, <code>aria-modal="true"</code>, and
+      <code>aria-labelledby</code> pointing to the title element.
+    </li>
+    <li>
+      Focus moves into the first focusable element in the panel on open
+      (via CDK <code>ConfigurableFocusTrapFactory</code>).
+    </li>
+    <li>
+      Focus is trapped within the drawer - <kbd>Tab</kbd> cycles through the panel's focusable elements
+      and cannot reach elements behind the backdrop.
+    </li>
+    <li>
+      Focus returns to the element that had focus before the drawer opened.
+    </li>
+    <li>
+      <kbd>Escape</kbd> closes the drawer and restores focus - even when <code>mask=false</code>.
+    </li>
+    <li>
+      Clicking the backdrop closes the drawer when <code>mask=true</code> (CDK <code>backdropClick()</code> subscription).
+    </li>
+    <li>
+      Body scroll is blocked while the drawer is open (CDK <code>BlockScrollStrategy</code>).
+    </li>
+    <li>
+      The close button's <code>aria-label</code> defaults to <code>'Close'</code> (overridable via <code>closeLabel</code> input or <code>provideSnIntl()</code>).
+    </li>
+  </ul>
+</section>

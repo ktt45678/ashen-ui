@@ -1,0 +1,55 @@
+@if (variant() === 'material') {
+  <div
+    class="sn-progress-bar-track sn-progress-bar-track--material"
+    snPart="track"
+    [class]="trackClassExtra()"
+    role="progressbar"
+    [attr.aria-valuenow]="ariaNow()"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    @if (indeterminate()) {
+      <div class="sn-progress-bar-track-bg"></div>
+      <div class="sn-progress-bar-fill sn-progress-bar-fill--indeterminate-material" snPart="fill" [class]="fillClassExtra()"></div>
+    } @else {
+      @if (pct() > 0) {
+        <div
+          class="sn-progress-bar-fill sn-progress-bar-fill--material"
+          snPart="fill"
+          [class]="fillClassExtra()"
+          [style.width.%]="pct()"
+        ></div>
+      }
+      <div
+        class="sn-progress-bar-track-remainder"
+        [style.inset-inline-start]="materialFillOffset()"
+      ></div>
+      <div class="sn-progress-bar-stop-dot"></div>
+    }
+  </div>
+} @else {
+  <div
+    class="sn-progress-bar-track"
+    snPart="track"
+    [class]="trackClassExtra()"
+    role="progressbar"
+    [attr.aria-valuenow]="ariaNow()"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    @if (indeterminate()) {
+      <div class="sn-progress-bar-fill sn-progress-bar-fill--indeterminate" snPart="fill" [class]="fillClassExtra()"></div>
+    } @else {
+      <div
+        class="sn-progress-bar-fill"
+        snPart="fill"
+        [class]="fillClassExtra()"
+        [style.width.%]="pct()"
+      ></div>
+    }
+  </div>
+}
+
+@if (showLabel()) {
+  <span class="sn-progress-bar-value" snPart="label" [class]="labelClassExtra()" aria-hidden="true">{{ displayValue() }}%</span>
+}

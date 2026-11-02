@@ -1,0 +1,84 @@
+@layer components {
+  /* Default (primary) color tokens - overridden by color modifiers */
+  .sn-badge {
+    --sn-badge-bg: var(--sn-color-primary-solid);
+    --sn-badge-text: var(--sn-text-on-primary);
+    --sn-badge-ring: var(--sn-surface-panel);
+  }
+
+  .sn-badge.sn-badge-secondary { --sn-badge-bg: var(--sn-color-secondary-solid); --sn-badge-text: var(--sn-text-on-secondary); }
+  .sn-badge.sn-badge-success    { --sn-badge-bg: var(--sn-color-success-solid); --sn-badge-text: var(--sn-text-on-success); }
+  .sn-badge.sn-badge-error      { --sn-badge-bg: var(--sn-color-error-solid); --sn-badge-text: var(--sn-text-on-error); }
+  .sn-badge.sn-badge-warning    { --sn-badge-bg: var(--sn-color-warning-solid); --sn-badge-text: var(--sn-text-on-warning); }
+  .sn-badge.sn-badge-info       { --sn-badge-bg: var(--sn-color-info-solid); --sn-badge-text: var(--sn-text-on-info); }
+
+  .sn-badge:not(.sn-badge--overlay) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    /* Kill the host's inline leading so a row of standalone pills can't pick up
+       a sub-pixel vertical offset from the surrounding line box at 100% zoom. */
+    line-height: 0;
+  }
+
+  .sn-badge.sn-badge--overlay {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .sn-badge-pip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    /* Pill dimensions */
+    min-width: var(--sn-badge-min-width, 18px);
+    height: var(--sn-badge-height, 18px);
+    padding: var(--sn-badge-padding, 0 5px);
+    border-radius: var(--sn-radius-pill);
+
+    /* Colors */
+    background: var(--sn-badge-bg);
+    color: var(--sn-badge-text);
+
+    /* Typography */
+    font-size: var(--sn-text-2xs);
+    font-weight: var(--sn-font-weight-semibold);
+    font-family: var(--sn-font-ui);
+    /* Match line-height to the pip height so the text line box fills the box and
+       there is zero fractional centering offset to round at 100% zoom (line-height:1
+       left a ~3.5px half-leading that jittered between pills). */
+    line-height: var(--sn-badge-height, 18px);
+
+    white-space: nowrap;
+  }
+
+  /* Dot mode - 8 px circle, no padding */
+  .sn-badge--dot .sn-badge-pip {
+    min-width: var(--sn-badge-dot-size, 8px);
+    height: var(--sn-badge-dot-size, 8px);
+    padding: 0;
+  }
+
+  /* Anchored pip - pinned to the top-right corner of the overlay wrapper */
+  .sn-badge-pip--anchored {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    transform: translate(40%, -40%);
+    box-shadow: 0 0 0 2px var(--sn-badge-ring);
+    z-index: 1;
+  }
+
+  [dir='rtl'] .sn-badge-pip--anchored {
+    transform: translate(-40%, -40%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-badge-pip--anchored {
+      transition: none;
+    }
+  }
+}

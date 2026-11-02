@@ -1,0 +1,66 @@
+<button
+  #triggerBtn
+  snPart="trigger"
+  type="button"
+  class="sn-select-trigger"
+  [class]="triggerClassExtra()"
+  [id]="triggerId()"
+  role="combobox"
+  [attr.aria-expanded]="isOpen()"
+  aria-haspopup="listbox"
+  [attr.aria-controls]="panelId"
+  [attr.aria-activedescendant]="activeOptionId()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-describedby]="ariaDescribedBy()"
+  [disabled]="isDisabled() || null"
+  [class.sn-select-trigger-clearable]="showClear()"
+  (click)="onTriggerClick()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span
+    snPart="value"
+    class="sn-select-value"
+    [class]="valueClassExtra()"
+    [class.sn-select-placeholder]="displayLabel() === null"
+  >{{ displayLabel() ?? effectivePlaceholder() }}</span>
+  <span snPart="arrow" class="sn-select-arrow" [class]="arrowClassExtra()">
+    @if (arrowIconTpl()) {
+      <ng-container *ngTemplateOutlet="arrowIconTpl()!.templateRef" />
+    } @else {
+      <sn-icon>{{ icons.resolve('chevron-down') }}</sn-icon>
+    }
+  </span>
+</button>
+
+@if (showClear()) {
+  <button
+    type="button"
+    snPart="clear"
+    class="sn-select-clear"
+    [class]="clearClassExtra()"
+    [attr.aria-label]="effectiveClearLabel()"
+    (pointerdown)="onClearPointerDown($event)"
+    (click)="clearSelection($event)"
+  >
+    @if (clearIconTpl()) {
+      <ng-container *ngTemplateOutlet="clearIconTpl()!.templateRef" />
+    } @else {
+      <sn-icon>{{ icons.resolve('close') }}</sn-icon>
+    }
+  </button>
+}
+
+<ng-template #panelTpl>
+  <div
+    snPart="panel"
+    class="sn-select-panel"
+    [class]="panelClassExtra()"
+    [class.sn-select-panel-closing]="isClosing()"
+    [style.animation]="panelAnimation()"
+    role="listbox"
+    [id]="panelId"
+    [attr.aria-label]="ariaLabel() || null"
+  >
+    <ng-content />
+  </div>
+</ng-template>

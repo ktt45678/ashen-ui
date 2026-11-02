@@ -1,0 +1,86 @@
+<header class="page-header">
+  <h1>Virtual Scroller</h1>
+  <p class="page-subtitle">
+    Windowed rendering for very large lists - only the rows currently visible (plus a small
+    buffer) are mounted in the DOM. Backed by Angular CDK's fixed-size virtual scroll strategy,
+    so every row must have the same height in pixels.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic - 10,000 string rows" snippet="virtual-scroller/codeBasic">
+    <div class="demo-scroller-wrapper">
+      <sn-virtual-scroller
+        [items]="bigList"
+        [itemHeight]="36"
+        [height]="240"
+      />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom item template" snippet="virtual-scroller/codeCustom">
+    <div class="demo-scroller-wrapper">
+      <sn-virtual-scroller [items]="contacts" [itemHeight]="52" [height]="260">
+        <ng-template snItemDef let-contact let-i="index">
+          <div class="contact-row">
+            <div class="contact-avatar">{{ contact.name[0] }}</div>
+            <div class="contact-info">
+              <span class="contact-name">{{ contact.name }}</span>
+              <span class="contact-email">{{ contact.email }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </sn-virtual-scroller>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Larger rows + more overscan" snippet="virtual-scroller/codeSizes">
+    <div class="demo-scroller-wrapper">
+      <sn-virtual-scroller
+        [items]="bigList"
+        [itemHeight]="48"
+        [height]="300"
+        [overscan]="8"
+      />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Infinite loading (windowed both ways)" snippet="virtual-scroller/codeInfinite">
+    <div class="demo-scroller-wrapper">
+      <p class="hint-text">
+        Rows scrolled out of view are removed from the DOM and re-rendered when you
+        scroll back - the total scroll height is preserved so the position never jumps.
+        Near the end, <code>loadMore</code> fires to append the next page.
+      </p>
+      <sn-virtual-scroller
+        [items]="infiniteItems()"
+        [itemHeight]="36"
+        [height]="260"
+        [hasMore]="infiniteHasMore()"
+        (loadMore)="onLoadMore()"
+      />
+      <p class="demo-note">{{ infiniteItems().length }} items loaded{{ infiniteHasMore() ? '' : ' (all)' }}</p>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <div class="doc-callout">
+    <strong>Fixed row height required.</strong>
+    <code>sn-virtual-scroller</code> uses CDK's <em>FixedSize</em> scroll strategy.
+    Every rendered item must have the exact same pixel height specified by
+    <code>itemHeight</code>. Variable-height rows are not supported.
+  </div>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="virtual-scroller" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="virtual-scroller" section="theming" />
+</section>

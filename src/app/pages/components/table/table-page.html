@@ -1,0 +1,315 @@
+<header class="page-header">
+  <h1>Table</h1>
+  <p class="page-subtitle">
+    Dense bordered data table with uppercase header row, optional column sorting, row stripes,
+    hover, single/multi selection, row expansion, pagination, virtual/infinite scroll, and
+    drag-and-drop reordering. Columns are projected as <code>sn-column</code> elements;
+    rows come from the <code>value</code> input array.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic columns with caption" snippet="table/codeBasic">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" caption="Project files">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Server-driven pagination and sorting"
+    description="The table renders the supplied page unchanged. Paginator and sort changes emit one typed load request."
+    snippet="table/codeServerPagination"
+  >
+    <div class="demo-table-wrapper">
+      <sn-table
+        #serverTable
+        server
+        [value]="serverRows()"
+        [totalRecords]="files.length"
+        [(page)]="serverPage"
+        [(pageSize)]="serverPageSize"
+        (load)="onServerLoad($event)"
+      >
+        <sn-column field="name" header="Name" sortable />
+        <sn-column field="size" header="Size (B)" align="right" sortable />
+        <sn-column field="modified" header="Modified" sortable />
+      </sn-table>
+      <sn-paginator
+        [page]="serverPage()"
+        [totalRecords]="files.length"
+        [rows]="serverPageSize() ?? 2"
+        [rowsPerPageOptions]="[2, 3, 5]"
+        (pageChange)="serverTable.paginate($event)"
+      />
+      @if (serverRequest()) {
+        <p class="demo-note">Request: {{ serverRequest() }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sortable columns" snippet="table/codeSortable">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" (sortChange)="onSortChange($event)">
+        <sn-column field="name" header="Name" [sortable]="true" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" [sortable]="true" />
+        <sn-column field="modified" header="Modified" [sortable]="true" />
+      </sn-table>
+      @if (sortChanges()) {
+        <p class="demo-note">Sort: {{ sortChanges() }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Striped with custom cell template" snippet="table/codeStriped">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" [striped]="true">
+        <sn-column field="name" header="Name" />
+        <sn-column field="type" header="Type">
+          <ng-template snCellDef let-row>
+            <sn-tag [value]="row.type" />
+          </ng-template>
+        </sn-column>
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Selectable rows (legacy)" snippet="table/codeSelectable">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" [selectable]="true" [(selectedIndex)]="selectedIndex">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+      @if (selectedIndex() !== null) {
+        <p class="demo-note">Selected: {{ files[selectedIndex()!].name }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Empty state" snippet="table/codeEmpty">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="[]">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" />
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Checkbox multi-selection" snippet="table/codeMultiSelect">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" selectionMode="multiple" [(selection)]="multiSelection">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+      <p class="demo-note">{{ multiSelection().length }} selected</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Single selection" snippet="table/codeSingleSelect">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" selectionMode="single" [(selection)]="singleSelection">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+      @if (singleSelection().length) {
+        <p class="demo-note">Selected: {{ singleSelection()[0].name }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Expandable rows" snippet="table/codeExpansion">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" [(expandedKeys)]="expandedKeys" expandRowOnClick (rowExpand)="onRowExpand($event)">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+        <ng-template snExpansionDef let-row>
+          <div style="padding: 12px 16px">
+            <strong>{{ row.name }}</strong> &mdash; {{ row.size }} bytes, last modified {{ row.modified }}
+          </div>
+        </ng-template>
+      </sn-table>
+      @if (rowExpandEvents()) {
+        <p class="demo-note">Last event: {{ rowExpandEvents() }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Actions column" snippet="table/codeActions">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files">
+        <sn-column field="name" header="Name" />
+        <sn-column field="modified" header="Modified" />
+        <sn-column type="actions" header="Actions">
+          <ng-template snCellDef let-row>
+            <button snButton variant="icon" size="sm" aria-label="Edit"><sn-icon>edit</sn-icon></button>
+            <button snButton variant="icon" size="sm" aria-label="Delete"><sn-icon>delete</sn-icon></button>
+          </ng-template>
+        </sn-column>
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sticky header and sticky first column" snippet="table/codeSticky">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" stickyHeader scrollHeight="300px">
+        <sn-column field="name" header="Name" sticky="start" width="120px" />
+        <sn-column field="size" header="Size (B)" align="right" width="120px" />
+        <sn-column field="type" header="Type" width="120px" />
+        <sn-column field="modified" header="Modified" width="160px" />
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Responsive (horizontal scroll)"
+    description="With `responsive`, the table keeps its natural column widths and scrolls horizontally inside its container instead of squeezing on narrow screens. Resize the box or view on mobile."
+    snippet="table/codeResponsive"
+  >
+    <div class="demo-table-narrow">
+      <sn-table [value]="files" responsive>
+        <sn-column field="name" header="Name" width="160px" />
+        <sn-column field="size" header="Size (B)" align="right" width="140px" />
+        <sn-column field="type" header="Type" width="160px" />
+        <sn-column field="modified" header="Modified" width="200px" />
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Pagination" snippet="table/codePagination">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" [page]="tablePageSignal()" [pageSize]="paginatorPageSize()">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+      <sn-paginator
+        [page]="tablePageSignal()"
+        [totalRecords]="files.length"
+        [rows]="paginatorPageSize()"
+        [rowsPerPageOptions]="[2, 3, 5]"
+        (pageChange)="onPaginatorChange($event)"
+      />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Virtual scroll - 10 000 rows" snippet="table/codeVirtual">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="virtualRows" virtual [rowHeight]="40" scrollHeight="400px">
+        <sn-column field="id" header="ID" width="80px" align="right" />
+        <sn-column field="name" header="Name" />
+        <sn-column field="value" header="Value" align="right" width="100px" />
+      </sn-table>
+      <p class="demo-note">10 000 rows - only a window of rows is rendered at a time.</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Infinite scroll" snippet="table/codeInfinite">
+    <div class="demo-table-wrapper">
+      <sn-table
+        [value]="infiniteRows()"
+        [hasMore]="hasMore()"
+        [loadMoreThreshold]="5"
+        (loadMore)="onLoadMore($event)"
+        scrollHeight="320px">
+        <sn-column field="id" header="ID" width="80px" align="right" />
+        <sn-column field="name" header="Name" />
+        <sn-column field="score" header="Score" align="right" width="100px" />
+      </sn-table>
+      <p class="demo-note">{{ loadedCount() }} rows loaded{{ hasMore() ? ' - scroll to load more' : ' - all loaded' }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Row reorder" snippet="table/codeRowReorder">
+    <div class="demo-table-wrapper">
+      <sn-table [(value)]="reorderRows" rowReorder (rowReordered)="onRowReordered($event)">
+        <sn-column field="name" header="Name" />
+        <sn-column field="priority" header="Priority" />
+      </sn-table>
+      @if (lastReorderEvent()) {
+        <p class="demo-note">{{ lastReorderEvent() }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Column reorder" snippet="table/codeColumnReorder">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="columnReorderRows" columnReorder (columnReordered)="onColumnReordered($event)">
+        <sn-column field="name" header="Name" />
+        <sn-column field="dept" header="Dept" />
+        <sn-column field="level" header="Level" />
+        <sn-column field="location" header="Location" />
+      </sn-table>
+      @if (lastColumnReorderEvent()) {
+        <p class="demo-note">{{ lastColumnReorderEvent() }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Flex layout" snippet="table/codeFlex">
+    <div class="demo-table-wrapper">
+      <sn-table [value]="files" layout="flex">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size (B)" align="right" width="100px" />
+        <sn-column field="modified" header="Modified" />
+      </sn-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Directive mode (hand-written table)" snippet="table/codeDirective">
+    <div class="demo-table-wrapper">
+      <table snTable [striped]="true" snTableSort (snSortChange)="onDirectiveSort($event)">
+        <thead>
+          <tr>
+            <th snSortHeader="name">Name</th>
+            <th snSortHeader="dept">Dept</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of directiveRows; track row.name) {
+            <tr>
+              <td>{{ row.name }}</td>
+              <td>{{ row.dept }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      @if (directiveSortState()) {
+        <p class="demo-note">Sort: {{ directiveSortState() }}</p>
+      }
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="table" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="table" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Follows the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/table/" target="_blank" rel="noopener">APG Sortable Table pattern</a>.</li>
+    <li>Sort triggers are real <code>&lt;button type="button"&gt;</code> elements inside <code>&lt;th&gt;</code> - never a clickable header cell.</li>
+    <li><code>aria-sort="ascending"</code> / <code>"descending"</code> is set on the <code>&lt;th&gt;</code> of the sorted column; absent when not sorted.</li>
+    <li>When <code>selectable</code> is true, body rows have <code>tabindex="0"</code> and respond to <kbd>Enter</kbd> and <kbd>Space</kbd>.</li>
+    <li>In <code>selectionMode="multiple"</code>, the header checkbox uses <code>aria-label</code> for "select all" and body checkboxes for "select row".</li>
+    <li>The expand chevron has <code>aria-expanded</code> and <code>aria-controls</code> pointing to the expansion row.</li>
+    <li>In <code>layout="flex"</code>, explicit <code>role="table"</code>, <code>role="row"</code>, and <code>role="cell"</code> attributes are added for screen-reader compatibility.</li>
+    <li>Column headers use <code>scope="col"</code> for correct cell association by screen readers.</li>
+  </ul>
+</section>

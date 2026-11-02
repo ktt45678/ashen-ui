@@ -1,0 +1,106 @@
+<header class="page-header">
+  <h1>Tooltip</h1>
+  <p class="page-subtitle">
+    An advisory text bubble shown on hover and keyboard focus. Attaches to any trigger element
+    via the <code>[snTooltip]</code> directive. The bubble is hoverable - the cursor can move
+    onto it without closing the tooltip. Fades in after a configurable show delay and fades
+    out after a hide-grace period. Press <kbd>Escape</kbd> to dismiss immediately.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="tooltip/codeBasic">
+    <div class="demo-row">
+      <button snButton variant="outlined" snTooltip="Save changes">Save</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Positions" snippet="tooltip/codePositions">
+    <div class="demo-row demo-row--spaced">
+      <button snButton variant="outlined" snTooltip="Above the button" snTooltipPosition="top">Top</button>
+      <button snButton variant="outlined" snTooltip="Below the button" snTooltipPosition="bottom">Bottom</button>
+      <button snButton variant="outlined" snTooltip="Left of the button" snTooltipPosition="left">Left</button>
+      <button snButton variant="outlined" snTooltip="Right of the button" snTooltipPosition="right">Right</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom delays" snippet="tooltip/codeDelay">
+    <div class="demo-row">
+      <button snButton variant="outlined" snTooltip="Appears quickly" [snTooltipShowDelay]="100" [snTooltipHideDelay]="50">Fast tooltip</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="tooltip/codeDisabled">
+    <div class="demo-row">
+      <button snButton variant="outlined" snTooltip="Will not show" [snTooltipDisabled]="true">Disabled tooltip</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="On any focusable element" snippet="tooltip/codeOnAnyElement">
+    <div class="demo-row">
+      <span
+        tabindex="0"
+        snTooltip="Tooltip on a plain span"
+        class="demo-span-target"
+      >Hover or focus me</span>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Icon button (typical use case)" snippet="tooltip/codeIconButton">
+    <div class="demo-row">
+      <button snButton variant="icon" aria-label="Edit tile" snTooltip="Edit tile">
+        <span class="sn-icon icon-ms">edit</span>
+      </button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Rich template content" snippet="tooltip/codeTemplate">
+    <div class="demo-row">
+      <ng-template #shortcutTip>
+        Copy selection <kbd>Ctrl</kbd> + <kbd>C</kbd>
+      </ng-template>
+      <button snButton variant="outlined" [snTooltip]="shortcutTip">Rich tooltip</button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tooltip" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tooltip" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/" target="_blank" rel="noopener">WAI-ARIA Tooltip pattern</a>.
+    </li>
+    <li>
+      The bubble has <code>role="tooltip"</code> and a unique <code>id</code>.
+    </li>
+    <li>
+      <code>aria-describedby</code> is added to the trigger element while the tooltip is open
+      and removed when it closes.
+    </li>
+    <li>
+      The tooltip opens on <kbd>mouseenter</kbd> and <kbd>focus</kbd>; it closes on
+      <kbd>mouseleave</kbd>, <kbd>blur</kbd>, and immediately on <kbd>Escape</kbd>.
+    </li>
+    <li>
+      The bubble is <strong>hoverable</strong>: moving the cursor from the trigger onto the
+      bubble cancels the hide timer, keeping the tooltip open.
+    </li>
+    <li>
+      The tooltip is for <em>advisory supplementary</em> text only - never use it to convey
+      information that is essential for the user to complete a task. Icon buttons must always
+      have an <code>aria-label</code> independent of the tooltip.
+    </li>
+  </ul>
+</section>

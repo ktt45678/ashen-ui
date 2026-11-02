@@ -1,0 +1,171 @@
+@layer components {
+  .sn-tabs {
+    --sn-tabs-border-color: var(--sn-border);
+    --sn-tabs-scroll-icon-size: 18px;
+    --sn-tabs-icon-size: 17px;
+    --sn-tabs-panel-padding: 14px 2px;
+    --sn-tabs-panel-font-size: var(--sn-text-sm);
+    --sn-tabs-panel-color: var(--sn-text-muted);
+
+    display: block;
+  }
+
+  .sn-tabs-list {
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid var(--sn-tabs-border-color);
+    position: relative;
+  }
+
+  .sn-tabs-scroller {
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* `min-width: 0` so the list may shrink below its content width, which is
+     what lets it scroll rather than pushing the controls off the row. */
+  .sn-tabs-scroller > .sn-tabs-list {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-tabs-list-scrollable {
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    /* The controls are the affordance; a scrollbar under the tabs is noise. */
+    scrollbar-width: none;
+  }
+
+  .sn-tabs-list-scrollable::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-tabs-list-scrollable {
+      scroll-behavior: auto;
+    }
+  }
+
+  .sn-tabs-scroll-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0 4px;
+    border: none;
+    /* Carries the list's own bottom border so the rule stays unbroken across
+       the full width of the header. */
+    border-bottom: 1px solid var(--sn-tabs-border-color);
+    background: transparent;
+    color: var(--sn-text-muted);
+    cursor: pointer;
+  }
+
+  .sn-tabs-scroll-btn:hover:not(:disabled) {
+    color: var(--sn-text);
+  }
+
+  .sn-tabs-scroll-btn:disabled {
+    color: var(--sn-text-disabled);
+    cursor: default;
+  }
+
+  .sn-tabs-scroll-btn sn-icon {
+    font-size: var(--sn-tabs-scroll-icon-size);
+  }
+
+  .sn-tab-button {
+    --sn-tab-button-padding: 8px 14px;
+    --sn-tab-button-gap: 6px;
+    --sn-tab-button-color: var(--sn-text-muted);
+    --sn-tab-button-selected-color: var(--sn-color-primary);
+    --sn-tab-button-disabled-color: var(--sn-text-disabled);
+    --sn-tab-button-font-family: var(--sn-font-ui);
+    --sn-tab-button-font-size: var(--sn-text-sm);
+    --sn-tab-button-font-weight: var(--sn-font-weight-medium);
+    --sn-tab-button-selected-font-weight: var(--sn-font-weight-semibold);
+    --sn-tab-button-transition: color var(--sn-motion-base);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sn-tab-button-gap);
+    padding: var(--sn-tab-button-padding);
+    border: none;
+    background: transparent;
+    color: var(--sn-tab-button-color);
+    font-family: var(--sn-tab-button-font-family);
+    font-size: var(--sn-tab-button-font-size);
+    font-weight: var(--sn-tab-button-font-weight);
+    cursor: pointer;
+    transition: var(--sn-tab-button-transition);
+    white-space: nowrap;
+  }
+
+  .sn-tab-button--selected {
+    color: var(--sn-tab-button-selected-color);
+    font-weight: var(--sn-tab-button-selected-font-weight);
+  }
+
+  .sn-tab-button:disabled {
+    color: var(--sn-tab-button-disabled-color);
+    cursor: not-allowed;
+  }
+
+  .sn-tab-button:hover:not(:disabled):not(.sn-tab-button--selected) {
+    color: var(--sn-text-subtle);
+  }
+
+  .sn-tab-button:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-tab-icon {
+    flex-shrink: 0;
+    font-size: var(--sn-tabs-icon-size);
+  }
+
+  .sn-tabs-indicator {
+    --sn-tabs-indicator-color: var(--sn-color-primary);
+    --sn-tabs-indicator-height: 2px;
+    --sn-tabs-indicator-radius: var(--sn-radius-pill);
+    --sn-tabs-indicator-transition-duration: var(--sn-motion-slow);
+
+    position: absolute;
+    bottom: -1px;
+    height: var(--sn-tabs-indicator-height);
+    border-radius: var(--sn-tabs-indicator-radius);
+    background: var(--sn-tabs-indicator-color);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-tabs.sn-tabs-animate .sn-tabs-indicator {
+      transition: none;
+    }
+
+    .sn-tab-button {
+      transition: none;
+    }
+  }
+  /* Gate indicator transitions until after first render so a preselected
+     non-first tab has its indicator snap into position instead of sliding. */
+  .sn-tabs.sn-tabs-animate .sn-tabs-indicator {
+    transition:
+      left var(--sn-tabs-indicator-transition-duration),
+      width var(--sn-tabs-indicator-transition-duration);
+  }
+
+  .sn-tabs-panel {
+    padding: var(--sn-tabs-panel-padding);
+    font-size: var(--sn-tabs-panel-font-size);
+    color: var(--sn-tabs-panel-color);
+    outline: none;
+  }
+
+  .sn-tabs-panel:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+}

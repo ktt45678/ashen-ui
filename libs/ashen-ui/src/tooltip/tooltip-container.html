@@ -1,0 +1,5 @@
+<span
+  [id]="tooltipId()"
+  role="tooltip"
+  class="sn-tooltip-bubble"
+>@if (template(); as tpl) {<ng-container *ngTemplateOutlet="tpl" />} @else {{{ content() }}}</span>

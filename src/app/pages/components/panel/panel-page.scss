@@ -1,0 +1,2 @@
+.demo-panels { display: grid; grid-template-columns: 1fr; gap: var(--sn-space-4); width: 100%; max-width: 420px; }
+.demo-highlighted-panel { outline: 2px dashed var(--sn-color-primary); }

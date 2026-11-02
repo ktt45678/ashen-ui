@@ -1,0 +1,67 @@
+@layer components {
+  :root {
+    --sn-input-number-stepper-width: var(--sn-control-height-md);
+    --sn-input-number-stepper-bg: var(--sn-color-primary-solid);
+    --sn-input-number-stepper-hover-bg: var(--sn-color-primary-solid-hover);
+    --sn-input-number-stepper-active-bg: var(--sn-color-primary-solid-active);
+    --sn-input-number-stepper-color: var(--sn-text-on-primary);
+    --sn-input-number-stepper-icon-size: var(--sn-icon-size-sm);
+  }
+
+  .sn-input-number {
+    /* Inherits all visual styling from .sn-input-text.
+       Hides the browser-native spin buttons for a cleaner numeric input. */
+    -moz-appearance: textfield;
+  }
+
+  .sn-input-number::-webkit-outer-spin-button,
+  .sn-input-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Two stacked halves. overflow keeps the buttons inside the radius the input
+     group gives its last child. */
+  .sn-input-number-stepper {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    width: var(--sn-input-number-stepper-width);
+    overflow: hidden;
+  }
+
+  .sn-input-number-stepper-button {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--sn-input-number-stepper-bg);
+    color: var(--sn-input-number-stepper-color);
+    cursor: pointer;
+    transition: background-color var(--sn-motion-slow);
+  }
+
+  .sn-input-number-stepper-button:hover {
+    background-color: var(--sn-input-number-stepper-hover-bg);
+  }
+
+  .sn-input-number-stepper-button:active {
+    background-color: var(--sn-input-number-stepper-active-bg);
+  }
+
+  .sn-input-number-stepper-button > .sn-icon {
+    font-size: var(--sn-input-number-stepper-icon-size);
+  }
+
+  /* The stepper has no state of its own, so it follows the input in its group.
+     :read-only also matches a disabled input. */
+  .sn-input-group:has(.sn-input-number:read-only) .sn-input-number-stepper-button {
+    background-color: var(--sn-disabled-bg);
+    color: var(--sn-disabled-text);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}

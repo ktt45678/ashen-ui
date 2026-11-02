@@ -1,0 +1,117 @@
+<header class="page-header">
+  <h1>Checkbox</h1>
+  <p class="page-subtitle">
+    A standalone checkbox control with checked, indeterminate, and disabled states. Implements
+    <code>ControlValueAccessor</code> so it works with reactive forms and <code>ngModel</code>.
+    The label is projected content - omit it for an unlabelled checkbox.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="checkbox/codeBasic">
+    <div class="demo-stack">
+      <sn-checkbox>Enable zoom effect</sn-checkbox>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Checked states" snippet="checkbox/codeChecked">
+    <div class="demo-stack">
+      <sn-checkbox [checked]="true">Show label</sn-checkbox>
+      <sn-checkbox>Unchecked</sn-checkbox>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Indeterminate"
+    description="Use when a parent checkbox represents a group where some - but not all - children are selected."
+    snippet="checkbox/codeIndeterminate"
+  >
+    <div class="demo-stack">
+      <sn-checkbox [indeterminate]="true">Some selected</sn-checkbox>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="checkbox/codeDisabled">
+    <div class="demo-stack">
+      <sn-checkbox [disabled]="true">Disabled unchecked</sn-checkbox>
+      <sn-checkbox [checked]="true" [disabled]="true">Disabled checked</sn-checkbox>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="checkbox/codeSizes">
+    <div class="demo-stack">
+      <sn-checkbox size="sm">Small</sn-checkbox>
+      <sn-checkbox>Medium (default)</sn-checkbox>
+      <sn-checkbox size="lg">Large</sn-checkbox>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl to integrate with Angular's reactive forms."
+    snippet="checkbox/codeReactive"
+  >
+    <div class="demo-stack">
+      <sn-checkbox [formControl]="formCtrl">Receive notifications</sn-checkbox>
+      <p class="hint-text">Value: {{ formCtrl.value }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel"
+    description="Two-way binding via ngModel for template-driven forms."
+    snippet="checkbox/codeNgModel"
+  >
+    <div class="demo-stack">
+      <sn-checkbox [(ngModel)]="ngModelVal">Enable dark mode</sn-checkbox>
+      <p class="hint-text">Value: {{ ngModelVal() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="checkbox/codeReskin">
+    <div class="demo-stack">
+      <sn-checkbox
+        [checked]="true"
+        style="--sn-checkbox-checked-bg: var(--sn-color-success); --sn-checkbox-checked-border: var(--sn-color-success);"
+      >Custom color</sn-checkbox>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="checkbox" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="checkbox" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Uses <code>role="checkbox"</code> on the host element with <code>aria-checked</code> set
+      to <code>true</code>, <code>false</code>, or <code>"mixed"</code> (for indeterminate).
+    </li>
+    <li>
+      Keyboard: <kbd>Space</kbd> and <kbd>Enter</kbd> toggle the checked state.
+      <kbd>Tab</kbd> moves focus normally.
+    </li>
+    <li>
+      When disabled, <code>tabindex="-1"</code> removes the element from tab order and
+      <code>aria-disabled="true"</code> is set.
+    </li>
+    <li>
+      The label is projected content - wrap in <code>aria-label</code> on the host for
+      icon-only or visually hidden labels.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - the <code>disabled</code> state propagates
+      from bound <code>FormControl.disable()</code> calls.
+    </li>
+  </ul>
+</section>

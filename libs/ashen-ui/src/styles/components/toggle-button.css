@@ -1,0 +1,105 @@
+@layer components {
+  .sn-toggle-button {
+    --sn-toggle-button-bg: var(--sn-input-bg);
+    --sn-toggle-button-border: var(--sn-border-strong);
+    --sn-toggle-button-text: var(--sn-text);
+    --sn-toggle-button-bg-selected: var(--sn-selected-bg);
+    --sn-toggle-button-border-selected: var(--sn-color-primary);
+    --sn-toggle-button-text-selected: var(--sn-selected-text);
+    --sn-toggle-button-bg-hover: var(--sn-surface-hover);
+    --sn-toggle-button-bg-hover-selected: var(--sn-selected-bg-hover);
+    --sn-toggle-button-bg-active-selected: var(--sn-selected-bg-hover);
+    --sn-toggle-button-radius: var(--sn-input-border-radius, var(--sn-radius-md));
+    --sn-toggle-button-transition: var(--sn-motion-slow, 0.2s ease);
+    --sn-toggle-button-padding-y: 0.5rem;
+    --sn-toggle-button-padding-x: 1.125rem;
+    --sn-toggle-button-font-size: var(--sn-text-sm);
+    --sn-toggle-button-icon-size: 1.125rem;
+    /* Matches the button and input of the same size. */
+    --sn-toggle-button-min-height: var(--sn-input-min-height-md);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    box-sizing: border-box;
+    min-height: var(--sn-toggle-button-min-height);
+    padding: var(--sn-toggle-button-padding-y) var(--sn-toggle-button-padding-x);
+    font-family: var(--sn-font-ui);
+    font-size: var(--sn-toggle-button-font-size);
+    font-weight: var(--sn-font-weight-medium);
+    line-height: var(--sn-leading-tight);
+    color: var(--sn-toggle-button-text);
+
+    cursor: pointer;
+    background-color: var(--sn-toggle-button-bg);
+    border: 1px solid var(--sn-toggle-button-border);
+    border-radius: var(--sn-toggle-button-radius);
+    user-select: none;
+  }
+
+  .sn-toggle-button:hover:not(:disabled) {
+    background-color: var(--sn-toggle-button-bg-hover);
+  }
+
+  .sn-toggle-button:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-toggle-button:disabled {
+    opacity: var(--sn-disabled-opacity);
+    cursor: not-allowed;
+  }
+
+  .sn-toggle-button.sn-toggle-button-selected {
+    background-color: var(--sn-toggle-button-bg-selected);
+    border-color: var(--sn-toggle-button-border-selected);
+    color: var(--sn-toggle-button-text-selected);
+  }
+
+  .sn-toggle-button.sn-toggle-button-selected:hover:not(:disabled) {
+    background-color: var(--sn-toggle-button-bg-hover-selected);
+  }
+
+  .sn-toggle-button.sn-toggle-button-selected:active:not(:disabled) {
+    background-color: var(--sn-toggle-button-bg-active-selected);
+  }
+
+  .sn-toggle-button.sn-toggle-button-sm {
+    --sn-toggle-button-padding-y: 0.375rem;
+    --sn-toggle-button-padding-x: 0.875rem;
+    --sn-toggle-button-font-size: var(--sn-text-xs);
+    --sn-toggle-button-icon-size: 0.9375rem;
+    --sn-toggle-button-min-height: var(--sn-input-min-height-sm);
+  }
+
+  .sn-toggle-button.sn-toggle-button-lg {
+    --sn-toggle-button-padding-y: 0.625rem;
+    --sn-toggle-button-padding-x: 1.375rem;
+    --sn-toggle-button-font-size: var(--sn-text-base);
+    --sn-toggle-button-icon-size: 1.25rem;
+    --sn-toggle-button-min-height: var(--sn-input-min-height-lg);
+  }
+
+  .sn-toggle-button .sn-icon {
+    font-size: var(--sn-toggle-button-icon-size);
+    line-height: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-toggle-button.sn-toggle-button-animate {
+      transition: none;
+    }
+  }
+
+  /* Gate state-driven transitions until after first render so a preselected
+     selected value snaps into place instead of animating from default. */
+  .sn-toggle-button.sn-toggle-button-animate {
+    transition:
+      background-color var(--sn-toggle-button-transition),
+      border-color var(--sn-toggle-button-transition),
+      color var(--sn-toggle-button-transition);
+  }
+}

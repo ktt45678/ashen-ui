@@ -1,0 +1,171 @@
+<header class="page-header">
+  <h1>Stepper</h1>
+  <p class="page-subtitle">
+    Wizard progress indicator with numbered/check step markers and connector lines.
+    Consumer defines <code>sn-step</code> children - the active step shows its content panel.
+    Supports horizontal and vertical orientations with optional linear navigation constraint.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic stepper" snippet="stepper/codeBasic">
+    <sn-stepper style="width: 100%">
+      <sn-step label="Account">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Account setup content goes here.</p>
+      </sn-step>
+      <sn-step label="Address">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Shipping address content goes here.</p>
+      </sn-step>
+      <sn-step label="Confirm">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Order confirmation content goes here.</p>
+      </sn-step>
+    </sn-stepper>
+  </doc-example>
+
+  <doc-example heading="With icons" snippet="stepper/codeWithIcons">
+    <sn-stepper style="width: 100%">
+      <sn-step label="Account" icon="person">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Account content.</p>
+      </sn-step>
+      <sn-step label="Address" icon="home">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Address content.</p>
+      </sn-step>
+      <sn-step label="Confirm" icon="check_circle">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Confirm content.</p>
+      </sn-step>
+    </sn-stepper>
+  </doc-example>
+
+  <doc-example heading="Two-way binding with external controls" snippet="stepper/codeTwoWay">
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+      <sn-stepper [(activeStep)]="activeStep">
+        <sn-step label="Step 1">
+          <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Step 1 content</p>
+        </sn-step>
+        <sn-step label="Step 2">
+          <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Step 2 content</p>
+        </sn-step>
+        <sn-step label="Step 3">
+          <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Step 3 content</p>
+        </sn-step>
+      </sn-stepper>
+      <div style="display: flex; gap: 8px;">
+        <button
+          type="button"
+          style="padding: 6px 14px; border-radius: var(--sn-radius-sm); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm);"
+          [disabled]="activeStep() === 0"
+          (click)="activeStep.set(activeStep() - 1)"
+        >Previous</button>
+        <button
+          type="button"
+          style="padding: 6px 14px; border-radius: var(--sn-radius-sm); border: 1px solid var(--sn-color-primary); background: var(--sn-color-primary); color: var(--sn-text-on-primary); cursor: pointer; font-size: var(--sn-text-sm);"
+          [disabled]="activeStep() === 2"
+          (click)="activeStep.set(activeStep() + 1)"
+        >Next</button>
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Linear stepper (no skipping steps)" snippet="stepper/codeLinear">
+    <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+      <sn-stepper [linear]="true" [(activeStep)]="linearStep">
+        <sn-step label="Type">
+          <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Choose type content.</p>
+        </sn-step>
+        <sn-step label="Action">
+          <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Configure action content.</p>
+        </sn-step>
+        <sn-step label="Appearance">
+          <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Set appearance content.</p>
+        </sn-step>
+      </sn-stepper>
+      <div style="display: flex; gap: 8px;">
+        <button
+          type="button"
+          style="padding: 6px 14px; border-radius: var(--sn-radius-sm); border: 1px solid var(--sn-border); background: var(--sn-surface); color: var(--sn-text); cursor: pointer; font-size: var(--sn-text-sm);"
+          [disabled]="linearStep() === 0"
+          (click)="linearStep.set(linearStep() - 1)"
+        >Back</button>
+        <button
+          type="button"
+          style="padding: 6px 14px; border-radius: var(--sn-radius-sm); border: 1px solid var(--sn-color-primary); background: var(--sn-color-primary); color: var(--sn-text-on-primary); cursor: pointer; font-size: var(--sn-text-sm);"
+          [disabled]="linearStep() === 2"
+          (click)="linearStep.set(linearStep() + 1)"
+        >Continue</button>
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Vertical orientation" snippet="stepper/codeVertical">
+    <sn-stepper orientation="vertical">
+      <sn-step label="Account">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Account setup content.</p>
+      </sn-step>
+      <sn-step label="Address">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Shipping address content.</p>
+      </sn-step>
+      <sn-step label="Confirm">
+        <p style="margin: 0; color: var(--sn-text-muted); font-size: var(--sn-text-sm);">Order confirmation content.</p>
+      </sn-step>
+    </sn-stepper>
+  </doc-example>
+
+  <doc-example heading="Completed override + disabled step" snippet="stepper/codeDisabled">
+    <sn-stepper [activeStep]="1" style="width: 100%">
+      <sn-step label="Completed" [completed]="true">Step 1 content</sn-step>
+      <sn-step label="Active">Step 2 content</sn-step>
+      <sn-step label="Disabled" [disabled]="true">Step 3 content</sn-step>
+    </sn-stepper>
+  </doc-example>
+
+  <doc-example heading="snClass pass-through" snippet="stepper/codeSnClass">
+    <sn-stepper snClass="my-stepper" style="width: 100%">
+      <sn-step label="Step 1" [snClass]="{ header: 'my-header', label: 'my-label' }">Content</sn-step>
+      <sn-step label="Step 2">Content</sn-step>
+    </sn-stepper>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="stepper" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="stepper" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Follows the WAI-ARIA Breadcrumb-inspired list pattern with wizard progress semantics.
+  </p>
+  <ul>
+    <li>
+      Steps are rendered in an <code>&lt;ol&gt;</code> (ordered list) reflecting wizard progress order.
+    </li>
+    <li>
+      Each step header is a native <code>&lt;button&gt;</code>. The active step receives
+      <code>aria-current="step"</code>.
+    </li>
+    <li>
+      The active step's content region has <code>role="region"</code> and
+      <code>aria-labelledby</code> pointing to the step's header button.
+    </li>
+    <li>
+      Step markers and connector lines are <code>aria-hidden="true"</code> - screen readers
+      hear only the label and state from the button.
+    </li>
+    <li>
+      Keyboard navigation: <kbd>ArrowRight</kbd>/<kbd>ArrowLeft</kbd> in horizontal mode,
+      <kbd>ArrowDown</kbd>/<kbd>ArrowUp</kbd> in vertical mode move between steps.
+      <kbd>Home</kbd>/<kbd>End</kbd> jump to first/last step. Focus wraps.
+    </li>
+    <li>
+      Disabled and linear-blocked steps are skipped by the focus key manager.
+    </li>
+  </ul>
+</section>

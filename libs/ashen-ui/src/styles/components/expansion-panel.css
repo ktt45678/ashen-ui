@@ -1,0 +1,153 @@
+@layer components {
+  .sn-accordion {
+    --sn-accordion-bg: var(--sn-surface-panel);
+    --sn-accordion-border-color: transparent;
+    --sn-accordion-border-width: 1px;
+    --sn-accordion-border-radius: var(--sn-radius-tile);
+    --sn-accordion-shadow: var(--sn-glass-shadow, var(--sn-shadow-sm));
+    --sn-accordion-backdrop-filter: var(--sn-backdrop-filter, none);
+
+    display: block;
+    min-width: 0;
+    background: var(--sn-accordion-bg);
+    border: var(--sn-accordion-border-width) solid var(--sn-accordion-border-color);
+    border-radius: var(--sn-accordion-border-radius);
+    box-shadow: var(--sn-accordion-shadow);
+    backdrop-filter: var(--sn-accordion-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-accordion-backdrop-filter);
+    overflow: hidden;
+  }
+
+  .sn-expansion-panel {
+    display: block;
+    min-width: 0;
+
+    --sn-expansion-panel-separator-color: var(--sn-border);
+    --sn-expansion-panel-button-padding: 10px 14px;
+    --sn-expansion-panel-button-gap: 10px;
+    --sn-expansion-panel-button-bg: transparent;
+    --sn-expansion-panel-button-expanded-bg: var(--sn-surface-hover);
+    --sn-expansion-panel-button-color: var(--sn-text);
+    --sn-expansion-panel-button-font-size: var(--sn-text-sm);
+    --sn-expansion-panel-button-font-weight: var(--sn-font-weight-medium);
+    --sn-expansion-panel-button-transition: background-color var(--sn-motion-base);
+
+    --sn-expansion-panel-icon-color: var(--sn-text-subtle);
+    --sn-expansion-panel-icon-size: 18px;
+
+    --sn-expansion-panel-toggle-color: var(--sn-text-subtle);
+    --sn-expansion-panel-toggle-transition: transform var(--sn-motion-slow);
+
+    --sn-expansion-panel-content-padding: 12px 14px;
+    --sn-expansion-panel-content-font-size: var(--sn-text-sm);
+    --sn-expansion-panel-content-color: var(--sn-text-muted);
+    --sn-expansion-panel-content-border-color: var(--sn-border-subtle);
+    --sn-expansion-panel-content-transition-duration: var(--sn-motion-slow);
+  }
+
+  .sn-accordion .sn-expansion-panel + .sn-expansion-panel {
+    border-top: 1px solid var(--sn-expansion-panel-separator-color);
+  }
+
+  .sn-expansion-panel-heading {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+  }
+
+  .sn-expansion-panel-button {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-expansion-panel-button-gap);
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--sn-expansion-panel-button-padding);
+    background: var(--sn-expansion-panel-button-bg);
+    border: none;
+    cursor: pointer;
+    text-align: start;
+    color: var(--sn-expansion-panel-button-color);
+    font-family: var(--sn-font-ui);
+    font-size: var(--sn-expansion-panel-button-font-size);
+    font-weight: var(--sn-expansion-panel-button-font-weight);
+    transition: var(--sn-expansion-panel-button-transition);
+  }
+
+  .sn-expansion-panel-button--expanded {
+    background: var(--sn-expansion-panel-button-expanded-bg);
+  }
+
+  .sn-expansion-panel-button:hover:not(:disabled) {
+    background: var(--sn-surface-hover);
+  }
+
+  .sn-expansion-panel-button:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-expansion-panel-button:disabled {
+    cursor: not-allowed;
+    opacity: var(--sn-disabled-opacity);
+  }
+
+  .sn-expansion-panel-icon {
+    flex-shrink: 0;
+    color: var(--sn-expansion-panel-icon-color);
+    font-size: var(--sn-expansion-panel-icon-size);
+  }
+
+  .sn-expansion-panel-title {
+    flex: 1;
+  }
+
+  .sn-expansion-panel-toggle {
+    flex-shrink: 0;
+    color: var(--sn-expansion-panel-toggle-color);
+    transition: var(--sn-expansion-panel-toggle-transition);
+  }
+
+  .sn-expansion-panel-toggle--expanded {
+    transform: rotate(180deg);
+  }
+
+  .sn-expansion-panel-content-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+  }
+
+  .sn-expansion-panel-content-wrapper--expanded {
+    grid-template-rows: 1fr;
+  }
+
+  .sn-expansion-panel-content {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .sn-expansion-panel-content-body {
+    padding: var(--sn-expansion-panel-content-padding);
+    font-size: var(--sn-expansion-panel-content-font-size);
+    color: var(--sn-expansion-panel-content-color);
+    border-top: 1px solid var(--sn-expansion-panel-content-border-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-expansion-panel-button {
+      transition: none;
+    }
+
+    .sn-expansion-panel-toggle {
+      transition: none;
+    }
+
+    .sn-expansion-panel.sn-expansion-panel-animate .sn-expansion-panel-content-wrapper {
+      transition: none;
+    }
+  }
+  /* Gate the content-wrapper transition until after first render so a
+     preselected expanded state snaps into place instead of animating. */
+  .sn-expansion-panel.sn-expansion-panel-animate .sn-expansion-panel-content-wrapper {
+    transition: grid-template-rows var(--sn-expansion-panel-content-transition-duration);
+  }
+}

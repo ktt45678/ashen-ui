@@ -1,0 +1,149 @@
+<header class="page-header">
+  <h1>Avatar</h1>
+  <p class="page-subtitle">
+    A user or entity thumbnail. Image, initials and icon are a fallback chain, so a broken URL
+    degrades to initials rather than to a blank circle.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example
+    heading="The fallback chain"
+    description="An image if there is one, otherwise initials from the label, otherwise an icon."
+    snippet="avatar/codeFallback"
+  >
+    <div class="demo-row">
+      <sn-avatar label="Ada Lovelace" />
+      <sn-avatar label="Grace Hopper" />
+      <sn-avatar label="Turing" />
+      <sn-avatar />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Broken image"
+    description="Both images below are invalid. The first falls back to its initials, the second has none and lands on the icon."
+    snippet="avatar/codeBrokenImage"
+  >
+    <div class="demo-row">
+      <sn-avatar [image]="brokenImage()" label="Ada Lovelace" />
+      <span class="demo-caption">image + label</span>
+      <sn-avatar [image]="brokenImage()" />
+      <span class="demo-caption">image alone, no initials to fall back to</span>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="avatar/codeSizes">
+    <div class="demo-row">
+      <sn-avatar label="Ada Lovelace" size="sm" />
+      <sn-avatar label="Ada Lovelace" size="md" />
+      <sn-avatar label="Ada Lovelace" size="lg" />
+      <sn-avatar label="Ada Lovelace" size="xl" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Square" snippet="avatar/codeShape">
+    <div class="demo-row">
+      <sn-avatar label="Ada Lovelace" shape="square" />
+      <sn-avatar icon="groups" shape="square" />
+      <sn-avatar icon="corporate_fare" shape="square" size="lg" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Icon"
+    description="A glyph name replaces the default, and an snIcon template replaces the glyph entirely."
+    snippet="avatar/codeIcon"
+  >
+    <div class="demo-row">
+      <sn-avatar icon="support_agent" />
+      <sn-avatar icon="smart_toy" />
+      <sn-avatar icon="groups" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Group"
+    description="Avatars past max are replaced by a counter."
+    snippet="avatar/codeGroup"
+  >
+    <sn-avatar-group [max]="3">
+      <sn-avatar label="Ada Lovelace" />
+      <sn-avatar label="Grace Hopper" />
+      <sn-avatar label="Alan Turing" />
+      <sn-avatar label="Katherine Johnson" />
+    </sn-avatar-group>
+  </doc-example>
+
+  <doc-example
+    heading="Group (interactive)"
+    description="Add and remove members to watch the counter follow."
+    snippet="avatar/codeGroup-2"
+  >
+    <div class="demo-stack">
+      <sn-avatar-group [max]="max()">
+        @for (name of team(); track name) {
+          <sn-avatar [label]="name" />
+        }
+      </sn-avatar-group>
+      <div class="demo-row">
+        <button snButton size="sm" variant="outlined" (click)="removeMember()">Remove</button>
+        <button snButton size="sm" variant="outlined" (click)="addMember()">Add</button>
+        <span class="demo-caption">{{ team().length }} members, max {{ max() }}</span>
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Group size and shape"
+    description="Set once on the group. An avatar that sets its own wins."
+    snippet="avatar/codeGroupSize"
+  >
+    <sn-avatar-group size="lg" shape="square">
+      <sn-avatar label="Ada Lovelace" />
+      <sn-avatar label="Grace Hopper" />
+      <sn-avatar label="Alan Turing" size="sm" />
+    </sn-avatar-group>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>Import</h2>
+  <p>
+    <code>sn-avatar</code> and <code>sn-avatar-group</code>, from
+    <code>ashen-ui/avatar</code>.
+  </p>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="avatar" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="avatar" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      With an image, the <code>img</code> carries the alt text and the host stays unlabelled, so
+      the person is announced once.
+    </li>
+    <li>
+      Without an image, the host takes <code>role="img"</code> and an <code>aria-label</code>
+      from <code>alt</code> or <code>label</code>. An avatar with neither is silent, which is
+      right for a decorative placeholder.
+    </li>
+    <li>The icon is <code>aria-hidden</code>; it is decoration on top of the host label.</li>
+    <li>
+      The group's counter is <code>role="img"</code> labelled "3 more", resolved through
+      <code>SnAvatarIntl</code> so it can be translated:
+      <code>provideSnIntl(&#123; avatar: &#123; more: (n) =&gt; `$&#123;n&#125; khác` &#125; &#125;)</code>
+    </li>
+  </ul>
+</section>

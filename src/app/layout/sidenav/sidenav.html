@@ -1,0 +1,31 @@
+<nav aria-label="Documentation navigation">
+  <section class="nav-section">
+    <h3 class="nav-heading">Guides</h3>
+    <ul class="nav-list" role="list">
+      <li><a class="nav-link" routerLink="/guides/getting-started" routerLinkActive="active">Getting started</a></li>
+      <li><a class="nav-link" routerLink="/guides/theming" routerLinkActive="active">Theming</a></li>
+      <li><a class="nav-link" routerLink="/guides/configuration" routerLinkActive="active">Configuration</a></li>
+      <li><a class="nav-link" routerLink="/guides/testing" routerLinkActive="active">Testing</a></li>
+      <li><a class="nav-link" routerLink="/guides/llm" routerLinkActive="active">LLM documentation</a></li>
+    </ul>
+  </section>
+
+  @for (group of groups; track group.label) {
+    <section class="nav-section">
+      <h3 class="nav-heading">{{ group.label }}</h3>
+      @if (group.items.length) {
+        <ul class="nav-list" role="list">
+          @for (item of group.items; track item.path) {
+            <li>
+              <a class="nav-link" [routerLink]="['/components', item.path]" routerLinkActive="active">
+                {{ item.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="nav-empty">Coming in a later phase</p>
+      }
+    </section>
+  }
+</nav>

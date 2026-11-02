@@ -1,0 +1,38 @@
+:root {
+  /* Spacing scale */
+  --sn-space-1: 0.25rem;   /* 4px  */
+  --sn-space-2: 0.5rem;    /* 8px  */
+  --sn-space-3: 0.75rem;   /* 12px */
+  --sn-space-4: 1rem;      /* 16px */
+  --sn-space-5: 1.25rem;   /* 20px */
+  --sn-space-6: 1.5rem;    /* 24px */
+
+  /* Radius scale: small, medium, large, pill, tile */
+  --sn-radius-sm: 0.25rem;
+  --sn-radius-md: 0.375rem;
+  --sn-radius-lg: 0.75rem;
+  --sn-radius-pill: 9999px;
+  --sn-radius-tile: 0.5rem;
+
+  /* Control sizing */
+  --sn-control-height-xs: 1.5rem;
+  --sn-control-height-sm: 2rem;
+  --sn-control-height-md: 2.5rem;
+  --sn-control-height-lg: 3rem;
+  --sn-icon-size-sm: 18px;
+  --sn-icon-size-md: 24px;
+  --sn-icon-size-lg: 32px;
+
+  /* Motion - subtle, fast, functional */
+  --sn-motion-fast: 0.1s ease-out;
+  --sn-motion-base: 0.15s ease-in-out;
+  --sn-motion-slow: 0.2s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sn-motion-fast: 0s;
+    --sn-motion-base: 0s;
+    --sn-motion-slow: 0s;
+  }
+}

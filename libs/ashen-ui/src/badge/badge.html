@@ -1,0 +1,8 @@
+@if (overlay()) {
+  <ng-content />
+  <span snPart="pip" class="sn-badge-pip sn-badge-pip--anchored" [class]="pipClassExtra()" aria-hidden="true">
+    {{ dot() ? '' : value() }}
+  </span>
+} @else {
+  <span snPart="pip" class="sn-badge-pip" [class]="pipClassExtra()">{{ dot() ? '' : value() }}</span>
+}

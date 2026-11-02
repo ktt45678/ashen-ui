@@ -1,0 +1,162 @@
+:root {
+  /* Elevation: flat, raised, overlay, modal, glass */
+  --sn-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --sn-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --sn-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --sn-shadow-overlay: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  /* Modals sit one step above dropdowns. */
+  --sn-shadow-modal: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
+
+  /* Button */
+  --sn-button-horizontal-padding-xs: 0.75rem;
+  --sn-button-vertical-padding-xs: 0.25rem;
+  --sn-button-horizontal-padding-sm: 1.5rem;
+  --sn-button-vertical-padding-sm: 0.375rem;
+  --sn-button-horizontal-padding-md: 1.5rem;
+  --sn-button-vertical-padding-md: 0.5rem;
+  --sn-button-horizontal-padding-lg: 1.5rem;
+  --sn-button-vertical-padding-lg: 0.625rem;
+  /* Buttons follow the input heights so a button and an input on one row line up. */
+  --sn-button-min-height-xs: var(--sn-input-min-height-xs);
+  --sn-button-min-height-sm: var(--sn-input-min-height-sm);
+  --sn-button-min-height-md: var(--sn-input-min-height-md);
+  --sn-button-min-height-lg: var(--sn-input-min-height-lg);
+  /* Icons beside a label, sized to fit the min-height (Material uses 18px in a 40px button).
+     Icon-only buttons use the --sn-icon-button-icon-size-* tokens below. */
+  --sn-button-icon-size-xs: 0.875rem;
+  --sn-button-icon-size-sm: 1rem;
+  --sn-button-icon-size-md: 1.125rem;
+  --sn-button-icon-size-lg: 1.25rem;
+  /* Glyph in icon variants and iconOnly buttons, per button size. */
+  --sn-icon-button-icon-size-xs: var(--sn-icon-size-md);
+  --sn-icon-button-icon-size-sm: var(--sn-icon-size-md);
+  --sn-icon-button-icon-size-md: var(--sn-icon-size-md);
+  --sn-icon-button-icon-size-lg: var(--sn-icon-size-md);
+  --sn-button-font-size-xs: 0.6875rem;
+  --sn-button-font-size-sm: 0.75rem;
+  --sn-button-font-size-md: 0.875rem;
+  --sn-button-font-size-lg: 1rem;
+  --sn-button-border-radius: 0.75rem;
+  /* Raise it (e.g. 1.5) when icons are taller than the label line. */
+  --sn-button-line-height: var(--sn-leading-tight);
+
+  /* Inputs */
+  /* Field border shared by input-text, select and autocomplete. */
+  --sn-input-border: var(--sn-border);
+  --sn-input-border-radius: 0.375rem;
+  --sn-input-spacing-xs: 0.375rem;
+  --sn-input-spacing-sm: 0.5rem;
+  --sn-input-spacing-md: 0.75rem;
+  --sn-input-spacing-lg: 1rem;
+  --sn-input-font-size-xs: 0.75rem;
+  --sn-input-font-size-sm: 0.75rem;
+  --sn-input-font-size-md: 0.875rem;
+  --sn-input-font-size-lg: 1rem;
+  /* Input box height per size. Defaults to the shared control height so inputs
+     line up with buttons and selects; raise it for taller fields. */
+  --sn-input-min-height-xs: var(--sn-control-height-xs);
+  --sn-input-min-height-sm: var(--sn-control-height-sm);
+  --sn-input-min-height-md: var(--sn-control-height-md);
+  --sn-input-min-height-lg: var(--sn-control-height-lg);
+
+  /* Select. Follows the md input by default so a select and an input on one
+     row match when a theme resizes inputs. */
+  --sn-select-padding: 0.5rem var(--sn-input-spacing-md);
+  /* Space after the arrow. Overrides the end side of --sn-select-padding, and
+     the clear button is placed from it. */
+  --sn-select-padding-inline-end: var(--sn-input-spacing-md);
+  --sn-select-font-size: var(--sn-input-font-size-md);
+  --sn-select-border-radius: var(--sn-input-border-radius);
+  --sn-select-min-height: var(--sn-input-min-height-md);
+  --sn-select-option-padding: 0.5rem 0.75rem;
+  --sn-list-item-height: 2.25rem;
+
+  --sn-menu-min-width: 11rem;
+  --sn-menu-item-padding: 7px 10px;
+
+  /* Toggle */
+  --sn-toggle-label-gap: 0.75rem;
+  --sn-toggle-track-border-radius: 9999px;
+  --sn-toggle-track-width-sm: 2rem;
+  --sn-toggle-track-height-sm: 1rem;
+  --sn-toggle-track-width-md: 2.5rem;
+  --sn-toggle-track-height-md: 1.25rem;
+  --sn-toggle-track-width-lg: 3rem;
+  --sn-toggle-track-height-lg: 1.5rem;
+  --sn-toggle-thumb-size-sm: 0.75rem;
+  --sn-toggle-thumb-size-md: 1rem;
+  --sn-toggle-thumb-size-lg: 1.25rem;
+  --sn-toggle-thumb-offset: 0.125rem;
+
+  /* Checkbox / radio */
+  --sn-checkbox-border-radius: 0.25rem;
+  --sn-checkbox-size-sm: 1rem;
+  --sn-checkbox-size-md: 1.25rem;
+  --sn-checkbox-size-lg: 1.5rem;
+  --sn-radio-button-size-md: 1.25rem;
+  --sn-radio-button-dot-size-md: 0.625rem;
+  --sn-radio-group-gap: 0.75rem;
+
+  /* Slider */
+  --sn-slider-track-height: 0.5rem;
+  --sn-slider-thumb-size: 1.25rem;
+  --sn-slider-value-gap: 1rem;
+  --sn-slider-value-min-width: 3rem;
+
+  /* Form field */
+  --sn-form-field-gap: 0.5rem;
+  --sn-form-field-subscript-gap: 0.375rem;
+  --sn-form-field-subscript-padding-x: 1rem;
+  --sn-form-field-label-font-size: 0.875rem;
+  --sn-form-field-label-font-weight: 500;
+  /* Resting floating label reads as a placeholder, so it follows the input text. */
+  --sn-form-field-floating-label-font-size: var(--sn-input-font-size-md);
+  --sn-form-field-hint-font-size: 0.75rem;
+  --sn-form-field-error-font-size: 0.75rem;
+  --sn-form-field-hint-font-weight: 400;
+  --sn-form-field-error-font-weight: 400;
+  --sn-form-field-subscript-line-height: 1.4;
+  /* MINIMUM room reserved in the control for an snPrefix/snSuffix. The actual
+     gutter is max(this, the affix's measured width), so wider content needs no
+     configuration; raise this only to line up a column of mixed affixes. */
+  --sn-form-field-affix-width: 2.5rem;
+  --sn-form-field-affix-gap: 0.375rem;
+
+  /* Dialog */
+  --sn-dialog-border-radius: 0.5rem;
+  --sn-dialog-container-padding: 1.5rem;
+  --sn-dialog-fullscreen-border-radius: 0;
+  --sn-dialog-max-width-small: 24rem;
+  --sn-dialog-max-width-medium: 32rem;
+  --sn-dialog-max-width-large: 48rem;
+  --sn-dialog-header-padding: 1.5rem;
+  --sn-dialog-body-padding: 1.5rem;
+  --sn-dialog-body-font-size: var(--sn-text-sm);
+  --sn-dialog-body-color: var(--sn-text-muted);
+  /* A negative value lifts the body of an untitled dialog beside its close button. */
+  --sn-dialog-untitled-body-margin-top: 0;
+  --sn-dialog-footer-padding: 1.5rem;
+  --sn-dialog-header-border: 1px solid var(--sn-border);
+  --sn-dialog-footer-border: 1px solid var(--sn-border);
+  --sn-dialog-close-size: 2rem;
+  --sn-dialog-close-radius: var(--sn-radius-sm);
+  --sn-dialog-title-font-size: 1.25rem;
+  --sn-dialog-title-font-weight: 600;
+
+  /* Drawer */
+  --sn-drawer-width: 20rem;
+  --sn-drawer-z-index: 1000;
+  --sn-drawer-header-padding: 1.25rem 1.5rem;
+  --sn-drawer-content-padding: 1.5rem;
+  --sn-drawer-footer-padding: 1.25rem 1.5rem;
+  --sn-drawer-title-font-size: 1.125rem;
+  --sn-drawer-title-font-weight: 600;
+
+  /* Color picker */
+  --sn-color-picker-width: 14rem;
+  --sn-color-picker-preview-height: 4rem;
+  --sn-color-picker-swatch-width: 2.25rem;
+  --sn-color-picker-swatch-height: 2.25rem;
+  --sn-color-picker-sv-area-height: 10rem;
+  --sn-color-picker-slider-height: 1.5rem;
+}

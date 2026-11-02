@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "AshenUiTheme",
+  "title": "Ashen UI theme",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Theme name. Sets the file name and the [data-theme] selector.",
+      "x-prompt": "What should the theme be called?",
+      "$default": { "$source": "argv", "index": 0 }
+    },
+    "project": {
+      "type": "string",
+      "description": "The project to add the theme to. Defaults to the workspace's default project.",
+      "$default": { "$source": "projectName" }
+    },
+    "path": {
+      "type": "string",
+      "default": "styles/themes",
+      "description": "Directory for the theme file, relative to the project source root."
+    },
+    "extends": {
+      "type": "string",
+      "description": "Name of a theme to derive from. The generated file overrides only the tokens you change and inherits the rest.",
+      "enum": ["light", "dark"]
+    }
+  },
+  "required": ["name"]
+}

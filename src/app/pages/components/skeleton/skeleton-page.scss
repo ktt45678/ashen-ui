@@ -1,0 +1,8 @@
+.demo-row { display: flex; gap: 12px; align-items: flex-start; }
+.demo-col { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.demo-shapes { display: flex; flex-direction: column; gap: var(--sn-space-3); }
+.demo-shape-item { display: flex; align-items: center; gap: var(--sn-space-3); }
+.demo-label { font-size: var(--sn-text-xs); color: var(--sn-text-subtle); width: 44px; flex-shrink: 0; font-family: var(--sn-font-mono); }
+.demo-card { border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); overflow: hidden; width: 100%; max-width: 280px; }
+.demo-card-body { padding: var(--sn-space-3); display: flex; flex-direction: column; gap: var(--sn-space-2); }
+.code-block { background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); padding: var(--sn-space-3) var(--sn-space-4); font-family: var(--sn-font-mono); font-size: var(--sn-text-xs); color: var(--sn-text-muted); overflow-x: auto; }

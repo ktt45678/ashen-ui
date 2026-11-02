@@ -1,0 +1,11 @@
+dist
+out-tsc
+coverage
+.angular
+playwright-report
+test-results
+public
+pnpm-lock.yaml
+docs-data
+**/*.generated.ts
+libs/ashen-ui/schematics/**/files

@@ -1,0 +1,125 @@
+<header class="page-header">
+  <h1>Skeleton</h1>
+  <p class="page-subtitle">
+    Loading placeholder with shimmer or pulse animation - use while content is being fetched
+    to reduce perceived latency. Supports text line, rect, circle, and grid-tile shapes.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Shimmer (default)" snippet="skeleton/codeShimmer">
+    <div class="demo-row">
+      <sn-skeleton shape="circle" />
+      <div class="demo-col">
+        <sn-skeleton shape="text" />
+        <sn-skeleton shape="text" width="70%" />
+        <sn-skeleton shape="rect" height="36px" />
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Pulse animation" snippet="skeleton/codePulse">
+    <div class="demo-row">
+      <sn-skeleton shape="circle" animation="pulse" />
+      <div class="demo-col">
+        <sn-skeleton shape="text" animation="pulse" />
+        <sn-skeleton shape="rect" animation="pulse" height="36px" />
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Static (no animation)" snippet="skeleton/codeStatic">
+    <div class="demo-row">
+      <sn-skeleton shape="circle" animation="none" />
+      <div class="demo-col">
+        <sn-skeleton shape="text" animation="none" />
+        <sn-skeleton shape="text" width="55%" animation="none" />
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Shape variants" description="All four shapes at their default dimensions." snippet="skeleton/codeShapes">
+    <div class="demo-shapes">
+      <div class="demo-shape-item">
+        <span class="demo-label">text</span>
+        <sn-skeleton shape="text" />
+      </div>
+      <div class="demo-shape-item">
+        <span class="demo-label">rect</span>
+        <sn-skeleton shape="rect" />
+      </div>
+      <div class="demo-shape-item">
+        <span class="demo-label">circle</span>
+        <sn-skeleton shape="circle" />
+      </div>
+      <div class="demo-shape-item">
+        <span class="demo-label">tile</span>
+        <sn-skeleton shape="tile" />
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom dimensions" description="Override width and height with any CSS value." snippet="skeleton/codeCustom">
+    <sn-skeleton shape="rect" width="100%" height="120px" />
+  </doc-example>
+
+  <doc-example
+    heading="Card placeholder"
+    description="Compose multiple skeletons to approximate the shape of a card before content loads."
+    snippet="skeleton/codeCard"
+  >
+    <div class="demo-card">
+      <sn-skeleton shape="rect" width="100%" height="120px" />
+      <div class="demo-card-body">
+        <sn-skeleton shape="text" width="60%" />
+        <sn-skeleton shape="text" />
+        <sn-skeleton shape="text" width="80%" />
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Re-skin via CSS variables"
+    description="Override the component tokens to match a custom surface color."
+    snippet="skeleton/codeReskin"
+  >
+    <sn-skeleton
+      shape="rect"
+      height="48px"
+      style="--sn-skeleton-bg: #e0e7ff; --sn-skeleton-shimmer-color: rgba(99,102,241,0.25);"
+    />
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="skeleton" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="skeleton" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Skeleton placeholders are decorative and carry <code>aria-hidden="true"</code> so screen
+      readers skip them entirely while content is loading.
+    </li>
+    <li>
+      For a region that is actively loading, wrap the skeleton group in a container with
+      <code>aria-busy="true"</code> and <code>aria-label</code> (e.g. "Loading content") so
+      assistive technology can announce the loading state to users. Remove the attribute when
+      real content replaces the skeletons.
+    </li>
+    <li>
+      The shimmer and pulse animations are suppressed automatically when the user's system has
+      <code>prefers-reduced-motion: reduce</code> enabled, matching the same motion tokens used
+      throughout the library.
+    </li>
+  </ul>
+</section>

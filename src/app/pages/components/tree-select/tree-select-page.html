@@ -1,0 +1,144 @@
+<header class="page-header">
+  <h1>Tree Select</h1>
+  <p class="page-subtitle">
+    A Select-style trigger that opens the <code>sn-tree</code> component in a floating panel.
+    Parent nodes expand and collapse - only leaf nodes are selectable and close the panel.
+    Follows the WAI-ARIA combobox + tree popup pattern. Implements
+    <code>ControlValueAccessor</code> for reactive forms and <code>ngModel</code>.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic with ngModel" snippet="tree-select/codeBasic">
+    <div class="demo-row">
+      <sn-tree-select
+        [(value)]="basicValue"
+        [nodes]="fileTree"
+        placeholder="Select a file…"
+        class="demo-select"
+      ></sn-tree-select>
+      <p class="hint-text">Value: "{{ basicValue() }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl. The value is the node's key string."
+    snippet="tree-select/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-tree-select
+        [formControl]="formCtrl"
+        [nodes]="fileTree"
+        class="demo-select"
+      ></sn-tree-select>
+      <p class="hint-text">FormControl value: "{{ formCtrl.value }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Pre-expanded via [(expandedKeys)]"
+    description="Pass initial expanded keys to show specific branches open by default. Two-way binding lets parent track changes."
+    snippet="tree-select/codePreExpanded"
+  >
+    <div class="demo-row">
+      <sn-tree-select
+        [(value)]="preExpandedValue"
+        [nodes]="fileTree"
+        [(expandedKeys)]="preExpandedKeys"
+        class="demo-select"
+      ></sn-tree-select>
+      <p class="hint-text">Value: "{{ preExpandedValue() }}" | Expanded: {{ preExpandedKeys() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside Form Field"
+    description="Compose with sn-form-field for label, hint, and focus styling."
+    snippet="tree-select/codeFormField"
+  >
+    <div class="demo-row">
+      <sn-form-field class="demo-select">
+        <sn-label>File</sn-label>
+        <sn-tree-select
+          [(value)]="formFieldValue"
+          [nodes]="fileTree"
+          placeholder="Select a file…"
+        ></sn-tree-select>
+        <sn-hint>Only leaf files are selectable</sn-hint>
+      </sn-form-field>
+      <p class="hint-text">Value: "{{ formFieldValue() }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled"
+    description="Set disabled=true to prevent interaction."
+    snippet="tree-select/codeDisabled"
+  >
+    <div class="demo-row">
+      <sn-tree-select
+        [disabled]="true"
+        [(value)]="disabledValue"
+        [nodes]="fileTree"
+        class="demo-select"
+      ></sn-tree-select>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tree-select" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Trigger has <code>role="combobox"</code>, <code>aria-haspopup="tree"</code>,
+      <code>aria-expanded</code>, and <code>aria-controls</code> pointing to the panel id.
+    </li>
+    <li>
+      On open, focus moves into the embedded <code>sn-tree</code> (first treeitem with
+      <code>tabindex="0"</code>) so full tree keyboard navigation is immediately available.
+    </li>
+    <li>
+      <strong>Parent row click</strong> - toggles expansion only. The value is not changed and the
+      panel stays open. The one-way <code>[selectedKey]</code> binding on the tree re-asserts
+      the parent's value on the next change-detection cycle.
+    </li>
+    <li>
+      <strong>Leaf row click / Enter on leaf</strong> - sets the value, emits <code>(nodeSelect)</code>,
+      and closes the panel with the 120 ms animation.
+    </li>
+    <li>
+      <strong>Escape</strong> - closes the panel without changing the value and returns focus to the trigger.
+    </li>
+    <li>
+      <strong>Tab</strong> - closes the panel and moves focus naturally to the next focusable element.
+    </li>
+    <li>
+      <strong>Trigger closed:</strong> Enter, Space, ArrowDown, ArrowUp all open the panel.
+    </li>
+    <li>
+      Full APG TreeView keyboard (ArrowDown/Up/Left/Right, Home/End, Enter/Space) is provided by
+      the embedded <code>sn-tree</code> component.
+    </li>
+    <li>
+      When used inside <code>&lt;sn-form-field&gt;</code>, the trigger receives the field's
+      <code>controlId</code> and reports filled/unfilled state.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - disabled state propagates from
+      <code>FormControl.disable()</code>.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tree-select" section="theming" />
+</section>

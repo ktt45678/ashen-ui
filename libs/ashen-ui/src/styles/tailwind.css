@@ -1,0 +1,279 @@
+/* Ashen UI - Tailwind 4 theme integration.
+   Exposes --sn-* tokens as Tailwind theme vars so app authors get:
+     bg-sn-primary, text-sn-error, rounded-sn-md, font-sn-ui, p-sn-4, …
+   The library itself never imports this file - it is for consuming apps only. */
+
+/* === GENERATED: theme bridge, do not edit by hand. ===
+   Run `node scripts/generate-tailwind-theme.mjs` after changing any token,
+   or `--check` in CI to fail on drift. Source: styles/tokens/*.css === */
+@theme inline {
+  /* ── color ─────────────────────────────────────────── */
+  --color-sn-border:                        var(--sn-border);
+  --color-sn-border-focus:                  var(--sn-border-focus);
+  --color-sn-border-invalid:                var(--sn-border-invalid);
+  --color-sn-border-strong:                 var(--sn-border-strong);
+  --color-sn-border-subtle:                 var(--sn-border-subtle);
+  --color-sn-error:                         var(--sn-color-error);
+  --color-sn-error-active:                  var(--sn-color-error-active);
+  --color-sn-error-border:                  var(--sn-color-error-border);
+  --color-sn-error-focus:                   var(--sn-color-error-focus);
+  --color-sn-error-hover:                   var(--sn-color-error-hover);
+  --color-sn-error-soft:                    var(--sn-color-error-soft);
+  --color-sn-error-solid:                   var(--sn-color-error-solid);
+  --color-sn-error-solid-active:            var(--sn-color-error-solid-active);
+  --color-sn-error-solid-hover:             var(--sn-color-error-solid-hover);
+  --color-sn-info:                          var(--sn-color-info);
+  --color-sn-info-active:                   var(--sn-color-info-active);
+  --color-sn-info-border:                   var(--sn-color-info-border);
+  --color-sn-info-focus:                    var(--sn-color-info-focus);
+  --color-sn-info-hover:                    var(--sn-color-info-hover);
+  --color-sn-info-soft:                     var(--sn-color-info-soft);
+  --color-sn-info-solid:                    var(--sn-color-info-solid);
+  --color-sn-info-solid-active:             var(--sn-color-info-solid-active);
+  --color-sn-info-solid-hover:              var(--sn-color-info-solid-hover);
+  --color-sn-invalid:                       var(--sn-color-invalid);
+  --color-sn-primary:                       var(--sn-color-primary);
+  --color-sn-primary-active:                var(--sn-color-primary-active);
+  --color-sn-primary-border:                var(--sn-color-primary-border);
+  --color-sn-primary-focus:                 var(--sn-color-primary-focus);
+  --color-sn-primary-hover:                 var(--sn-color-primary-hover);
+  --color-sn-primary-soft:                  var(--sn-color-primary-soft);
+  --color-sn-primary-solid:                 var(--sn-color-primary-solid);
+  --color-sn-primary-solid-active:          var(--sn-color-primary-solid-active);
+  --color-sn-primary-solid-hover:           var(--sn-color-primary-solid-hover);
+  --color-sn-secondary:                     var(--sn-color-secondary);
+  --color-sn-secondary-active:              var(--sn-color-secondary-active);
+  --color-sn-secondary-border:              var(--sn-color-secondary-border);
+  --color-sn-secondary-focus:               var(--sn-color-secondary-focus);
+  --color-sn-secondary-hover:               var(--sn-color-secondary-hover);
+  --color-sn-secondary-soft:                var(--sn-color-secondary-soft);
+  --color-sn-secondary-solid:               var(--sn-color-secondary-solid);
+  --color-sn-secondary-solid-active:        var(--sn-color-secondary-solid-active);
+  --color-sn-secondary-solid-hover:         var(--sn-color-secondary-solid-hover);
+  --color-sn-success:                       var(--sn-color-success);
+  --color-sn-success-active:                var(--sn-color-success-active);
+  --color-sn-success-border:                var(--sn-color-success-border);
+  --color-sn-success-focus:                 var(--sn-color-success-focus);
+  --color-sn-success-hover:                 var(--sn-color-success-hover);
+  --color-sn-success-soft:                  var(--sn-color-success-soft);
+  --color-sn-success-solid:                 var(--sn-color-success-solid);
+  --color-sn-success-solid-active:          var(--sn-color-success-solid-active);
+  --color-sn-success-solid-hover:           var(--sn-color-success-solid-hover);
+  --color-sn-warning:                       var(--sn-color-warning);
+  --color-sn-warning-active:                var(--sn-color-warning-active);
+  --color-sn-warning-border:                var(--sn-color-warning-border);
+  --color-sn-warning-focus:                 var(--sn-color-warning-focus);
+  --color-sn-warning-hover:                 var(--sn-color-warning-hover);
+  --color-sn-warning-soft:                  var(--sn-color-warning-soft);
+  --color-sn-warning-solid:                 var(--sn-color-warning-solid);
+  --color-sn-warning-solid-active:          var(--sn-color-warning-solid-active);
+  --color-sn-warning-solid-hover:           var(--sn-color-warning-solid-hover);
+  --color-sn-dialog-bg:                     var(--sn-dialog-bg);
+  --color-sn-dialog-body-color:             var(--sn-dialog-body-color);
+  --color-sn-dialog-footer-border:          var(--sn-dialog-footer-border);
+  --color-sn-dialog-header-border:          var(--sn-dialog-header-border);
+  --color-sn-disabled-bg:                   var(--sn-disabled-bg);
+  --color-sn-disabled-border:               var(--sn-disabled-border);
+  --color-sn-disabled-text:                 var(--sn-disabled-text);
+  --color-sn-drawer-bg:                     var(--sn-drawer-bg);
+  --color-sn-focus-ring-color:              var(--sn-focus-ring-color);
+  --color-sn-input-bg:                      var(--sn-input-bg);
+  --color-sn-input-border:                  var(--sn-input-border);
+  --color-sn-input-focus-shadow-color:      var(--sn-input-focus-shadow-color);
+  --color-sn-input-focus-shadow-invalid:    var(--sn-input-focus-shadow-invalid);
+  --color-sn-input-focus-shadow-painted:    var(--sn-input-focus-shadow-painted);
+  --color-sn-input-focus-shadow-rest:       var(--sn-input-focus-shadow-rest);
+  --color-sn-input-focus-shadow-transition: var(--sn-input-focus-shadow-transition);
+  --color-sn-input-placeholder:             var(--sn-input-placeholder);
+  --color-sn-menu-bg:                       var(--sn-menu-bg);
+  --color-sn-message-error-bg:              var(--sn-message-error-bg);
+  --color-sn-message-error-text:            var(--sn-message-error-text);
+  --color-sn-message-info-bg:               var(--sn-message-info-bg);
+  --color-sn-message-info-text:             var(--sn-message-info-text);
+  --color-sn-message-success-bg:            var(--sn-message-success-bg);
+  --color-sn-message-success-text:          var(--sn-message-success-text);
+  --color-sn-message-warning-bg:            var(--sn-message-warning-bg);
+  --color-sn-message-warning-text:          var(--sn-message-warning-text);
+  --color-sn-scrollbar-thumb:               var(--sn-scrollbar-thumb);
+  --color-sn-scrollbar-track:               var(--sn-scrollbar-track);
+  --color-sn-select-option-selected-bg:     var(--sn-select-option-selected-bg);
+  --color-sn-select-option-selected-text:   var(--sn-select-option-selected-text);
+  --color-sn-select-panel-bg:               var(--sn-select-panel-bg);
+  --color-sn-selected-bg:                   var(--sn-selected-bg);
+  --color-sn-selected-bg-hover:             var(--sn-selected-bg-hover);
+  --color-sn-selected-text:                 var(--sn-selected-text);
+  --color-sn-canvas:                        var(--sn-surface-canvas);
+  --color-sn-elevated:                      var(--sn-surface-elevated);
+  --color-sn-glass:                         var(--sn-surface-glass);
+  --color-sn-grid:                          var(--sn-surface-grid);
+  --color-sn-hover:                         var(--sn-surface-hover);
+  --color-sn-overlay:                       var(--sn-surface-overlay);
+  --color-sn-panel:                         var(--sn-surface-panel);
+  --color-sn-tile:                          var(--sn-surface-tile);
+  --color-sn-tile-active:                   var(--sn-surface-tile-active);
+  --color-sn-tile-editing:                  var(--sn-surface-tile-editing);
+  --color-sn-text:                          var(--sn-text);
+  --color-sn-text-disabled:                 var(--sn-text-disabled);
+  --color-sn-text-inverse:                  var(--sn-text-inverse);
+  --color-sn-text-muted:                    var(--sn-text-muted);
+  --color-sn-text-on-error:                 var(--sn-text-on-error);
+  --color-sn-text-on-error-soft:            var(--sn-text-on-error-soft);
+  --color-sn-text-on-info:                  var(--sn-text-on-info);
+  --color-sn-text-on-info-soft:             var(--sn-text-on-info-soft);
+  --color-sn-text-on-primary:               var(--sn-text-on-primary);
+  --color-sn-text-on-primary-soft:          var(--sn-text-on-primary-soft);
+  --color-sn-text-on-secondary:             var(--sn-text-on-secondary);
+  --color-sn-text-on-secondary-soft:        var(--sn-text-on-secondary-soft);
+  --color-sn-text-on-success:               var(--sn-text-on-success);
+  --color-sn-text-on-success-soft:          var(--sn-text-on-success-soft);
+  --color-sn-text-on-warning:               var(--sn-text-on-warning);
+  --color-sn-text-on-warning-soft:          var(--sn-text-on-warning-soft);
+  --color-sn-text-subtle:                   var(--sn-text-subtle);
+
+  /* ── radius ─────────────────────────────────────────── */
+  --radius-sn-button:            var(--sn-button-border-radius);
+  --radius-sn-checkbox:          var(--sn-checkbox-border-radius);
+  --radius-sn-dialog:            var(--sn-dialog-border-radius);
+  --radius-sn-dialog-close:      var(--sn-dialog-close-radius);
+  --radius-sn-dialog-fullscreen: var(--sn-dialog-fullscreen-border-radius);
+  --radius-sn-input:             var(--sn-input-border-radius);
+  --radius-sn-lg:                var(--sn-radius-lg);
+  --radius-sn-md:                var(--sn-radius-md);
+  --radius-sn-pill:              var(--sn-radius-pill);
+  --radius-sn-sm:                var(--sn-radius-sm);
+  --radius-sn-tile:              var(--sn-radius-tile);
+  --radius-sn-select:            var(--sn-select-border-radius);
+
+  /* ── spacing ─────────────────────────────────────────── */
+  --spacing-sn-button-icon-lg:      var(--sn-button-icon-size-lg);
+  --spacing-sn-button-icon-md:      var(--sn-button-icon-size-md);
+  --spacing-sn-button-icon-sm:      var(--sn-button-icon-size-sm);
+  --spacing-sn-button-icon-xs:      var(--sn-button-icon-size-xs);
+  --spacing-sn-checkbox-lg:         var(--sn-checkbox-size-lg);
+  --spacing-sn-checkbox-md:         var(--sn-checkbox-size-md);
+  --spacing-sn-checkbox-sm:         var(--sn-checkbox-size-sm);
+  --spacing-sn-control-height-lg:   var(--sn-control-height-lg);
+  --spacing-sn-control-height-md:   var(--sn-control-height-md);
+  --spacing-sn-control-height-sm:   var(--sn-control-height-sm);
+  --spacing-sn-control-height-xs:   var(--sn-control-height-xs);
+  --spacing-sn-dialog-close:        var(--sn-dialog-close-size);
+  --spacing-sn-icon-button-icon-lg: var(--sn-icon-button-icon-size-lg);
+  --spacing-sn-icon-button-icon-md: var(--sn-icon-button-icon-size-md);
+  --spacing-sn-icon-button-icon-sm: var(--sn-icon-button-icon-size-sm);
+  --spacing-sn-icon-button-icon-xs: var(--sn-icon-button-icon-size-xs);
+  --spacing-sn-icon-size-lg:        var(--sn-icon-size-lg);
+  --spacing-sn-icon-size-md:        var(--sn-icon-size-md);
+  --spacing-sn-icon-size-sm:        var(--sn-icon-size-sm);
+  --spacing-sn-menu-min-width:      var(--sn-menu-min-width);
+  --spacing-sn-radio-button-dot-md: var(--sn-radio-button-dot-size-md);
+  --spacing-sn-radio-button-md:     var(--sn-radio-button-size-md);
+  --spacing-sn-scrollbar-size:      var(--sn-scrollbar-size);
+  --spacing-sn-1:                   var(--sn-space-1);
+  --spacing-sn-2:                   var(--sn-space-2);
+  --spacing-sn-3:                   var(--sn-space-3);
+  --spacing-sn-4:                   var(--sn-space-4);
+  --spacing-sn-5:                   var(--sn-space-5);
+  --spacing-sn-6:                   var(--sn-space-6);
+
+  /* ── font ─────────────────────────────────────────── */
+  --font-sn-display: var(--sn-font-display);
+  --font-sn-mono:    var(--sn-font-mono);
+  --font-sn-ui:      var(--sn-font-ui);
+
+  /* ── text ─────────────────────────────────────────── */
+  --text-sn-button-lg:                 var(--sn-button-font-size-lg);
+  --text-sn-button-md:                 var(--sn-button-font-size-md);
+  --text-sn-button-sm:                 var(--sn-button-font-size-sm);
+  --text-sn-button-xs:                 var(--sn-button-font-size-xs);
+  --text-sn-dialog-body:               var(--sn-dialog-body-font-size);
+  --text-sn-dialog-title:              var(--sn-dialog-title-font-size);
+  --text-sn-drawer-title:              var(--sn-drawer-title-font-size);
+  --text-sn-form-field-error:          var(--sn-form-field-error-font-size);
+  --text-sn-form-field-floating-label: var(--sn-form-field-floating-label-font-size);
+  --text-sn-form-field-hint:           var(--sn-form-field-hint-font-size);
+  --text-sn-form-field-label:          var(--sn-form-field-label-font-size);
+  --text-sn-hint:                      var(--sn-hint-size);
+  --text-sn-input-lg:                  var(--sn-input-font-size-lg);
+  --text-sn-input-md:                  var(--sn-input-font-size-md);
+  --text-sn-input-sm:                  var(--sn-input-font-size-sm);
+  --text-sn-input-xs:                  var(--sn-input-font-size-xs);
+  --text-sn-label:                     var(--sn-label-size);
+  --text-sn-select:                    var(--sn-select-font-size);
+  --text-sn-2xl:                       var(--sn-text-2xl);
+  --text-sn-2xs:                       var(--sn-text-2xs);
+  --text-sn-lg:                        var(--sn-text-lg);
+  --text-sn-md:                        var(--sn-text-md);
+  --text-sn-sm:                        var(--sn-text-sm);
+  --text-sn-xl:                        var(--sn-text-xl);
+  --text-sn-xs:                        var(--sn-text-xs);
+
+  /* ── font-weight ─────────────────────────────────────────── */
+  --font-weight-sn-bold:     var(--sn-font-weight-bold);
+  --font-weight-sn-medium:   var(--sn-font-weight-medium);
+  --font-weight-sn-regular:  var(--sn-font-weight-regular);
+  --font-weight-sn-semibold: var(--sn-font-weight-semibold);
+
+  /* ── leading ─────────────────────────────────────────── */
+  --leading-sn-normal: var(--sn-leading-normal);
+  --leading-sn-tight:  var(--sn-leading-tight);
+
+  /* ── shadow ─────────────────────────────────────────── */
+  --shadow-sn-input-focus: var(--sn-input-focus-shadow);
+  --shadow-sn-lg:          var(--sn-shadow-lg);
+  --shadow-sn-md:          var(--sn-shadow-md);
+  --shadow-sn-modal:       var(--sn-shadow-modal);
+  --shadow-sn-overlay:     var(--sn-shadow-overlay);
+  --shadow-sn-sm:          var(--sn-shadow-sm);
+}
+
+/* Not bridged, deliberately:
+     --sn-backdrop-filter: a filter shorthand; no Tailwind namespace accepts it
+     --sn-dialog-title-font-weight: covered by --font-weight-sn-*
+     --sn-disabled-opacity: a bare number; no Tailwind opacity namespace
+     --sn-drawer-title-font-weight: covered by --font-weight-sn-*
+     --sn-drawer-z-index: a bare number
+     --sn-focus-ring-applied-offset: derived internal; set --sn-focus-ring-style instead
+     --sn-focus-ring-inset-offset: derived internal
+     --sn-focus-ring-style: a keyword switch, not a value Tailwind can consume
+     --sn-form-field-error-font-weight: covered by --font-weight-sn-*
+     --sn-form-field-hint-font-weight: covered by --font-weight-sn-*
+     --sn-form-field-label-font-weight: covered by --font-weight-sn-*
+     --sn-menu-item-padding: a two-axis padding shorthand, not a reusable spacing scale value
+     --sn-motion-base: a full animation shorthand
+     --sn-motion-fast: a full animation shorthand; --ease-* takes a timing function only
+     --sn-motion-slow: a full animation shorthand
+   Reach these as plain custom properties: var(--sn-motion-base). */
+/* === END GENERATED === */
+
+/* Component state variants. Each is shorthand for the data attribute form:
+     <sn-select class="sn-open:ring-2" />  ==  class="data-[sn-open]:ring-2"
+   States inherited by a component's children also match descendants.
+   Valued states (data-sn-size, data-sn-variant, ...) use the arbitrary form:
+     <sn-button class="data-[sn-size=sm]:px-2" /> */
+
+/* Inherited by descendants. */
+@custom-variant sn-open (&[data-sn-open], &[data-sn-open] *);
+@custom-variant sn-hiding (&[data-sn-hiding], &[data-sn-hiding] *);
+@custom-variant sn-invalid (&[data-sn-invalid], &[data-sn-invalid] *);
+@custom-variant sn-expanded (&[data-sn-expanded], &[data-sn-expanded] *);
+@custom-variant sn-collapsed (&[data-sn-collapsed], &[data-sn-collapsed] *);
+@custom-variant sn-resizing (&[data-sn-resizing], &[data-sn-resizing] *);
+
+/* Intrinsic to the element that carries them. */
+@custom-variant sn-selected (&[data-sn-selected]);
+@custom-variant sn-active (&[data-sn-active]);
+@custom-variant sn-disabled (&[data-sn-disabled]);
+@custom-variant sn-focused (&[data-sn-focused]);
+@custom-variant sn-filled (&[data-sn-filled]);
+@custom-variant sn-indeterminate (&[data-sn-indeterminate]);
+@custom-variant sn-loading (&[data-sn-loading]);
+
+/* States the library reports through ARIA rather than a data attribute, because
+   ARIA already says the same thing and Tailwind ships `aria-*` variants
+   natively. Listed so the absence is not read as an oversight:
+     checked   -> aria-checked:…   (checkbox, toggle, radio)
+     selected  -> aria-selected:…  (list options)
+     pressed   -> aria-pressed:…   (toggle-button, select-button option)
+     disabled  -> aria-disabled:…  (where the element sets it) or `disabled:…`
+     sorted    -> aria-sort:…      (sort headers)
+     expanded  -> aria-expanded:…  (combobox/menu triggers) */

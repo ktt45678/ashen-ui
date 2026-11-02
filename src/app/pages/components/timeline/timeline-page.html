@@ -1,0 +1,95 @@
+<header class="page-header">
+  <h1>Timeline</h1>
+  <p class="page-subtitle">
+    Vertical chain of events with dot or icon markers, connector lines, and projected content.
+    Use to display an ordered history of actions, states, or log entries.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="With icons and times" snippet="timeline/codeBasic">
+    <sn-timeline>
+      <sn-timeline-item icon="add">
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Grid created</span>
+          <span class="sn-timeline-time">09:12</span>
+        </span>
+      </sn-timeline-item>
+      <sn-timeline-item>
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Tile added</span>
+          <span class="sn-timeline-time">09:14</span>
+        </span>
+        <div class="sn-timeline-subtitle">Play Music → play-sound</div>
+      </sn-timeline-item>
+      <sn-timeline-item icon="play_arrow" color="var(--sn-color-success)">
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Action run</span>
+          <span class="sn-timeline-time">09:41</span>
+        </span>
+      </sn-timeline-item>
+    </sn-timeline>
+  </doc-example>
+
+  <doc-example heading="Dot markers only" snippet="timeline/codeDotOnly">
+    <sn-timeline>
+      <sn-timeline-item>
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Draft saved</span>
+        </span>
+      </sn-timeline-item>
+      <sn-timeline-item>
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Review started</span>
+        </span>
+      </sn-timeline-item>
+      <sn-timeline-item>
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Published</span>
+        </span>
+      </sn-timeline-item>
+    </sn-timeline>
+  </doc-example>
+
+  <doc-example heading="Custom colors" snippet="timeline/codeCustomColor">
+    <sn-timeline>
+      <sn-timeline-item icon="pending" color="var(--sn-color-warning)">
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Awaiting approval</span>
+        </span>
+      </sn-timeline-item>
+      <sn-timeline-item icon="check_circle" color="var(--sn-color-success)">
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Approved</span>
+        </span>
+      </sn-timeline-item>
+      <sn-timeline-item icon="cancel" color="var(--sn-color-error)">
+        <span class="sn-timeline-title">
+          <span class="sn-timeline-title-text">Rejected</span>
+        </span>
+      </sn-timeline-item>
+    </sn-timeline>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="timeline" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="timeline" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>The timeline renders as an <code>&lt;ol&gt;</code> list; each item has <code>role="listitem"</code>.</li>
+    <li>The axis (marker + connector) column is <code>aria-hidden="true"</code> - decorative.</li>
+    <li>Icon ligatures inside markers carry no semantic meaning and are hidden from AT.</li>
+    <li>Timeline items are passive - no keyboard interaction is added.</li>
+  </ul>
+</section>

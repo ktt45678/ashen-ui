@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.sn-color-input-rgb-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sn-color-input-rgb-field {
+  flex: 1;
+  min-width: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.sn-color-input-rgb-label {
+  font-size: var(--sn-text-2xs, 0.625rem);
+  color: var(--sn-text-subtle);
+  text-align: center;
+  text-transform: uppercase;
+}

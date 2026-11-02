@@ -1,0 +1,125 @@
+@layer components {
+  .sn-tree-table {
+    --sn-tree-table-header-bg: var(--sn-surface-hover);
+    --sn-tree-table-toggle-icon-size: 16px;
+    --sn-tree-table-header-color: var(--sn-text-subtle);
+    --sn-tree-table-header-font-size: var(--sn-text-2xs);
+    --sn-tree-table-header-font-weight: 600;
+    --sn-tree-table-header-letter-spacing: 0.06em;
+    --sn-tree-table-cell-padding-v: 7px;
+    --sn-tree-table-cell-padding-h: 12px;
+    --sn-tree-table-cell-border: var(--sn-border-subtle);
+    --sn-tree-table-cell-font-size: var(--sn-text-sm);
+    --sn-tree-table-cell-color: var(--sn-text);
+    --sn-tree-table-cell-muted-color: var(--sn-text-muted);
+    --sn-tree-table-toggle-size: 18px;
+    --sn-tree-table-toggle-color: var(--sn-text-subtle);
+    --sn-tree-table-toggle-radius: var(--sn-radius-sm);
+    --sn-tree-table-toggle-motion: var(--sn-motion-base);
+    --sn-tree-table-node-icon-size: 16px;
+    --sn-tree-table-node-icon-color: var(--sn-text-subtle);
+    --sn-tree-table-cell-gap: 4px;
+    --sn-tree-table-depth-indent: 20px;
+
+    /* Host chrome, declared here (not on the unlayered :host) so a consumer
+       can override the frame with a plain utility with no !important. */
+    border: 1px solid var(--sn-border);
+    border-radius: var(--sn-radius-tile);
+    background: var(--sn-surface-panel);
+    overflow: auto;
+  }
+
+  .sn-tree-table-inner {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sn-font-ui);
+    font-size: var(--sn-tree-table-cell-font-size);
+  }
+
+  .sn-tree-table-th {
+    padding: 8px var(--sn-tree-table-cell-padding-h);
+    font-size: var(--sn-tree-table-header-font-size);
+    font-weight: var(--sn-tree-table-header-font-weight);
+    letter-spacing: var(--sn-tree-table-header-letter-spacing);
+    text-transform: var(--sn-tree-table-header-text-transform, uppercase);
+    color: var(--sn-tree-table-header-color);
+    background: var(--sn-tree-table-header-bg);
+    white-space: nowrap;
+    text-align: start;
+  }
+
+  .sn-tree-table-header-text {
+    display: inline-block;
+  }
+
+  .sn-tree-table-row {
+    outline: none;
+  }
+
+  .sn-tree-table-row:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: calc(-1 * var(--sn-focus-ring-offset));
+  }
+
+  .sn-tree-table-td {
+    padding: var(--sn-tree-table-cell-padding-v) var(--sn-tree-table-cell-padding-h);
+    border-top: 1px solid var(--sn-tree-table-cell-border);
+    font-size: var(--sn-tree-table-cell-font-size);
+    color: var(--sn-tree-table-cell-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sn-tree-table-td--muted {
+    color: var(--sn-tree-table-cell-muted-color);
+  }
+
+  .sn-tree-table-cell-content {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-tree-table-cell-gap);
+  }
+
+  .sn-tree-table-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-tree-table-toggle-size);
+    height: var(--sn-tree-table-toggle-size);
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--sn-tree-table-toggle-color);
+    cursor: pointer;
+    border-radius: var(--sn-tree-table-toggle-radius);
+  }
+
+  .sn-tree-table-toggle-icon {
+    font-size: var(--sn-tree-table-toggle-icon-size);
+    transition: transform var(--sn-tree-table-toggle-motion);
+  }
+
+  .sn-tree-table-toggle-icon--open {
+    transform: rotate(90deg);
+  }
+
+  .sn-tree-table-spacer {
+    display: inline-block;
+    width: var(--sn-tree-table-toggle-size);
+    flex-shrink: 0;
+  }
+
+  .sn-tree-table-node-icon {
+    font-size: var(--sn-tree-table-node-icon-size);
+    color: var(--sn-tree-table-node-icon-color);
+    flex-shrink: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-tree-table-toggle-icon {
+      transition: none;
+    }
+  }
+}

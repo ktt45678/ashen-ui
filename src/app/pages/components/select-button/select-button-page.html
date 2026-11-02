@@ -1,0 +1,171 @@
+<header class="page-header">
+  <h1>Select Button</h1>
+  <p class="page-subtitle">
+    A toggle-button group that supports single and multiple selection. Renders native
+    <code>&lt;button&gt;</code> elements projected by the consumer - no <code>options</code>
+    array input. Implements <code>ControlValueAccessor</code> for reactive forms and
+    <code>ngModel</code>.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Single select" snippet="select-button/codeSingle">
+    <div class="demo-stack">
+      <sn-select-button [(value)]="singleValue">
+        <button snSelectOption value="day">Day</button>
+        <button snSelectOption value="week">Week</button>
+        <button snSelectOption value="month">Month</button>
+      </sn-select-button>
+      <p class="hint-text">Value: {{ singleValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Multiple select"
+    description="Set multiple=true to allow toggling several options independently."
+    snippet="select-button/codeMultiple"
+  >
+    <div class="demo-stack">
+      <sn-select-button [(value)]="multipleValue" [multiple]="true">
+        <button snSelectOption value="mon">Mon</button>
+        <button snSelectOption value="tue">Tue</button>
+        <button snSelectOption value="wed">Wed</button>
+        <button snSelectOption value="thu">Thu</button>
+        <button snSelectOption value="fri">Fri</button>
+      </sn-select-button>
+      <p class="hint-text">Value: {{ multipleValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="With icons"
+    description="Project icons or any content inside the option buttons."
+    snippet="select-button/codeIcons"
+  >
+    <div class="demo-stack">
+      <sn-select-button [(value)]="iconsValue">
+        <button snSelectOption value="list">
+          <sn-icon size="sm">view_list</sn-icon> List
+        </button>
+        <button snSelectOption value="grid">
+          <sn-icon size="sm">grid_view</sn-icon> Grid
+        </button>
+      </sn-select-button>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled group"
+    description="The entire group can be disabled via the disabled input or via a disabled form control."
+    snippet="select-button/codeDisabledGroup"
+  >
+    <div class="demo-stack">
+      <sn-select-button [(value)]="singleValue" [disabled]="true">
+        <button snSelectOption value="a">Alpha</button>
+        <button snSelectOption value="b">Beta</button>
+        <button snSelectOption value="c">Gamma</button>
+      </sn-select-button>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled option"
+    description="Individual options can be disabled independently of the group."
+    snippet="select-button/codeDisabledOption"
+  >
+    <div class="demo-stack">
+      <sn-select-button [(value)]="singleValue">
+        <button snSelectOption value="a">Available</button>
+        <button snSelectOption value="b" [disabled]="true">Unavailable</button>
+        <button snSelectOption value="c">Available</button>
+      </sn-select-button>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl to integrate with Angular's reactive forms."
+    snippet="select-button/codeReactive"
+  >
+    <div class="demo-stack">
+      <sn-select-button [formControl]="formCtrlSingle">
+        <button snSelectOption value="list">List</button>
+        <button snSelectOption value="card">Card</button>
+        <button snSelectOption value="table">Table</button>
+      </sn-select-button>
+      <p class="hint-text">Value: {{ formCtrlSingle.value | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel"
+    description="Two-way binding via ngModel for template-driven forms."
+    snippet="select-button/codeNgModel"
+  >
+    <div class="demo-stack">
+      <sn-select-button [(ngModel)]="ngModelSingle">
+        <button snSelectOption value="day">Day</button>
+        <button snSelectOption value="week">Week</button>
+        <button snSelectOption value="month">Month</button>
+      </sn-select-button>
+      <p class="hint-text">Value: {{ ngModelSingle() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form - multiple"
+    description="Multiple selection with a reactive FormControl holding an array."
+    snippet="select-button/codeMultiple-2"
+  >
+    <div class="demo-stack">
+      <sn-select-button [formControl]="formCtrlMultiple" [multiple]="true">
+        <button snSelectOption value="bold">Bold</button>
+        <button snSelectOption value="italic">Italic</button>
+        <button snSelectOption value="underline">Underline</button>
+      </sn-select-button>
+      <p class="hint-text">Value: {{ formCtrlMultiple.value | json }}</p>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="select-button" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="select-button" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The container has <code>role="group"</code>. When disabled,
+      <code>aria-disabled="true"</code> is also set.
+    </li>
+    <li>
+      Each option is a native <code>&lt;button type="button"&gt;</code> with
+      <code>aria-pressed</code> reflecting its selected state.
+    </li>
+    <li>
+      Navigation uses the browser's natural Tab order - each enabled button is individually
+      focusable. Space and Enter activate the focused button for free via native button
+      behavior.
+    </li>
+    <li>
+      Disabled options receive the native <code>disabled</code> attribute so they are excluded
+      from the tab order automatically.
+    </li>
+    <li>
+      Focus ring is visible via <code>:focus-visible</code> with a primary-color outline.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - the <code>disabled</code> state propagates
+      from bound <code>FormControl.disable()</code> calls.
+    </li>
+  </ul>
+</section>

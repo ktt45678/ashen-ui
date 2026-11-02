@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+.doc-example-demo {
+  width: 100%;
+}
+
+.tree-table-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.demo-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  background: var(--sn-surface-panel);
+  font-family: var(--sn-font-ui);
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--sn-surface-hover);
+  }
+}
+
+.demo-note {
+  margin-top: 8px;
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text-muted);
+}
+
+/* -- Standard doc-page styles (shared look across all component pages) -- */
+.code-block { background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); padding: var(--sn-space-3) var(--sn-space-4); font-family: var(--sn-font-mono); font-size: var(--sn-text-xs); color: var(--sn-text-muted); overflow-x: auto; }

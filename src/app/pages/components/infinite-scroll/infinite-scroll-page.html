@@ -1,0 +1,117 @@
+<header class="page-header">
+  <h1>Infinite Scroll</h1>
+  <p class="page-subtitle">
+    Attach <code>snInfiniteScroll</code> to any scrollable element (or the window) to receive
+    <code>scrolled</code> / <code>scrolledUp</code> events as the user approaches either edge.
+    Uses <code>IntersectionObserver</code> sentinels - no scroll-event polling. SSR-safe.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Element scroller - load more on scroll down" snippet="infinite-scroll/codeElement">
+    <div
+      class="scroll-container"
+      snInfiniteScroll
+      [distance]="100"
+      [throttle]="150"
+      (scrolled)="loadMore()"
+    >
+      @for (item of items(); track item) {
+        <div class="list-item">{{ item }}</div>
+      }
+      @if (loading()) {
+        <div class="loading-row">Loading…</div>
+      }
+    </div>
+    <p class="demo-count">{{ totalLoaded() }} items loaded</p>
+  </doc-example>
+
+  <doc-example heading="Load older content on scroll up (chat history)" snippet="infinite-scroll/codeScrolledUp">
+    <div
+      class="chat-container"
+      snInfiniteScroll
+      [distance]="80"
+      (scrolledUp)="loadOlderMessages()"
+    >
+      @if (chatLoading()) {
+        <div class="loading-row">Loading older messages…</div>
+      }
+      @for (msg of chatMessages(); track msg.id) {
+        <div class="chat-bubble" [class.is-me]="msg.author === 'You'">
+          <span class="chat-author">{{ msg.author }}</span>
+          <span class="chat-text">{{ msg.text }}</span>
+        </div>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Composed with sn-table - scrollable log viewer" snippet="infinite-scroll/codeTable">
+    <div
+      class="table-scroll-wrap"
+      snInfiniteScroll
+      [distance]="80"
+      (scrolled)="loadMoreRows()"
+    >
+      <sn-table [value]="tableRows()">
+        <sn-column field="id" header="#" />
+        <sn-column field="level" header="Level" />
+        <sn-column field="message" header="Message" />
+        <sn-column field="time" header="Time" />
+      </sn-table>
+      @if (tableLoading()) {
+        <div class="loading-row">Loading more rows…</div>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled toggle" snippet="infinite-scroll/codeDisabled">
+    <div style="margin-bottom:8px;">
+      <label style="display:flex;align-items:center;gap:8px;font-size:var(--sn-text-sm);">
+        <input type="checkbox" [checked]="isDisabled()" (change)="isDisabled.set(!isDisabled())" />
+        Disable infinite scroll
+      </label>
+    </div>
+    <div
+      class="scroll-container"
+      snInfiniteScroll
+      [snInfiniteScrollDisabled]="isDisabled()"
+      (scrolled)="loadMore()"
+    >
+      @for (item of disabledItems(); track item) {
+        <div class="list-item">{{ item }}</div>
+      }
+    </div>
+    <p class="demo-count" [class.muted]="isDisabled()">
+      Scroll events {{ isDisabled() ? 'disabled' : 'enabled' }}
+    </p>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <div class="doc-callout">
+    <strong>Sentinel mechanism.</strong>
+    The directive inserts a 1 px div at the top and bottom of the host element. Angular's
+    <code>&#64;for</code> block content lands between the sentinels automatically, so new items
+    always sit above the bottom sentinel. When the list is shorter than the viewport, the
+    bottom sentinel is visible immediately - <code>scrolled</code> fires on mount, letting
+    consumers auto-fill short lists. The top sentinel is suppressed until the container has
+    actually scrolled to prevent a spurious <code>scrolledUp</code> on initial render.
+  </div>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="infinite-scroll" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    <code>snInfiniteScroll</code> adds no ARIA attributes. Announce newly loaded content to
+    screen readers with an <code>aria-live</code> region or an <code>aria-label</code> update
+    on the list container. Provide a manual "Load more" button as a keyboard fallback so users
+    who cannot scroll (switch access, keyboard-only) can still access paginated content.
+  </p>
+</section>

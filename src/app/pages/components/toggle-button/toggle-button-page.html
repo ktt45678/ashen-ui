@@ -1,0 +1,139 @@
+<header class="page-header">
+  <h1>Toggle Button</h1>
+  <p class="page-subtitle">
+    A native <code>&lt;button&gt;</code> that reflects a pressed/unpressed state via
+    <code>aria-pressed</code>. Fills primary when selected and takes an input-styled appearance
+    when unselected. Implements <code>ControlValueAccessor</code> so it works with reactive
+    forms and <code>ngModel</code>. Icons and labels are projected content.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="toggle-button/codeBasic">
+    <div class="demo-row">
+      <button snToggleButton>Mute</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Selected states" snippet="toggle-button/codeSelected">
+    <div class="demo-row">
+      <button snToggleButton [selected]="true">Muted</button>
+      <button snToggleButton>Mic on</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="toggle-button/codeSizes">
+    <div class="demo-row demo-row--align-center">
+      <button snToggleButton size="sm">Small</button>
+      <button snToggleButton>Medium (default)</button>
+      <button snToggleButton size="lg">Large</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="toggle-button/codeDisabled">
+    <div class="demo-row">
+      <button snToggleButton [disabled]="true">Disabled off</button>
+      <button snToggleButton [selected]="true" [disabled]="true">Disabled on</button>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="With icon"
+    description="Place an icon span inside the button. The consumer controls which icon shows per state."
+    snippet="toggle-button/codeWithIcon"
+  >
+    <div class="demo-row">
+      <button snToggleButton [(selected)]="muted">
+        <span class="sn-icon icon-ms" aria-hidden="true">{{ muted() ? 'mic_off' : 'mic' }}</span>
+        {{ muted() ? 'Muted' : 'Mic on' }}
+      </button>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Icon only"
+    description="Omit the label text and add aria-label for accessibility."
+    snippet="toggle-button/codeIconOnly"
+  >
+    <div class="demo-row">
+      <button snToggleButton [(selected)]="muted" aria-label="Toggle mute">
+        <span class="sn-icon icon-ms" aria-hidden="true">{{ muted() ? 'mic_off' : 'mic' }}</span>
+      </button>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl to integrate with Angular's reactive forms."
+    snippet="toggle-button/codeReactive"
+  >
+    <div class="demo-stack">
+      <button snToggleButton [formControl]="formCtrl">Enable notifications</button>
+      <p class="hint-text">Value: {{ formCtrl.value }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel"
+    description="Two-way binding via ngModel for template-driven forms."
+    snippet="toggle-button/codeNgModel"
+  >
+    <div class="demo-stack">
+      <button snToggleButton [(ngModel)]="ngModelVal">Dark mode</button>
+      <p class="hint-text">Value: {{ ngModelVal() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="toggle-button/codeReskin">
+    <div class="demo-row">
+      <button
+        snToggleButton
+        [selected]="true"
+        style="--sn-toggle-button-bg-selected: var(--sn-color-success);
+               --sn-toggle-button-border-selected: var(--sn-color-success);"
+      >Custom color</button>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="toggle-button" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="toggle-button" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Uses a native <code>&lt;button&gt;</code> with <code>type="button"</code> - inherits
+      native semantics, keyboard focus, and activation for free.
+    </li>
+    <li>
+      <code>aria-pressed</code> is set to <code>true</code> or <code>false</code> to reflect
+      the pressed state per the WAI-ARIA button pattern.
+    </li>
+    <li>
+      Keyboard: <kbd>Space</kbd> and <kbd>Enter</kbd> toggle the state; <kbd>Tab</kbd> moves
+      focus normally (native button behavior).
+    </li>
+    <li>
+      When disabled, the native <code>disabled</code> attribute is set, removing the element
+      from tab order and preventing all interaction.
+    </li>
+    <li>
+      For icon-only buttons, add <code>aria-label</code> directly on the host element to
+      provide an accessible name.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - the <code>disabled</code> state
+      propagates from bound <code>FormControl.disable()</code> calls.
+    </li>
+  </ul>
+</section>

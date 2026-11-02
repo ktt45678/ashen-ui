@@ -1,0 +1,42 @@
+<!-- The scroll controls are a pointer affordance only: every link is already
+     in the tab order, and focusing one scrolls it into view. -->
+@if (overflowing()) {
+  <button
+    type="button"
+    class="sn-tab-nav-scroll-btn sn-tab-nav-scroll-btn-back"
+    aria-hidden="true"
+    tabindex="-1"
+    [disabled]="!canScrollBack()"
+    (click)="scrollLinks(-1)"
+  >
+    <sn-icon>{{ backIcon() }}</sn-icon>
+  </button>
+}
+<div
+  #listEl
+  class="sn-tab-nav-list"
+  [class.sn-tab-nav-list-scrollable]="scrolling()"
+  (scroll)="updateScrollState()"
+>
+  <ng-content />
+  @if (indicatorVisible()) {
+    <span
+      aria-hidden="true"
+      class="sn-tab-nav-indicator"
+      [style.left.px]="indicatorLeft()"
+      [style.width.px]="indicatorWidth()"
+    ></span>
+  }
+</div>
+@if (overflowing()) {
+  <button
+    type="button"
+    class="sn-tab-nav-scroll-btn sn-tab-nav-scroll-btn-forward"
+    aria-hidden="true"
+    tabindex="-1"
+    [disabled]="!canScrollForward()"
+    (click)="scrollLinks(1)"
+  >
+    <sn-icon>{{ forwardIcon() }}</sn-icon>
+  </button>
+}

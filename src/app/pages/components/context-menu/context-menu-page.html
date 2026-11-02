@@ -1,0 +1,99 @@
+<header class="page-header">
+  <h1>Context Menu</h1>
+  <p class="page-subtitle">
+    Right-click menu panel that opens at the pointer coordinates on a <code>contextmenu</code> event.
+    Full APG Menu keyboard navigation with typeahead, backdrop click, Escape, and Tab to close.
+    Reposition on repeated right-click. Reuses the existing <code>sn-menu</code>,
+    <code>snMenuItem</code>, and <code>sn-menu-separator</code> components.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="context-menu/codeBasic">
+    <div [snContextMenuTriggerFor]="basicMenu" class="demo-zone">
+      Right-click anywhere in this area
+    </div>
+    <sn-menu #basicMenu>
+      <button snMenuItem>Rename</button>
+      <button snMenuItem>Duplicate</button>
+      <sn-menu-separator />
+      <button snMenuItem disabled>Delete</button>
+    </sn-menu>
+  </doc-example>
+
+  <doc-example heading="With actions" snippet="context-menu/codeWithActions">
+    <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
+      <div [snContextMenuTriggerFor]="actionsMenu" class="demo-zone">
+        Right-click to perform an action
+      </div>
+      @if (lastAction()) {
+        <span style="font-size: var(--sn-text-sm); color: var(--sn-text-subtle);">Last: {{ lastAction() }}</span>
+      }
+      <sn-menu #actionsMenu>
+        <button snMenuItem (click)="lastAction.set('Rename')">Rename</button>
+        <button snMenuItem (click)="lastAction.set('Duplicate')">Duplicate</button>
+        <button snMenuItem (click)="lastAction.set('Move')">Move</button>
+        <button snMenuItem (click)="lastAction.set('Download')">Download</button>
+      </sn-menu>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="context-menu" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Behavior</h2>
+  <table class="api-table">
+    <thead>
+      <tr><th>Trigger</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Right-click (contextmenu event)</td><td>Open menu at pointer coordinates</td></tr>
+      <tr><td>Right-click again (menu open)</td><td>Close existing menu and reopen at new coordinates (no duplicate panels)</td></tr>
+      <tr><td>Click on backdrop</td><td>Close menu</td></tr>
+      <tr><td><kbd>Escape</kbd></td><td>Close menu; return focus to trigger element</td></tr>
+      <tr><td><kbd>Tab</kbd></td><td>Close menu; move focus to next focusable element in page</td></tr>
+      <tr><td><kbd>↓</kbd> / <kbd>↑</kbd> (in menu)</td><td>Focus next/previous item (wraps)</td></tr>
+      <tr><td><kbd>Home</kbd> / <kbd>End</kbd></td><td>Focus first/last item</td></tr>
+      <tr><td>Printable character</td><td>Typeahead: jump to next item whose label starts with that character</td></tr>
+      <tr><td><kbd>Enter</kbd> / <kbd>Space</kbd> (on item)</td><td>Activate item; close menu</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Context menus implement the same
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener">WAI-ARIA Menu Button</a>
+    and
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu/" target="_blank" rel="noopener">Menu</a>
+    patterns as regular menus, with focus management adapted for context activation.
+  </p>
+  <ul>
+    <li>
+      The trigger element receives <code>aria-haspopup="menu"</code>, <code>aria-expanded</code>,
+      and <code>aria-controls</code> pointing to the panel.
+    </li>
+    <li>
+      The overlay panel has <code>role="menu"</code>. Each item has <code>role="menuitem"</code>
+      and <code>tabindex="-1"</code>; focus is managed by <code>FocusKeyManager</code>
+      (roving tabindex, not tab stops).
+    </li>
+    <li>
+      Disabled items set <code>disabled</code> and <code>aria-disabled="true"</code>; they are
+      skipped by keyboard navigation and typeahead.
+    </li>
+    <li>
+      Separators have <code>role="separator"</code> and <code>aria-orientation="horizontal"</code>.
+    </li>
+    <li>
+      Focus returns to the trigger element when the menu closes via Escape or backdrop click.
+    </li>
+  </ul>
+</section>

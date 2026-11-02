@@ -1,0 +1,5 @@
+a { color: var(--sn-color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.demo-panels { display: grid; grid-template-columns: 1fr; gap: var(--sn-space-4); max-width: 420px; }
+.demo-highlighted-accordion { outline: 2px dashed var(--sn-color-primary); }
+.demo-highlighted-button { font-style: italic; }

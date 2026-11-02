@@ -1,0 +1,124 @@
+<header class="page-header">
+  <h1>Confirm Dialog</h1>
+  <p class="page-subtitle">
+    A small modal confirmation preset built on Dialog. Presents an icon, a message, and
+    reject/accept buttons. Use <code>severity="error"</code> with a contextual icon for
+    destructive actions; the severity drives both the icon color and the accept button color.
+  </p>
+</header>
+
+<div class="page-callout">
+  <p style="margin:0">
+    Prefer to trigger a confirmation from code? Inject <code>DialogService</code> from
+    <code>ashen-ui/dialog</code> and call
+    <code>dialog.confirm({{ '{' }} message, severity {{ '}' }}).subscribe(ok =&gt; …)</code>: it
+    resolves to <code>true</code> when accepted and <code>false</code> when rejected or dismissed.
+    See the <strong>Dialog</strong> page for the full imperative API.
+  </p>
+</div>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Destructive action (error severity)" snippet="confirm-dialog/codeBasic">
+    <div class="demo-row">
+      <button snButton color="error" variant="outlined" (click)="deleteOpen.set(true)">Delete item</button>
+      @if (lastAction()) {
+        <span class="demo-status">{{ lastAction() }}</span>
+      }
+      <sn-confirm-dialog
+        [(open)]="deleteOpen"
+        header="Delete item"
+        severity="error"
+        icon="delete"
+        message='This removes "Play Music" from Grid 1. This action cannot be undone.'
+        acceptLabel="Delete"
+        (accept)="onAccept('Delete')"
+        (reject)="onReject('Delete')"
+      />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Primary confirmation (default severity)" snippet="confirm-dialog/codePrimary">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="primaryOpen.set(true)">Save changes</button>
+      <sn-confirm-dialog
+        [(open)]="primaryOpen"
+        header="Save changes"
+        message="Your unsaved changes will be applied to all connected devices."
+        (accept)="onAccept('Save')"
+        (reject)="onReject('Save')"
+      />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Warning severity" snippet="confirm-dialog/codeWarning">
+    <div class="demo-row">
+      <button snButton color="warning" variant="outlined" (click)="warningOpen.set(true)">Reset layout</button>
+      <sn-confirm-dialog
+        [(open)]="warningOpen"
+        header="Reset layout"
+        severity="warning"
+        icon="warning"
+        message="This will revert your grid layout to the default. Custom tile positions will be lost."
+        (accept)="onAccept('Reset')"
+        (reject)="onReject('Reset')"
+      />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom labels and success severity" snippet="confirm-dialog/codeCustomLabels">
+    <div class="demo-row">
+      <button snButton variant="outlined" (click)="customLabelsOpen.set(true)">Publish tile</button>
+      <sn-confirm-dialog
+        [(open)]="customLabelsOpen"
+        header="Publish tile"
+        severity="success"
+        icon="publish"
+        message="Publishing makes this tile visible to all workspace members."
+        acceptLabel="Publish now"
+        rejectLabel="Not yet"
+        (accept)="onAccept('Publish')"
+        (reject)="onReject('Publish')"
+      />
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="confirm-dialog" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="confirm-dialog" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The underlying <code>sn-dialog</code> panel carries <code>role="dialog"</code>,
+      <code>aria-modal="true"</code>, and <code>aria-labelledby</code> pointing to the title element.
+      WAI-ARIA APG recommends <code>role="alertdialog"</code> for confirmations; the underlying
+      Dialog uses <code>role="dialog"</code> - document this if your app requires strict alertdialog
+      semantics, but do not fork Dialog.
+    </li>
+    <li>
+      Focus is trapped within the panel on open (CDK <code>ConfigurableFocusTrapFactory</code>)
+      and returned to the triggering element on close.
+    </li>
+    <li>
+      <kbd>Escape</kbd>, backdrop click, and the close button all close the dialog and emit
+      the <code>reject</code> output.
+    </li>
+    <li>
+      Body scroll is blocked while the dialog is open (CDK <code>BlockScrollStrategy</code>).
+    </li>
+    <li>
+      Use a clear, action-specific <code>acceptLabel</code> (e.g. <code>"Delete"</code> instead
+      of <code>"Yes"</code>) so screen reader users understand the consequence before confirming.
+    </li>
+  </ul>
+</section>

@@ -1,0 +1,21 @@
+<!-- preventDefault on mousedown keeps focus (and the caret) in the input. -->
+<button
+  type="button"
+  class="sn-input-number-stepper-button sn-input-number-stepper-up"
+  tabindex="-1"
+  aria-hidden="true"
+  (mousedown)="$event.preventDefault()"
+  (click)="for().stepUp()"
+>
+  <sn-icon>{{ icons.resolve('chevron-up') }}</sn-icon>
+</button>
+<button
+  type="button"
+  class="sn-input-number-stepper-button sn-input-number-stepper-down"
+  tabindex="-1"
+  aria-hidden="true"
+  (mousedown)="$event.preventDefault()"
+  (click)="for().stepDown()"
+>
+  <sn-icon>{{ icons.resolve('chevron-down') }}</sn-icon>
+</button>

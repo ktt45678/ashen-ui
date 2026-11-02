@@ -1,0 +1,108 @@
+@layer components {
+  .sn-listbox {
+    --sn-listbox-border: var(--sn-border);
+    --sn-listbox-border-radius: var(--sn-select-border-radius, 0.375rem);
+    --sn-listbox-bg: var(--sn-input-bg);
+    --sn-listbox-max-height: 15rem;
+    --sn-listbox-option-padding: var(--sn-select-option-padding, 0.5rem 0.75rem);
+    --sn-listbox-font-size: var(--sn-select-font-size, 0.875rem);
+    --sn-listbox-option-selected-bg: var(--sn-select-option-selected-bg, var(--sn-selected-bg));
+    --sn-listbox-option-selected-text: var(--sn-select-option-selected-text, var(--sn-selected-text));
+
+    display: block;
+    border: 1px solid var(--sn-listbox-border);
+    border-radius: var(--sn-listbox-border-radius);
+    background: var(--sn-listbox-bg);
+    overflow: auto;
+    max-height: var(--sn-listbox-max-height);
+    font-size: var(--sn-listbox-font-size);
+  }
+
+  .sn-listbox-disabled {
+    opacity: var(--sn-disabled-opacity, 0.5);
+    pointer-events: none;
+  }
+
+  .sn-listbox-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--sn-listbox-option-padding, var(--sn-select-option-padding, 0.5rem 0.75rem));
+    font-size: var(--sn-listbox-font-size, var(--sn-select-font-size, 0.875rem));
+    min-height: var(--sn-list-item-height);
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--sn-motion-fast, 150ms ease);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-listbox-option {
+      transition: none;
+    }
+  }
+
+  /* Selected is excluded here rather than restated below: :not() carries
+     specificity, so a bare .sn-listbox-option-selected:hover would lose. */
+  .sn-listbox-option:hover:not(.sn-listbox-option-disabled):not(.sn-listbox-option-selected) {
+    background: var(--sn-surface-hover, rgba(0, 0, 0, 0.04));
+  }
+
+  .sn-listbox-option-selected {
+    background: var(--sn-listbox-option-selected-bg, var(--sn-selected-bg));
+    color: var(--sn-listbox-option-selected-text, var(--sn-selected-text));
+  }
+
+  .sn-listbox-option-check {
+    margin-inline-start: auto;
+  }
+
+  .sn-listbox-option-disabled {
+    opacity: var(--sn-disabled-opacity, 0.5);
+    cursor: not-allowed;
+  }
+
+  .sn-listbox-option:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: -2px;
+  }
+
+  .sn-listbox-option sn-icon {
+    font-size: var(--sn-listbox-option-icon-size, 1rem);
+    width: var(--sn-listbox-option-icon-size, 1rem);
+    height: var(--sn-listbox-option-icon-size, 1rem);
+    flex-shrink: 0;
+  }
+
+  .sn-listbox-option-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--sn-listbox-check-size, 1rem);
+    height: var(--sn-listbox-check-size, 1rem);
+    border: 2px solid var(--sn-border-strong, var(--sn-border));
+    border-radius: var(--sn-checkbox-border-radius, 0.25rem);
+    box-sizing: border-box;
+    transition: background-color var(--sn-motion-fast, 150ms ease), border-color var(--sn-motion-fast, 150ms ease);
+  }
+
+  .sn-listbox-option-selected .sn-listbox-option-box {
+    background-color: var(--sn-color-primary-solid);
+    border-color: var(--sn-color-primary-solid);
+    color: var(--sn-text-on-primary);
+  }
+
+  .sn-listbox-option-box sn-icon {
+    font-size: var(--sn-listbox-check-icon-size, 12px);
+    width: var(--sn-listbox-check-icon-size, 12px);
+    height: var(--sn-listbox-check-icon-size, 12px);
+    line-height: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-listbox-option-box {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,139 @@
+<header class="page-header">
+  <h1>Splitter</h1>
+  <p class="page-subtitle">
+    Two resizable panels separated by a draggable gutter. Supports horizontal and
+    vertical layouts, keyboard navigation, and nested splitters.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Horizontal split" snippet="splitter/codeBasic">
+    <sn-splitter class="demo-splitter">
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Left panel - drag the gutter to resize.</div>
+      </sn-splitter-panel>
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Right panel.</div>
+      </sn-splitter-panel>
+    </sn-splitter>
+  </doc-example>
+
+  <doc-example heading="Vertical split" snippet="splitter/codeVertical">
+    <sn-splitter layout="vertical" class="demo-splitter demo-splitter-tall">
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Top panel.</div>
+      </sn-splitter-panel>
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Bottom panel.</div>
+      </sn-splitter-panel>
+    </sn-splitter>
+  </doc-example>
+
+  <doc-example heading="Custom minimum size" snippet="splitter/codeMinSize"
+    description="Set minSize to prevent panels from collapsing beyond a threshold. Keyboard Home/End also respect minSize.">
+    <sn-splitter [minSize]="25" class="demo-splitter">
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Min 25% - cannot shrink below 25%.</div>
+      </sn-splitter-panel>
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Right panel.</div>
+      </sn-splitter-panel>
+    </sn-splitter>
+  </doc-example>
+
+  <doc-example heading="Controlled via [(size)]" snippet="splitter/codeControlled">
+    <sn-splitter [(size)]="controlledSize" class="demo-splitter">
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Left - {{ controlledSize() }}%</div>
+      </sn-splitter-panel>
+      <sn-splitter-panel>
+        <div class="demo-panel-content">Right - {{ 100 - controlledSize() }}%</div>
+      </sn-splitter-panel>
+    </sn-splitter>
+    <p class="demo-readout">First panel: {{ controlledSize() }}%</p>
+  </doc-example>
+
+  <doc-example heading="Nested splitters" snippet="splitter/codeNested"
+    description="Splitters compose freely. The inner vertical splitter fills the right panel of the outer horizontal one.">
+    <sn-splitter layout="horizontal" class="demo-splitter demo-splitter-tall">
+      <sn-splitter-panel>
+        <div class="demo-panel-content demo-panel-content--sidebar">Sidebar</div>
+      </sn-splitter-panel>
+      <sn-splitter-panel>
+        <sn-splitter layout="vertical" style="height: 100%; border: none; border-radius: 0;">
+          <sn-splitter-panel>
+            <div class="demo-panel-content">Editor</div>
+          </sn-splitter-panel>
+          <sn-splitter-panel>
+            <div class="demo-panel-content">Terminal</div>
+          </sn-splitter-panel>
+        </sn-splitter>
+      </sn-splitter-panel>
+    </sn-splitter>
+  </doc-example>
+
+  <doc-example heading="snClass pass-through" snippet="splitter/codeSnClass">
+    <sn-splitter
+      [snClass]="{ gutter: 'demo-custom-gutter' }"
+      class="demo-splitter"
+    >
+      <sn-splitter-panel [snClass]="{ root: 'demo-custom-panel' }">Left</sn-splitter-panel>
+      <sn-splitter-panel>Right</sn-splitter-panel>
+    </sn-splitter>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="splitter" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="splitter" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Follows the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/" target="_blank" rel="noopener">WAI-ARIA APG Window Splitter pattern</a>.
+  </p>
+  <ul>
+    <li>
+      The gutter element has <code>role="separator"</code>, <code>tabindex="0"</code>,
+      <code>aria-orientation</code> (opposite of layout: <code>vertical</code> gutter for
+      horizontal layout, <code>horizontal</code> gutter for vertical layout),
+      <code>aria-valuenow</code>, <code>aria-valuemin</code>, <code>aria-valuemax</code>, and
+      <code>aria-controls</code> referencing the first panel's generated id.
+    </li>
+    <li>
+      The accessible label defaults to <code>'Resize panels'</code> via <code>SnSplitterIntl</code>
+      and can be overridden per-instance with <code>resizeLabel</code> or globally via
+      <code>provideSnIntl(&#123; splitter: &#123; resize: '…' &#125; &#125;)</code>.
+    </li>
+    <li>
+      Drag is implemented via <code>pointerdown</code> on the gutter and global
+      <code>pointermove</code>/<code>pointerup</code> listeners attached through
+      <code>Renderer2.listen</code> (SSR-safe) and detached on <code>pointerup</code>.
+    </li>
+  </ul>
+
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Arrow Right</code></td><td>Increase first panel size by <code>step</code>% (horizontal layout only).</td></tr>
+      <tr><td><code>Arrow Left</code></td><td>Decrease first panel size by <code>step</code>% (horizontal layout only).</td></tr>
+      <tr><td><code>Arrow Down</code></td><td>Increase first panel size by <code>step</code>% (vertical layout only).</td></tr>
+      <tr><td><code>Arrow Up</code></td><td>Decrease first panel size by <code>step</code>% (vertical layout only).</td></tr>
+      <tr><td><code>Home</code></td><td>Set first panel to <code>minSize</code>%.</td></tr>
+      <tr><td><code>End</code></td><td>Set first panel to <code>100 − minSize</code>%.</td></tr>
+    </tbody>
+  </table>
+
+  <p>All size changes are clamped to [<code>minSize</code>, <code>100 − minSize</code>].</p>
+</section>

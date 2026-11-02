@@ -1,0 +1,117 @@
+<header class="page-header">
+  <h1>Input Text</h1>
+  <p class="page-subtitle">
+    Directive on a native <code>&lt;input&gt;</code> element that applies Ashen UI styling
+    and wires into the surrounding <code>sn-form-field</code>. Supports reactive forms and
+    template-driven forms natively - no wrapper component.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="input-text/codeBasic">
+    <div class="demo-stack">
+      <input snInputText placeholder="Enter item name" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="input-text/codeSizes">
+    <div class="demo-stack">
+      <input snInputText size="sm" placeholder="Small (sm)" />
+      <input snInputText placeholder="Medium (md - default)" />
+      <input snInputText size="lg" placeholder="Large (lg)" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Error state" snippet="input-text/codeError">
+    <div class="demo-stack">
+      <input snInputText [invalid]="true" placeholder="Invalid input" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="input-text/codeDisabled">
+    <div class="demo-stack">
+      <input snInputText disabled value="Disabled value" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Read-only" snippet="input-text/codeReadonly">
+    <div class="demo-stack">
+      <input snInputText readonly value="Read-only value" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form with validation"
+    description="The input turns red after it is touched and the field is empty."
+    snippet="input-text/codeReactive"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Email address</sn-label>
+        <input snInputText [formControl]="emailCtrl" placeholder="user@example.com" type="email" />
+        <sn-error>A valid email is required</sn-error>
+      </sn-form-field>
+      <p class="hint-text">Status: {{ emailCtrl.status }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Inside FormField" snippet="input-text/codeInField">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Request body</sn-label>
+        <input snInputText placeholder='{ "action": "play" }' />
+      </sn-form-field>
+      <sn-form-field>
+        <sn-label>Volume</sn-label>
+        <input snInputText placeholder="65" type="number" />
+        <sn-hint>0 – 100</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="input-text/codeReskin">
+    <div class="demo-stack">
+      <input
+        snInputText
+        placeholder="Custom border radius"
+        style="--sn-input-text-border-radius: 9999px; --sn-input-text-focus-border: var(--sn-color-success);"
+      />
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="input-text" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="input-text" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Uses a native <code>&lt;input&gt;</code> element - all browser and assistive technology
+      semantics are preserved without any wrapper.
+    </li>
+    <li>
+      When placed inside <code>sn-form-field</code>, the <code>id</code>, <code>aria-required</code>,
+      and <code>aria-describedby</code> attributes are managed automatically via the
+      <code>SN_FORM_FIELD</code> DI context.
+    </li>
+    <li>
+      <code>aria-invalid="true"</code> is applied when the <code>invalid</code> input is
+      <code>true</code> or when a bound <code>FormControl</code> is in an invalid state
+      and the user has interacted with the field (touched or dirty).
+    </li>
+    <li>
+      <code>disabled</code> and <code>readonly</code> states are handled entirely by native
+      HTML attributes - no Angular wrapping is needed.
+    </li>
+  </ul>
+</section>

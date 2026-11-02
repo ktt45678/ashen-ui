@@ -1,0 +1,57 @@
+/* ── CDK overlay styles ──────────────────────────────────── */
+@import "@angular/cdk/overlay-prebuilt.css";
+
+/* ── Tailwind CSS 4 ──────────────────────────────────────── */
+@import "tailwindcss";
+
+/* ── Material Symbols codepoint icon classes (.sn-icon-<name>) ─ */
+@plugin "../libs/ashen-ui/src/styles/icons/icons.plugin.cjs";
+
+/* The Icon component's `icon` input applies `.sn-icon-<name>` at runtime, so those
+   class names never appear literally in source for Tailwind to scan. Safelist the
+   demo icon set so the class-mode examples render. Apps do the same for any icons
+   they reference dynamically. */
+@source inline("sn-icon-{grid-view,dashboard,widgets,settings,tune,edit,delete,download,upload,search,home,star,favorite,visibility,notifications,calendar-month,folder,description,bolt,rocket-launch}");
+
+/* ── Fontsource variable fonts ───────────────────────────── */
+@import "@fontsource-variable/nunito-sans";
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/noto-sans-jp";
+@import "@fontsource-variable/material-symbols-outlined";
+
+/* ── Ashen UI design tokens ──────────────────────────────── */
+@import "../libs/ashen-ui/src/styles/index.css";
+
+/* ── Ashen UI Tailwind theme integration ─────────────────── */
+@import "../libs/ashen-ui/src/styles/tailwind.css";
+
+/* ── Tailwind custom variants for theme switching ────────── */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+@custom-variant glass (&:where([data-theme='glass'], [data-theme='glass'] *));
+
+/* ── App-level custom themes ─────────────────────────────── */
+@import "./styles/themes/glass.css";
+
+/* ── Showcase documentation chrome ───────────────────────── */
+@import "./styles/docs.css";
+
+/* ── Showcase app overrides ──────────────────────────────── */
+html, body {
+  height: 100%;
+}
+
+/* ── Boot guard ──────────────────────────────────────────────
+   Zoneless Angular paints host elements one frame before their host
+   bindings (e.g. sn-button color classes) apply, flashing default colors.
+   index.html sets data-sn-app-boot before paint; App removes it after the
+   first route render. Until then: keep the app invisible and suppress
+   transitions so nothing animates from the pre-binding state. */
+html[data-sn-app-boot] app-root {
+  visibility: hidden;
+}
+
+html[data-sn-app-boot] *,
+html[data-sn-app-boot] *::before,
+html[data-sn-app-boot] *::after {
+  transition: none !important;
+}

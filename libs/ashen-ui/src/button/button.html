@@ -1,0 +1,39 @@
+@if (isIconVariant()) {
+  @if (showMaterialSpinner()) {
+    <ng-container *ngTemplateOutlet="matSpinner" />
+  } @else if (customIconTpl()) {
+    <ng-container *ngTemplateOutlet="customIconTpl()!.templateRef" />
+  } @else if (icon() || loading()) {
+    <span class="sn-icon icon-ms" [class.sn-spin]="loading()" aria-hidden="true">{{
+      loading() ? 'progress_activity' : icon()
+    }}</span>
+  } @else {
+    <ng-content />
+  }
+} @else {
+  @if (effectiveIcon() && iconPosition() === 'start') {
+    @if (showMaterialSpinner()) {
+      <ng-container *ngTemplateOutlet="matSpinner" />
+    } @else if (customIconTpl()) {
+      <ng-container *ngTemplateOutlet="customIconTpl()!.templateRef" />
+    } @else {
+      <span class="sn-icon icon-ms" [class.sn-spin]="loading()" aria-hidden="true">{{
+        effectiveIcon()
+      }}</span>
+    }
+  }
+  <ng-content />
+  @if (!loading() && icon() && iconPosition() === 'end') {
+    @if (customIconTpl()) {
+      <ng-container *ngTemplateOutlet="customIconTpl()!.templateRef" />
+    } @else {
+      <span class="sn-icon icon-ms" aria-hidden="true">{{ icon() }}</span>
+    }
+  }
+}
+
+<ng-template #matSpinner>
+  <svg class="sn-button-spinner" viewBox="0 0 24 24" aria-hidden="true">
+    <circle class="sn-button-spinner-arc" cx="12" cy="12" r="10" />
+  </svg>
+</ng-template>

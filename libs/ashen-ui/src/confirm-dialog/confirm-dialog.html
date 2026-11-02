@@ -1,0 +1,31 @@
+<sn-dialog
+  [open]="open()"
+  (openChange)="onDialogOpenChange($event)"
+  [title]="_effectiveHeader()"
+  size="sm"
+  [animated]="animated()"
+  [animation]="animation()"
+  [snStyle]="snStyle()"
+  [snAttrs]="snAttrs()"
+>
+  <div class="sn-confirm-dialog-body">
+    <sn-icon
+      snPart="icon"
+      class="sn-confirm-dialog-icon"
+      [class.sn-confirm-dialog-icon--primary]="severity() === 'primary'"
+      [class.sn-confirm-dialog-icon--error]="severity() === 'error'"
+      [class.sn-confirm-dialog-icon--warning]="severity() === 'warning'"
+      [class.sn-confirm-dialog-icon--success]="severity() === 'success'"
+    >{{ effectiveIcon() }}</sn-icon>
+    <span snPart="message" class="sn-confirm-dialog-message">{{ message() }}</span>
+  </div>
+
+  <div snDialogFooter>
+    <button snButton variant="outlined" color="secondary" type="button" (click)="onReject()">
+      {{ _effectiveRejectLabel() }}
+    </button>
+    <button snButton [color]="_acceptColor()" type="button" (click)="onAccept()">
+      {{ _effectiveAcceptLabel() }}
+    </button>
+  </div>
+</sn-dialog>

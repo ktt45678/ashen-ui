@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--sn-surface-canvas);
+  color: var(--sn-text);
+  font-family: var(--sn-font-ui);
+}
+.docs-shell {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.docs-main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: var(--sn-space-6) var(--sn-space-6);
+}
+.docs-content {
+  max-width: 900px;
+}
+.docs-content {
+  margin: 0 auto;
+}
+// Backdrop is desktop-hidden; only the narrow-viewport media query shows it.
+.docs-nav-backdrop {
+  display: none;
+}
+
+// ── Narrow viewports: sidenav becomes an off-canvas drawer ──────────
+@media (max-width: 860px) {
+  .docs-main {
+    padding: var(--sn-space-4);
+  }
+  app-sidenav {
+    position: fixed;
+    top: 3rem; // header height
+    bottom: 0;
+    left: 0;
+    z-index: 90;
+    transform: translateX(-100%);
+    transition: transform var(--sn-motion-base, 220ms ease);
+    box-shadow: var(--sn-shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.24));
+  }
+  .docs-shell.nav-open app-sidenav {
+    transform: translateX(0);
+  }
+  .docs-nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 3rem 0 0 0;
+    border: none;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--sn-motion-base, 220ms ease);
+    z-index: 85;
+  }
+  .docs-shell.nav-open .docs-nav-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  app-sidenav,
+  .docs-nav-backdrop {
+    transition: none;
+  }
+}

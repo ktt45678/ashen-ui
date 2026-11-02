@@ -1,0 +1,25 @@
+@layer components {
+  .sn-split-button {
+    --sn-split-button-divider: rgba(255, 255, 255, 0.25);
+
+    display: inline-flex;
+    position: relative;
+  }
+
+  /* Outranks the size and shape rules on .sn-button in any load order. */
+  .sn-split-button > .sn-button.sn-split-button-main {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .sn-split-button > .sn-button.sn-split-button-trigger {
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    padding-inline: var(--sn-split-button-trigger-padding-inline, 0.5rem);
+    box-shadow: inset calc(1px * var(--sn-ring-snap, 1)) 0 0 var(--sn-split-button-divider);
+  }
+
+  [dir='rtl'] .sn-split-button > .sn-button.sn-split-button-trigger {
+    box-shadow: inset calc(-1px * var(--sn-ring-snap, 1)) 0 0 var(--sn-split-button-divider);
+  }
+}

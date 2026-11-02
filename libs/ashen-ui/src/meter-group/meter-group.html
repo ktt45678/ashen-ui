@@ -1,0 +1,41 @@
+<div
+  snPart="bar"
+  class="sn-meter-group-bar"
+  [class]="barClassExtra()"
+  role="group"
+>
+  @for (meter of meters(); track meter; let i = $index) {
+    <div
+      class="sn-meter-group-segment"
+      role="meter"
+      [attr.aria-label]="meter.label()"
+      [attr.aria-valuenow]="meter.value()"
+      [attr.aria-valuemin]="0"
+      [attr.aria-valuemax]="max()"
+      [attr.title]="meter.label() + ' ' + meter.value() + meter.unit()"
+      [style.width.%]="meter.pct()"
+      [style.background]="meter.effectiveColor(i)"
+    ></div>
+  }
+</div>
+
+@if (showLegend()) {
+  <div snPart="legend" class="sn-meter-group-legend" [class]="legendClassExtra()">
+    @for (meter of meters(); track meter; let i = $index) {
+      <span class="sn-meter-group-legend-item">
+        <span
+          class="sn-meter-group-legend-dot"
+          [style.background]="meter.effectiveColor(i)"
+          aria-hidden="true"
+        ></span>
+        <span class="sn-meter-group-legend-label">{{ meter.label() }}</span>
+        <span class="sn-meter-group-legend-value">{{ meter.value() }}{{ meter.unit() }}</span>
+      </span>
+    }
+    <span class="sn-meter-group-legend-total">
+      {{ total() }}{{ firstUnit() }} of {{ max() }}{{ firstUnit() }}
+    </span>
+  </div>
+}
+
+<ng-content />

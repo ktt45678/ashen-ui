@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "ng-add": {
+      "description": "Register Ashen UI providers and import its stylesheet into an application.",
+      "factory": "./ng-add/index#ngAdd",
+      "schema": "./ng-add/schema.json"
+    },
+    "theme": {
+      "description": "Scaffold a new theme file from the Ashen UI token template.",
+      "factory": "./theme/index#theme",
+      "schema": "./theme/schema.json",
+      "aliases": [
+        "t"
+      ]
+    },
+    "theme-sync": {
+      "description": "Report and apply the changes an existing theme file needs to match the installed Ashen UI tokens.",
+      "factory": "./theme-sync/index#themeSync",
+      "schema": "./theme-sync/schema.json"
+    }
+  }
+}

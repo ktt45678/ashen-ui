@@ -1,0 +1,142 @@
+@layer components {
+  .sn-autocomplete {
+    display: block;
+    position: relative;
+  }
+
+  .sn-autocomplete-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .sn-autocomplete-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sn-autocomplete-multiple {
+    --sn-autocomplete-border: 1px solid var(--sn-input-border);
+    --sn-autocomplete-focus-border: var(--sn-border-focus);
+    --sn-autocomplete-bg: var(--sn-input-bg);
+    --sn-autocomplete-radius: var(--sn-input-border-radius);
+    --sn-autocomplete-padding: var(--sn-space-1);
+    --sn-autocomplete-input-padding: var(--sn-autocomplete-padding);
+    --sn-autocomplete-gap: var(--sn-space-1);
+    --sn-autocomplete-chip-bg: var(--sn-selected-bg);
+    --sn-autocomplete-chip-color: var(--sn-selected-text);
+    --sn-autocomplete-chip-border: 1px solid transparent;
+    --sn-autocomplete-chip-radius: var(--sn-radius-pill);
+    --sn-autocomplete-chip-padding: var(--sn-space-1) var(--sn-space-2);
+    --sn-autocomplete-chip-gap: var(--sn-space-1);
+    --sn-autocomplete-chip-font-size: var(--sn-text-xs);
+    --sn-autocomplete-remove-size: var(--sn-icon-size-sm);
+    --sn-autocomplete-remove-color: currentColor;
+    --sn-autocomplete-remove-hover-color: var(--sn-color-error);
+    --sn-autocomplete-summary-color: var(--sn-text-muted);
+    --sn-autocomplete-summary-bg: transparent;
+    --sn-autocomplete-summary-padding: 0;
+    --sn-autocomplete-summary-radius: 0;
+    --sn-autocomplete-summary-font-size: var(--sn-autocomplete-chip-font-size);
+  }
+
+  .sn-autocomplete-wrapper-multiple {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sn-autocomplete-gap);
+    width: 100%;
+    /* Same height as a plain input, so it lines up with the fields beside it. */
+    min-height: var(--sn-autocomplete-min-height, var(--sn-input-min-height-md));
+    padding: var(--sn-autocomplete-padding);
+    border: var(--sn-autocomplete-border);
+    border-radius: var(--sn-autocomplete-radius);
+    background: var(--sn-autocomplete-bg);
+    box-sizing: border-box;
+    box-shadow: var(--sn-input-focus-shadow-rest);
+    transition: border-color var(--sn-motion-slow),
+      box-shadow var(--sn-input-focus-shadow-transition);
+  }
+
+  .sn-autocomplete-wrapper-multiple:focus-within {
+    border-color: var(--sn-autocomplete-focus-border);
+    /* Focus lands on the inner field; ring the wrapper via :focus-within. */
+    box-shadow: var(--sn-input-focus-shadow);
+  }
+
+  /* The wrapper is the control here; the input is one slot inside it, so it must
+     not draw a second border and focus ring of its own. */
+  .sn-autocomplete-wrapper-multiple .sn-autocomplete-input,
+  .sn-autocomplete-wrapper-multiple .sn-autocomplete-input:focus {
+    flex: 1 1 var(--sn-control-height-md);
+    width: auto;
+    min-width: var(--sn-control-height-md);
+    /* The wrapper sets the height; the input's own min-height would add to it. */
+    min-height: 0;
+    padding: var(--sn-autocomplete-input-padding);
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .sn-autocomplete-selected-values {
+    display: contents;
+  }
+
+  .sn-autocomplete-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-autocomplete-chip-gap);
+    max-width: 100%;
+    padding: var(--sn-autocomplete-chip-padding);
+    border: var(--sn-autocomplete-chip-border);
+    border-radius: var(--sn-autocomplete-chip-radius);
+    background: var(--sn-autocomplete-chip-bg);
+    color: var(--sn-autocomplete-chip-color);
+    font-size: var(--sn-autocomplete-chip-font-size);
+    line-height: var(--sn-leading-tight);
+  }
+
+  .sn-autocomplete-chip-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sn-autocomplete-chip-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-autocomplete-remove-size);
+    height: var(--sn-autocomplete-remove-size);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--sn-autocomplete-remove-color);
+    cursor: pointer;
+  }
+
+  .sn-autocomplete-chip-remove:hover {
+    color: var(--sn-autocomplete-remove-hover-color);
+  }
+
+  .sn-autocomplete-chip-remove sn-icon {
+    font-size: var(--sn-autocomplete-remove-size);
+  }
+
+  .sn-autocomplete-summary {
+    padding: var(--sn-autocomplete-summary-padding);
+    border-radius: var(--sn-autocomplete-summary-radius);
+    background: var(--sn-autocomplete-summary-bg);
+    color: var(--sn-autocomplete-summary-color);
+    font-size: var(--sn-autocomplete-summary-font-size);
+    white-space: nowrap;
+  }
+
+  /* Not an option: no hover, no pointer. */
+  .sn-autocomplete-empty {
+    padding: var(--sn-autocomplete-empty-padding, var(--sn-select-option-padding, 0.5rem 0.75rem));
+    font-size: var(--sn-autocomplete-empty-font-size, inherit);
+    color: var(--sn-autocomplete-empty-color, var(--sn-text-subtle));
+    cursor: default;
+  }
+}

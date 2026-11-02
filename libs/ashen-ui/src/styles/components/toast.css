@@ -1,0 +1,169 @@
+@layer components {
+  .sn-toast {
+    --sn-toast-gap: 8px;
+    --sn-toast-offset: 14px;
+    --sn-toast-width: 20rem;
+    --sn-toast-padding: 10px 12px;
+    --sn-toast-radius: var(--sn-radius-md);
+    --sn-toast-border-color: transparent;
+    --sn-toast-bg: var(--sn-surface-elevated);
+    --sn-toast-shadow: var(--sn-glass-shadow, var(--sn-shadow-overlay));
+    --sn-toast-text-color: var(--sn-text);
+    --sn-toast-font-family: var(--sn-font-ui);
+    --sn-toast-icon-size: 18px;
+    --sn-toast-close-size: 20px;
+    --sn-toast-close-icon-size: 15px;
+    --sn-toast-close-color: var(--sn-text-subtle);
+    --sn-toast-summary-size: var(--sn-text-sm);
+    --sn-toast-detail-size: var(--sn-text-xs);
+    --sn-toast-detail-color: var(--sn-text-muted);
+    --sn-toast-accent: var(--sn-color-info);
+    --sn-toast-enter-duration: 200ms;
+    --sn-toast-exit-duration: 150ms;
+    --sn-toast-z: 1200;
+
+    position: fixed;
+    z-index: var(--sn-toast-z);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sn-toast-gap);
+
+    /* Default: top-right */
+    top: var(--sn-toast-offset);
+    right: var(--sn-toast-offset);
+  }
+
+  .sn-toast--top-right    { top: var(--sn-toast-offset); right: var(--sn-toast-offset); bottom: auto; left: auto; }
+  .sn-toast--top-left     { top: var(--sn-toast-offset); left: var(--sn-toast-offset); bottom: auto; right: auto; }
+  .sn-toast--bottom-right { bottom: var(--sn-toast-offset); right: var(--sn-toast-offset); top: auto; left: auto; flex-direction: column-reverse; }
+  .sn-toast--bottom-left  { bottom: var(--sn-toast-offset); left: var(--sn-toast-offset); top: auto; right: auto; flex-direction: column-reverse; }
+
+  .sn-toast-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: var(--sn-toast-width);
+    padding: var(--sn-toast-padding);
+    box-sizing: border-box;
+    background: var(--sn-toast-bg);
+    backdrop-filter: var(--sn-backdrop-filter, none);
+    -webkit-backdrop-filter: var(--sn-backdrop-filter, none);
+    border: 1px solid var(--sn-toast-border-color);
+    border-inline-start: 3px solid var(--sn-toast-accent);
+    border-radius: var(--sn-toast-radius);
+    box-shadow: var(--sn-toast-shadow);
+    color: var(--sn-toast-text-color);
+    font-family: var(--sn-toast-font-family);
+    /* Enter animation applied immediately on insert. */
+    animation: sn-toast-in var(--sn-toast-enter-duration) ease-out;
+  }
+
+  /* Severity accent colours - only override the accent token. */
+  .sn-toast-item--info    { --sn-toast-accent: var(--sn-color-info); }
+  .sn-toast-item--success { --sn-toast-accent: var(--sn-color-success); }
+  .sn-toast-item--warning { --sn-toast-accent: var(--sn-color-warning); }
+  .sn-toast-item--error   { --sn-toast-accent: var(--sn-color-error); }
+
+  /* Exit animation - triggers when the hiding class is applied. */
+  .sn-toast-item--hiding {
+    animation: sn-toast-out var(--sn-toast-exit-duration) ease-in forwards;
+    pointer-events: none;
+  }
+
+  /* Entering state (before first animationend) - prevent flicker on SSR. */
+  .sn-toast-item--entering {
+    /* Intentionally no extra styles; the enter animation runs normally. */
+  }
+
+  .sn-icon.sn-toast-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--sn-toast-accent);
+    font-size: var(--sn-toast-icon-size);
+    width: var(--sn-toast-icon-size);
+    height: var(--sn-toast-icon-size);
+  }
+
+  .sn-toast-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-toast-summary {
+    font-size: var(--sn-toast-summary-size);
+    font-weight: 600;
+    line-height: var(--sn-leading-tight);
+  }
+
+  .sn-toast-detail {
+    font-size: var(--sn-toast-detail-size);
+    color: var(--sn-toast-detail-color);
+    margin-top: 2px;
+    line-height: var(--sn-leading-normal);
+  }
+
+  .sn-toast-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--sn-toast-close-size);
+    height: var(--sn-toast-close-size);
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--sn-toast-close-color);
+    cursor: pointer;
+    border-radius: var(--sn-radius-sm);
+    transition: color var(--sn-motion-fast), background var(--sn-motion-fast);
+  }
+
+  .sn-toast-close .sn-icon {
+    font-size: var(--sn-toast-close-icon-size);
+    width: var(--sn-toast-close-icon-size);
+    height: var(--sn-toast-close-icon-size);
+  }
+
+  .sn-toast-close:hover {
+    background: var(--sn-surface-hover);
+    color: var(--sn-text-muted);
+  }
+
+  .sn-toast-close:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  @keyframes sn-toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes sn-toast-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-toast-item,
+    .sn-toast-item--hiding {
+      animation: none;
+    }
+
+    .sn-toast-close {
+      transition: none;
+    }
+  }
+}

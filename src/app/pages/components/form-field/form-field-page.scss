@@ -1,0 +1,4 @@
+.demo-stack { display: flex; flex-direction: column; gap: var(--sn-space-3); width: 100%; max-width: 360px; }
+.demo-row { display: flex; gap: var(--sn-space-4); width: 100%; }
+.demo-toggle { align-self: flex-start; font: inherit; font-size: var(--sn-text-sm); padding: var(--sn-space-1) var(--sn-space-3); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-sm); background: var(--sn-surface-canvas); color: var(--sn-text); cursor: pointer; }
+.demo-note { margin: 0; font-size: var(--sn-text-sm); color: var(--sn-text-muted); }

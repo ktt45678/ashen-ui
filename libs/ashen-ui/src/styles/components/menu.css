@@ -1,0 +1,137 @@
+@layer components {
+  .sn-menu-host {
+    display: none;
+  }
+
+  .sn-menu-panel {
+    /* --sn-menu-bg is global; restating it here would hide it from :root themes. */
+    --sn-menu-border: none;
+    --sn-menu-border-radius: var(--sn-radius-md);
+    --sn-menu-shadow: var(--sn-glass-shadow, var(--sn-shadow-overlay));
+    --sn-menu-backdrop-filter: var(--sn-backdrop-filter, none);
+    --sn-menu-padding: 4px;
+    --sn-menu-submenu-icon-size: 16px;
+
+    background-color: var(--sn-menu-bg);
+    backdrop-filter: var(--sn-menu-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-menu-backdrop-filter);
+    border: var(--sn-menu-border);
+    border-radius: var(--sn-menu-border-radius);
+    box-shadow: var(--sn-menu-shadow);
+    padding: var(--sn-menu-padding);
+    min-width: var(--sn-menu-min-width);
+    box-sizing: border-box;
+    outline: none;
+    transform-origin: top center;
+    animation: sn-menu-in var(--sn-motion-base, 150ms ease);
+  }
+
+  .sn-menu-item {
+    --sn-menu-item-color: var(--sn-text);
+    --sn-menu-item-bg: transparent;
+    --sn-menu-item-hover-bg: var(--sn-surface-hover);
+    --sn-menu-item-font-size: var(--sn-text-sm);
+    --sn-menu-item-font-family: var(--sn-font-ui);
+    --sn-menu-item-font-weight: 500;
+    --sn-menu-item-line-height: 1;
+    --sn-menu-item-gap: 10px;
+    --sn-menu-item-border-radius: var(--sn-radius-sm);
+    --sn-menu-item-icon-color: var(--sn-text-subtle);
+    --sn-menu-item-icon-size: 17px;
+    --sn-menu-item-disabled-opacity: var(--sn-disabled-opacity);
+    --sn-menu-item-danger-color: var(--sn-color-error);
+
+    display: flex;
+    align-items: center;
+    gap: var(--sn-menu-item-gap);
+    width: 100%;
+    padding: var(--sn-menu-item-padding);
+    min-height: var(--sn-list-item-height);
+    border: none;
+    background: var(--sn-menu-item-bg);
+    color: var(--sn-menu-item-color);
+    font-family: var(--sn-menu-item-font-family);
+    font-size: var(--sn-menu-item-font-size);
+    font-weight: var(--sn-menu-item-font-weight);
+    line-height: var(--sn-menu-item-line-height);
+    cursor: pointer;
+    border-radius: var(--sn-menu-item-border-radius);
+    text-align: start;
+    box-sizing: border-box;
+    transition: background-color var(--sn-motion-base);
+  }
+
+  .sn-menu-item:hover:not([disabled]):not([aria-disabled='true']) {
+    background-color: var(--sn-menu-item-hover-bg);
+  }
+
+  .sn-menu-item:focus-visible {
+    background-color: var(--sn-menu-item-hover-bg);
+    outline: none;
+  }
+
+  .sn-menu-item[disabled],
+  .sn-menu-item[aria-disabled='true'] {
+    opacity: var(--sn-menu-item-disabled-opacity);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .sn-menu-item.sn-menu-item-danger {
+    --sn-menu-item-color: var(--sn-menu-item-danger-color);
+    --sn-menu-item-icon-color: var(--sn-menu-item-danger-color);
+  }
+
+  .sn-menu-item-icon {
+    color: var(--sn-menu-item-icon-color);
+    flex-shrink: 0;
+    font-size: var(--sn-menu-item-icon-size);
+    width: var(--sn-menu-item-icon-size);
+    height: var(--sn-menu-item-icon-size);
+  }
+
+  .sn-menu-item-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-menu-item-submenu-icon {
+    margin-inline-start: auto;
+    color: var(--sn-menu-item-icon-color);
+    font-size: var(--sn-menu-submenu-icon-size);
+    width: var(--sn-menu-submenu-icon-size);
+    height: var(--sn-menu-submenu-icon-size);
+    flex-shrink: 0;
+  }
+
+  .sn-menu-shortcut {
+    margin-inline-start: auto;
+    font-size: var(--sn-text-2xs);
+    color: var(--sn-text-subtle);
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+
+  .sn-menu-separator {
+    display: block;
+    height: 1px;
+    background: var(--sn-border);
+    margin: 4px;
+  }
+
+  .sn-menu-backdrop {
+    background: transparent;
+  }
+
+  .sn-menu-panel-closing {
+    animation: sn-menu-out var(--sn-menu-exit-duration, 0.12s) ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes sn-menu-in { from { opacity: 0; transform: translateY(-4px); } }
+  @keyframes sn-menu-out { to { opacity: 0; transform: translateY(-4px); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-menu-panel, .sn-menu-panel-closing { animation: none; }
+  }
+}

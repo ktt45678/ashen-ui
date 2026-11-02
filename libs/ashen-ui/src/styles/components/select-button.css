@@ -1,0 +1,94 @@
+@layer components {
+  /* Component-token tier - override per-instance or per-theme */
+  .sn-select-button {
+    --sn-select-button-border: var(--sn-border);
+    --sn-select-button-radius: var(--sn-radius-md);
+    /* Options stretch to fill it, so the group lines up with an md input. */
+    --sn-select-button-min-height: var(--sn-input-min-height-md);
+    --sn-select-option-bg: var(--sn-input-bg);
+    --sn-select-option-color: var(--sn-text);
+    --sn-select-option-border: var(--sn-border);
+    --sn-select-option-padding-x: 0.875rem;
+    --sn-select-option-padding-y: 0.5rem;
+    --sn-select-option-selected-bg: var(--sn-selected-bg);
+    --sn-select-option-selected-color: var(--sn-selected-text);
+    /* Same hover feedback as the toggle button. */
+    --sn-select-option-hover-bg: var(--sn-surface-hover);
+    --sn-select-option-selected-hover-bg: var(--sn-selected-bg-hover);
+    --sn-select-option-transition: background-color var(--sn-motion-fast, 150ms ease),
+      color var(--sn-motion-fast, 150ms ease);
+  }
+
+  .sn-select-button {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: var(--sn-select-button-min-height);
+    border: 1px solid var(--sn-select-button-border);
+    border-radius: var(--sn-select-button-radius);
+    overflow: hidden;
+  }
+
+  .sn-select-button-disabled {
+    opacity: var(--sn-disabled-opacity, 0.5);
+  }
+
+  .sn-select-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: var(--sn-select-option-padding-y) var(--sn-select-option-padding-x);
+    border: none;
+    border-inline-start: 1px solid var(--sn-select-option-border);
+    background: var(--sn-select-option-bg);
+    color: var(--sn-select-option-color);
+    font-family: var(--sn-font-ui, ui-sans-serif, system-ui, sans-serif);
+    font-size: var(--sn-text-sm, 0.875rem);
+    font-weight: var(--sn-font-weight-medium, 500);
+    line-height: var(--sn-leading-normal, 1.5);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-select-button.sn-select-button-animate .sn-select-option {
+      transition: none;
+    }
+  }
+
+  /* Gate state-driven transitions until after first render so a preselected
+     selected option snaps into place instead of animating from default. */
+  .sn-select-button.sn-select-button-animate .sn-select-option {
+    transition: var(--sn-select-option-transition);
+  }
+
+  .sn-select-option:first-child {
+    border-inline-start: none;
+  }
+
+  .sn-select-option:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: -2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sn-select-option:disabled {
+    cursor: not-allowed;
+  }
+
+  .sn-select-option-selected {
+    background: var(--sn-select-option-selected-bg);
+    color: var(--sn-select-option-selected-color);
+  }
+
+  .sn-select-option:hover:not(:disabled) {
+    background: var(--sn-select-option-hover-bg);
+  }
+
+  .sn-select-option-selected:hover:not(:disabled) {
+    background: var(--sn-select-option-selected-hover-bg);
+  }
+}

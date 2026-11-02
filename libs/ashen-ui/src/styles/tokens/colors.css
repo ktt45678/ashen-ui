@@ -1,0 +1,344 @@
+:root {
+  color-scheme: light;
+  --sn-backdrop-filter: none;
+
+  --sn-color-primary: rgb(0, 112, 243);
+  --sn-color-primary-hover: rgb(0, 90, 198);
+  --sn-color-primary-active: rgb(0, 80, 173);
+  --sn-color-primary-border: var(--sn-color-primary-hover);
+  --sn-color-primary-focus: var(--sn-color-primary-active);
+  --sn-color-primary-solid: rgb(0, 112, 243);
+  --sn-color-primary-solid-hover: rgb(0, 90, 198);
+  --sn-color-primary-solid-active: rgb(0, 80, 173);
+  --sn-color-primary-soft: rgba(0, 112, 243, 0.10);
+  --sn-color-secondary: rgb(90, 99, 108);
+  --sn-color-secondary-hover: rgb(73, 81, 89);
+  --sn-color-secondary-active: rgb(62, 69, 76);
+  --sn-color-secondary-border: var(--sn-color-secondary-hover);
+  --sn-color-secondary-focus: var(--sn-color-secondary-active);
+  --sn-color-secondary-solid: rgb(90, 99, 108);
+  --sn-color-secondary-solid-hover: rgb(73, 81, 89);
+  --sn-color-secondary-solid-active: rgb(62, 69, 76);
+  --sn-color-secondary-soft: rgba(90, 99, 108, 0.10);
+  --sn-color-success: rgb(21, 128, 79);
+  --sn-color-success-hover: rgb(17, 103, 64);
+  --sn-color-success-active: rgb(14, 88, 54);
+  --sn-color-success-border: var(--sn-color-success-hover);
+  --sn-color-success-focus: var(--sn-color-success-active);
+  --sn-color-success-solid: rgb(21, 128, 79);
+  --sn-color-success-solid-hover: rgb(17, 103, 64);
+  --sn-color-success-solid-active: rgb(14, 88, 54);
+  --sn-color-success-soft: rgba(21, 128, 79, 0.10);
+  --sn-color-error: rgb(211, 47, 63);
+  --sn-color-error-hover: rgb(176, 43, 55);
+  --sn-color-error-active: rgb(154, 37, 48);
+  --sn-color-error-border: var(--sn-color-error-hover);
+  --sn-color-error-focus: var(--sn-color-error-active);
+  --sn-color-error-solid: rgb(211, 47, 63);
+  --sn-color-error-solid-hover: rgb(176, 43, 55);
+  --sn-color-error-solid-active: rgb(154, 37, 48);
+  --sn-color-error-soft: rgba(211, 47, 63, 0.10);
+  --sn-color-warning: rgb(190, 134, 4);
+  --sn-color-warning-hover: rgb(163, 115, 4);
+  --sn-color-warning-active: rgb(139, 98, 3);
+  --sn-color-warning-border: var(--sn-color-warning-hover);
+  --sn-color-warning-focus: var(--sn-color-warning-active);
+  --sn-color-warning-solid: rgb(166, 108, 0);
+  --sn-color-warning-solid-hover: rgb(139, 91, 0);
+  --sn-color-warning-solid-active: rgb(112, 73, 0);
+  --sn-color-warning-soft: rgba(190, 134, 4, 0.10);
+  --sn-color-info: rgb(8, 126, 150);
+  --sn-color-info-hover: rgb(7, 108, 129);
+  --sn-color-info-active: rgb(6, 91, 109);
+  --sn-color-info-border: var(--sn-color-info-hover);
+  --sn-color-info-focus: var(--sn-color-info-active);
+  --sn-color-info-solid: rgb(8, 126, 150);
+  --sn-color-info-solid-hover: rgb(7, 108, 129);
+  --sn-color-info-solid-active: rgb(6, 91, 109);
+  --sn-color-info-soft: rgba(8, 126, 150, 0.10);
+  --sn-color-invalid: var(--sn-color-error);
+
+  --sn-text: rgb(17, 24, 39);
+  --sn-text-muted: rgb(75, 85, 99);
+  --sn-text-subtle: rgb(107, 114, 128);
+  --sn-text-inverse: rgb(255, 255, 255);
+  --sn-text-disabled: rgb(156, 163, 175);
+  --sn-text-on-primary: rgb(255, 255, 255);
+  --sn-text-on-secondary: var(--sn-text-on-primary);
+  --sn-text-on-success: var(--sn-text-on-primary);
+  --sn-text-on-error: var(--sn-text-on-primary);
+  --sn-text-on-warning: var(--sn-text-on-primary);
+  --sn-text-on-info: var(--sn-text-on-primary);
+  --sn-text-on-primary-soft: var(--sn-color-primary-active);
+  --sn-text-on-secondary-soft: var(--sn-color-secondary-active);
+  --sn-text-on-success-soft: var(--sn-color-success-active);
+  --sn-text-on-error-soft: var(--sn-color-error-active);
+  --sn-text-on-warning-soft: var(--sn-color-warning-active);
+  --sn-text-on-info-soft: var(--sn-color-info-active);
+
+  /* Surfaces */
+  --sn-surface-canvas: rgb(238, 240, 243);
+  --sn-surface-panel: rgb(255, 255, 255);
+  --sn-surface-elevated: rgb(255, 255, 255);
+  --sn-surface-overlay: rgba(17, 24, 39, 0.45);
+  --sn-surface-grid: rgb(51, 65, 85);
+  --sn-surface-tile: rgb(71, 85, 105);
+  --sn-surface-tile-active: rgb(51, 65, 85);
+  --sn-surface-tile-editing: rgba(59, 130, 246, 0.14);
+  --sn-surface-glass: rgba(255, 255, 255, 0.65);
+  --sn-surface-hover: rgb(243, 244, 246);
+
+  /* Borders */
+  --sn-border: rgb(226, 226, 226);
+  --sn-border-subtle: rgb(238, 239, 241);
+  --sn-border-strong: rgb(198, 204, 212);
+  --sn-border-focus: var(--sn-color-primary-focus);
+  --sn-border-invalid: var(--sn-color-error-border);
+
+  /* Inputs (theme-scoped) */
+  --sn-input-bg: rgb(252, 252, 252);
+  --sn-input-placeholder: rgb(153, 153, 153);
+  --sn-select-panel-bg: rgb(255, 255, 255);
+
+  /* A selected row, cell or segment. Derived from --sn-color-primary, so a theme
+     gets it by setting that one token and never restates it per mode. */
+  --sn-selected-bg: color-mix(in srgb, var(--sn-color-primary) 16%, transparent);
+  --sn-selected-bg-hover: color-mix(in srgb, var(--sn-color-primary) 24%, transparent);
+  --sn-selected-text: var(--sn-color-primary);
+  --sn-select-option-selected-bg: var(--sn-selected-bg);
+  --sn-select-option-selected-text: var(--sn-selected-text);
+
+  /* Focus ring */
+  --sn-focus-ring-color: rgba(0, 112, 243, 0.55);
+  --sn-focus-ring-width: 2px;
+  --sn-focus-ring-offset: 2px;
+  /* Focus-ring placement. See the note at the bottom of this file.
+       outline (default) - ring sits OUTSIDE the border box, offset by
+                           --sn-focus-ring-offset. Needs breathing room, and an
+                           ancestor's `overflow: hidden` can clip it.
+       inset             - ring sits INSIDE the border box. Nothing can clip it,
+                           and it suits dense adjacent controls. */
+  --sn-focus-ring-style: outline;
+  /* Offset used by the `inset` branch. Pulling the outline fully inside the
+     border box is exactly one ring-width inward. */
+  --sn-focus-ring-inset-offset: calc(-1 * var(--sn-focus-ring-width));
+  /* DERIVED - this is what component rules read; do not set it from a theme.
+     The @container rule below rewrites it when the style switch flips. */
+  --sn-focus-ring-applied-offset: var(--sn-focus-ring-offset);
+
+  /* Inset ring that thickens the field border on focus. box-shadow, so its
+     spread grows sub-pixel-smooth. -rest is the collapsed form fields hold at
+     rest so it grows from a shape, not from `none` (which pops). Transition
+     folds to 0s under reduced motion. The floating variant drives its notched
+     outline instead (an inset ring would cross the label gap). */
+  --sn-input-focus-shadow-color: var(--sn-border-focus);
+  --sn-input-focus-shadow-width: 1px;
+  --sn-input-focus-shadow-transition: var(--sn-motion-slow, 0.2s ease-in-out);
+  /* Snapped so the ring lands on whole device pixels like the border it sits
+     against. See --sn-ring-snap. */
+  --sn-input-focus-shadow-painted: calc(var(--sn-input-focus-shadow-width) * var(--sn-ring-snap, 1));
+  --sn-input-focus-shadow-rest: inset 0 0 0 0 var(--sn-input-focus-shadow-color);
+  --sn-input-focus-shadow: inset 0 0 0 var(--sn-input-focus-shadow-painted) var(--sn-input-focus-shadow-color);
+  --sn-input-focus-shadow-invalid: inset 0 0 0 var(--sn-input-focus-shadow-painted) var(--sn-border-invalid);
+
+  /* Disabled */
+  --sn-disabled-opacity: 0.5;
+  --sn-disabled-bg: rgb(243, 244, 246);
+  --sn-disabled-text: rgb(156, 163, 175);
+  --sn-disabled-border: rgb(229, 231, 235);
+
+  /* Overlay grounds. Apps commonly want three distinct ones; the dropdown ground
+     is `--sn-select-panel-bg` above. Previously these were restated in the
+     component tier, which made a :root-level theme block unable to reach them. */
+  --sn-menu-bg: var(--sn-surface-panel);
+  --sn-dialog-bg: var(--sn-surface-panel);
+  --sn-drawer-bg: var(--sn-surface-panel);
+
+  /* Scrollbars (applied inside library scroll surfaces; see base.css) */
+  --sn-scrollbar-size: 10px;
+  --sn-scrollbar-track: transparent;
+  --sn-scrollbar-thumb: rgb(198, 204, 212);
+  --sn-scrollbar-thumb-hover: rgb(156, 163, 175);
+
+  /* Message / Toast severity grounds. Defaults reproduce the color-mix tint,
+     but a theme can set flat pastels that the mix cannot reach. */
+  --sn-message-info-bg: color-mix(in srgb, var(--sn-color-info) 14%, var(--sn-surface-panel));
+  --sn-message-info-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-info) 45%);
+  --sn-message-success-bg: color-mix(in srgb, var(--sn-color-success) 14%, var(--sn-surface-panel));
+  --sn-message-success-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-success) 45%);
+  --sn-message-warning-bg: color-mix(in srgb, var(--sn-color-warning) 14%, var(--sn-surface-panel));
+  --sn-message-warning-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-warning) 45%);
+  --sn-message-error-bg: color-mix(in srgb, var(--sn-color-error) 14%, var(--sn-surface-panel));
+  --sn-message-error-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-error) 45%);
+}
+
+[data-theme|='dark'] {
+  color-scheme: dark;
+  --sn-backdrop-filter: none;
+
+  --sn-color-primary: rgb(112, 174, 255);
+  --sn-color-primary-hover: rgb(139, 191, 255);
+  --sn-color-primary-active: rgb(166, 207, 255);
+  --sn-color-primary-border: var(--sn-color-primary-hover);
+  --sn-color-primary-focus: var(--sn-color-primary-active);
+  --sn-color-primary-solid: rgb(36, 100, 180);
+  --sn-color-primary-solid-hover: rgb(29, 78, 166);
+  --sn-color-primary-solid-active: rgb(23, 60, 128);
+  --sn-color-primary-soft: rgba(112, 174, 255, 0.16);
+  --sn-color-secondary: rgb(174, 188, 204);
+  --sn-color-secondary-hover: rgb(193, 205, 218);
+  --sn-color-secondary-active: rgb(215, 224, 234);
+  --sn-color-secondary-border: var(--sn-color-secondary-hover);
+  --sn-color-secondary-focus: var(--sn-color-secondary-active);
+  --sn-color-secondary-solid: rgb(82, 91, 101);
+  --sn-color-secondary-solid-hover: rgb(66, 75, 86);
+  --sn-color-secondary-solid-active: rgb(52, 60, 70);
+  --sn-color-secondary-soft: rgba(174, 188, 204, 0.16);
+  --sn-color-success: rgb(112, 211, 157);
+  --sn-color-success-hover: rgb(139, 225, 177);
+  --sn-color-success-active: rgb(166, 236, 196);
+  --sn-color-success-border: var(--sn-color-success-hover);
+  --sn-color-success-focus: var(--sn-color-success-active);
+  --sn-color-success-solid: rgb(34, 121, 75);
+  --sn-color-success-solid-hover: rgb(24, 98, 61);
+  --sn-color-success-solid-active: rgb(17, 77, 48);
+  --sn-color-success-soft: rgba(112, 211, 157, 0.16);
+  --sn-color-error: rgb(255, 139, 151);
+  --sn-color-error-hover: rgb(255, 166, 176);
+  --sn-color-error-active: rgb(255, 193, 201);
+  --sn-color-error-border: var(--sn-color-error-hover);
+  --sn-color-error-focus: var(--sn-color-error-active);
+  --sn-color-error-solid: rgb(190, 57, 74);
+  --sn-color-error-solid-hover: rgb(160, 43, 59);
+  --sn-color-error-solid-active: rgb(128, 31, 45);
+  --sn-color-error-soft: rgba(255, 139, 151, 0.16);
+  --sn-color-warning: rgb(255, 204, 103);
+  --sn-color-warning-hover: rgb(255, 218, 139);
+  --sn-color-warning-active: rgb(255, 230, 174);
+  --sn-color-warning-border: var(--sn-color-warning-hover);
+  --sn-color-warning-focus: var(--sn-color-warning-active);
+  --sn-color-warning-solid: rgb(145, 95, 0);
+  --sn-color-warning-solid-hover: rgb(119, 78, 0);
+  --sn-color-warning-solid-active: rgb(94, 61, 0);
+  --sn-color-warning-soft: rgba(255, 204, 103, 0.16);
+  --sn-color-info: rgb(112, 218, 235);
+  --sn-color-info-hover: rgb(143, 229, 242);
+  --sn-color-info-active: rgb(174, 239, 249);
+  --sn-color-info-border: var(--sn-color-info-hover);
+  --sn-color-info-focus: var(--sn-color-info-active);
+  --sn-color-info-solid: rgb(0, 117, 143);
+  --sn-color-info-solid-hover: rgb(0, 94, 115);
+  --sn-color-info-solid-active: rgb(0, 74, 91);
+  --sn-color-info-soft: rgba(112, 218, 235, 0.16);
+  --sn-color-invalid: var(--sn-color-error);
+
+  --sn-text: rgb(232, 236, 242);
+  --sn-text-muted: rgb(184, 195, 208);
+  --sn-text-subtle: rgb(145, 159, 176);
+  --sn-text-inverse: rgb(17, 24, 39);
+  --sn-text-disabled: rgb(105, 119, 136);
+  --sn-text-on-primary: rgb(245, 247, 250);
+  --sn-text-on-secondary: var(--sn-text-on-primary);
+  --sn-text-on-success: var(--sn-text-on-primary);
+  --sn-text-on-error: var(--sn-text-on-primary);
+  --sn-text-on-warning: var(--sn-text-on-primary);
+  --sn-text-on-info: var(--sn-text-on-primary);
+  --sn-text-on-primary-soft: var(--sn-color-primary);
+  --sn-text-on-secondary-soft: var(--sn-color-secondary);
+  --sn-text-on-success-soft: var(--sn-color-success);
+  --sn-text-on-error-soft: var(--sn-color-error);
+  --sn-text-on-warning-soft: var(--sn-color-warning);
+  --sn-text-on-info-soft: var(--sn-color-info);
+
+  --sn-surface-canvas: rgb(17, 20, 25);
+  --sn-surface-panel: rgb(26, 30, 37);
+  --sn-surface-elevated: rgb(35, 40, 50);
+  --sn-surface-overlay: rgba(4, 7, 12, 0.68);
+  --sn-surface-grid: rgb(20, 27, 38);
+  --sn-surface-tile: rgb(55, 68, 87);
+  --sn-surface-tile-active: rgb(73, 88, 110);
+  --sn-surface-tile-editing: rgba(112, 174, 255, 0.16);
+  --sn-surface-glass: rgba(35, 40, 50, 0.70);
+  --sn-surface-hover: rgb(43, 50, 61);
+
+  --sn-border: rgb(59, 68, 81);
+  --sn-border-subtle: rgb(43, 50, 61);
+  --sn-border-strong: rgb(103, 116, 136);
+  --sn-control-border: rgb(96, 109, 127);
+  --sn-border-focus: var(--sn-color-primary);
+  --sn-border-invalid: var(--sn-color-error);
+
+  --sn-input-bg: rgb(20, 24, 32);
+  --sn-input-placeholder: rgb(145, 159, 176);
+  --sn-select-panel-bg: var(--sn-surface-elevated);
+
+  --sn-focus-ring-color: rgba(100, 170, 255, 0.6);
+  --sn-focus-ring-width: 2px;
+  --sn-focus-ring-offset: 2px;
+  --sn-focus-ring-style: outline;
+  --sn-focus-ring-inset-offset: calc(-1 * var(--sn-focus-ring-width));
+  --sn-focus-ring-applied-offset: var(--sn-focus-ring-offset);
+
+  /* No input-focus-shadow overrides here: the tokens live only in :root because
+     their colour delegates to --sn-border-focus, which is already theme-scoped,
+     so the emphasis follows every theme without being restated per theme. */
+
+  --sn-disabled-opacity: 0.5;
+  --sn-disabled-bg: rgb(38, 44, 55);
+  --sn-disabled-text: rgb(127, 140, 157);
+  --sn-disabled-border: rgb(66, 76, 91);
+
+  /* Overlay grounds. Apps commonly want three distinct ones; the dropdown ground
+     is `--sn-select-panel-bg` above. Previously these were restated in the
+     component tier, which made a :root-level theme block unable to reach them. */
+  --sn-menu-bg: var(--sn-surface-panel);
+  --sn-dialog-bg: var(--sn-surface-panel);
+  --sn-drawer-bg: var(--sn-surface-panel);
+
+  /* Scrollbars (applied inside library scroll surfaces; see base.css) */
+  --sn-scrollbar-size: 10px;
+  --sn-scrollbar-track: transparent;
+  --sn-scrollbar-thumb: rgb(82, 82, 82);
+  --sn-scrollbar-thumb-hover: rgb(110, 110, 110);
+
+  /* Message / Toast severity grounds. Defaults reproduce the color-mix tint,
+     but a theme can set flat pastels that the mix cannot reach. */
+  --sn-message-info-bg: color-mix(in srgb, var(--sn-color-info) 14%, var(--sn-surface-panel));
+  --sn-message-info-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-info) 45%);
+  --sn-message-success-bg: color-mix(in srgb, var(--sn-color-success) 14%, var(--sn-surface-panel));
+  --sn-message-success-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-success) 45%);
+  --sn-message-warning-bg: color-mix(in srgb, var(--sn-color-warning) 14%, var(--sn-surface-panel));
+  --sn-message-warning-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-warning) 45%);
+  --sn-message-error-bg: color-mix(in srgb, var(--sn-color-error) 14%, var(--sn-surface-panel));
+  --sn-message-error-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-error) 45%);
+}
+
+/* Focus-ring style switch
+   A custom property cannot gate a selector, so the keyword in
+   --sn-focus-ring-style is read back with a CSS style container query. Every
+   element is a style container by default, so no `container-type` is needed:
+   set --sn-focus-ring-style anywhere (`:root` for the whole app, or a wrapper
+   element for one subtree) and its descendants pick the inset branch up.
+
+   Deliberately NOT the `box-shadow: inset` technique. Two reasons:
+     1. box-shadow is stripped entirely in forced-colors / Windows High
+        Contrast mode. An outline is not - it is forced to the system highlight
+        colour - so keeping an outline in BOTH branches keeps high-contrast
+        support without a transparent-outline workaround.
+     2. box-shadow is a single property. Emitting an inset ring through it
+        would clobber the elevation shadow on anything already carrying one
+        (`.sn-raised-button`, panels, dialogs) for as long as it has focus.
+   A negative `outline-offset` draws the same ring inside the border box, is
+   clipped by nothing, and follows border-radius. It costs one token.
+
+   Browsers without style-query support simply keep the `outline` default,
+   which is the safe branch.
+
+   Rules that were already deliberately inset (table rows, tree nodes, listbox
+   options - anything with a negative literal offset) do not read the derived
+   token and are unaffected by the switch. */
+@container style(--sn-focus-ring-style: inset) {
+  * {
+    --sn-focus-ring-applied-offset: var(--sn-focus-ring-inset-offset);
+  }
+}

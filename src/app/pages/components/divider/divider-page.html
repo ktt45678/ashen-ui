@@ -1,0 +1,65 @@
+<header class="page-header">
+  <h1>Divider</h1>
+  <p class="page-subtitle">
+    1px separator - plain, labelled, or vertical. Use between sections of content or between
+    inline actions in a toolbar.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Plain horizontal" snippet="divider/codePlain">
+    <div style="width:100%">
+      Basic tile properties
+      <sn-divider />
+      Icon, colors, and opacity
+    </div>
+  </doc-example>
+
+  <doc-example heading="Labelled" snippet="divider/codeLabeled">
+    <div style="width:100%">
+      <sn-divider label="Visual Appearance" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Vertical (for toolbars)" snippet="divider/codeVertical">
+    <div style="display:flex; align-items:center">
+      <button snButton variant="text" size="sm">Edit</button>
+      <sn-divider vertical />
+      <button snButton variant="text" size="sm">Duplicate</button>
+      <sn-divider vertical />
+      <button snButton variant="text" color="error" size="sm">Delete</button>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Multiple labelled dividers" snippet="divider/codeMultiple">
+    <div style="width:100%">
+      General settings
+      <sn-divider label="Display" />
+      Theme and layout options
+      <sn-divider label="Behavior" />
+      Interaction preferences
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="divider" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="divider" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    The host element carries <code>role="separator"</code> and
+    <code>aria-orientation</code> (<code>"horizontal"</code> or <code>"vertical"</code>) per
+    the WAI-ARIA separator pattern. For horizontal dividers with a label, the label is
+    rendered as visible text content of the separator - not announced separately.
+  </p>
+</section>

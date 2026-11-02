@@ -1,0 +1,220 @@
+@layer components {
+  .sn-dialog {
+    display: contents;
+  }
+
+  .sn-dialog-container {
+    position: fixed;
+    inset: 0;
+    z-index: var(--sn-z-index-modal, 1000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sn-dialog-container-padding, 1.5rem);
+    box-sizing: border-box;
+  }
+
+  .sn-dialog-mask {
+    position: absolute;
+    inset: 0;
+    background: var(--sn-surface-overlay);
+    animation: sn-dialog-backdrop-in var(--sn-dialog-enter-duration, 0.15s) ease-out;
+  }
+
+  .sn-dialog-container--hiding .sn-dialog-mask {
+    animation: sn-dialog-backdrop-out var(--sn-dialog-exit-duration, 0.15s) ease-in forwards;
+  }
+
+  .sn-dialog-panel {
+    position: relative;
+    z-index: 1;
+    /* --sn-dialog-bg is global; restating it here would hide it from :root themes. */
+    --sn-dialog-color: var(--sn-text);
+    --sn-dialog-font-family: var(--sn-font-ui);
+    --sn-dialog-border: none;
+    --sn-dialog-shadow: var(--sn-glass-shadow, var(--sn-shadow-modal));
+    --sn-dialog-backdrop-filter: var(--sn-backdrop-filter, none);
+
+    display: flex;
+    flex-direction: column;
+    background: var(--sn-dialog-bg);
+    backdrop-filter: var(--sn-dialog-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-dialog-backdrop-filter);
+    color: var(--sn-dialog-color);
+    font-family: var(--sn-dialog-font-family);
+    border: var(--sn-dialog-border);
+    border-radius: var(--sn-dialog-border-radius, 0.5rem);
+    box-shadow: var(--sn-dialog-shadow);
+    max-width: min(var(--sn-dialog-max-width-medium, 32rem), calc(100vw - 2 * var(--sn-dialog-container-padding, 1.5rem)));
+    max-height: 90vh;
+    width: 100%;
+    overflow: hidden;
+    pointer-events: auto;
+    box-sizing: border-box;
+    animation: sn-dialog-in var(--sn-dialog-enter-duration, 0.15s) ease-out;
+  }
+
+  .sn-dialog-container--hiding .sn-dialog-panel {
+    animation: sn-dialog-out var(--sn-dialog-exit-duration, 0.15s) ease-in forwards;
+  }
+
+  .sn-dialog-panel--sm {
+    max-width: min(var(--sn-dialog-max-width-small, 24rem), calc(100vw - 2 * var(--sn-dialog-container-padding, 1.5rem)));
+  }
+
+  .sn-dialog-panel--lg {
+    max-width: min(var(--sn-dialog-max-width-large, 48rem), calc(100vw - 2 * var(--sn-dialog-container-padding, 1.5rem)));
+  }
+
+  /* An explicit `width` config must not be clamped by the size preset cap; bound
+     it only by the viewport. A `maxWidth` config still applies independently
+     through the inline max-width and wins over this. */
+  .sn-dialog-panel--custom-width {
+    max-width: calc(100vw - 2 * var(--sn-dialog-container-padding, 1.5rem));
+  }
+
+  /* Fullscreen: edge-to-edge, no gutter, fills the viewport, no border. No radius
+     unless the theme sets --sn-dialog-fullscreen-border-radius. */
+  .sn-dialog-container--fullscreen {
+    padding: 0;
+  }
+
+  .sn-dialog-container--fullscreen .sn-dialog-panel {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: var(--sn-dialog-fullscreen-border-radius, 0);
+    border: 0;
+  }
+
+  /* Compact density: a tight, dense header (matching the classic dense dialog
+     header) with body and footer padding kept comfortable. Declared on the
+     panel so the tokens inherit to the header/body/footer parts. A consumer can
+     tune any of these once on :root / [data-theme] instead of per dialog. */
+  .sn-dialog-panel--compact {
+    --sn-dialog-header-padding: 0.5rem 1.5rem;
+    --sn-dialog-body-padding: 0 1.5rem 1.5rem;
+    --sn-dialog-footer-padding: 1rem 1.5rem;
+  }
+
+  .sn-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sn-dialog-header-padding, 1.5rem);
+    border-bottom: var(--sn-dialog-header-border);
+    flex-shrink: 0;
+  }
+
+  .sn-dialog-title {
+    margin: 0;
+    font-family: var(--sn-font-display, var(--sn-font-ui));
+    font-size: var(--sn-dialog-title-font-size, 1.25rem);
+    font-weight: var(--sn-dialog-title-font-weight, 600);
+    color: var(--sn-text);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .sn-dialog-close-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-dialog-close-size);
+    height: var(--sn-dialog-close-size);
+    border: none;
+    background: transparent;
+    color: var(--sn-text-muted);
+    border-radius: var(--sn-dialog-close-radius);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-inline-start: 0.75rem;
+    transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+  }
+
+  .sn-dialog-close-button:hover {
+    background-color: var(--sn-surface-hover);
+    color: var(--sn-text);
+  }
+
+  .sn-dialog-close-button:focus-visible {
+    /* An outline, not a box-shadow: box-shadow is stripped in forced-colors /
+       Windows High Contrast mode, so the shadow form left these two buttons
+       with no visible focus indicator at all there. */
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-dialog-body {
+    padding: var(--sn-dialog-body-padding, 1.5rem);
+    overflow: auto;
+    flex: 1;
+    font-size: var(--sn-dialog-body-font-size, 0.875rem);
+    color: var(--sn-dialog-body-color);
+  }
+
+  /* Only when the header row is there: it holds just the close button. */
+  .sn-dialog-panel--untitled > .sn-dialog-header + .sn-dialog-body {
+    margin-top: var(--sn-dialog-untitled-body-margin-top);
+  }
+
+  .sn-dialog-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--sn-dialog-footer-gap, 0.75rem);
+    padding: var(--sn-dialog-footer-padding, 1.5rem);
+    border-top: var(--sn-dialog-footer-border);
+    flex-shrink: 0;
+  }
+
+  /* In a component opened through DialogService there is no footer part, so
+     the wrapper lays out its own action row at the end of the content. */
+  .sn-dialog-footer-slot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--sn-dialog-footer-gap, 0.75rem);
+    padding-top: var(--sn-dialog-footer-slot-padding-top, 1.5rem);
+  }
+
+  /* Inside sn-dialog the wrapper collapses so its buttons become direct flex
+     children of the footer and pick up its gap/justification. */
+  .sn-dialog-footer > .sn-dialog-footer-slot {
+    display: contents;
+  }
+
+  @keyframes sn-dialog-backdrop-in {
+    from { opacity: 0; }
+  }
+
+  @keyframes sn-dialog-backdrop-out {
+    to { opacity: 0; }
+  }
+
+  @keyframes sn-dialog-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  @keyframes sn-dialog-out {
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
+  /* (dark-theme --sn-dialog-bg override removed - the token is global now) */
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-dialog-panel,
+    .sn-dialog-container--hiding .sn-dialog-panel,
+    .sn-dialog-mask,
+    .sn-dialog-container--hiding .sn-dialog-mask {
+      animation: none;
+    }
+  }
+}

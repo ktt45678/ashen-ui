@@ -1,0 +1,103 @@
+<header class="page-header">
+  <h1>Input Tags</h1>
+  <p class="page-subtitle">
+    A CVA component that renders a flex-wrap shell containing removable <code>sn-chip</code>
+    elements and a borderless text input. Typing then pressing <kbd>Enter</kbd> or <kbd>,</kbd>
+    adds the text as a tag; <kbd>Backspace</kbd> on an empty field removes the last tag. Works
+    with reactive forms, <code>ngModel</code>, and the two-way <code>[(value)]</code> binding.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="input-tags/codeBasic">
+    <div class="demo-stack">
+      <sn-input-tags placeholder="Add tag" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Preset tags" snippet="input-tags/codePreset">
+    <div class="demo-stack">
+      <sn-input-tags [value]="presetTags()" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Inside FormField" snippet="input-tags/codeFormField">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Project tags</sn-label>
+        <sn-input-tags />
+        <sn-hint>Press Enter or comma to add a tag.</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="input-tags/codeDisabled">
+    <div class="demo-stack">
+      <sn-input-tags [value]="['locked', 'readonly']" [disabled]="true" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Uses FormControl&lt;string[]&gt;. The live value is displayed below."
+    snippet="input-tags/codeReactive"
+  >
+    <div class="demo-stack">
+      <sn-input-tags [formControl]="tagsCtrl" />
+      <p class="hint-text">Value: {{ tagsCtrl.value | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel"
+    description="Two-way binding via ngModel - value array shown below."
+    snippet="input-tags/codeNgModel"
+  >
+    <div class="demo-stack">
+      <sn-input-tags [(ngModel)]="ngModelTags" />
+      <p class="hint-text">Value: {{ ngModelTags() | json }}</p>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="input-tags" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="input-tags" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Keyboard &amp; Accessibility</h2>
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Behaviour</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>Enter</kbd></td><td>Adds the current text as a tag (trimmed; ignores empty or duplicate).</td></tr>
+      <tr><td><kbd>,</kbd></td><td>Same as Enter - adds the current text as a tag.</td></tr>
+      <tr><td><kbd>Backspace</kbd></td><td>When the text input is empty, removes the last tag.</td></tr>
+      <tr><td><kbd>Tab</kbd> / blur</td><td>Commits any pending text as a tag, then calls <code>onTouched</code>.</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>
+      Each tag is rendered as a <code>sn-chip</code> with a remove button that carries an
+      <code>aria-label</code> of the form "Remove &lt;tag&gt;" (resolved via
+      <code>SnChipIntl.remove</code>).
+    </li>
+    <li>
+      The internal <code>&lt;input&gt;</code> receives <code>id</code>,
+      <code>aria-describedby</code>, and <code>aria-invalid</code> from the surrounding
+      <code>sn-form-field</code> when present.
+    </li>
+    <li>
+      Clicking anywhere on the shell focuses the text input, keeping the interaction area large.
+    </li>
+  </ul>
+</section>

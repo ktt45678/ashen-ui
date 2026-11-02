@@ -1,0 +1,108 @@
+<header class="page-header">
+  <h1>Toggle</h1>
+  <p class="page-subtitle">
+    A pill-track switch for boolean options. The track fills the primary color when on and the
+    thumb slides to indicate state. Implements <code>ControlValueAccessor</code> so it works
+    with reactive forms and <code>ngModel</code>. The label is projected content - omit it for
+    an unlabelled switch.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="toggle/codeBasic">
+    <div class="demo-stack">
+      <sn-toggle>Zoom Effect</sn-toggle>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Checked states" snippet="toggle/codeChecked">
+    <div class="demo-stack">
+      <sn-toggle [checked]="true">Background Colors</sn-toggle>
+      <sn-toggle>Zoom Effect</sn-toggle>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="toggle/codeDisabled">
+    <div class="demo-stack">
+      <sn-toggle [disabled]="true">Disabled off</sn-toggle>
+      <sn-toggle [checked]="true" [disabled]="true">Disabled on</sn-toggle>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="toggle/codeSizes">
+    <div class="demo-stack">
+      <sn-toggle size="sm">Small</sn-toggle>
+      <sn-toggle>Medium (default)</sn-toggle>
+      <sn-toggle size="lg">Large</sn-toggle>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl to integrate with Angular's reactive forms."
+    snippet="toggle/codeReactive"
+  >
+    <div class="demo-stack">
+      <sn-toggle [formControl]="formCtrl">Enable notifications</sn-toggle>
+      <p class="hint-text">Value: {{ formCtrl.value }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel"
+    description="Two-way binding via ngModel for template-driven forms."
+    snippet="toggle/codeNgModel"
+  >
+    <div class="demo-stack">
+      <sn-toggle [(ngModel)]="ngModelVal">Enable dark mode</sn-toggle>
+      <p class="hint-text">Value: {{ ngModelVal() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="toggle/codeReskin">
+    <div class="demo-stack">
+      <sn-toggle
+        [checked]="true"
+        style="--sn-toggle-track-bg-checked: var(--sn-color-success);"
+      >Custom color</sn-toggle>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="toggle" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="toggle" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Uses <code>role="switch"</code> on the host element with <code>aria-checked</code> set
+      to <code>true</code> or <code>false</code> to reflect the on/off state.
+    </li>
+    <li>
+      Keyboard: <kbd>Space</kbd> and <kbd>Enter</kbd> toggle the switch state.
+      <kbd>Tab</kbd> moves focus normally.
+    </li>
+    <li>
+      When disabled, <code>tabindex="-1"</code> removes the element from tab order and
+      <code>aria-disabled="true"</code> is set.
+    </li>
+    <li>
+      The label is projected content - wrap in <code>aria-label</code> on the host for
+      icon-only or visually hidden labels.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - the <code>disabled</code> state propagates
+      from bound <code>FormControl.disable()</code> calls.
+    </li>
+  </ul>
+</section>

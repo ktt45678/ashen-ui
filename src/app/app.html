@@ -1,0 +1,15 @@
+<app-header />
+<div class="docs-shell" [class.nav-open]="layout.navOpen()">
+  <app-sidenav />
+  <button
+    type="button"
+    class="docs-nav-backdrop"
+    aria-label="Close navigation"
+    (click)="layout.closeNav()"
+  ></button>
+  <main class="docs-main">
+    <div class="docs-content">
+      <router-outlet />
+    </div>
+  </main>
+</div>

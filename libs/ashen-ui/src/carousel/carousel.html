@@ -1,0 +1,62 @@
+<div class="sn-carousel-controls">
+  @if (showNavigation()) {
+    <button
+      type="button"
+      snPart="prev"
+      class="sn-carousel-btn sn-carousel-btn-prev"
+      [class]="prevClassExtra()"
+      [attr.aria-label]="prevLabel()"
+      [disabled]="prevDisabled() || null"
+      (click)="prev()"
+    >
+      <sn-icon>{{ prevIcon() }}</sn-icon>
+    </button>
+  }
+
+  <div #viewport snPart="viewport" class="sn-carousel-viewport" [class]="viewportClassExtra()">
+    <div
+      #track
+      snPart="track"
+      class="sn-carousel-track"
+      [class]="trackClassExtra()"
+      (pointerdown)="onTrackPointerDown($event)"
+    >
+      <ng-content select="sn-carousel-item" />
+    </div>
+  </div>
+
+  @if (showNavigation()) {
+    <button
+      type="button"
+      snPart="next"
+      class="sn-carousel-btn sn-carousel-btn-next"
+      [class]="nextClassExtra()"
+      [attr.aria-label]="nextLabel()"
+      [disabled]="nextDisabled() || null"
+      (click)="next()"
+    >
+      <sn-icon>{{ nextIcon() }}</sn-icon>
+    </button>
+  }
+
+  @if (showPagination()) {
+    <div snPart="indicators" class="sn-carousel-dots" aria-hidden="true" [class]="indicatorsClassExtra()">
+      @for (dot of dots(); track dot) {
+        <button
+          type="button"
+          snPart="indicator"
+          class="sn-carousel-dot"
+          [class]="indicatorClassExtra()"
+          [class.sn-carousel-dot--active]="isDotActive(dot)"
+          [attr.aria-label]="dotLabel(dot)"
+          [attr.aria-current]="isDotActive(dot) ? 'true' : null"
+          [disabled]="!dotsClickable() || null"
+          (click)="onDotClick(dot)"
+        ></button>
+      }
+    </div>
+  }
+</div>
+
+<!-- Catch-all slot: custom controls placed inside <sn-carousel> render here. -->
+<ng-content />

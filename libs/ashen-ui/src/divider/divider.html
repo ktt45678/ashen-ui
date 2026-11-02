@@ -1,0 +1,7 @@
+@if (!vertical()) {
+  <span snPart="line" class="sn-divider-line" [class]="lineClassExtra()"></span>
+  @if (label()) {
+    <span snPart="label" class="sn-divider-label" [class]="labelClassExtra()">{{ label() }}</span>
+  }
+  <span snPart="line" class="sn-divider-line" [class]="lineClassExtra()"></span>
+}

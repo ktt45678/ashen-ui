@@ -1,0 +1,166 @@
+<header class="page-header">
+  <h1>Listbox</h1>
+  <p class="page-subtitle">
+    An always-visible option list supporting single and multiple selection. Consumer-projected
+    <code>&lt;sn-list-option&gt;</code> children via <code>&#64;for</code>. Implements
+    <code>ControlValueAccessor</code> for reactive forms and <code>ngModel</code>.
+    Keyboard navigation follows the WAI-ARIA APG Listbox pattern with roving tabindex and typeahead.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Single selection" snippet="listbox/codeSingle">
+    <div class="demo-row">
+      <sn-listbox [(value)]="singleValue" class="demo-listbox">
+        @for (opt of options; track opt) {
+          <sn-list-option [value]="opt">{{ opt }}</sn-list-option>
+        }
+      </sn-listbox>
+      <p class="hint-text">Value: {{ singleValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Check mark on selected options"
+    description="Off by default. Set checkmark to add a trailing mark, aligned to the end of the row."
+    snippet="listbox/codeCheckmark"
+  >
+    <div class="demo-row">
+      <sn-listbox [(value)]="checkmarkValue" checkmark class="demo-listbox">
+        @for (opt of options; track opt) {
+          <sn-list-option [value]="opt">{{ opt }}</sn-list-option>
+        }
+      </sn-listbox>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Multiple selection"
+    description="Set multiple=true to allow toggling several options independently."
+    snippet="listbox/codeMultiple"
+  >
+    <div class="demo-row">
+      <sn-listbox [(value)]="multipleValue" [multiple]="true" class="demo-listbox">
+        @for (w of widgets; track w.value) {
+          <sn-list-option [value]="w.value">{{ w.label }}</sn-list-option>
+        }
+      </sn-listbox>
+      <p class="hint-text">Value: {{ multipleValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Options with icons and a disabled option"
+    description="Project leading icons inside sn-list-option. Individual options can be disabled."
+    snippet="listbox/codeIcons"
+  >
+    <div class="demo-row">
+      <sn-listbox [(value)]="iconsValue" class="demo-listbox">
+        @for (opt of iconOptions; track opt.value) {
+          <sn-list-option [value]="opt.value" [disabled]="opt.disabled">
+            <sn-icon>{{ opt.icon }}</sn-icon>
+            {{ opt.label }}
+          </sn-list-option>
+        }
+      </sn-listbox>
+      <p class="hint-text">Value: {{ iconsValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl to integrate with Angular's reactive forms."
+    snippet="listbox/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-listbox [formControl]="formCtrl" class="demo-listbox">
+        @for (fw of frameworks; track fw) {
+          <sn-list-option [value]="fw.toLowerCase()">{{ fw }}</sn-list-option>
+        }
+      </sn-listbox>
+      <p class="hint-text">Value: {{ formCtrl.value | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel"
+    description="Two-way binding via ngModel for template-driven forms."
+    snippet="listbox/codeNgModel"
+  >
+    <div class="demo-row">
+      <sn-listbox [(ngModel)]="ngModelValue" class="demo-listbox">
+        <sn-list-option value="channels">Channels</sn-list-option>
+        <sn-list-option value="streams">Streams</sn-list-option>
+        <sn-list-option value="clips">Clips</sn-list-option>
+      </sn-listbox>
+      <p class="hint-text">Value: {{ ngModelValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled listbox"
+    description="The entire listbox can be disabled via the disabled input or via a disabled form control."
+    snippet="listbox/codeDisabled"
+  >
+    <div class="demo-row">
+      <sn-listbox [disabled]="true" [(value)]="disabledValue" class="demo-listbox">
+        <sn-list-option value="option1">Option 1</sn-list-option>
+        <sn-list-option value="option2">Option 2</sn-list-option>
+        <sn-list-option value="option3">Option 3</sn-list-option>
+      </sn-listbox>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="listbox" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The container has <code>role="listbox"</code>. When <code>multiple=true</code>,
+      <code>aria-multiselectable="true"</code> is set. When disabled,
+      <code>aria-disabled="true"</code> is set.
+    </li>
+    <li>
+      Each option has <code>role="option"</code> with <code>aria-selected</code> reflecting
+      its selection state and <code>aria-disabled</code> when disabled.
+    </li>
+    <li>
+      Navigation uses roving tabindex - the first selected (or first enabled) option carries
+      <code>tabindex="0"</code>; all others have <code>tabindex="-1"</code>.
+    </li>
+    <li>
+      <strong>Arrow keys</strong> move focus between options; <strong>Home/End</strong> jump to
+      first/last. Arrow keys do not wrap (APG Listbox pattern).
+    </li>
+    <li>
+      <strong>Enter</strong> and <strong>Space</strong> activate the focused option.
+      Space prevents page scrolling.
+    </li>
+    <li>
+      <strong>Typeahead</strong>: typing characters focuses the first matching option.
+    </li>
+    <li>
+      Disabled options are skipped during keyboard navigation and cannot be activated.
+    </li>
+    <li>
+      Provide an accessible name via <code>ariaLabel</code> or <code>ariaLabelledby</code> when
+      no visible label is present.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - the <code>disabled</code> state propagates
+      from bound <code>FormControl.disable()</code> calls.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="listbox" section="theming" />
+</section>

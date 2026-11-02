@@ -1,0 +1,96 @@
+@layer components {
+  .sn-breadcrumb {
+    --sn-breadcrumb-gap: 4px;
+    --sn-breadcrumb-font-size: var(--sn-text-xs);
+    --sn-breadcrumb-font-family: var(--sn-font-ui);
+
+    --sn-breadcrumb-link-color: var(--sn-text-subtle);
+    --sn-breadcrumb-link-padding: 3px 6px;
+    --sn-breadcrumb-link-radius: var(--sn-radius-sm);
+    --sn-breadcrumb-link-transition: color var(--sn-motion-base), background-color var(--sn-motion-base);
+
+    --sn-breadcrumb-current-color: var(--sn-text);
+    --sn-breadcrumb-current-font-weight: var(--sn-font-weight-semibold);
+
+    --sn-breadcrumb-separator-color: var(--sn-text-disabled);
+    --sn-breadcrumb-separator-size: 14px;
+
+    --sn-breadcrumb-icon-size: 15px;
+    --sn-breadcrumb-icon-gap: 5px;
+
+    display: block;
+  }
+
+  .sn-breadcrumb-nav {
+    display: block;
+  }
+
+  .sn-breadcrumb-list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sn-breadcrumb-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sn-breadcrumb-list-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-breadcrumb-gap);
+  }
+
+  .sn-breadcrumb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-breadcrumb-icon-gap);
+    padding: var(--sn-breadcrumb-link-padding);
+    border-radius: var(--sn-breadcrumb-link-radius);
+    font-size: var(--sn-breadcrumb-font-size);
+    font-family: var(--sn-breadcrumb-font-family);
+    font-weight: 400;
+    color: var(--sn-breadcrumb-link-color);
+    text-decoration: none;
+    transition: var(--sn-breadcrumb-link-transition);
+    cursor: pointer;
+  }
+
+  a.sn-breadcrumb-link:hover {
+    background: var(--sn-surface-hover);
+    color: var(--sn-text);
+  }
+
+  a.sn-breadcrumb-link:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-breadcrumb-link--current {
+    font-weight: var(--sn-breadcrumb-current-font-weight);
+    color: var(--sn-breadcrumb-current-color);
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .sn-breadcrumb-item-icon {
+    font-size: var(--sn-breadcrumb-icon-size);
+    color: inherit;
+    flex-shrink: 0;
+  }
+
+  .sn-breadcrumb-separator {
+    display: inline-flex;
+    align-items: center;
+    color: var(--sn-breadcrumb-separator-color);
+    font-size: var(--sn-breadcrumb-separator-size);
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-breadcrumb-link {
+      transition: none;
+    }
+  }
+}

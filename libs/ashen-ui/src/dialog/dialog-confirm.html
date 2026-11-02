@@ -1,0 +1,31 @@
+<div class="sn-confirm-dialog-body">
+  <sn-icon
+    class="sn-confirm-dialog-icon"
+    [class.sn-confirm-dialog-icon--primary]="severity() === 'primary'"
+    [class.sn-confirm-dialog-icon--error]="severity() === 'error'"
+    [class.sn-confirm-dialog-icon--warning]="severity() === 'warning'"
+    [class.sn-confirm-dialog-icon--success]="severity() === 'success'"
+  >{{ icon() }}</sn-icon>
+  @if (html()) {
+    <span class="sn-confirm-dialog-message" [innerHTML]="message()"></span>
+  } @else {
+    <span class="sn-confirm-dialog-message">{{ message() }}</span>
+  }
+</div>
+
+<div class="sn-dialog-confirm-actions">
+  <button
+    snButton
+    cdkFocusInitial
+    [variant]="rejectVariant()"
+    color="secondary"
+    [size]="buttonSize() ?? 'md'"
+    type="button"
+    (click)="reject()"
+  >
+    {{ rejectLabel() }}
+  </button>
+  <button snButton [color]="acceptColor()" [size]="buttonSize() ?? 'md'" type="button" (click)="accept()">
+    {{ acceptLabel() }}
+  </button>
+</div>

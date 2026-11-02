@@ -1,0 +1,189 @@
+@layer components {
+  .sn-carousel {
+    --sn-carousel-btn-size: 32px;
+    --sn-carousel-btn-radius: var(--sn-radius-pill);
+    --sn-carousel-dot-size: 8px;
+    --sn-carousel-dot-active-width: 18px;
+    --sn-carousel-dot-gap: 6px;
+    --sn-carousel-viewport-radius: var(--sn-radius-tile);
+    --sn-carousel-vertical-height: 260px;
+    --sn-carousel-transition: transform var(--sn-motion-slow);
+    --sn-carousel-btn-color: var(--sn-text-subtle);
+    --sn-carousel-btn-bg: transparent;
+    --sn-carousel-btn-bg-hover: var(--sn-surface-hover);
+    --sn-carousel-dot-bg: var(--sn-border-strong);
+    --sn-carousel-dot-active-bg: var(--sn-color-primary);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sn-space-2);
+  }
+
+  /* Grid so the dots can share the layout: horizontally the prev/next flank the
+     viewport with the dots centered below; vertically the prev/dots/next stack in
+     a control column to the right of the viewport. */
+  .sn-carousel-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'prev viewport next'
+      'dots dots dots';
+    align-items: center;
+    gap: var(--sn-space-2);
+  }
+
+  .sn-carousel-controls > .sn-carousel-btn-prev { grid-area: prev; }
+  .sn-carousel-controls > .sn-carousel-btn-next { grid-area: next; }
+  .sn-carousel-controls > .sn-carousel-viewport { grid-area: viewport; }
+  .sn-carousel-controls > .sn-carousel-dots { grid-area: dots; }
+
+  .sn-carousel-viewport {
+    overflow: hidden;
+    border-radius: var(--sn-carousel-viewport-radius);
+    min-width: 0;
+  }
+
+  .sn-carousel-track {
+    display: flex;
+    gap: var(--sn-carousel-gap, 0px);
+    transition: var(--sn-carousel-transition);
+    touch-action: pan-y;
+    will-change: transform;
+    /* Slide content isn't selectable so a swipe never accidentally selects text;
+       opt back in per-region with [snCarouselNoSwipe]. */
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Regions exempt from drag-to-swipe: selectable + normal pointer behaviour. */
+  .sn-carousel-no-swipe {
+    user-select: text;
+    -webkit-user-select: text;
+    touch-action: auto;
+  }
+
+  .sn-carousel-item {
+    flex: 0 0 var(--sn-carousel-slide-basis, 100%);
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .sn-carousel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-carousel-btn-size);
+    height: var(--sn-carousel-btn-size);
+    padding: 0;
+    border: none;
+    border-radius: var(--sn-carousel-btn-radius);
+    background: var(--sn-carousel-btn-bg);
+    color: var(--sn-carousel-btn-color);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--sn-motion-fast), color var(--sn-motion-fast), opacity var(--sn-motion-fast);
+  }
+
+  .sn-carousel-btn:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-carousel-btn:hover:not(:disabled) {
+    background: var(--sn-carousel-btn-bg-hover);
+    color: var(--sn-text);
+  }
+
+  .sn-carousel-btn:disabled {
+    opacity: 0.38;
+    cursor: default;
+  }
+
+  /* Fallbacks let the dots render when sn-carousel-pagination is used standalone,
+     i.e. outside the .sn-carousel host where the component tokens are declared. */
+  .sn-carousel-dots {
+    display: flex;
+    gap: var(--sn-carousel-dot-gap, 6px);
+    justify-content: center;
+  }
+
+  .sn-carousel-dot {
+    width: var(--sn-carousel-dot-size, 8px);
+    height: var(--sn-carousel-dot-size, 8px);
+    padding: 0;
+    border: none;
+    border-radius: var(--sn-radius-pill);
+    background: var(--sn-carousel-dot-bg, var(--sn-border-strong));
+    cursor: pointer;
+    transition: width var(--sn-motion-slow), background-color var(--sn-motion-slow);
+  }
+
+  .sn-carousel-dot:disabled {
+    cursor: default;
+  }
+
+  .sn-carousel-dot--active {
+    width: var(--sn-carousel-dot-active-width, 18px);
+    background: var(--sn-carousel-dot-active-bg, var(--sn-color-primary));
+  }
+
+  /* Viewport on the left; the dots + both nav buttons form one centered cluster in
+     a control column on the right (buttons kept together, not split top/bottom). */
+  .sn-carousel--vertical .sn-carousel-controls {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto auto auto 1fr;
+    grid-template-areas:
+      'viewport .'
+      'viewport dots'
+      'viewport prev'
+      'viewport next'
+      'viewport .';
+  }
+
+  .sn-carousel--vertical .sn-carousel-viewport {
+    width: 100%;
+    height: var(--sn-carousel-vertical-height);
+  }
+
+  .sn-carousel--vertical .sn-carousel-track {
+    flex-direction: column;
+    height: 100%;
+    touch-action: pan-x;
+  }
+
+  .sn-carousel--vertical .sn-carousel-item {
+    height: 100%;
+  }
+
+  /* Dots stack into a vertical column; the active dot stretches DOWN, not across. */
+  .sn-carousel--vertical .sn-carousel-dots {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sn-carousel--vertical .sn-carousel-dot {
+    transition: height var(--sn-motion-slow), background-color var(--sn-motion-slow);
+  }
+
+  .sn-carousel--vertical .sn-carousel-dot--active {
+    width: var(--sn-carousel-dot-size, 8px);
+    height: var(--sn-carousel-dot-active-width, 18px);
+  }
+
+  .sn-carousel--auto-height .sn-carousel-viewport {
+    transition: height var(--sn-motion-slow);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-carousel-track {
+      transition: none;
+    }
+
+    .sn-carousel-dot {
+      transition: none;
+    }
+
+    .sn-carousel--auto-height .sn-carousel-viewport {
+      transition: none;
+    }
+  }
+}

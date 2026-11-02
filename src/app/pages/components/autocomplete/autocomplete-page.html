@@ -1,0 +1,298 @@
+<header class="page-header">
+  <h1>AutoComplete</h1>
+  <p class="page-subtitle">
+    A text input with a live-filtered suggestion panel. As you type the panel narrows to matching
+    suggestions; picking one fills the input. Free text is always accepted - selection is optional.
+    Implements the WAI-ARIA APG <em>Combobox with list autocomplete</em> pattern using
+    <code>aria-activedescendant</code>. Implements <code>ControlValueAccessor</code> for reactive
+    forms and <code>ngModel</code>.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic with ngModel" snippet="autocomplete/codeBasic">
+    <div class="demo-row">
+      <sn-autocomplete
+        [(value)]="basicValue"
+        [suggestions]="countries"
+        placeholder="Search countries…"
+        class="demo-input"
+      ></sn-autocomplete>
+      <p class="hint-text">Value: "{{ basicValue() }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Object suggestions"
+    description="optionLabel drives filtering and input text while compareWith defines object identity. The selected value remains the original object."
+    snippet="autocomplete/codeObjects"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        [(value)]="objectValue"
+        [suggestions]="programs"
+        optionLabel="name"
+        [compareWith]="compareProgram"
+        placeholder="Search programs…"
+        class="demo-input"
+      >
+        <ng-template snAutoCompleteOption let-option>
+          <span class="program-option">
+            <span>{{ option.name }}</span>
+            <small>{{ option.category }}</small>
+          </span>
+        </ng-template>
+      </sn-autocomplete>
+      <p class="hint-text">Value: {{ objectValueDisplay() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Multiple object values"
+    description="Multiple mode keeps selected objects as removable values, compares them by identity, and leaves the input available for the next query."
+    snippet="autocomplete/codeMultiple"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        multiple
+        [(values)]="multipleValues"
+        [suggestions]="programs"
+        optionLabel="name"
+        [compareWith]="compareProgram"
+        [maxSelectedLabels]="2"
+        placeholder="Add programs…"
+        class="demo-input-wide"
+      >
+        <ng-template snAutoCompleteSelectedValue let-option>{{ option.name }}</ng-template>
+        <ng-template snAutoCompleteSummary let-count="count">+{{ count }} more</ng-template>
+        <ng-template snIcon="remove"><span aria-hidden="true">×</span></ng-template>
+      </sn-autocomplete>
+      <p class="hint-text">{{ multipleValues().length }} programs selected</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Toggling selection in the panel"
+    description="Selected suggestions stay in the panel, marked with a check mark, and picking one again removes it. Set hideSelected to drop them from the list instead, or checkmark=false to leave them unmarked."
+    snippet="autocomplete/codeToggle"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        multiple
+        [(values)]="panelValues"
+        [suggestions]="programs"
+        optionLabel="name"
+        [compareWith]="compareProgram"
+        [hideSelected]="panelHideSelected()"
+        [checkmark]="panelCheckmark()"
+        placeholder="Add programs…"
+        class="demo-input-wide"
+      />
+      <div class="demo-toggles">
+        <sn-toggle [(checked)]="panelHideSelected">hideSelected</sn-toggle>
+        <sn-toggle [(checked)]="panelCheckmark">checkmark</sn-toggle>
+      </div>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="One badge for the whole selection"
+    description="maxSelectedLabels=0 sends every value to the summary template, so the selection can read as a single badge. removable=false drops the per-chip clear button, and hideValuesOnFocus clears the badges out of the way while typing."
+    snippet="autocomplete/codeBadge"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        multiple
+        [(values)]="badgeValues"
+        [suggestions]="programs"
+        optionLabel="name"
+        [compareWith]="compareProgram"
+        [maxSelectedLabels]="0"
+        [removable]="false"
+        hideValuesOnFocus
+        placeholder="Add programs…"
+        class="demo-input-wide"
+      >
+        <ng-template snAutoCompleteSummary let-count="count">
+          <span class="selection-badge">{{ count }} selected</span>
+        </ng-template>
+      </sn-autocomplete>
+      <p class="hint-text">Focus the field to see the badge give way to the caret.</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Server-driven completion"
+    description="Set filter=false when suggestions already come from a server. complete emits on input and, with completeOnFocus, when the input receives focus."
+    snippet="autocomplete/codeServer"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        [(value)]="serverValue"
+        [suggestions]="serverSuggestions()"
+        [filter]="false"
+        completeOnFocus
+        (complete)="onComplete($event)"
+        placeholder="Search remote countries…"
+        class="demo-input"
+      />
+      @if (completionLog().length > 0) {
+        <p class="hint-text">Latest completion: {{ completionLog()[0] }}</p>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form"
+    description="Bind to a FormControl. Free text is accepted - value updates on every keystroke."
+    snippet="autocomplete/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        [formControl]="formCtrl"
+        [suggestions]="countries"
+        placeholder="Search countries…"
+        class="demo-input"
+      ></sn-autocomplete>
+      <p class="hint-text">FormControl value: "{{ formCtrl.value }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="(selected) event log vs free text"
+    description="The (selected) output fires only when a suggestion is picked. The value can still be any text."
+    snippet="autocomplete/codeEvent"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        [(value)]="eventLogValue"
+        [suggestions]="countries"
+        (selected)="onSelected($event)"
+        placeholder="Search countries…"
+        class="demo-input"
+      ></sn-autocomplete>
+      <p class="hint-text">Value: "{{ eventLogValue() }}"</p>
+      @if (eventLog().length > 0) {
+        <ul class="event-log">
+          @for (entry of eventLog(); track entry) {
+            <li>{{ entry }}</li>
+          }
+        </ul>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside Form Field"
+    description="Compose with sn-form-field for label, hint, focus ring, and error state styling."
+    snippet="autocomplete/codeFormField"
+  >
+    <div class="demo-row">
+      <sn-form-field class="demo-input">
+        <sn-label>Country</sn-label>
+        <sn-autocomplete
+          [(value)]="formFieldValue"
+          [suggestions]="countries"
+          placeholder="Search countries…"
+        ></sn-autocomplete>
+        <sn-hint>Start typing to filter</sn-hint>
+      </sn-form-field>
+      <p class="hint-text">Value: "{{ formFieldValue() }}"</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Virtual + infinite suggestions"
+    description="virtual windows the options (only visible rows in the DOM, scroll position preserved both ways); hasMore + (loadMore) page in more results near the end of the list."
+    snippet="autocomplete/codeVirtual"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        [(value)]="virtualValue"
+        [suggestions]="virtualSuggestions()"
+        virtual
+        [hasMore]="virtualHasMore()"
+        (loadMore)="onLoadMore($event)"
+        placeholder="Search 10,000 items…"
+        class="demo-input"
+      ></sn-autocomplete>
+      <p class="hint-text">{{ virtualSuggestions().length }} suggestions loaded{{ virtualHasMore() ? '' : ' (all)' }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled"
+    description="Set disabled=true to prevent interaction."
+    snippet="autocomplete/codeDisabled"
+  >
+    <div class="demo-row">
+      <sn-autocomplete
+        [disabled]="true"
+        [(value)]="disabledValue"
+        [suggestions]="countries"
+        class="demo-input"
+      ></sn-autocomplete>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="autocomplete" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the WAI-ARIA APG <strong>Combobox with list autocomplete</strong> pattern.
+      The input has <code>role="combobox"</code>, <code>aria-autocomplete="list"</code>,
+      <code>aria-expanded</code>, and <code>aria-controls</code>.
+    </li>
+    <li>
+      Focus stays on the input at all times. <code>aria-activedescendant</code> tracks the
+      highlighted option using its generated <code>id</code>.
+    </li>
+    <li>
+      <strong>ArrowDown</strong> - open panel (if closed) or move active option down (clamped, no wrap).
+    </li>
+    <li>
+      <strong>ArrowUp</strong> - move active option up (clamped, no wrap).
+    </li>
+    <li>
+      <strong>Enter</strong> - pick the active option if one is highlighted; otherwise do nothing (allows form submit).
+    </li>
+    <li>
+      <strong>Escape</strong> - close the panel without changing the value.
+    </li>
+    <li>
+      <strong>Tab</strong> - close the panel and move focus to the next element normally.
+    </li>
+    <li>
+      <strong>Home / End</strong> intentionally left to native input text-caret behavior -
+      the APG combobox pattern with list autocomplete requires this so users can navigate
+      within the typed text.
+    </li>
+    <li>
+      In multiple mode, <strong>Backspace</strong> removes the last selected value only when the
+      input query is empty. Each visible value also has a localized remove button, unless
+      <code>removable</code> is off.
+    </li>
+    <li>
+      In multiple mode <code>aria-selected</code> reports the values actually selected, since
+      selected suggestions stay in the panel. In single mode it follows the active option, as
+      the APG combobox pattern specifies.
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - disabled state propagates from
+      <code>FormControl.disable()</code>.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="autocomplete" section="theming" />
+</section>

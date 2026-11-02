@@ -1,0 +1,12 @@
+.demo-tab-nav { max-width: 480px; }
+
+/* Narrow enough that eight links cannot fit, which is the point of the demo. */
+.demo-tab-nav-narrow { max-width: 22rem; }
+.demo-tab-nav-side { max-width: 14rem; }
+.demo-readout { margin-top: var(--sn-space-3); font-size: var(--sn-text-xs); color: var(--sn-text-subtle); }
+
+.demo-tab-nav-reskin { --sn-color-primary: var(--sn-color-success); }
+.demo-tab-nav-reskin [snTabLink] {
+  --sn-tab-link-padding: 10px 18px;
+  --sn-tab-link-color: var(--sn-text-subtle);
+}

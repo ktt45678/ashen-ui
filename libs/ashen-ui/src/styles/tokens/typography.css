@@ -1,0 +1,26 @@
+:root {
+  --sn-font-display: 'Nunito Sans Variable', 'Noto Sans JP Variable', sans-serif;
+  --sn-font-ui: 'Outfit Variable', 'Noto Sans JP Variable', sans-serif;
+  --sn-font-mono: ui-monospace, monospace;
+
+  /* Type scale - dense desktop utility */
+  --sn-text-2xs: 0.6875rem;  /* 11px badges, kbd */
+  --sn-text-xs: 0.75rem;     /* 12px hints, errors, tile labels */
+  --sn-text-sm: 0.875rem;    /* 14px default control / body size */
+  --sn-text-md: 1rem;        /* 16px large controls */
+  --sn-text-lg: 1.125rem;    /* 18px drawer titles */
+  --sn-text-xl: 1.25rem;     /* 20px dialog titles */
+  --sn-text-2xl: 1.5rem;     /* 24px page/display headings */
+
+  --sn-font-weight-regular: 400;
+  --sn-font-weight-medium: 500;
+  --sn-font-weight-semibold: 600;
+  --sn-font-weight-bold: 700;
+
+  --sn-leading-tight: 1.2;
+  --sn-leading-normal: 1.5;
+
+  /* Semantic sizes used by components */
+  --sn-label-size: var(--sn-text-sm);
+  --sn-hint-size: var(--sn-text-xs);
+}

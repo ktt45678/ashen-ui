@@ -1,0 +1,76 @@
+@layer components {
+  .sn-meter-group {
+    --sn-meter-group-bar-height: 8px;
+    --sn-meter-group-bar-radius: var(--sn-radius-pill);
+    --sn-meter-group-bar-bg: var(--sn-border);
+    --sn-meter-group-gap: 8px;
+    --sn-meter-group-legend-gap: 14px;
+    --sn-meter-group-legend-font-size: var(--sn-text-xs);
+    --sn-meter-group-legend-color: var(--sn-text-muted);
+    --sn-meter-group-legend-value-color: var(--sn-text-subtle);
+    --sn-meter-group-legend-dot-size: 8px;
+    --sn-meter-group-legend-item-gap: 6px;
+    --sn-meter-group-segment-transition: width var(--sn-motion-slow);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sn-meter-group-gap);
+    width: 100%;
+  }
+
+  .sn-meter-group-bar {
+    display: flex;
+    height: var(--sn-meter-group-bar-height);
+    border-radius: var(--sn-meter-group-bar-radius);
+    overflow: hidden;
+    background: var(--sn-meter-group-bar-bg);
+  }
+
+  .sn-meter-group-segment {
+    height: 100%;
+    transition: var(--sn-meter-group-segment-transition);
+    flex-shrink: 0;
+  }
+
+  .sn-meter-group-legend {
+    display: flex;
+    gap: var(--sn-meter-group-legend-gap);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .sn-meter-group-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-meter-group-legend-item-gap);
+    font-size: var(--sn-meter-group-legend-font-size);
+    color: var(--sn-meter-group-legend-color);
+  }
+
+  .sn-meter-group-legend-dot {
+    width: var(--sn-meter-group-legend-dot-size);
+    height: var(--sn-meter-group-legend-dot-size);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sn-meter-group-legend-value {
+    color: var(--sn-meter-group-legend-value-color);
+  }
+
+  .sn-meter-group-legend-total {
+    margin-inline-start: auto;
+    font-size: var(--sn-meter-group-legend-font-size);
+    color: var(--sn-meter-group-legend-value-color);
+  }
+
+  sn-meter {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-meter-group-segment {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,131 @@
+<header class="page-header">
+  <h1>Input Number</h1>
+  <p class="page-subtitle">
+    Directive on a native <code>&lt;input type="number"&gt;</code> element that applies Ashen
+    UI styling and wires into the surrounding <code>sn-form-field</code>. Supports
+    min/max/step constraints with automatic clamping on blur. Form bindings use Angular's
+    built-in number value accessor - no wrapper needed.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="input-number/codeBasic">
+    <div class="demo-stack">
+      <input snInputNumber placeholder="0" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Min / Max / Step" snippet="input-number/codeConstraints">
+    <div class="demo-stack">
+      <input snInputNumber [min]="0" [max]="100" [step]="5" placeholder="0" />
+      <p class="hint-text">Try typing -10 or 200 and blur - value is clamped.</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Stepper buttons"
+    description="Stacked buttons that step the value. They join the input inside an input group and stay out of the tab order, since the arrow keys already step."
+    snippet="input-number/codeStepper"
+  >
+    <div class="demo-stack">
+      <sn-input-group>
+        <input snInputNumber #stepped="snInputNumber" [min]="0" [max]="10" placeholder="0" />
+        <sn-input-number-stepper [for]="stepped" />
+      </sn-input-group>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Sizes" snippet="input-number/codeSizes">
+    <div class="demo-stack">
+      <input snInputNumber size="sm" placeholder="Small (sm)" />
+      <input snInputNumber placeholder="Medium (md - default)" />
+      <input snInputNumber size="lg" placeholder="Large (lg)" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Error state" snippet="input-number/codeError">
+    <div class="demo-stack">
+      <input snInputNumber [invalid]="true" placeholder="Invalid" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Disabled" snippet="input-number/codeDisabled">
+    <div class="demo-stack">
+      <input snInputNumber disabled value="42" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside FormField with reactive validation"
+    description="The input turns red after it is touched and the value is empty or out of range."
+    snippet="input-number/codeInField"
+  >
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label required>Quantity</sn-label>
+        <input snInputNumber [formControl]="quantityCtrl" [min]="1" [max]="99" />
+        <sn-hint>Enter a value between 1 and 99</sn-hint>
+        <sn-error>A number between 1 and 99 is required</sn-error>
+      </sn-form-field>
+      <p class="hint-text">Status: {{ quantityCtrl.status }} · Value: {{ quantityCtrl.value }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="ngModel binding"
+    description="The bound value is always a number (Angular's built-in number value accessor)."
+    snippet="input-number/codeNgModel"
+  >
+    <div class="demo-stack">
+      <input snInputNumber [(ngModel)]="ngModelValue" [min]="0" [max]="10" [step]="0.5" />
+      <p class="hint-text">Bound value: {{ ngModelValue() }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Re-skin via CSS variables" snippet="input-number/codeReskin">
+    <div class="demo-stack">
+      <input
+        snInputNumber
+        placeholder="0"
+        style="--sn-input-text-border-radius: 9999px; --sn-input-text-focus-border: var(--sn-color-success);"
+      />
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="input-number" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="input-number" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Uses a native <code>&lt;input type="number"&gt;</code> element - all browser and
+      assistive technology semantics are preserved without any wrapper.
+    </li>
+    <li>
+      When placed inside <code>sn-form-field</code>, the <code>id</code>,
+      <code>aria-required</code>, and <code>aria-describedby</code> attributes are managed
+      automatically via the <code>SN_FORM_FIELD</code> DI context (inherited from InputText).
+    </li>
+    <li>
+      <code>aria-invalid="true"</code> is applied when the <code>invalid</code> input is
+      <code>true</code> or when a bound <code>FormControl</code> is invalid and has been
+      touched or dirtied.
+    </li>
+    <li>
+      On blur, if the value falls outside the <code>[min]</code>/<code>[max]</code> range it
+      is automatically clamped and an <code>input</code> event is dispatched so Angular forms
+      pick up the corrected value.
+    </li>
+  </ul>
+</section>

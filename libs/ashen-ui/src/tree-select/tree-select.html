@@ -1,0 +1,51 @@
+<button
+  #triggerBtn
+  snPart="trigger"
+  type="button"
+  class="sn-select-trigger"
+  [class]="triggerClassExtra()"
+  [id]="triggerId()"
+  role="combobox"
+  [attr.aria-expanded]="isOpen()"
+  aria-haspopup="tree"
+  [attr.aria-controls]="panelId"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-describedby]="ariaDescribedBy()"
+  [disabled]="isDisabled() || null"
+  (click)="onTriggerClick()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  <span
+    snPart="value"
+    class="sn-select-value sn-tree-select-value"
+    [class]="valueClassExtra()"
+    [class.sn-select-placeholder]="selectedNode() === null"
+  >
+    @if (selectedNode() !== null && selectedNode()!.icon) {
+      <sn-icon>{{ selectedNode()!.icon }}</sn-icon>
+    }
+    {{ selectedNode() !== null ? selectedNode()!.label : effectivePlaceholder() }}
+  </span>
+  <span snPart="arrow" class="sn-select-arrow" [class]="arrowClassExtra()">
+    <sn-icon>{{ icons.resolve('chevron-down') }}</sn-icon>
+  </span>
+</button>
+
+<ng-template #panelTpl>
+  <div
+    snPart="panel"
+    class="sn-select-panel sn-tree-select-panel"
+    [class]="panelClassExtra()"
+    [class.sn-select-panel-closing]="isClosing()"
+    [id]="panelId"
+    [attr.aria-label]="ariaLabel() || null"
+    [style.animation]="panelAnimation()"
+  >
+    <sn-tree
+      [nodes]="nodes()"
+      [selectedKey]="selectedKey()"
+      [(expandedKeys)]="expandedKeys"
+      (nodeSelect)="onTreeSelect($event)"
+    />
+  </div>
+</ng-template>

@@ -1,0 +1,74 @@
+@layer components {
+  .sn-skeleton {
+    --sn-skeleton-bg: var(--sn-surface-hover);
+    --sn-skeleton-shimmer-color: rgba(255, 255, 255, 0.45);
+    --sn-skeleton-text-height: 0.875rem;
+    --sn-skeleton-text-radius: var(--sn-radius-sm);
+    --sn-skeleton-rect-height: 4rem;
+    --sn-skeleton-rect-radius: var(--sn-radius-md);
+    --sn-skeleton-circle-size: 2.5rem;
+    --sn-skeleton-tile-size: 96px;
+    --sn-skeleton-tile-radius: var(--sn-radius-tile);
+    --sn-skeleton-width: 100%;
+    --sn-skeleton-animation-duration: 1.4s;
+
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: var(--sn-skeleton-rendered-width, var(--sn-skeleton-width));
+    height: var(--sn-skeleton-rendered-height, auto);
+    border-radius: var(--sn-skeleton-rendered-radius, 0);
+    background: var(--sn-skeleton-bg);
+  }
+
+  .sn-skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--sn-skeleton-shimmer-color),
+      transparent
+    );
+    animation: sn-shimmer var(--sn-skeleton-animation-duration) infinite;
+  }
+
+  [data-theme|='dark'] .sn-skeleton::after {
+    --sn-skeleton-shimmer-color: rgba(255, 255, 255, 0.08);
+  }
+
+  @keyframes sn-shimmer {
+    to {
+      transform: translateX(100%);
+    }
+  }
+
+  .sn-skeleton-pulse {
+    animation: sn-skeleton-pulse var(--sn-skeleton-animation-duration) ease-in-out infinite;
+  }
+
+  .sn-skeleton-pulse::after {
+    display: none;
+  }
+
+  @keyframes sn-skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+  .sn-skeleton-static::after {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-skeleton-pulse {
+      animation: none;
+    }
+
+    .sn-skeleton::after {
+      animation: none;
+    }
+  }
+}

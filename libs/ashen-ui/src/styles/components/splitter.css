@@ -1,0 +1,105 @@
+@layer components {
+  .sn-splitter {
+    --sn-splitter-border: var(--sn-border);
+    --sn-splitter-radius: var(--sn-radius-tile);
+    --sn-splitter-bg: var(--sn-surface-panel);
+    --sn-splitter-gutter-bg: var(--sn-surface-hover);
+    --sn-splitter-gutter-border: var(--sn-border);
+    --sn-splitter-gutter-size: 6px;
+    --sn-splitter-handle-bg: var(--sn-border-strong);
+    --sn-splitter-handle-short: 18px;
+    --sn-splitter-handle-thin: 2px;
+    --sn-splitter-handle-radius: var(--sn-radius-pill);
+
+    display: flex;
+    overflow: hidden;
+    border: 1px solid var(--sn-splitter-border);
+    border-radius: var(--sn-splitter-radius);
+    background: var(--sn-splitter-bg);
+    box-sizing: border-box;
+  }
+
+  .sn-splitter.sn-splitter-horizontal {
+    flex-direction: row;
+  }
+
+  .sn-splitter.sn-splitter-vertical {
+    flex-direction: column;
+  }
+
+  .sn-splitter-panel {
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .sn-splitter-panel:last-of-type {
+    flex: 1;
+  }
+
+  .sn-splitter-gutter {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sn-splitter-gutter-bg);
+    box-sizing: border-box;
+    order: 1;
+    /* Let the gutter own touch gestures so a finger drag resizes instead of
+       scrolling the page (pointer events then fire for touch input too). */
+    touch-action: none;
+    -ms-touch-action: none;
+  }
+
+  .sn-splitter-gutter:focus {
+    outline: none;
+  }
+
+  .sn-splitter-gutter:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: -2px;
+  }
+
+  .sn-splitter.sn-splitter-horizontal .sn-splitter-gutter {
+    width: var(--sn-splitter-gutter-size);
+    height: 100%;
+    cursor: col-resize;
+    border-inline: 1px solid var(--sn-splitter-gutter-border);
+  }
+
+  .sn-splitter.sn-splitter-vertical .sn-splitter-gutter {
+    width: 100%;
+    height: var(--sn-splitter-gutter-size);
+    cursor: row-resize;
+    border-top: 1px solid var(--sn-splitter-gutter-border);
+    border-bottom: 1px solid var(--sn-splitter-gutter-border);
+  }
+
+  .sn-splitter-gutter-handle {
+    border-radius: var(--sn-splitter-handle-radius);
+    background: var(--sn-splitter-handle-bg);
+    flex-shrink: 0;
+  }
+
+  .sn-splitter.sn-splitter-horizontal .sn-splitter-gutter-handle {
+    width: var(--sn-splitter-handle-thin);
+    height: var(--sn-splitter-handle-short);
+  }
+
+  .sn-splitter.sn-splitter-vertical .sn-splitter-gutter-handle {
+    width: var(--sn-splitter-handle-short);
+    height: var(--sn-splitter-handle-thin);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sn-splitter-panel {
+      transition: flex-basis var(--sn-motion-fast);
+    }
+
+    /* During an active pointer drag the panel must track the cursor with no
+       easing lag - the transition is only for keyboard-driven size steps. */
+    .sn-splitter-resizing .sn-splitter-panel {
+      transition: none;
+    }
+  }
+}

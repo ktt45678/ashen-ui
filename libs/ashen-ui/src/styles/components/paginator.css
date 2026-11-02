@@ -1,0 +1,386 @@
+@layer components {
+  /* Panels render in the CDK overlay (outside .sn-paginator), so tokens must
+     be defined on them as well. */
+  .sn-paginator,
+  .sn-paginator-jump-panel,
+  .sn-paginator-rows-panel {
+    --sn-paginator-gap: 4px;
+    --sn-paginator-font-family: var(--sn-font-ui);
+
+    --sn-paginator-page-min-width: 30px;
+    --sn-paginator-page-height: 30px;
+    --sn-paginator-page-padding: 0 6px;
+    --sn-paginator-page-radius: var(--sn-radius-md);
+    --sn-paginator-page-font-size: var(--sn-text-sm);
+    --sn-paginator-page-transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+
+    --sn-paginator-page-bg: transparent;
+    --sn-paginator-page-color: var(--sn-text);
+    --sn-paginator-page-hover-bg: var(--sn-surface-hover);
+
+    --sn-paginator-current-bg: var(--sn-selected-bg);
+    --sn-paginator-current-color: var(--sn-selected-text);
+    --sn-paginator-current-font-weight: var(--sn-font-weight-semibold);
+
+    --sn-paginator-ellipsis-color: var(--sn-text-subtle);
+    --sn-paginator-ellipsis-font-size: var(--sn-text-xs);
+    --sn-paginator-ellipsis-hover-bg: var(--sn-surface-hover);
+    --sn-paginator-ellipsis-radius: var(--sn-radius-md);
+
+    --sn-paginator-nav-color: var(--sn-text);
+    --sn-paginator-nav-icon-size: var(--sn-icon-size-md);
+
+    --sn-paginator-report-color: var(--sn-text-subtle);
+    --sn-paginator-report-font-size: var(--sn-text-xs);
+
+    --sn-paginator-select-padding: var(--sn-select-padding);
+    --sn-paginator-select-font-size: var(--sn-select-font-size);
+    --sn-paginator-select-radius: var(--sn-select-border-radius);
+
+    /* Rows trigger tokens */
+    --sn-paginator-rows-trigger-height: 30px;
+    --sn-paginator-rows-trigger-padding: 0 8px;
+    --sn-paginator-rows-trigger-radius: var(--sn-radius-md);
+    --sn-paginator-rows-trigger-bg: var(--sn-input-bg);
+    --sn-paginator-rows-trigger-color: var(--sn-text);
+    --sn-paginator-rows-trigger-border: 1px solid var(--sn-border);
+    --sn-paginator-rows-trigger-hover-border: 1px solid var(--sn-border-focus);
+    --sn-paginator-rows-trigger-font-size: var(--sn-text-sm);
+    --sn-paginator-rows-trigger-font-weight: var(--sn-font-weight-semibold);
+    --sn-paginator-rows-trigger-gap: 2px;
+    --sn-paginator-rows-trigger-icon-color: var(--sn-text-subtle);
+
+    /* Panel tokens */
+    --sn-paginator-panel-bg: var(--sn-surface-panel);
+    --sn-paginator-panel-border: none;
+    --sn-paginator-panel-radius: var(--sn-radius-md);
+    --sn-paginator-panel-shadow: var(--sn-glass-shadow, var(--sn-shadow-overlay));
+    --sn-paginator-panel-backdrop-filter: var(--sn-backdrop-filter, none);
+
+    --sn-paginator-jump-panel-max-height: 240px;
+    --sn-paginator-jump-panel-width: 200px;
+    --sn-paginator-jump-page-min-width: 36px;
+    --sn-paginator-jump-page-height: 32px;
+    --sn-paginator-jump-page-radius: var(--sn-radius-sm);
+    --sn-paginator-jump-page-font-size: var(--sn-text-sm);
+    --sn-paginator-jump-page-hover-bg: var(--sn-surface-hover);
+
+    --sn-paginator-rows-panel-min-width: 80px;
+    --sn-paginator-rows-option-height: var(--sn-list-item-height);
+    --sn-paginator-rows-option-padding: 0 12px;
+    --sn-paginator-rows-option-font-size: var(--sn-text-sm);
+    --sn-paginator-rows-option-hover-bg: var(--sn-surface-hover);
+    --sn-paginator-rows-option-selected-bg: var(--sn-selected-bg);
+    --sn-paginator-rows-option-selected-color: var(--sn-selected-text);
+
+    display: block;
+  }
+
+  .sn-paginator-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-paginator-gap);
+    flex-wrap: wrap;
+    font-family: var(--sn-paginator-font-family);
+  }
+
+  .sn-paginator-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-paginator-gap);
+  }
+
+  .sn-paginator-controls > .sn-icon-button:not(:disabled) {
+    color: var(--sn-paginator-nav-color);
+  }
+
+  .sn-paginator-controls > .sn-icon-button > .sn-icon {
+    font-size: var(--sn-paginator-nav-icon-size);
+  }
+
+  .sn-paginator-pages {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-paginator-gap);
+  }
+
+  .sn-paginator-page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--sn-paginator-page-min-width);
+    height: var(--sn-paginator-page-height);
+    padding: var(--sn-paginator-page-padding);
+    border: none;
+    cursor: pointer;
+    border-radius: var(--sn-paginator-page-radius);
+    background: var(--sn-paginator-page-bg);
+    color: var(--sn-paginator-page-color);
+    font-size: var(--sn-paginator-page-font-size);
+    font-weight: var(--sn-font-weight-regular);
+    font-family: var(--sn-paginator-font-family);
+    transition: var(--sn-paginator-page-transition);
+    line-height: 1;
+  }
+
+  .sn-paginator-page:hover:not(.sn-paginator-page--current) {
+    background: var(--sn-paginator-page-hover-bg);
+  }
+
+  .sn-paginator-page:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-paginator-page--current {
+    background: var(--sn-paginator-current-bg);
+    color: var(--sn-paginator-current-color);
+    font-weight: var(--sn-paginator-current-font-weight);
+    cursor: default;
+  }
+
+  .sn-paginator-ellipsis {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--sn-paginator-page-height);
+    padding: 0 4px;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--sn-paginator-ellipsis-radius);
+    background: transparent;
+    font-size: var(--sn-paginator-ellipsis-font-size);
+    color: var(--sn-paginator-ellipsis-color);
+    font-family: var(--sn-paginator-font-family);
+    user-select: none;
+    transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+  }
+
+  .sn-paginator-ellipsis:hover {
+    background: var(--sn-paginator-ellipsis-hover-bg);
+    color: var(--sn-paginator-page-color);
+  }
+
+  .sn-paginator-ellipsis:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-paginator-report {
+    font-size: var(--sn-paginator-report-font-size);
+    color: var(--sn-paginator-report-color);
+    white-space: nowrap;
+    margin-inline-start: auto;
+  }
+
+  /* reportPosition="start": flex order pulls the report ahead of the controls,
+     and its auto margin now pushes everything after it to the trailing edge. The
+     rows-select trails last: report, controls, rows-select. */
+  .sn-paginator--report-start .sn-paginator-report {
+    order: -1;
+    margin-inline-start: 0;
+    margin-inline-end: auto;
+  }
+
+  .sn-paginator--report-start .sn-paginator-rows-select {
+    order: 1;
+  }
+
+  /* Packed layouts drop the report's auto margin so the parts sit together. */
+  .sn-paginator--packed .sn-paginator-report {
+    margin-inline: 0;
+  }
+
+  .sn-paginator[data-sn-justify='start'] .sn-paginator-nav {
+    justify-content: flex-start;
+  }
+
+  .sn-paginator[data-sn-justify='center'] .sn-paginator-nav {
+    justify-content: center;
+  }
+
+  .sn-paginator[data-sn-justify='end'] .sn-paginator-nav {
+    justify-content: flex-end;
+  }
+
+  .sn-paginator-rows-select {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sn-paginator-rows-label {
+    font-size: var(--sn-paginator-report-font-size);
+    color: var(--sn-paginator-report-color);
+    white-space: nowrap;
+  }
+
+  .sn-paginator-rows-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-paginator-rows-trigger-gap);
+    height: var(--sn-paginator-rows-trigger-height);
+    padding: var(--sn-paginator-rows-trigger-padding);
+    border: var(--sn-paginator-rows-trigger-border);
+    border-radius: var(--sn-paginator-rows-trigger-radius);
+    background: var(--sn-paginator-rows-trigger-bg);
+    color: var(--sn-paginator-rows-trigger-color);
+    font-size: var(--sn-paginator-rows-trigger-font-size);
+    font-family: var(--sn-paginator-font-family);
+    cursor: pointer;
+    transition: border-color var(--sn-motion-base);
+    user-select: none;
+  }
+
+  .sn-paginator-rows-trigger:hover {
+    border: var(--sn-paginator-rows-trigger-hover-border);
+  }
+
+  .sn-paginator-rows-trigger:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+    border-color: var(--sn-border-focus);
+  }
+
+  .sn-paginator-rows-trigger > .sn-icon {
+    color: var(--sn-paginator-rows-trigger-icon-color);
+  }
+
+  .sn-paginator-rows-value {
+    font-size: var(--sn-paginator-rows-trigger-font-size);
+    font-weight: var(--sn-paginator-rows-trigger-font-weight);
+    min-width: 1.5ch;
+    text-align: center;
+  }
+
+  .sn-paginator-jump-panel,
+  .sn-paginator-rows-panel {
+    transform-origin: top center;
+    animation: sn-paginator-panel-in var(--sn-motion-base, 150ms ease);
+  }
+
+  .sn-paginator-panel-closing {
+    animation: sn-paginator-panel-out var(--sn-paginator-panel-exit-duration, 0.12s) ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes sn-paginator-panel-in { from { opacity: 0; transform: translateY(-4px); } }
+  @keyframes sn-paginator-panel-out { to { opacity: 0; transform: translateY(-4px); } }
+
+  .sn-paginator-jump-panel {
+    box-sizing: border-box;
+    width: var(--sn-paginator-jump-panel-width);
+    max-height: var(--sn-paginator-jump-panel-max-height);
+    overflow-y: auto;
+    padding: 6px;
+    background: var(--sn-paginator-panel-bg);
+    backdrop-filter: var(--sn-paginator-panel-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-paginator-panel-backdrop-filter);
+    border: var(--sn-paginator-panel-border);
+    border-radius: var(--sn-paginator-panel-radius);
+    box-shadow: var(--sn-paginator-panel-shadow);
+  }
+
+  .sn-paginator-jump-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .sn-paginator-jump-page {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--sn-paginator-jump-page-min-width);
+    height: var(--sn-paginator-jump-page-height);
+    padding: 0 4px;
+    border: none;
+    border-radius: var(--sn-paginator-jump-page-radius);
+    background: transparent;
+    color: var(--sn-paginator-page-color);
+    font-size: var(--sn-paginator-jump-page-font-size);
+    font-family: var(--sn-paginator-font-family);
+    cursor: pointer;
+    transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+  }
+
+  .sn-paginator-jump-page:hover:not(.sn-paginator-jump-page--current) {
+    background: var(--sn-paginator-jump-page-hover-bg);
+  }
+
+  .sn-paginator-jump-page--current {
+    background: var(--sn-paginator-current-bg);
+    color: var(--sn-paginator-current-color);
+    font-weight: var(--sn-paginator-current-font-weight);
+    cursor: default;
+  }
+
+  .sn-paginator-jump-page:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-paginator-rows-panel {
+    box-sizing: border-box;
+    min-width: var(--sn-paginator-rows-panel-min-width);
+    padding: 4px 0;
+    background: var(--sn-paginator-panel-bg);
+    backdrop-filter: var(--sn-paginator-panel-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-paginator-panel-backdrop-filter);
+    border: var(--sn-paginator-panel-border);
+    border-radius: var(--sn-paginator-panel-radius);
+    box-shadow: var(--sn-paginator-panel-shadow);
+  }
+
+  .sn-paginator-rows-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--sn-paginator-rows-option-height);
+    padding: var(--sn-paginator-rows-option-padding);
+    border: none;
+    background: transparent;
+    color: var(--sn-paginator-page-color);
+    font-size: var(--sn-paginator-rows-option-font-size);
+    font-family: var(--sn-paginator-font-family);
+    cursor: pointer;
+    transition: background-color var(--sn-motion-base), color var(--sn-motion-base);
+    text-align: start;
+  }
+
+  .sn-paginator-rows-option:hover:not(.sn-paginator-rows-option--selected) {
+    background: var(--sn-paginator-rows-option-hover-bg);
+  }
+
+  .sn-paginator-rows-option--selected {
+    background: var(--sn-paginator-rows-option-selected-bg);
+    color: var(--sn-paginator-rows-option-selected-color);
+    font-weight: var(--sn-paginator-current-font-weight);
+    cursor: default;
+  }
+
+  .sn-paginator-rows-option:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-paginator-overlay-backdrop {
+    background: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-paginator-page,
+    .sn-paginator-ellipsis,
+    .sn-paginator-rows-trigger,
+    .sn-paginator-jump-page,
+    .sn-paginator-rows-option {
+      transition: none;
+    }
+
+    .sn-paginator-jump-panel,
+    .sn-paginator-rows-panel,
+    .sn-paginator-panel-closing {
+      animation: none;
+    }
+  }
+}

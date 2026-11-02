@@ -1,0 +1,210 @@
+@layer components {
+  .sn-stepper {
+    --sn-stepper-marker-size: 28px;
+    --sn-stepper-marker-border-width: 2px;
+    --sn-stepper-marker-font-size: var(--sn-text-xs);
+    --sn-stepper-marker-font-weight: var(--sn-font-weight-semibold);
+    --sn-stepper-marker-font-family: var(--sn-font-ui);
+    --sn-stepper-marker-icon-size: 15px;
+    --sn-stepper-marker-gap: 6px;
+    --sn-stepper-connector-thickness: 2px;
+    --sn-stepper-connector-color: var(--sn-border-strong);
+    --sn-stepper-connector-active-color: var(--sn-color-primary);
+    --sn-stepper-connector-transition: background-color var(--sn-motion-slow);
+    --sn-stepper-label-font-size: var(--sn-text-xs);
+    --sn-stepper-label-font-family: var(--sn-font-ui);
+    --sn-stepper-label-color: var(--sn-text-subtle);
+    --sn-stepper-label-active-color: var(--sn-text);
+    --sn-stepper-label-active-font-weight: var(--sn-font-weight-semibold);
+    --sn-stepper-marker-bg: transparent;
+    --sn-stepper-marker-border-color: var(--sn-border-strong);
+    --sn-stepper-marker-color: var(--sn-text-subtle);
+    --sn-stepper-marker-active-bg: var(--sn-color-primary-solid);
+    --sn-stepper-marker-active-border-color: var(--sn-color-primary-solid);
+    --sn-stepper-marker-active-color: var(--sn-text-on-primary);
+    --sn-stepper-marker-completed-bg: var(--sn-color-primary-solid);
+    --sn-stepper-marker-completed-border-color: var(--sn-color-primary-solid);
+    --sn-stepper-marker-completed-color: var(--sn-text-on-primary);
+    --sn-stepper-marker-transition: background-color var(--sn-motion-slow), border-color var(--sn-motion-slow);
+    --sn-stepper-header-padding: 0 10px;
+    --sn-stepper-panel-padding: 12px 0 12px 10px;
+    --sn-stepper-panel-font-size: var(--sn-text-sm);
+    --sn-stepper-panel-color: var(--sn-text-muted);
+
+    display: block;
+  }
+
+  .sn-stepper-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .sn-stepper--vertical .sn-stepper-list {
+    flex-direction: column;
+  }
+
+  .sn-stepper-item {
+    display: contents;
+  }
+
+  .sn-stepper--vertical .sn-stepper-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  /* Reserve room for the rail between steps (also when the step has no
+     expanded content). */
+  .sn-stepper--vertical .sn-stepper-item:not(:last-child) {
+    padding-bottom: 28px;
+  }
+
+  .sn-step-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sn-stepper-marker-gap);
+    background: transparent;
+    border: none;
+    padding: var(--sn-stepper-header-padding);
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Non-clickable upcoming steps keep full opacity (aesc design) - only
+     explicitly disabled steps are dimmed. */
+  .sn-step-header:disabled {
+    cursor: default;
+  }
+
+  .sn-step-header--disabled:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .sn-step-header:not(:disabled):focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+    border-radius: var(--sn-radius-sm);
+  }
+
+  .sn-stepper--vertical .sn-step-header {
+    flex-direction: row;
+  }
+
+  .sn-step-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-stepper-marker-size);
+    height: var(--sn-stepper-marker-size);
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: var(--sn-stepper-marker-border-width) solid var(--sn-stepper-marker-border-color);
+    background: var(--sn-stepper-marker-bg);
+    color: var(--sn-stepper-marker-color);
+    flex-shrink: 0;
+  }
+
+  .sn-step-header--active .sn-step-marker {
+    background: var(--sn-stepper-marker-active-bg);
+    border-color: var(--sn-stepper-marker-active-border-color);
+    color: var(--sn-stepper-marker-active-color);
+  }
+
+  .sn-step-header--completed .sn-step-marker {
+    background: var(--sn-stepper-marker-completed-bg);
+    border-color: var(--sn-stepper-marker-completed-border-color);
+    color: var(--sn-stepper-marker-completed-color);
+  }
+
+  .sn-step-marker-icon {
+    font-size: var(--sn-stepper-marker-icon-size);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .sn-step-number {
+    font-size: var(--sn-stepper-marker-font-size);
+    font-weight: var(--sn-stepper-marker-font-weight);
+    font-family: var(--sn-stepper-marker-font-family);
+    line-height: 1;
+  }
+
+  .sn-step-label {
+    font-size: var(--sn-stepper-label-font-size);
+    font-family: var(--sn-stepper-label-font-family);
+    font-weight: 400;
+    color: var(--sn-stepper-label-color);
+  }
+
+  .sn-step-header--active .sn-step-label {
+    font-weight: var(--sn-stepper-label-active-font-weight);
+    color: var(--sn-stepper-label-active-color);
+  }
+
+  .sn-step-connector {
+    flex: 1;
+    min-width: 1rem;
+    height: var(--sn-stepper-connector-thickness);
+    margin-top: calc((var(--sn-stepper-marker-size) - var(--sn-stepper-connector-thickness)) / 2);
+    border-radius: var(--sn-radius-pill);
+    background: var(--sn-stepper-connector-color);
+    display: block;
+  }
+
+  .sn-step-connector--completed {
+    background: var(--sn-stepper-connector-active-color);
+  }
+
+  /* Vertical rail - spans the full item (past any expanded content) so the
+     line runs continuously from marker to marker. */
+  .sn-stepper--vertical .sn-step-connector {
+    position: absolute;
+    flex: none;
+    inset-inline-start: calc(var(--sn-stepper-marker-size) / 2 - var(--sn-stepper-connector-thickness) / 2 + 10px);
+    top: calc(var(--sn-stepper-marker-size) + 4px);
+    bottom: 4px;
+    width: var(--sn-stepper-connector-thickness);
+    /* Reset the horizontal connector's min-width so the vertical rail stays a
+       thin line instead of a thick pill. */
+    min-width: 0;
+    height: auto;
+    margin: 0;
+    border-radius: var(--sn-radius-pill);
+  }
+
+  .sn-step-panel {
+    padding: var(--sn-stepper-panel-padding);
+    font-size: var(--sn-stepper-panel-font-size);
+    color: var(--sn-stepper-panel-color);
+  }
+
+  .sn-stepper--vertical .sn-step-panel {
+    margin-inline-start: calc(var(--sn-stepper-marker-size) + 10px + var(--sn-stepper-marker-border-width) * 2);
+  }
+
+  /* Gate state-driven transitions until after first render so a preselected
+     active step marker/connector snaps into place instead of animating. */
+  .sn-stepper.sn-stepper-animate .sn-step-marker {
+    transition: var(--sn-stepper-marker-transition);
+  }
+  .sn-stepper.sn-stepper-animate .sn-step-connector {
+    transition: var(--sn-stepper-connector-transition);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-stepper.sn-stepper-animate .sn-step-connector {
+      transition: none;
+    }
+
+    .sn-stepper.sn-stepper-animate .sn-step-marker {
+      transition: none;
+    }
+  }
+}

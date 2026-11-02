@@ -1,0 +1,7 @@
+a { color: var(--sn-color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.demo-splitter { height: 240px; }
+.demo-splitter-tall { height: 320px; }
+.demo-panel-content { padding: var(--sn-space-4); font-size: var(--sn-text-sm); color: var(--sn-text-muted); }
+.demo-panel-content--sidebar { background: var(--sn-surface-canvas); height: 100%; box-sizing: border-box; }
+.demo-readout { margin-top: var(--sn-space-3); font-size: var(--sn-text-xs); color: var(--sn-text-subtle); }

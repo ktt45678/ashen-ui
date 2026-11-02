@@ -1,0 +1,77 @@
+<header class="page-header">
+  <h1>Badge</h1>
+  <p class="page-subtitle">
+    Small count or status indicator - standalone pill, dot, or overlaid on a child element's
+    top-right corner.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Standalone pill - color variants" snippet="badge/codeStandalone">
+    <sn-badge value="3" />
+    <sn-badge value="12" color="error" />
+    <sn-badge value="new" color="success" />
+    <sn-badge value="99+" color="warning" />
+    <sn-badge value="1" color="info" />
+    <sn-badge value="5" color="secondary" />
+  </doc-example>
+
+  <doc-example heading="Dot mode - no value shown" snippet="badge/codeDot">
+    <sn-badge dot />
+    <sn-badge dot color="success" />
+    <sn-badge dot color="error" />
+    <sn-badge dot color="warning" />
+  </doc-example>
+
+  <doc-example heading="Overlay - pinned to child's top-right corner" snippet="badge/codeOverlay">
+    <sn-badge value="2" color="error" overlay>
+      <button snButton variant="icon" icon="notifications" aria-label="Notifications"></button>
+    </sn-badge>
+    <sn-badge dot color="success" overlay>
+      <button snButton variant="icon" icon="wifi" aria-label="Network"></button>
+    </sn-badge>
+    <sn-badge value="9+" color="warning" overlay>
+      <button snButton variant="icon" icon="mail" aria-label="Mail"></button>
+    </sn-badge>
+  </doc-example>
+
+  <doc-example
+    heading="Custom re-skin via CSS variables"
+    description="Set --sn-badge-bg on any ancestor or the element itself to override the color."
+    snippet="badge/codeCustom"
+  >
+    <sn-badge value="PRO" style="--sn-badge-bg: #6941c6; --sn-badge-text: #fff;" />
+    <sn-badge value="BETA" style="--sn-badge-bg: #0e7490; --sn-badge-text: #fff;" />
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="badge" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="badge" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Standalone badges carry <code>role="status"</code> so screen readers announce updates
+      without interrupting the user.
+    </li>
+    <li>
+      The <code>aria-label</code> attribute is set to the <code>value</code> string on
+      standalone badges, giving an accessible name without relying on visual text.
+    </li>
+    <li>
+      Overlay badges hide the inner pip with <code>aria-hidden="true"</code>; the badge
+      information should be communicated through the labelling on the wrapped element (e.g.
+      <code>aria-label="Notifications - 2 unread"</code> on the button).
+    </li>
+  </ul>
+</section>

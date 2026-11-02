@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  position: relative;
+  background: var(--doc-code-bg);
+  color: var(--doc-code-fg);
+}
+
+.code-block-pre {
+  margin: 0;
+  padding: var(--sn-space-4);
+  overflow-x: auto;
+  font-family: var(--sn-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.code-block-pre code {
+  background: none;
+  padding: 0;
+  font: inherit;
+  white-space: pre;
+}
+
+.code-block-copy {
+  position: absolute;
+  inset-block-start: var(--sn-space-2);
+  inset-inline-end: var(--sn-space-2);
+  z-index: 1;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--doc-code-border);
+  border-radius: var(--sn-radius-sm);
+  background: var(--doc-code-chip);
+  color: var(--doc-code-muted);
+  font: inherit;
+  font-size: var(--sn-text-xs);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--sn-motion-base), color var(--sn-motion-base);
+}
+
+:host(:hover) .code-block-copy,
+.code-block-copy:focus-visible,
+.code-block-copy--done {
+  opacity: 1;
+}
+
+.code-block-copy:hover {
+  color: var(--doc-code-fg);
+}
+
+.code-block-copy--done {
+  color: var(--doc-code-added);
+}
+
+.tok-comment {
+  color: var(--doc-code-comment);
+  font-style: italic;
+}
+.tok-string {
+  color: var(--doc-code-string);
+}
+.tok-keyword {
+  color: var(--doc-code-keyword);
+}
+.tok-literal,
+.tok-number {
+  color: var(--doc-code-number);
+}
+.tok-type {
+  color: var(--doc-code-type);
+}
+.tok-tag {
+  color: var(--doc-code-keyword);
+}
+.tok-attr,
+.tok-property {
+  color: var(--doc-code-attr);
+}
+.tok-binding {
+  color: var(--doc-code-binding);
+}
+.tok-punct {
+  color: var(--doc-code-punct);
+}

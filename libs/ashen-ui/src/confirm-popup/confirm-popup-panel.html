@@ -1,0 +1,38 @@
+<div
+  snPart="panel"
+  [id]="panelId()"
+  role="alertdialog"
+  class="sn-confirm-popup-panel"
+  [attr.aria-describedby]="messageId()"
+  [style.animation]="panelAnimation()"
+>
+  <div class="sn-confirm-popup-body">
+    <sn-icon
+      snPart="icon"
+      class="sn-confirm-popup-icon"
+      [class.sn-confirm-popup-icon--primary]="severity() === 'primary'"
+      [class.sn-confirm-popup-icon--error]="severity() === 'error'"
+      [class.sn-confirm-popup-icon--warning]="severity() === 'warning'"
+      [class.sn-confirm-popup-icon--success]="severity() === 'success'"
+    >{{ icon() }}</sn-icon>
+    <span snPart="message" [id]="messageId()" class="sn-confirm-popup-message">{{ message() }}</span>
+  </div>
+  <div snPart="footer" class="sn-confirm-popup-footer">
+    <button
+      #rejectBtn
+      snButton
+      variant="text"
+      color="secondary"
+      size="sm"
+      type="button"
+      (click)="onReject()"
+    >{{ effectiveRejectLabel() }}</button>
+    <button
+      snButton
+      [color]="acceptColor()"
+      size="sm"
+      type="button"
+      (click)="onAccept()"
+    >{{ effectiveAcceptLabel() }}</button>
+  </div>
+</div>

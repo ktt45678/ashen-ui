@@ -1,0 +1,396 @@
+@layer components {
+  .sn-form-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .sn-form-field-control {
+    --sn-form-field-wrapper-gap: var(--sn-form-field-gap);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sn-form-field-wrapper-gap);
+    width: 100%;
+  }
+
+  .sn-form-field-label {
+    --sn-form-field-label-size: var(--sn-form-field-label-font-size);
+    --sn-form-field-label-weight: var(--sn-form-field-label-font-weight);
+    --sn-form-field-label-color: var(--sn-text);
+
+    font-size: var(--sn-form-field-label-size);
+    font-weight: var(--sn-form-field-label-weight);
+    color: var(--sn-form-field-label-color);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .sn-form-field-required-indicator {
+    --sn-form-field-required-color: var(--sn-color-invalid);
+
+    color: var(--sn-form-field-required-color);
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  /* The row wrapping the projected control. Present in every field so the
+     structure never changes; it only becomes a positioning context, which is
+     inert until an affix is actually projected. */
+  .sn-form-field-flex {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .sn-form-field-flex > :not(.sn-form-field-affix) {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Absolutely positioned rather than laid out in the row: the control keeps
+     its own border and background, so this composes with both the plain field
+     and the notched-outline floating variant without either drawing twice. */
+  .sn-form-field-affix {
+    --sn-form-field-affix-color: var(--sn-text-muted);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    /* Above the outline, which sits at 1. See the note there. */
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: var(--sn-form-field-affix-gap);
+    /* Zero until something is actually projected, so an unused slot is a
+       genuinely empty box rather than 24px of invisible padding. */
+    padding-inline: 0;
+    color: var(--sn-form-field-affix-color);
+    font-size: var(--sn-input-font-size-md);
+    /* A decorative icon must not eat the click that should focus the input.
+       Interactive content opts back in below. */
+    pointer-events: none;
+  }
+
+  .sn-form-field-affix :is(button, a, input, select, textarea, [tabindex]) {
+    pointer-events: auto;
+  }
+
+  .sn-form-field-affix--prefix {
+    inset-inline-start: 0;
+  }
+
+  .sn-form-field-affix--suffix {
+    inset-inline-end: 0;
+  }
+
+  .sn-form-field-has-prefix .sn-form-field-affix--prefix,
+  .sn-form-field-has-suffix .sn-form-field-affix--suffix {
+    padding-inline: var(--sn-form-field-affix-padding, var(--sn-input-spacing-md));
+  }
+
+  /* A lone icon button brings its own round hit area, so it sits close to the
+     edge instead of taking a full input inset. */
+  .sn-form-field-affix:has(> :is(.sn-icon-button, .sn-button-icon-only):only-child) {
+    padding-inline: var(--sn-form-field-affix-button-padding, 0.25rem);
+  }
+
+  /* Room made for each affix, as `max(minimum, measured)`.
+
+     The measured half is why there is no snTextPrefix directive here: the
+     slot's real width is known, so an icon, a currency code and a button each
+     get exactly the room they need.
+
+     The minimum half keeps `--sn-form-field-affix-width` meaningful: it is the
+     gutter a field reserves regardless of content, so a column of fields with
+     different affixes still lines up. Raise it for a wider uniform gutter;
+     content wider than it still gets the room it needs. */
+  .sn-form-field-has-prefix {
+    --sn-form-field-prefix-gutter: max(
+      var(--sn-form-field-affix-width),
+      var(--sn-form-field-prefix-width, 0px)
+    );
+  }
+
+  .sn-form-field-has-suffix {
+    --sn-form-field-suffix-gutter: max(
+      var(--sn-form-field-affix-width),
+      var(--sn-form-field-suffix-width, 0px)
+    );
+  }
+
+  .sn-form-field-has-prefix .sn-form-field-flex > :not(.sn-form-field-affix) {
+    padding-inline-start: var(--sn-form-field-prefix-gutter);
+  }
+
+  .sn-form-field-has-suffix .sn-form-field-flex > :not(.sn-form-field-affix) {
+    padding-inline-end: var(--sn-form-field-suffix-gutter);
+  }
+
+  .sn-form-field-invalid .sn-form-field-affix {
+    --sn-form-field-affix-color: var(--sn-color-invalid);
+  }
+
+  /* The resting label clears the prefix; once floated it belongs in the outline
+     notch at the field's edge, so the shift returns to zero.
+
+     A `transform` offset rather than an `inset-inline-start` override, on
+     purpose. The label transitions `top`, `transform` and `color`, so a
+     positional property changed on the same state flip is not in that list, so
+     it SNAPPED: the label jumped left under the prefix icon and sat there for
+     the whole float animation. Riding the transform moves both axes together,
+     on the transition that already exists.
+
+     `translateX` is physical, so the shift is multiplied by `--sn-dir` where
+     it is used, which keeps it pointing away from the prefix in RTL. */
+  .sn-form-field-has-prefix.sn-form-field-floating .sn-form-field-label {
+    --sn-form-field-label-shift: calc(
+      var(--sn-form-field-prefix-gutter) - var(--sn-input-spacing-md)
+    );
+  }
+
+  .sn-form-field-subscript {
+    display: flex;
+    flex-direction: column;
+    /* Inset so hint and error text align with the field's content edge. */
+    padding-inline: var(--sn-form-field-subscript-padding-x);
+  }
+
+  .sn-form-field-hint {
+    --sn-form-field-hint-size: var(--sn-form-field-hint-font-size);
+    --sn-form-field-hint-color: var(--sn-text-subtle);
+
+    font-size: var(--sn-form-field-hint-size);
+    font-weight: var(--sn-form-field-hint-font-weight);
+    line-height: var(--sn-form-field-subscript-line-height);
+    color: var(--sn-form-field-hint-color);
+    margin-top: var(--sn-form-field-subscript-gap);
+  }
+
+  .sn-form-field-error {
+    --sn-form-field-error-size: var(--sn-form-field-error-font-size);
+    --sn-form-field-error-color: var(--sn-color-invalid);
+
+    font-size: var(--sn-form-field-error-size);
+    font-weight: var(--sn-form-field-error-font-weight);
+    line-height: var(--sn-form-field-subscript-line-height);
+    color: var(--sn-form-field-error-color);
+    margin-top: var(--sn-form-field-subscript-gap);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  /* Slide and fade in on show. Applied only to errors
+     that appear after the field's first render, so an initially-invalid field
+     doesn't animate its error on page load. */
+  .sn-form-field-error--animate {
+    animation: sn-form-field-error-in 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+  }
+
+  /* autoDisplayErrors: errors are conditionally rendered, so they animate in
+     naturally whenever the control enters its error state. */
+  .sn-form-field-auto-errors .sn-form-field-error {
+    animation: sn-form-field-error-in 300ms cubic-bezier(0.55, 0, 0.55, 0.2);
+  }
+
+  @keyframes sn-form-field-error-in {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+  }
+
+  /* subscriptSizing: 'fixed' - reserve one line so the layout never jumps
+     when a hint or error appears. 'dynamic' collapses when empty. */
+  .sn-form-field-subscript-reserve .sn-form-field-subscript {
+    min-height: calc(var(--sn-form-field-hint-font-size) * var(--sn-form-field-subscript-line-height) + var(--sn-form-field-subscript-gap));
+  }
+
+  .sn-form-field-floating .sn-form-field-control {
+    position: relative;
+  }
+
+  /* Border hidden; the outline overlay draws the frame so a gap can be cut
+     around the floated label. Ring off here: it would cross the label gap; the
+     outline thickens on focus instead (below). */
+  .sn-form-field-floating .sn-input-text,
+  .sn-form-field-floating .sn-input-text:focus {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .sn-form-field-outline {
+    --sn-form-field-outline-color: var(--sn-border);
+
+    position: absolute;
+    inset: 0;
+    /* REQUIRED, not cosmetic. `.sn-form-field-flex` is a positioned element
+       later in the DOM, so with `z-index: auto` on both it (and the control's
+       opaque background inside it) would paint over these border segments and
+       the field would lose its outline entirely. */
+    z-index: 1;
+    display: flex;
+    pointer-events: none;
+    color: var(--sn-form-field-outline-color);
+    transition: color var(--sn-motion-slow);
+  }
+
+  /* The focus thickening rides inset shadows, not border-width: a border can
+     only paint in whole device pixels, so growing it snaps mid-transition.
+     One band per side the segment draws, so the notch-facing edges stay open. */
+  .sn-form-field-outline-start,
+  .sn-form-field-outline-notch,
+  .sn-form-field-outline-end {
+    --sn-form-field-outline-grow: 0px;
+
+    box-sizing: border-box;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transition:
+      width var(--sn-motion-slow),
+      border-color var(--sn-motion-slow),
+      box-shadow var(--sn-input-focus-shadow-transition);
+  }
+
+  .sn-form-field-outline-start {
+    width: calc(var(--sn-input-spacing-md) - 0.25rem);
+    border-inline-start: 1px solid currentColor;
+    border-start-start-radius: var(--sn-input-border-radius);
+    border-end-start-radius: var(--sn-input-border-radius);
+    box-shadow:
+      inset 0 var(--sn-form-field-outline-grow) 0 0 currentColor,
+      inset 0 calc(-1 * var(--sn-form-field-outline-grow)) 0 0 currentColor,
+      inset calc(var(--sn-form-field-outline-grow) * var(--sn-dir, 1)) 0 0 0 currentColor;
+  }
+
+  .sn-form-field-outline-notch {
+    box-sizing: border-box;
+    width: 0;
+    max-width: calc(100% - 2 * var(--sn-input-spacing-md));
+    /* Bottom band only: focus always floats the label, so the top edge here is
+       the open notch. */
+    box-shadow: inset 0 calc(-1 * var(--sn-form-field-outline-grow)) 0 0 currentColor;
+  }
+
+  .sn-form-field-outline-end {
+    flex: 1;
+    border-inline-end: 1px solid currentColor;
+    border-start-end-radius: var(--sn-input-border-radius);
+    border-end-end-radius: var(--sn-input-border-radius);
+    box-shadow:
+      inset 0 var(--sn-form-field-outline-grow) 0 0 currentColor,
+      inset 0 calc(-1 * var(--sn-form-field-outline-grow)) 0 0 currentColor,
+      inset calc(-1 * var(--sn-form-field-outline-grow) * var(--sn-dir, 1)) 0 0 0 currentColor;
+  }
+
+  /* Floated: open the gap by dropping the notch segment's top border. */
+  .sn-form-field-floating.sn-form-field-should-float .sn-form-field-outline-notch {
+    border-top-color: transparent;
+  }
+
+  .sn-form-field-floating.sn-form-field-focused .sn-form-field-outline {
+    --sn-form-field-outline-color: var(--sn-border-focus);
+  }
+
+  .sn-form-field-floating.sn-form-field-focused .sn-form-field-outline-start,
+  .sn-form-field-floating.sn-form-field-focused .sn-form-field-outline-notch,
+  .sn-form-field-floating.sn-form-field-focused .sn-form-field-outline-end {
+    --sn-form-field-outline-grow: var(--sn-input-focus-shadow-painted);
+  }
+
+  .sn-form-field-floating.sn-form-field-invalid .sn-form-field-outline {
+    --sn-form-field-outline-color: var(--sn-color-invalid);
+  }
+
+  /* Resting: label sits vertically centered over the control like a placeholder. */
+  .sn-form-field-floating .sn-form-field-label {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: calc(1px + var(--sn-input-spacing-md) - 0.25rem);
+    z-index: 1;
+    margin: 0;
+    padding: 0 0.25rem;
+    max-width: calc(100% - 2 * var(--sn-input-spacing-md));
+    white-space: nowrap;
+    font-size: var(--sn-form-field-floating-label-font-size);
+    font-weight: 400;
+    color: var(--sn-form-field-label-color);
+    pointer-events: none;
+    /* Same function list as the floated state below, so the two interpolate
+       pairwise rather than falling back to matrix interpolation. The shift is
+       zero unless a prefix sets it. */
+    transform: translateY(-50%)
+      translateX(calc(var(--sn-form-field-label-shift, 0px) * var(--sn-dir, 1))) scale(1);
+    /* The label shrinks towards the edge it is anchored to. `transform-origin`
+       has no logical keyword, so RTL needs the physical opposite. */
+    transform-origin: left center;
+    transition:
+      top var(--sn-motion-slow),
+      transform var(--sn-motion-slow),
+      color var(--sn-motion-slow);
+  }
+
+  [dir='rtl'] .sn-form-field-floating .sn-form-field-label {
+    transform-origin: right center;
+  }
+
+  /* While resting, hide the native placeholder so it doesn't sit under the label. */
+  .sn-form-field-floating:not(.sn-form-field-should-float) .sn-input-text::placeholder {
+    color: transparent;
+  }
+
+  /* Resting, the label reads as the placeholder it stands in for. */
+  .sn-form-field-floating .sn-form-field-label {
+    --sn-form-field-label-color: var(--sn-input-placeholder);
+  }
+
+  /* Floated: raise the label into the border gap and shrink it. No background -
+     the container shows through the notch. */
+  .sn-form-field-floating.sn-form-field-should-float .sn-form-field-label {
+    --sn-form-field-label-color: var(--sn-text-subtle);
+
+    top: 0;
+    transform: translateY(-50%) translateX(0) scale(0.75);
+  }
+
+  /* State colors, in whichever position the label is in: an invalid field reads
+     as invalid before it is ever touched. Matched on the label rather than the
+     wrapper because the position defaults above have to be, and weighted to
+     three classes each so the later rule wins - invalid over focus. */
+  .sn-form-field-floating.sn-form-field-focused .sn-form-field-label {
+    --sn-form-field-label-color: var(--sn-border-focus);
+  }
+
+  .sn-form-field-wrapper.sn-form-field-invalid .sn-form-field-label {
+    --sn-form-field-label-color: var(--sn-color-invalid);
+  }
+
+  /* Boot guard: the floating class and the label's resting position land in the
+     same zoneless CD cycle after first paint, so without this the label's
+     transform transition runs on load and it slides in from below. Paired with
+     the data-sn-boot host binding, which is present until the first render. */
+  .sn-form-field-wrapper[data-sn-boot] .sn-form-field-label,
+  .sn-form-field-wrapper[data-sn-boot] .sn-form-field-outline,
+  .sn-form-field-wrapper[data-sn-boot] .sn-form-field-outline-start,
+  .sn-form-field-wrapper[data-sn-boot] .sn-form-field-outline-notch,
+  .sn-form-field-wrapper[data-sn-boot] .sn-form-field-outline-end {
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-form-field-floating .sn-form-field-label,
+    .sn-form-field-outline,
+    .sn-form-field-outline-start,
+    .sn-form-field-outline-notch,
+    .sn-form-field-outline-end {
+      transition: none;
+    }
+    .sn-form-field-error--animate,
+    .sn-form-field-auto-errors .sn-form-field-error {
+      animation: none;
+    }
+  }
+}

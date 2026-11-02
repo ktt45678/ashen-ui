@@ -1,0 +1,131 @@
+<header class="page-header">
+  <h1>Multi Select</h1>
+  <p class="page-subtitle">
+    A multi-value dropdown that shows selected options as removable chips in the trigger and checkbox
+    rows in the panel. Implements the WAI-ARIA APG Combobox with multi-select listbox popup -
+    focus stays on the trigger while <code>aria-activedescendant</code> tracks the highlighted option.
+    Reuses <code>&lt;sn-list-option&gt;</code> children from <code>ashen-ui/listbox</code>.
+    Implements <code>ControlValueAccessor</code> for reactive forms and <code>ngModel</code>.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic multi-select with ngModel" snippet="multi-select/codeBasic">
+    <div class="demo-row">
+      <sn-multi-select [(value)]="basicValue" placeholder="Pick widgets…" class="demo-select">
+        @for (w of widgets; track w.value) {
+          <sn-list-option [value]="w.value">{{ w.label }}</sn-list-option>
+        }
+      </sn-multi-select>
+      <p class="hint-text">Value: {{ basicValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="maxChips collapse (+n more)"
+    description="With maxChips=2 and five options pre-selected, the overflow renders as '+3 more'."
+    snippet="multi-select/codeMaxChips"
+  >
+    <div class="demo-row">
+      <sn-multi-select [(value)]="manyValue" [maxChips]="2" class="demo-select">
+        @for (w of widgets; track w.value) {
+          <sn-list-option [value]="w.value">{{ w.label }}</sn-list-option>
+        }
+      </sn-multi-select>
+      <p class="hint-text">Value: {{ manyValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Reactive form with disabled option"
+    description="Bind to a FormControl. Individual options can be disabled."
+    snippet="multi-select/codeReactive"
+  >
+    <div class="demo-row">
+      <sn-multi-select [formControl]="formCtrl" class="demo-select">
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value" [disabled]="!!fw.disabled">{{ fw.label }}</sn-list-option>
+        }
+      </sn-multi-select>
+      <p class="hint-text">Value: {{ formCtrl.value | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Inside Form Field"
+    description="Compose with sn-form-field for label, hint, and focus styling."
+    snippet="multi-select/codeFormField"
+  >
+    <div class="demo-row">
+      <sn-form-field class="demo-select">
+        <sn-label>Frameworks</sn-label>
+        <sn-multi-select [(value)]="formFieldValue">
+          @for (fw of frameworks; track fw.value) {
+            <sn-list-option [value]="fw.value" [disabled]="!!fw.disabled">{{ fw.label }}</sn-list-option>
+          }
+        </sn-multi-select>
+        <sn-hint>Choose all that apply</sn-hint>
+      </sn-form-field>
+      <p class="hint-text">Value: {{ formFieldValue() | json }}</p>
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Disabled"
+    description="Set disabled=true. Selected chips are shown but not removable."
+    snippet="multi-select/codeDisabled"
+  >
+    <div class="demo-row">
+      <sn-multi-select [disabled]="true" [(value)]="disabledValue" class="demo-select">
+        @for (fw of frameworks; track fw.value) {
+          <sn-list-option [value]="fw.value">{{ fw.label }}</sn-list-option>
+        }
+      </sn-multi-select>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="multi-select" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Follows the WAI-ARIA APG <strong>Combobox with listbox popup</strong> pattern with multi-select.
+    </li>
+    <li>
+      The panel has <code>role="listbox"</code> and <code>aria-multiselectable="true"</code>.
+      Each option has <code>role="option"</code> and <code>aria-selected</code>.
+    </li>
+    <li>
+      Focus stays on the trigger while the panel is open. <code>aria-activedescendant</code>
+      tracks the highlighted option.
+    </li>
+    <li>
+      <strong>Enter / Space</strong> toggle the active option and <strong>keep the panel open</strong>
+      - unlike single Select where they close.
+    </li>
+    <li>
+      <strong>Escape</strong> closes the panel without changing the selection.
+      <strong>Tab</strong> closes and moves focus naturally.
+    </li>
+    <li>
+      Chip remove buttons include an accessible <code>aria-label</code> via <code>SnChipIntl.remove</code>.
+      Clicking a chip or its container does NOT open/close the panel (stopPropagation).
+    </li>
+    <li>
+      Implements <code>ControlValueAccessor</code> - disabled state propagates from
+      <code>FormControl.disable()</code>.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="multi-select" section="theming" />
+</section>

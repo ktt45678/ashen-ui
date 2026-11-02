@@ -1,0 +1,118 @@
+<header class="page-header">
+  <h1>Confirm Popup</h1>
+  <p class="page-subtitle">
+    A lightweight confirmation bubble anchored below its trigger. Lighter than ConfirmDialog
+    for quick inline destructive actions - no modal backdrop, contextual placement, and a
+    fixed icon + message + Accept/Reject layout. The <code>severity</code> drives both the
+    icon color and the accept button color.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Destructive action (error severity)" snippet="confirm-popup/codeBasic">
+    <div class="demo-row">
+      <sn-confirm-popup
+        message="Delete this tile?"
+        icon="delete"
+        severity="error"
+        acceptLabel="Delete"
+        (accept)="onAccept('Delete')"
+        (reject)="onReject('Delete')"
+      >
+        <button snButton variant="outlined" color="error" snConfirmPopupTrigger>Delete tile</button>
+      </sn-confirm-popup>
+      @if (lastAction()) {
+        <span class="demo-status">{{ lastAction() }}</span>
+      }
+    </div>
+  </doc-example>
+
+  <doc-example heading="Primary confirmation (default severity)" snippet="confirm-popup/codePrimary">
+    <div class="demo-row">
+      <sn-confirm-popup
+        message="Save changes to all connected devices?"
+        (accept)="onAccept('Save')"
+        (reject)="onReject('Save')"
+      >
+        <button snButton variant="outlined" snConfirmPopupTrigger>Save changes</button>
+      </sn-confirm-popup>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Warning severity" snippet="confirm-popup/codeWarning">
+    <div class="demo-row">
+      <sn-confirm-popup
+        message="This will revert your grid layout to the default. Custom tile positions will be lost."
+        severity="warning"
+        icon="warning"
+        acceptLabel="Reset"
+        (accept)="onAccept('Reset')"
+        (reject)="onReject('Reset')"
+      >
+        <button snButton color="warning" variant="outlined" snConfirmPopupTrigger>Reset layout</button>
+      </sn-confirm-popup>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom labels and success severity" snippet="confirm-popup/codeCustomLabels">
+    <div class="demo-row">
+      <sn-confirm-popup
+        message="Publishing makes this tile visible to all workspace members."
+        severity="success"
+        icon="publish"
+        acceptLabel="Publish now"
+        rejectLabel="Not yet"
+        (accept)="onAccept('Publish')"
+        (reject)="onReject('Publish')"
+      >
+        <button snButton variant="outlined" snConfirmPopupTrigger>Publish tile</button>
+      </sn-confirm-popup>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="confirm-popup" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="confirm-popup" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The popup panel carries <code>role="alertdialog"</code> and
+      <code>aria-describedby</code> pointing to the message element, satisfying
+      WAI-ARIA APG alertdialog semantics for confirmations.
+    </li>
+    <li>
+      <code>aria-modal</code> is <strong>not</strong> set - ConfirmPopup is non-modal;
+      page content behind the popup remains accessible.
+    </li>
+    <li>
+      The trigger element automatically receives <code>aria-haspopup="dialog"</code>,
+      <code>aria-expanded</code> (updated on toggle), and <code>aria-controls</code>
+      referencing the panel id.
+    </li>
+    <li>
+      Focus moves to the Reject (least-destructive) button when the popup opens, so
+      accidental keyboard confirmation is minimised. Focus is returned to the trigger
+      element when the popup closes.
+    </li>
+    <li>
+      <kbd>Escape</kbd> and outside-click dismiss the popup without emitting
+      <code>reject</code> - these are a neutral dismissal. Only the Reject button emits
+      the <code>reject</code> output.
+    </li>
+    <li>
+      Use a descriptive <code>acceptLabel</code> (e.g. <code>"Delete"</code> instead of
+      <code>"Yes"</code>) so screen reader users understand the consequence before confirming.
+    </li>
+  </ul>
+</section>

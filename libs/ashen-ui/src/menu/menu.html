@@ -1,0 +1,8 @@
+<ng-template #content>
+  <div snPart="panel" class="sn-menu-panel" role="menu"
+    [class]="panelClassExtra()"
+    [class.sn-menu-panel-closing]="_isClosing()"
+    [style.animation]="!_effAnimated() ? 'none' : (_isClosing() ? (_effAnimation()?.exit ?? null) : (_effAnimation()?.enter ?? null))">
+    <ng-content />
+  </div>
+</ng-template>

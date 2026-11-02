@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "AshenUiThemeSync",
+  "title": "Ashen UI theme sync",
+  "type": "object",
+  "properties": {
+    "file": {
+      "type": "string",
+      "description": "Path to the theme file, relative to the workspace root.",
+      "x-prompt": "Which theme file should be checked?",
+      "$default": { "$source": "argv", "index": 0 }
+    },
+    "apply": {
+      "type": "boolean",
+      "default": false,
+      "description": "Write the changes. Without it the schematic only reports what it would do."
+    },
+    "check": {
+      "type": "boolean",
+      "default": false,
+      "description": "Exit with an error if the theme is out of date. For CI."
+    }
+  },
+  "required": ["file"]
+}

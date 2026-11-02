@@ -1,0 +1,82 @@
+.page-header { margin-bottom: var(--sn-space-6); }
+.page-title {
+  margin: 0 0 var(--sn-space-3);
+  font-family: var(--sn-font-display);
+  font-size: var(--sn-text-2xl);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+  line-height: var(--sn-leading-tight);
+}
+.page-lead {
+  margin: 0;
+  font-size: var(--sn-text-md);
+  color: var(--sn-text-muted);
+  line-height: var(--sn-leading-normal);
+  max-width: 70ch;
+}
+.doc-section { margin-bottom: var(--sn-space-6); }
+.section-title {
+  margin: 0 0 var(--sn-space-3);
+  font-size: var(--sn-text-lg);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+  border-bottom: 1px solid var(--sn-border);
+  padding-bottom: var(--sn-space-2);
+}
+.doc-p {
+  margin: 0 0 var(--sn-space-3);
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text-muted);
+  line-height: var(--sn-leading-normal);
+  max-width: 80ch;
+}
+.doc-p strong { color: var(--sn-text); }
+.code-block {
+  margin: 0 0 var(--sn-space-3);
+  padding: var(--sn-space-3) var(--sn-space-4);
+  background: var(--sn-surface-elevated);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-tile);
+  overflow-x: auto;
+  font-family: var(--sn-font-mono);
+  font-size: var(--sn-text-xs);
+  color: var(--sn-text);
+  line-height: 1.6;
+}
+code {
+  font-family: var(--sn-font-mono);
+  font-size: 0.9em;
+  background: var(--sn-surface-elevated);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-sm);
+  padding: 0.1em 0.3em;
+}
+.code-block code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--sn-text-sm);
+  margin-bottom: var(--sn-space-3);
+  /* The token table has four columns of identifiers; let it scroll rather
+     than squeeze the code spans onto two lines each. */
+  display: block;
+  overflow-x: auto;
+}
+.token-table th, .token-table td {
+  padding: var(--sn-space-2) var(--sn-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--sn-border);
+  vertical-align: top;
+}
+.token-table th {
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+  background: var(--sn-surface-elevated);
+  white-space: nowrap;
+}
+.token-table td { color: var(--sn-text-muted); }

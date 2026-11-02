@@ -1,0 +1,15 @@
+<ng-content />
+
+@if (overflowCount() > 0) {
+  <span
+    class="sn-avatar sn-avatar-counter"
+    [class]="counterClassExtra()"
+    [class.sn-avatar-sm]="size() === 'sm'"
+    [class.sn-avatar-lg]="size() === 'lg'"
+    [class.sn-avatar-xl]="size() === 'xl'"
+    [class.sn-avatar--square]="shape() === 'square'"
+    role="img"
+    [attr.aria-label]="moreLabel()"
+    >+{{ overflowCount() }}</span
+  >
+}

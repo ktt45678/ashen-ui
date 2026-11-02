@@ -1,0 +1,89 @@
+@layer components {
+  /* Component-token tier - defaults to global input tokens */
+  :root {
+    --sn-input-group-border-radius: var(--sn-input-border-radius);
+    --sn-input-group-addon-bg: var(--sn-surface-hover);
+    --sn-input-group-addon-border: var(--sn-border);
+    --sn-input-group-addon-color: var(--sn-text-muted);
+    --sn-input-group-addon-font-size: var(--sn-input-font-size-md);
+    --sn-input-group-addon-gap: 6px;
+    --sn-input-group-addon-padding: 0 0.75rem;
+  }
+
+  .sn-input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  /* Remove radius from all children - outer radius applied to first/last only */
+  .sn-input-group > * {
+    border-radius: 0;
+  }
+
+  /* Collapse adjacent borders */
+  .sn-input-group > * + * {
+    margin-inline-start: -1px;
+  }
+
+  /* First child gets left radius */
+  .sn-input-group > :first-child {
+    border-radius: var(--sn-input-group-border-radius) 0 0 var(--sn-input-group-border-radius);
+  }
+
+  /* Last child gets right radius */
+  .sn-input-group > :last-child {
+    border-radius: 0 var(--sn-input-group-border-radius) var(--sn-input-group-border-radius) 0;
+  }
+
+  /* When first = last (only one child), restore full radius */
+  .sn-input-group > :first-child:last-child {
+    border-radius: var(--sn-input-group-border-radius);
+  }
+
+  /* Input (and any flex-grow control) stretches to fill remaining space */
+  .sn-input-group .sn-input-text {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  /* Focused input appears above adjacent siblings (shows full focus ring) */
+  .sn-input-group .sn-input-text:focus,
+  .sn-input-group .sn-input-text:focus-within {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Button addons paint above the input's overlapped edge so their own border
+     (all four sides, including hover/focus color changes) stays visible. The
+     focused input still wins via its z-index above. */
+  .sn-input-group > .sn-button {
+    position: relative;
+  }
+
+  /* Suppress the outlined/filled button border-color change on hover inside a
+     group - the border should only shift on :active (press), not on hover,
+     to avoid a jarring mid-group border flash. */
+  .sn-input-group > .sn-button.sn-outlined-button:hover:not(:disabled),
+  .sn-input-group > .sn-button.sn-outlined-button:not(:disabled):hover {
+    border-color: transparent;
+  }
+
+  .sn-input-group > .sn-button.sn-outlined-button:active:not(:disabled) {
+    border-color: var(--sn-button-active-bg);
+  }
+
+  .sn-input-group-addon {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-input-group-addon-gap);
+    padding: var(--sn-input-group-addon-padding);
+    background-color: var(--sn-input-group-addon-bg);
+    border: 1px solid var(--sn-input-group-addon-border);
+    color: var(--sn-input-group-addon-color);
+    font-size: var(--sn-input-group-addon-font-size);
+    font-family: var(--sn-font-ui);
+    white-space: nowrap;
+  }
+}

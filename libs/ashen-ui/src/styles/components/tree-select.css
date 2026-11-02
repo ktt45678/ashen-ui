@@ -1,0 +1,42 @@
+@layer components {
+  .sn-tree-select {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+  }
+
+  /* In the select-style panel the tree reads as full-width Select rows, not
+     rounded sidebar rows: no panel padding and no node radius, so the selection
+     fills the row edge to edge and the panel's rounded corners (overflow-y clips)
+     round it off. */
+  .sn-tree-select-panel {
+    padding: 0;
+    max-height: 20rem;
+    overflow-y: auto;
+  }
+
+  .sn-tree-select-panel .sn-tree {
+    display: block;
+  }
+
+  .sn-tree-select-panel .sn-tree-node {
+    border-radius: 0;
+    /* Match a Select option's row: the same min height and the same padding, set
+       directly (not by redefining --sn-tree-node-padding-*, which would register
+       those tree tokens as a bogus tree-select token group). */
+    min-height: var(--sn-list-item-height);
+    padding-block: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .sn-tree-select-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sn-tree-select-value sn-icon {
+    font-size: var(--sn-tree-select-icon-size, 16px);
+    flex-shrink: 0;
+  }
+}

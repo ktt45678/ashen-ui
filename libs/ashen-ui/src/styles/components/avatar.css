@@ -1,0 +1,90 @@
+@layer components {
+  .sn-avatar {
+    --sn-avatar-size: 2.5rem;
+    --sn-avatar-font-size: var(--sn-text-sm);
+    --sn-avatar-bg: var(--sn-surface-hover);
+    --sn-avatar-text: var(--sn-text-muted);
+    --sn-avatar-radius: var(--sn-radius-pill);
+    --sn-avatar-ring: var(--sn-surface-panel);
+    --sn-avatar-ring-width: 0px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle;
+
+    width: var(--sn-avatar-size);
+    height: var(--sn-avatar-size);
+    border-radius: var(--sn-avatar-radius);
+    background: var(--sn-avatar-bg);
+    color: var(--sn-avatar-text);
+    box-shadow: 0 0 0 var(--sn-avatar-ring-width) var(--sn-avatar-ring);
+
+    font-family: var(--sn-font-ui);
+    font-size: var(--sn-avatar-font-size);
+    font-weight: var(--sn-font-weight-semibold);
+    /* Matches the box height so the initials sit on the optical centre with no
+       half-leading to round at 100% zoom. */
+    line-height: 1;
+    user-select: none;
+  }
+
+  .sn-avatar-sm {
+    --sn-avatar-size: 2rem;
+    --sn-avatar-font-size: var(--sn-text-xs);
+  }
+
+  .sn-avatar-lg {
+    --sn-avatar-size: 3rem;
+    --sn-avatar-font-size: var(--sn-text-md);
+  }
+
+  .sn-avatar-xl {
+    --sn-avatar-size: 4rem;
+    --sn-avatar-font-size: var(--sn-text-xl);
+  }
+
+  .sn-avatar--square {
+    --sn-avatar-radius: var(--sn-radius-md);
+  }
+
+  .sn-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sn-avatar-icon {
+    font-size: calc(var(--sn-avatar-size) * 0.55);
+    line-height: 1;
+  }
+
+  /* Kept out of the flow entirely rather than hidden, so the counter's number
+     and the visible avatars stay the only things the layout measures. */
+  .sn-avatar--overflowed {
+    display: none;
+  }
+
+  .sn-avatar-group {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  .sn-avatar-group .sn-avatar {
+    --sn-avatar-ring-width: 2px;
+  }
+
+  .sn-avatar-group .sn-avatar + .sn-avatar {
+    margin-inline-start: calc(var(--sn-avatar-size) * -0.3);
+  }
+
+  .sn-avatar-counter {
+    --sn-avatar-bg: var(--sn-color-secondary-soft);
+    --sn-avatar-text: var(--sn-text);
+  }
+}

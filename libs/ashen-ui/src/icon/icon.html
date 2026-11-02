@@ -1,0 +1,11 @@
+@if (resolved(); as glyph) {
+  @if (glyph.kind === 'ligature') {
+    {{ glyph.text }}
+  } @else if (glyph.kind === 'svg') {
+    <svg class="sn-icon-svg" aria-hidden="true"><use [attr.href]="glyph.url" /></svg>
+  }
+}
+@if (classTextFallback(); as text) {
+  <span class="sn-icon-fallback-text">{{ text }}</span>
+}
+<ng-content />

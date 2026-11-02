@@ -1,0 +1,36 @@
+@layer components {
+  .sn-virtual-scroller {
+    --sn-virtual-scroller-border: var(--sn-border);
+    --sn-virtual-scroller-border-radius: var(--sn-select-border-radius);
+    --sn-virtual-scroller-bg: var(--sn-input-bg);
+    --sn-virtual-scroller-item-border: var(--sn-border-subtle);
+    --sn-virtual-scroller-item-color: var(--sn-text);
+    --sn-virtual-scroller-item-font-size: var(--sn-text-sm);
+    --sn-virtual-scroller-item-padding: 0 12px;
+
+    /* Declared in the layer, not on :host, so a utility class can override it. */
+    border: 1px solid var(--sn-virtual-scroller-border);
+    border-radius: var(--sn-virtual-scroller-border-radius);
+    background: var(--sn-virtual-scroller-bg);
+    overflow: hidden;
+  }
+
+  .sn-virtual-scroller-viewport {
+    width: 100%;
+  }
+
+  .sn-virtual-scroller-item {
+    box-sizing: border-box;
+  }
+
+  .sn-virtual-scroller-default-row {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: var(--sn-virtual-scroller-item-padding);
+    font-size: var(--sn-virtual-scroller-item-font-size);
+    color: var(--sn-virtual-scroller-item-color);
+    border-bottom: 1px solid var(--sn-virtual-scroller-item-border);
+    box-sizing: border-box;
+  }
+}

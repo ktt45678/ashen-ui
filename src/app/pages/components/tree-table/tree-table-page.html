@@ -1,0 +1,95 @@
+<header class="page-header">
+  <h1>Tree Table</h1>
+  <p class="page-subtitle">
+    Hierarchical rows in a table shell. The first column carries the expand toggle and
+    optional node icon; other columns display data fields. Implements the WAI-ARIA APG
+    Treegrid pattern (row-focus subset) with roving tabindex keyboard navigation.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic file system" snippet="tree-table/codeBasic">
+    <div class="doc-example-demo">
+      <sn-tree-table [nodes]="fileNodes">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size" width="80px" align="right" />
+        <sn-column field="modified" header="Modified" />
+      </sn-tree-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Controlled expansion" snippet="tree-table/codeControlled">
+    <div class="doc-example-demo">
+      <div class="tree-table-controls">
+        <button type="button" class="demo-btn" (click)="expandAll()">Expand all</button>
+        <button type="button" class="demo-btn" (click)="collapseAll()">Collapse all</button>
+      </div>
+      <sn-tree-table [nodes]="fileNodes" [(expandedKeys)]="expandedKeys">
+        <sn-column field="name" header="Name" />
+        <sn-column field="size" header="Size" width="80px" align="right" />
+        <sn-column field="modified" header="Modified" />
+      </sn-tree-table>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Custom cell template (snCellDef)" snippet="tree-table/codeCellDef">
+    <div class="doc-example-demo">
+      <sn-tree-table [nodes]="deployNodes">
+        <sn-column field="name" header="Name" />
+        <sn-column field="region" header="Region" />
+        <sn-column field="status" header="Status">
+          <ng-template snCellDef let-data>
+            <sn-tag [value]="data.status" />
+          </ng-template>
+        </sn-column>
+      </sn-tree-table>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tree-table" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Implements the <a href="https://www.w3.org/WAI/ARIA/apg/patterns/treegrid/" target="_blank" rel="noopener">WAI-ARIA APG Treegrid pattern</a> - row-focus subset.</li>
+    <li>The inner <code>&lt;table&gt;</code> carries <code>role="treegrid"</code> and <code>aria-label</code>. Native table semantics are intentionally overridden by this role.</li>
+    <li>Each visible row is a <code>role="row" &lt;tr&gt;</code>. The DOM is flat (no nested groups); positional context is conveyed via <code>aria-level</code>, <code>aria-setsize</code>, and <code>aria-posinset</code>.</li>
+    <li>Parent rows carry <code>aria-expanded="true"</code> or <code>"false"</code>. Leaf rows have no <code>aria-expanded</code>.</li>
+    <li>Focus is managed with <strong>roving tabindex</strong>: exactly one row has <code>tabindex="0"</code> at any time; all others are <code>tabindex="-1"</code>.</li>
+    <li>When the active row is hidden (e.g. its parent is collapsed), focus moves to the collapsed ancestor.</li>
+    <li>The expand toggle is a real <code>&lt;button type="button" tabindex="-1"&gt;</code> with an <code>aria-label</code> of "Expand" / "Collapse" from <code>SnTreeIntl</code>.</li>
+    <li>Row selection is intentionally absent - the design export has no selection affordance. Rows are navigable but not selectable.</li>
+    <li>Column headers use <code>scope="col"</code> for correct cell association.</li>
+  </ul>
+
+  <h3>Keyboard map</h3>
+  <table class="api-table">
+    <thead>
+      <tr><th>Key</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>ArrowDown</kbd></td><td>Move focus to the next visible row.</td></tr>
+      <tr><td><kbd>ArrowUp</kbd></td><td>Move focus to the previous visible row.</td></tr>
+      <tr><td><kbd>ArrowRight</kbd></td><td>Collapsed parent: expand it. Expanded parent: move focus to first child row. Leaf: no-op.</td></tr>
+      <tr><td><kbd>ArrowLeft</kbd></td><td>Expanded parent: collapse it. Leaf or collapsed node: move focus to parent row (if any).</td></tr>
+      <tr><td><kbd>Home</kbd></td><td>Move focus to the first visible row.</td></tr>
+      <tr><td><kbd>End</kbd></td><td>Move focus to the last visible row.</td></tr>
+    </tbody>
+  </table>
+
+  <p class="demo-note">
+    <strong>Note:</strong> Enter and Space have no action - row selection is not part of this component.
+    This matches the design export which has no selection affordance.
+  </p>
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tree-table" section="theming" />
+</section>

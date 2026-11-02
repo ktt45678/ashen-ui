@@ -1,0 +1,130 @@
+/* ── Showcase documentation chrome ───────────────────────────
+   Page shell, API tables and the code palette. Every component page used to
+   restate this block in its own SCSS; they now only keep their demo helpers. */
+
+:root {
+  --doc-measure: 68rem;
+
+  --doc-code-bg: #1c2027;
+  --doc-code-fg: #e6e9ef;
+  --doc-code-muted: #98a2b3;
+  --doc-code-border: #343b45;
+  --doc-code-chip: #262b33;
+  --doc-code-comment: #7c8899;
+  --doc-code-string: #a5d6a7;
+  --doc-code-keyword: #88b7f5;
+  --doc-code-number: #f0b37e;
+  --doc-code-type: #b8a4f0;
+  --doc-code-attr: #8fd3d0;
+  --doc-code-binding: #f5c26b;
+  --doc-code-punct: #9aa4b2;
+  --doc-code-added: #7fd18c;
+}
+
+/* ── Page shell ──────────────────────────────────────────── */
+.doc-page {
+  display: block;
+  max-width: var(--doc-measure);
+}
+
+.doc-page-header {
+  margin-bottom: var(--sn-space-6);
+}
+
+.doc-page h1 {
+  margin: 0 0 var(--sn-space-2);
+  font-size: var(--sn-text-2xl);
+  line-height: var(--sn-leading-tight);
+  color: var(--sn-text);
+}
+
+.doc-page .page-subtitle {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--sn-text-muted);
+  font-size: var(--sn-text-sm);
+  line-height: var(--sn-leading-normal);
+}
+
+.doc-page .page-section {
+  margin-bottom: var(--sn-space-8, 3rem);
+  scroll-margin-top: var(--sn-space-6);
+}
+
+.doc-page h2 {
+  margin: 0 0 var(--sn-space-4);
+  padding-bottom: var(--sn-space-2);
+  border-bottom: 1px solid var(--sn-border);
+  font-size: var(--sn-text-lg);
+  color: var(--sn-text);
+}
+
+.doc-page h3 {
+  margin: var(--sn-space-5) 0 var(--sn-space-2);
+  font-size: var(--sn-text-sm);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text);
+}
+
+.doc-page p {
+  margin: 0 0 var(--sn-space-3);
+  max-width: 72ch;
+  color: var(--sn-text-muted);
+  font-size: var(--sn-text-sm);
+  line-height: var(--sn-leading-normal);
+}
+
+.doc-page ul {
+  margin: 0 0 var(--sn-space-3);
+  padding-inline-start: var(--sn-space-5);
+  max-width: 72ch;
+  color: var(--sn-text-muted);
+  font-size: var(--sn-text-sm);
+  line-height: var(--sn-leading-normal);
+}
+
+.doc-page li {
+  margin-bottom: var(--sn-space-2);
+}
+
+.doc-page :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border-radius: var(--sn-radius-sm);
+  background: var(--sn-surface-canvas);
+  font-family: var(--sn-font-mono);
+  font-size: 0.85em;
+}
+
+/* ── API tables ──────────────────────────────────────────── */
+.api-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--sn-space-4);
+  font-size: var(--sn-text-xs);
+}
+
+.api-table th,
+.api-table td {
+  padding: var(--sn-space-2) var(--sn-space-3);
+  border-bottom: 1px solid var(--sn-border);
+  text-align: start;
+  vertical-align: top;
+  color: var(--sn-text-muted);
+}
+
+.api-table th {
+  color: var(--sn-text-subtle);
+  font-size: 0.65rem;
+  font-weight: var(--sn-font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .api-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

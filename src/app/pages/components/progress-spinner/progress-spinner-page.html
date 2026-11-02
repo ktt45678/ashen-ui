@@ -1,0 +1,71 @@
+<header class="page-header">
+  <h1>Progress Spinner</h1>
+  <p class="page-subtitle">
+    SVG ring spinner - indeterminate by default; pass <code>value</code> for a determinate arc.
+    A <code>variant="material"</code> option renders the Material 3 style with rounded caps,
+    gapped track, and a grow/shrink indeterminate arc.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Indeterminate (default)" snippet="progress-spinner/codeDefault">
+    <sn-progress-spinner />
+  </doc-example>
+
+  <doc-example heading="Determinate" snippet="progress-spinner/codeDeterminate">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <sn-progress-spinner [value]="70" />
+      <sn-progress-spinner [value]="30" [size]="24" color="var(--sn-color-warning)" />
+    </div>
+  </doc-example>
+
+  <doc-example heading="Material variant" snippet="progress-spinner/codeMaterial">
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <sn-progress-spinner variant="material" />
+      <sn-progress-spinner variant="material" [value]="70" />
+      <sn-progress-spinner variant="material" [value]="30" [size]="24" color="var(--sn-color-warning)" />
+    </div>
+  </doc-example>
+
+  <doc-example
+    heading="Custom color via CSS variable"
+    description="Override --sn-progress-spinner-color on any ancestor or the element itself."
+    snippet="progress-spinner/codeCustom"
+  >
+    <sn-progress-spinner [size]="48" style="--sn-progress-spinner-color: var(--sn-color-success);" />
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="progress-spinner" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="progress-spinner" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      The host element carries <code>role="progressbar"</code> with
+      <code>aria-valuemin="0"</code> and <code>aria-valuemax="100"</code>.
+    </li>
+    <li>
+      In determinate mode, <code>aria-valuenow</code> reflects the current value;
+      the SVG is marked <code>aria-hidden="true"</code> to prevent double-reading.
+    </li>
+    <li>
+      In indeterminate mode, <code>aria-valuenow</code> is omitted; the host receives
+      an <code>aria-label</code> from the <code>ariaLabel</code> input or the
+      <code>SnCommonIntl.loading</code> string ("Loading" by default).
+    </li>
+    <li>
+      Animations are paused when <code>prefers-reduced-motion: reduce</code> is set.
+    </li>
+  </ul>
+</section>

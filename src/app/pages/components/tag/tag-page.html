@@ -1,0 +1,67 @@
+<header class="page-header">
+  <h1>Tag</h1>
+  <p class="page-subtitle">
+    Small rectangular category label - soft severity tint with colored text. Use to denote
+    status, category, or metadata. 4 px corner radius differentiates it from the pill-shaped
+    Chip.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Severity variants" snippet="tag/codeSeverities">
+    <sn-tag value="Button" />
+    <sn-tag value="Saved" severity="success" />
+    <sn-tag value="Overlap" severity="warning" />
+    <sn-tag value="Invalid" severity="error" />
+    <sn-tag value="Widget" severity="info" />
+    <sn-tag value="Draft" severity="secondary" />
+  </doc-example>
+
+  <doc-example heading="With icon" snippet="tag/codeIcons">
+    <sn-tag value="Widget" severity="info" icon="widgets" />
+    <sn-tag value="Saved" severity="success" icon="check_circle" />
+    <sn-tag value="Error" severity="error" icon="cancel" />
+    <sn-tag value="Pending" severity="warning" icon="schedule" />
+  </doc-example>
+
+  <doc-example heading="Content projection" snippet="tag/codeProjection">
+    <sn-tag severity="success">Streaming</sn-tag>
+    <sn-tag severity="info">v2.4.1</sn-tag>
+  </doc-example>
+
+  <doc-example
+    heading="Custom re-skin via CSS variables"
+    description="Override --sn-tag-color on the element to set a fully custom color."
+    snippet="tag/codeCustom"
+  >
+    <sn-tag value="Purple" style="--sn-tag-color: #6941c6;" />
+    <sn-tag value="Teal" style="--sn-tag-color: #0e7490;" />
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="tag" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="tag" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Tags are inline passive labels - they carry no interactive role or keyboard behavior.</li>
+    <li>
+      Color is used for visual emphasis but is never the only indicator; the text value always
+      provides the semantic meaning.
+    </li>
+    <li>
+      The leading icon is marked <code>aria-hidden="true"</code> so it is not read twice by
+      screen readers.
+    </li>
+  </ul>
+</section>

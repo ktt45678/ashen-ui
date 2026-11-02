@@ -1,0 +1,52 @@
+<h3 snPart="header" class="sn-expansion-panel-heading" [class]="headerClassExtra()">
+  <button
+    #headerButton
+    type="button"
+    snPart="button"
+    class="sn-expansion-panel-button"
+    [class]="buttonClassExtra()"
+    [class.sn-expansion-panel-button--expanded]="expanded()"
+    [attr.id]="headerId"
+    [attr.aria-expanded]="expanded()"
+    [attr.aria-controls]="contentId"
+    [disabled]="disabledInput() || null"
+    (click)="toggle()"
+  >
+    @if (icon()) {
+      <sn-icon snPart="icon" class="sn-expansion-panel-icon" [class]="iconClassExtra()">{{ icon() }}</sn-icon>
+    }
+    <span snPart="title" class="sn-expansion-panel-title" [class]="titleClassExtra()">
+      <ng-content select="[snExpansionPanelHeader]">{{ header() }}</ng-content>
+    </span>
+    @if (toggleIconTpl()) {
+      <span snPart="toggle" class="sn-expansion-panel-toggle" [class]="toggleClassExtra()">
+        <ng-container *ngTemplateOutlet="toggleIconTpl()!.templateRef" />
+      </span>
+    } @else {
+      <sn-icon
+        snPart="toggle"
+        class="sn-expansion-panel-toggle"
+        [class]="toggleClassExtra()"
+        [class.sn-expansion-panel-toggle--expanded]="expanded()"
+      >{{ icons.resolve('chevron-down') }}</sn-icon>
+    }
+  </button>
+</h3>
+<div
+  class="sn-expansion-panel-content-wrapper"
+  [class.sn-expansion-panel-content-wrapper--expanded]="expanded()"
+>
+  <div
+    snPart="content"
+    class="sn-expansion-panel-content"
+    [class]="contentClassExtra()"
+    [attr.id]="contentId"
+    role="region"
+    [attr.aria-labelledby]="headerId"
+    [attr.inert]="expanded() ? null : ''"
+  >
+    <div class="sn-expansion-panel-content-body">
+      <ng-content />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<header class="page-header">
+  <h1>Chip</h1>
+  <p class="page-subtitle">
+    Compact entity pill - hover surface fill, primary tint when selected, optional leading icon
+    and removable × button. Suitable for tags, filter selections, and keyword sets.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic chips" snippet="chip/codeBasic">
+    <sn-chip label="Streaming" />
+    <sn-chip label="macros" />
+    <sn-chip label="deploy" />
+  </doc-example>
+
+  <doc-example heading="With icon" snippet="chip/codeIcon">
+    <sn-chip label="Streaming" icon="videocam" />
+    <sn-chip label="Audio" icon="headphones" />
+    <sn-chip label="Settings" icon="settings" />
+  </doc-example>
+
+  <doc-example heading="Selected state" snippet="chip/codeSelected">
+    <sn-chip label="Active" [selected]="true" />
+    <sn-chip label="Inactive" [selected]="false" />
+    <sn-chip label="Streaming" icon="videocam" [selected]="true" />
+  </doc-example>
+
+  <doc-example
+    heading="Toggle selected (interactive)"
+    description="Click a chip to toggle its selected state."
+    snippet="chip/codeToggle"
+  >
+    @for (chip of toggleChips(); track chip.label) {
+      <sn-chip
+        [label]="chip.label"
+        [icon]="chip.icon"
+        [selected]="chip.selected"
+        (click)="toggleChip(chip)"
+      />
+    }
+  </doc-example>
+
+  <doc-example
+    heading="Removable chips"
+    description="Click × or press Backspace / Delete to remove a chip."
+    snippet="chip/codeRemovable"
+  >
+    @for (chip of removableChips(); track chip) {
+      <sn-chip
+        [label]="chip"
+        removable
+        (removed)="removeChip(chip)"
+      />
+    }
+    @if (!removableChips().length) {
+      <span class="no-chips">All chips removed.</span>
+    }
+  </doc-example>
+
+  <doc-example heading="Content projection" snippet="chip/codeProjection">
+    <sn-chip>angular</sn-chip>
+    <sn-chip>typescript</sn-chip>
+    <sn-chip removable>rxjs</sn-chip>
+  </doc-example>
+
+  <doc-example
+    heading="Custom re-skin via CSS variables"
+    description="Override the component tokens on an ancestor or the chip itself."
+    snippet="chip/codeCustom"
+  >
+    <sn-chip label="Purple" style="--sn-chip-selected-bg: #ede9fe; --sn-chip-selected-border: #6941c6; --sn-chip-selected-text: #6941c6;" [selected]="true" />
+    <sn-chip label="Teal" style="--sn-chip-selected-bg: #e0f2fe; --sn-chip-selected-border: #0e7490; --sn-chip-selected-text: #0e7490;" [selected]="true" />
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="chip" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="chip" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>
+      Chips have <code>tabindex="0"</code> and can receive keyboard focus. When <code>removable</code>, the
+      <code>Backspace</code> and <code>Delete</code> keys fire the <code>removed</code> output while the chip is focused.
+    </li>
+    <li>
+      The remove button has an <code>aria-label</code> of <code>"Remove &lt;label&gt;"</code> so screen readers
+      announce its purpose.
+    </li>
+    <li>
+      The leading icon and the close icon are marked <code>aria-hidden="true"</code> to avoid duplicating
+      the label in screen reader output.
+    </li>
+    <li>
+      When building chip input or filter groups, wrap the chips in a
+      <code>role="group"</code> container with an accessible name to give screen reader users
+      context.
+    </li>
+  </ul>
+</section>

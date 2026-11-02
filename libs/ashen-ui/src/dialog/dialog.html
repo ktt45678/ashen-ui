@@ -1,0 +1,48 @@
+@if (_visibility() !== 'hidden') {
+  <div
+    snPart="container"
+    class="sn-dialog-container"
+    [class.sn-dialog-container--hiding]="_visibility() === 'hiding'"
+  >
+    <div snPart="mask" class="sn-dialog-mask" [style.animation]="_maskAnimation()" (click)="requestClose()"></div>
+    <div
+      snPart="panel"
+      [id]="_panelId"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="_titleId"
+      class="sn-dialog-panel"
+      [style.animation]="_panelAnimation()"
+      [class.sn-dialog-panel--sm]="size() === 'sm'"
+      [class.sn-dialog-panel--lg]="size() === 'lg'"
+      [class]="snClass()"
+    >
+      <div snPart="header" class="sn-dialog-header">
+        @if (title()) {
+          <h2 snPart="title" [id]="_titleId" class="sn-dialog-title">{{ title() }}</h2>
+        } @else {
+          <div snPart="title" [id]="_titleId" class="sn-dialog-title">
+            <ng-content select="[snDialogTitle]" />
+          </div>
+        }
+        <button
+          snPart="close"
+          type="button"
+          class="sn-dialog-close-button"
+          [attr.aria-label]="_effectiveCloseLabel"
+          (click)="requestClose()"
+        >
+          <sn-icon>{{ icons.resolve('close') }}</sn-icon>
+        </button>
+      </div>
+      <div snPart="body" class="sn-dialog-body">
+        <ng-content />
+      </div>
+      @if (_footerDir()) {
+        <div snPart="footer" class="sn-dialog-footer">
+          <ng-content select="[snDialogFooter]" />
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,19 @@
+<div class="sn-timeline-item-axis" aria-hidden="true">
+  <span
+    snPart="marker"
+    class="sn-timeline-marker"
+    [class.sn-timeline-marker--icon]="hasIcon()"
+    [class]="markerClassExtra()"
+    [style.--sn-timeline-item-color]="markerColor()"
+  >
+    @if (hasIcon()) {
+      <span class="sn-icon icon-ms sn-timeline-marker-icon">{{ icon() }}</span>
+    }
+  </span>
+  @if (!isLast()) {
+    <span class="sn-timeline-connector"></span>
+  }
+</div>
+<div snPart="content" class="sn-timeline-content" [class]="contentClassExtra()">
+  <ng-content />
+</div>

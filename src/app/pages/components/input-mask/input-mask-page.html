@@ -1,0 +1,143 @@
+<header class="page-header">
+  <h1>Input Mask</h1>
+  <p class="page-subtitle">
+    A fixed-pattern mask for an <code>input</code>: phone numbers, dates, postal codes, card
+    numbers. A directive, not a component, so it composes with
+    <code>snInputText</code>, <code>sn-form-field</code> and Angular forms rather than replacing
+    them.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic" snippet="input-mask/codeBasic">
+    <div class="demo-stack">
+      <sn-form-field floatLabel="auto">
+        <sn-label>Phone</sn-label>
+        <input snInputText snMask="(999) 999-9999" [(ngModel)]="phone" />
+        <sn-hint>Model: {{ phone() || '(empty)' }}</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Tokens" snippet="input-mask/codeTokens">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Date</sn-label>
+        <input snInputText snMask="99/99/9999" [(ngModel)]="date" />
+        <sn-hint><code>9</code> is a digit</sn-hint>
+      </sn-form-field>
+
+      <sn-form-field>
+        <sn-label>Licence plate</sn-label>
+        <input snInputText snMask="aa-9999" [(ngModel)]="plate" />
+        <sn-hint><code>a</code> is a letter. Literals are anything else.</sn-hint>
+      </sn-form-field>
+
+      <sn-form-field>
+        <sn-label>ZIP</sn-label>
+        <input snInputText snMask="99999?-9999" [(ngModel)]="zip" />
+        <sn-hint><code>?</code> makes everything after it optional, so 5 digits is complete.</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Unmasked model" snippet="input-mask/codeUnmask">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Phone</sn-label>
+        <input snInputText snMask="(999) 999-9999" unmask [(ngModel)]="raw" />
+        <sn-hint>Model: {{ raw() || '(empty)' }}. The element still shows the mask.</sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+
+  <doc-example heading="Incomplete values" snippet="input-mask/codeIncomplete">
+    <div class="demo-stack">
+      <sn-form-field>
+        <sn-label>Auto-clear time</sn-label>
+        <input snInputText snMask="99:99:99" [(ngModel)]="autoCleared" />
+        <sn-hint>Leave the field before all six digits are entered to clear it.</sn-hint>
+      </sn-form-field>
+
+      <sn-form-field>
+        <sn-label>Retained time</sn-label>
+        <input snInputText snMask="99:99:99" [autoClear]="false" [formControl]="retained" />
+        <sn-hint>
+          @if (retained.hasError('maskIncomplete')) {
+            Angular forms reports <code>maskIncomplete</code>.
+          } @else {
+            Enter a partial value to see incomplete validation.
+          }
+        </sn-hint>
+      </sn-form-field>
+    </div>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="input-mask" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Behaviour</h2>
+  <ul>
+    <li>
+      <strong>The value holds only what you typed.</strong> The mask template is shown through the
+      native <code>placeholder</code>, not written into the element. An untouched field is
+      genuinely empty, so the floating label rests, <code>required</code> validation sees an empty
+      string, and nothing has to strip <code>_</code> out of your model.
+    </li>
+    <li>
+      <strong>Pasting works from any shape.</strong> <code>(555) 123-4567</code>,
+      <code>555.123.4567</code> and <code>5551234567</code> all land the same way: characters that
+      don't fit the next token are skipped rather than rejected.
+    </li>
+    <li>
+      <strong>Separators auto-advance.</strong> The third digit of <code>(999) </code> brings the
+      separator with it, so the next keystroke goes where you expect.
+    </li>
+    <li>
+      <strong>Deleting a separator deletes the character in front of it.</strong> Otherwise the
+      mask would put the separator straight back and the keypress would appear to do nothing.
+    </li>
+    <li>
+      <strong>Incomplete values follow an explicit blur policy.</strong> They clear by default or
+      remain when <code>autoClear</code> is false. Angular forms receives a
+      <code>maskIncomplete</code> validation error while a non-empty value is incomplete.
+    </li>
+  </ul>
+</section>
+
+<section class="page-section">
+  <h2>What this deliberately doesn't do</h2>
+  <p>
+    This masks patterns whose shape is known up front. It does <strong>not</strong> do numeric
+    masks with thousand separators and decimals, dates that correct themselves as you type
+    (<code>13</code> → <code>01</code>), masks that change shape based on input (card-type
+    detection), or regex masks. Those are genuinely hard. Caret placement, IME composition and the
+    browser's undo stack all fight you, and they are where a dedicated engine earns its weight.
+  </p>
+  <p>
+    So bring one. Maskito and imask both work on an <code>snInputText</code>, and neither is a
+    dependency of this library. The only thing to wire up is what "empty" means, so the form field
+    keeps behaving:
+  </p>
+  <pre class="code-block"><code>{{ codeThirdParty }}</code></pre>
+  <p>
+    <code>setEmptyPredicate()</code> is public API and mask-library-agnostic:
+    <code>snMask</code> is simply its first consumer.
+  </p>
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <ul>
+    <li>The mask template appears as a <code>placeholder</code>, which assistive technology reads as a format hint rather than as a value.</li>
+    <li>A placeholder is not a label. Keep the <code>sn-label</code>.</li>
+    <li>The element stays a plain <code>input</code>, so type, <code>inputmode</code>, autofill hints and validation all work normally.</li>
+    <li><code>data-sn-mask-complete</code> is for styling. Angular forms receives <code>maskIncomplete</code> for user-facing validation.</li>
+  </ul>
+</section>

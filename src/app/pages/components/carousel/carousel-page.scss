@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+
+.carousel-demo-wrap {
+  width: 100%;
+  max-width: 480px;
+}
+
+.demo-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  border-radius: var(--sn-radius-tile);
+  font-size: var(--sn-text-lg);
+  font-weight: var(--sn-font-weight-semibold);
+  color: var(--sn-text-on-primary);
+}
+
+.demo-slide--1 { background: var(--sn-color-primary); }
+.demo-slide--2 { background: var(--sn-color-success); }
+.demo-slide--3 { background: var(--sn-color-warning); }
+.demo-slide--4 { background: var(--sn-color-error); }
+.demo-slide--5 { background: var(--sn-color-info); }
+.demo-slide--6 { background: var(--sn-color-secondary); }
+
+.demo-carousel-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sn-space-2);
+  margin-bottom: var(--sn-space-3);
+}
+
+/* In the vertical demo each slide should fill the fixed-height viewport. */
+.sn-carousel--vertical .demo-slide {
+  height: 100%;
+}
+
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sn-space-2);
+  padding: var(--sn-space-5);
+  background: var(--sn-surface-raised);
+  border: 1px solid var(--sn-border);
+  border-radius: var(--sn-radius-tile);
+  min-height: 120px;
+
+  strong {
+    font-size: var(--sn-text-base);
+    font-weight: var(--sn-font-weight-semibold);
+    color: var(--sn-text);
+  }
+
+  p {
+    margin: 0;
+    font-size: var(--sn-text-sm);
+    color: var(--sn-text-muted);
+  }
+}
+
+.demo-binding-info {
+  margin-top: var(--sn-space-3);
+  font-size: var(--sn-text-sm);
+  color: var(--sn-text-subtle);
+}
+
+/* -- Standard doc-page styles (shared look across all component pages) -- */
+.code-block { background: var(--sn-surface-canvas); border: 1px solid var(--sn-border); border-radius: var(--sn-radius-md); padding: var(--sn-space-3) var(--sn-space-4); font-family: var(--sn-font-mono); font-size: var(--sn-text-xs); color: var(--sn-text-muted); overflow-x: auto; }

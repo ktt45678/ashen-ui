@@ -1,0 +1,37 @@
+<div
+  snPart="shell"
+  [class]="shellClassExtra()"
+  class="sn-input-tags-shell sn-input-text"
+  [class.sn-input-text-sm]="size() === 'sm'"
+  [class.sn-input-text-lg]="size() === 'lg'"
+  [class.sn-input-text-error]="effectiveInvalid()"
+  [class.sn-input-tags--disabled]="isDisabled()"
+  (click)="focusInput()"
+>
+  @for (tag of value(); track tag) {
+    <sn-chip
+      [label]="tag"
+      [removable]="!isDisabled()"
+      [snClass]="chipClassExtra()"
+      [snStyle]="chipStyleExtra()"
+      [snAttrs]="chipAttrsExtra()"
+      (removed)="removeTag(tag)"
+    />
+  }
+  <input
+    snPart="input"
+    #inputEl
+    class="sn-input-tags-field"
+    [class]="inputClassExtra()"
+    [value]="text()"
+    [placeholder]="value().length ? '' : effectivePlaceholder()"
+    [disabled]="isDisabled() || null"
+    [attr.id]="controlId()"
+    [attr.aria-describedby]="ariaDescribedBy()"
+    [attr.aria-invalid]="effectiveInvalid() ? 'true' : null"
+    (input)="onInput($event)"
+    (keydown)="onKeydown($event)"
+    (focus)="onFocus()"
+    (blur)="commitPending()"
+  />
+</div>

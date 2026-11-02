@@ -1,0 +1,88 @@
+<header class="page-header">
+  <h1>Breadcrumb</h1>
+  <p class="page-subtitle">
+    Hierarchy trail with chevron separators. Consumer writes
+    <code>sn-breadcrumb-item</code> children - no data-array input required.
+    The last item is automatically marked as the current page.
+  </p>
+</header>
+
+<section class="page-section">
+  <h2>Examples</h2>
+
+  <doc-example heading="Basic breadcrumb" snippet="breadcrumb/codeBasic">
+    <sn-breadcrumb>
+      <sn-breadcrumb-item href="/">Home</sn-breadcrumb-item>
+      <sn-breadcrumb-item href="/library">Library</sn-breadcrumb-item>
+      <sn-breadcrumb-item>Current Page</sn-breadcrumb-item>
+    </sn-breadcrumb>
+  </doc-example>
+
+  <doc-example heading="With icons" snippet="breadcrumb/codeWithIcons">
+    <sn-breadcrumb>
+      <sn-breadcrumb-item href="/" icon="grid_view">Grids</sn-breadcrumb-item>
+      <sn-breadcrumb-item href="/main">Main</sn-breadcrumb-item>
+      <sn-breadcrumb-item>Play Music</sn-breadcrumb-item>
+    </sn-breadcrumb>
+  </doc-example>
+
+  <doc-example heading="Single item (current page only)" snippet="breadcrumb/codeSingleItem">
+    <sn-breadcrumb>
+      <sn-breadcrumb-item>Dashboard</sn-breadcrumb-item>
+    </sn-breadcrumb>
+  </doc-example>
+
+  <doc-example heading="Custom aria-label" snippet="breadcrumb/codeCustomLabel">
+    <sn-breadcrumb label="Site Navigation">
+      <sn-breadcrumb-item href="/">Home</sn-breadcrumb-item>
+      <sn-breadcrumb-item>About</sn-breadcrumb-item>
+    </sn-breadcrumb>
+  </doc-example>
+
+  <doc-example heading="snClass pass-through" snippet="breadcrumb/codeSnClass">
+    <sn-breadcrumb snClass="my-breadcrumb">
+      <sn-breadcrumb-item href="/" [snClass]="{ link: 'my-link' }">Home</sn-breadcrumb-item>
+      <sn-breadcrumb-item>Current</sn-breadcrumb-item>
+    </sn-breadcrumb>
+  </doc-example>
+</section>
+
+<section class="page-section">
+  <h2>API</h2>
+  <doc-api slug="breadcrumb" section="api" />
+</section>
+
+<section class="page-section">
+  <h2>Theming</h2>
+  <doc-api slug="breadcrumb" section="theming" />
+</section>
+
+<section class="page-section">
+  <h2>Accessibility</h2>
+  <p>
+    Follows the
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/" target="_blank" rel="noopener">WAI-ARIA APG Breadcrumb pattern</a>.
+  </p>
+  <ul>
+    <li>
+      The navigation landmark uses <code>&lt;nav aria-label&gt;</code>. The label defaults to
+      <code>'Breadcrumb'</code> (overridable via the <code>label</code> input or
+      <code>provideSnIntl(&#123; breadcrumb: &#123; label: '…' &#125; &#125;)</code>).
+    </li>
+    <li>
+      Items are rendered in an <code>&lt;ol&gt;</code> (ordered list) reflecting the hierarchy.
+    </li>
+    <li>
+      The last item receives <code>aria-current="page"</code> and is rendered as a
+      <code>&lt;span&gt;</code> (non-interactive) with <code>pointer-events: none</code>.
+    </li>
+    <li>
+      Non-last items with <code>href</code> are native <code>&lt;a&gt;</code> elements -
+      standard browser tab/focus behavior applies.
+    </li>
+    <li>
+      Separators are wrapped in <code>aria-hidden="true"</code> spans so screen readers announce
+      only the crumb labels.
+    </li>
+  </ul>
+</section>

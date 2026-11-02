@@ -1,0 +1,85 @@
+<table class="sn-tree-table-inner" snPart="table" [class]="tableClassExtra()" role="treegrid" [attr.aria-label]="resolvedAriaLabel()">
+  <thead>
+    <tr class="sn-tree-table-header-row" snPart="header" [class]="headerClassExtra()">
+      @for (col of columns(); track col) {
+        <th
+          scope="col"
+          class="sn-tree-table-th"
+          [style.width]="col.width()"
+          [style.text-align]="col.align()"
+        >
+          <span class="sn-tree-table-header-text">{{ col.header() }}</span>
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (entry of visibleEntries(); track entry.key) {
+      <tr
+        role="row"
+        class="sn-tree-table-row"
+        snPart="row"
+        [class]="rowClassExtra()"
+        [attr.data-key]="entry.key"
+        [attr.aria-level]="entry.level"
+        [attr.aria-posinset]="entry.posinset"
+        [attr.aria-setsize]="entry.setsize"
+        [attr.aria-expanded]="entry.hasChildren ? (entry.expanded ? 'true' : 'false') : null"
+        [attr.tabindex]="isActive(entry.key) ? 0 : -1"
+        (focus)="onRowFocus(entry.key)"
+        (keydown)="onRowKeydown($event, entry)"
+      >
+        @for (col of columns(); track col; let ci = $index) {
+          <td
+            class="sn-tree-table-td"
+            snPart="cell"
+            [class]="cellClassExtra()"
+            [class.sn-tree-table-td--muted]="ci !== 0"
+            [style.text-align]="col.align()"
+            [style.padding-left.px]="ci === 0 ? getFirstColPaddingLeft(entry.depth) : null"
+          >
+            @if (ci === 0) {
+              <span class="sn-tree-table-cell-content">
+                @if (entry.hasChildren) {
+                  <button
+                    type="button"
+                    tabindex="-1"
+                    class="sn-tree-table-toggle"
+                    snPart="toggle"
+                    [class]="toggleClassExtra()"
+                    [attr.aria-label]="getToggleLabel(entry.expanded)"
+                    (click)="toggleExpand(entry.key)"
+                  >
+                    <sn-icon class="sn-tree-table-toggle-icon" [class.sn-tree-table-toggle-icon--open]="entry.expanded">{{ icons.resolve('chevron-right') }}</sn-icon>
+                  </button>
+                } @else {
+                  <span class="sn-tree-table-spacer"></span>
+                }
+                @if (entry.node.icon) {
+                  <sn-icon class="sn-tree-table-node-icon">{{ entry.node.icon }}</sn-icon>
+                }
+                @if (col.cellDef(); as cellDef) {
+                  <ng-template
+                    [ngTemplateOutlet]="cellDef.templateRef"
+                    [ngTemplateOutletContext]="{ $implicit: entry.node.data, node: entry.node }"
+                  />
+                } @else {
+                  {{ entry.node.data[col.field()] }}
+                }
+              </span>
+            } @else {
+              @if (col.cellDef(); as cellDef) {
+                <ng-template
+                  [ngTemplateOutlet]="cellDef.templateRef"
+                  [ngTemplateOutletContext]="{ $implicit: entry.node.data, node: entry.node }"
+                />
+              } @else {
+                {{ entry.node.data[col.field()] }}
+              }
+            }
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

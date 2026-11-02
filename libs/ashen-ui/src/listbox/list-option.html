@@ -1,0 +1,15 @@
+@if (showCheckbox()) {
+  <span snPart="box" class="sn-listbox-option-box">
+    @if (selected()) {
+      <sn-icon snPart="check">{{ icons.resolve('check') }}</sn-icon>
+    }
+  </span>
+}
+<ng-content />
+@if (showCheckmark() && selected()) {
+  <sn-icon
+    snPart="check"
+    class="sn-listbox-option-check"
+    [class]="checkClassExtra()"
+  >{{ icons.resolve('check') }}</sn-icon>
+}

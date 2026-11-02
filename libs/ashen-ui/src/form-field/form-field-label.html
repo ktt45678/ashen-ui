@@ -1,0 +1,12 @@
+<label
+  #labelEl
+  class="sn-form-field-label"
+  snPart="root"
+  [class]="labelClassExtra()"
+  [for]="labelFor()"
+>
+  <ng-content />
+  @if (required()) {
+    <span class="sn-form-field-required-indicator" snPart="requiredIndicator" [class]="requiredIndicatorClassExtra()" aria-hidden="true">*</span>
+  }
+</label>

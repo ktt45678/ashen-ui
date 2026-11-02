@@ -1,0 +1,57 @@
+@if (_visibility() !== 'hidden') {
+  <div
+    snPart="container"
+    class="sn-drawer-container"
+    [class.sn-drawer-container--hiding]="_visibility() === 'hiding'"
+  >
+    @if (mask()) {
+      <div snPart="mask" class="sn-drawer-mask" [style.animation]="_maskAnimation()" (click)="requestClose()"></div>
+    }
+    <div
+      snPart="panel"
+      [id]="_panelId"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="_titleId"
+      class="sn-drawer-panel"
+      [class.sn-drawer-panel--start]="position() === 'start'"
+      [class.sn-drawer-panel--end]="position() === 'end'"
+      [class.sn-drawer-panel--left]="position() === 'left'"
+      [class.sn-drawer-panel--right]="position() === 'right'"
+      [class.sn-drawer-panel--top]="position() === 'top'"
+      [class.sn-drawer-panel--bottom]="position() === 'bottom'"
+      [class.sn-drawer-panel--fullscreen]="position() === 'fullscreen'"
+      [style.width]="_isVertical || _isFullscreen ? null : _effectiveWidth"
+      [style.height]="_isVertical ? _effectiveHeight : null"
+      [class]="snClass()"
+      [style.animation]="_panelAnimation()"
+    >
+      <div snPart="header" class="sn-drawer-header">
+        @if (title()) {
+          <h2 snPart="title" [id]="_titleId" class="sn-drawer-title">{{ title() }}</h2>
+        } @else {
+          <div snPart="title" [id]="_titleId" class="sn-drawer-title">
+            <ng-content select="[snDrawerTitle]" />
+          </div>
+        }
+        <button
+          snPart="close"
+          type="button"
+          class="sn-drawer-close-button"
+          [attr.aria-label]="_effectiveCloseLabel"
+          (click)="requestClose()"
+        >
+          <sn-icon>{{ icons.resolve('close') }}</sn-icon>
+        </button>
+      </div>
+      <div snPart="body" class="sn-drawer-body">
+        <ng-content />
+      </div>
+      @if (_footerDir()) {
+        <div snPart="footer" class="sn-drawer-footer">
+          <ng-content select="[snDrawerFooter]" />
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,552 @@
+@layer components {
+  .sn-table {
+    --sn-table-header-bg: var(--sn-surface-hover);
+    --sn-table-control-column-width: 36px;
+    --sn-table-expand-button-size: 24px;
+    --sn-table-expand-icon-size: 18px;
+    --sn-table-header-color: var(--sn-text-subtle);
+    --sn-table-header-sorted-color: var(--sn-color-primary);
+    --sn-table-header-border: var(--sn-border);
+    --sn-table-header-font-size: var(--sn-text-xs);
+    --sn-table-header-font-weight: 600;
+    --sn-table-header-letter-spacing: 0.04em;
+    --sn-table-cell-padding: 8px 12px;
+    --sn-table-cell-color: var(--sn-text);
+    --sn-table-cell-border: var(--sn-border-subtle);
+    --sn-table-cell-max-width: 16rem;
+    --sn-table-row-selected-bg: var(--sn-selected-bg);
+    --sn-table-row-hover-bg: var(--sn-surface-hover);
+    --sn-table-sort-icon-inactive-opacity: 0.35;
+    --sn-table-sort-icon-size: 13px;
+    --sn-table-sort-gap: 3px;
+    --sn-table-motion: var(--sn-motion-base);
+    --sn-table-empty-padding: 18px 12px;
+    --sn-table-empty-color: var(--sn-text-subtle);
+    --sn-table-caption-color: var(--sn-text);
+    --sn-table-caption-font-size: var(--sn-text-lg);
+    --sn-table-caption-font-weight: var(--sn-font-weight-medium);
+    --sn-table-caption-padding: var(--sn-table-cell-padding);
+    --sn-table-loading-bg: var(--sn-surface-overlay);
+    --sn-table-loading-min-height: 6rem;
+
+    /* Host chrome, declared here (not on the unlayered :host) so a consumer
+       can override the frame with a plain utility (border-none, rounded-none,
+       bg-*, overflow-visible) with no !important. */
+    border: 1px solid var(--sn-border);
+    border-radius: var(--sn-radius-tile);
+    background: var(--sn-surface-panel);
+    overflow: auto;
+    /* Anchors the loading overlay. */
+    position: relative;
+  }
+
+  .sn-table-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sn-table-loading-bg);
+  }
+
+  .sn-table-inner {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sn-font-ui);
+    font-size: var(--sn-text-sm);
+  }
+
+  .sn-table-caption {
+    caption-side: top;
+    padding: var(--sn-table-caption-padding);
+    color: var(--sn-table-caption-color);
+    font-size: var(--sn-table-caption-font-size);
+    font-weight: var(--sn-table-caption-font-weight);
+    text-align: start;
+  }
+
+  /* Responsive: keep natural width and let the host (overflow:auto) scroll
+     horizontally rather than squeezing columns on narrow viewports. */
+  .sn-table--responsive .sn-table-inner {
+    min-width: var(--sn-table-min-width, max-content);
+  }
+
+  .sn-table-th {
+    padding: var(--sn-table-cell-padding);
+    font-size: var(--sn-table-header-font-size);
+    font-weight: var(--sn-table-header-font-weight);
+    letter-spacing: var(--sn-table-header-letter-spacing);
+    text-transform: var(--sn-table-header-text-transform, uppercase);
+    color: var(--sn-table-header-color);
+    border-bottom: 1px solid var(--sn-table-header-border);
+    background: var(--sn-table-header-bg);
+    white-space: nowrap;
+    transition: color var(--sn-table-motion);
+    user-select: none;
+  }
+
+  .sn-table-th--sorted {
+    color: var(--sn-table-header-sorted-color);
+  }
+
+  .sn-table-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-table-sort-gap);
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    cursor: pointer;
+    width: 100%;
+    text-align: inherit;
+  }
+
+  .sn-table-sort:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+    border-radius: 2px;
+  }
+
+  .sn-table-sort-icon {
+    font-size: var(--sn-table-sort-icon-size);
+    transition: opacity var(--sn-table-motion), transform var(--sn-table-motion);
+  }
+
+  .sn-table-sort-icon--inactive {
+    opacity: var(--sn-table-sort-icon-inactive-opacity);
+  }
+
+  .sn-table-header-text {
+    display: inline-block;
+  }
+
+  .sn-table-row {
+    background: transparent;
+    transition: background-color var(--sn-table-motion);
+  }
+
+  .sn-table-row--selected {
+    background: var(--sn-table-row-selected-bg);
+  }
+
+  .sn-table-row--striped:not(.sn-table-row--selected) {
+    background: var(--sn-table-row-hover-bg);
+  }
+
+  .sn-table-row--hover:hover {
+    background: var(--sn-table-row-hover-bg);
+  }
+
+  .sn-table-row--selectable {
+    cursor: pointer;
+  }
+
+  .sn-table-row--selectable:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: calc(-1 * var(--sn-focus-ring-offset));
+  }
+
+  .sn-table-td {
+    padding: var(--sn-table-cell-padding);
+    color: var(--sn-table-cell-color);
+    border-bottom: 1px solid var(--sn-table-cell-border);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: var(--sn-table-cell-max-width);
+  }
+
+  .sn-table-td--last-row {
+    border-bottom: none;
+  }
+
+  .sn-table-empty {
+    padding: var(--sn-table-empty-padding);
+    text-align: center;
+    color: var(--sn-table-empty-color);
+  }
+
+  /* Room for the spinner while the first page loads. */
+  .sn-table-empty--loading {
+    height: var(--sn-table-loading-min-height);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-table-row,
+    .sn-table-th,
+    .sn-table-sort-icon {
+      transition: none;
+    }
+  }
+}
+
+@layer components {
+  .sn-table--sticky-header .sn-table-th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .sn-table-cell--sticky-start,
+  .sn-table-cell--sticky-end {
+    position: sticky;
+    z-index: 1;
+    background: var(--sn-surface-panel);
+  }
+
+  th.sn-table-cell--sticky-start,
+  th.sn-table-cell--sticky-end {
+    z-index: 3;
+    background: var(--sn-table-header-bg);
+  }
+
+  /* The seam goes on the edge facing the scrolling content. `box-shadow` has
+     no logical form, so the offset carries the direction sign, and no device
+     pixel snapping either, so it carries --sn-ring-snap too. */
+  .sn-table-cell--sticky-start {
+    box-shadow: calc(1px * var(--sn-ring-snap, 1) * var(--sn-dir, 1)) 0 0 var(--sn-table-cell-border);
+  }
+
+  .sn-table-cell--sticky-end {
+    box-shadow: calc(-1px * var(--sn-ring-snap, 1) * var(--sn-dir, 1)) 0 0 var(--sn-table-cell-border);
+  }
+
+  /* Selected/striped rows would otherwise show through sticky cells. */
+  .sn-table-row--selected .sn-table-cell--sticky-start,
+  .sn-table-row--selected .sn-table-cell--sticky-end {
+    background: var(--sn-table-row-selected-bg);
+  }
+
+  .sn-table-th--select,
+  .sn-table-td--select {
+    width: var(--sn-table-control-column-width);
+    text-align: center;
+  }
+
+  /* sn-checkbox host inside select cells */
+  .sn-table-checkbox {
+    display: inline-flex;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .sn-table-checkbox:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-table-th--expand,
+  .sn-table-td--expand {
+    width: var(--sn-table-control-column-width);
+    text-align: center;
+  }
+
+  .sn-table-expand-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-table-expand-button-size);
+    height: var(--sn-table-expand-button-size);
+    border: none;
+    background: transparent;
+    color: var(--sn-text-subtle);
+    border-radius: var(--sn-radius-sm);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .sn-table-expand-btn:hover {
+    background: var(--sn-surface-hover);
+    color: var(--sn-text);
+  }
+
+  .sn-table-expand-btn:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-table-expand-icon {
+    font-size: var(--sn-table-expand-icon-size);
+    transition: transform var(--sn-table-motion);
+  }
+
+  .sn-table-expand-icon--open {
+    transform: rotate(90deg);
+  }
+
+  .sn-table-expansion-row {
+    background: var(--sn-surface-canvas);
+  }
+
+  .sn-table-expansion-cell {
+    padding: var(--sn-table-cell-padding);
+    border-bottom: 1px solid var(--sn-table-cell-border);
+    color: var(--sn-table-cell-color);
+  }
+
+  .sn-table-th--actions,
+  .sn-table-td--actions {
+    width: 1%;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
+    text-align: end;
+  }
+
+  .sn-table-spacer-cell {
+    padding: 0;
+    border: none;
+    height: 0;
+  }
+
+  .sn-table-th--draggable {
+    cursor: grab;
+  }
+
+  .sn-table-row--draggable {
+    cursor: grab;
+  }
+
+  .sn-table-row.cdk-drag-preview {
+    display: table;
+    background: var(--sn-surface-panel);
+    box-shadow: var(--sn-shadow-md);
+    border-radius: var(--sn-radius-sm);
+  }
+
+  .sn-table-row.cdk-drag-placeholder {
+    opacity: 0.4;
+  }
+
+  tr.cdk-drop-list-dragging .sn-table-row:not(.cdk-drag-placeholder),
+  tbody.cdk-drop-list-dragging .sn-table-row:not(.cdk-drag-placeholder) {
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .sn-table--flex .sn-table-inner {
+    display: block;
+  }
+
+  .sn-table--flex thead,
+  .sn-table--flex tbody {
+    display: block;
+  }
+
+  .sn-table--flex tr {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sn-table--flex th,
+  .sn-table--flex td {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    box-sizing: border-box;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .sn-table--flex th[style*="width"],
+  .sn-table--flex td[style*="width"] {
+    flex: 0 0 auto;
+  }
+
+  .sn-table--flex .sn-table-th--select,
+  .sn-table--flex .sn-table-td--select,
+  .sn-table--flex .sn-table-th--expand,
+  .sn-table--flex .sn-table-td--expand {
+    flex: 0 0 36px;
+    justify-content: center;
+  }
+
+  .sn-table--flex .sn-table-th--actions,
+  .sn-table--flex .sn-table-td--actions {
+    flex: 0 0 auto;
+    justify-content: flex-end;
+  }
+
+  .sn-table--flex .sn-table-empty,
+  .sn-table--flex .sn-table-expansion-cell,
+  .sn-table--flex .sn-table-spacer-cell {
+    flex: 1;
+    display: block;
+  }
+
+  .sn-table-native {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sn-font-ui);
+    font-size: var(--sn-text-sm);
+    /* Same token names as sn-table, so one theme block styles both modes. */
+    --sn-table-header-bg: var(--sn-surface-hover);
+    --sn-table-header-color: var(--sn-text-subtle);
+    --sn-table-header-border: var(--sn-border);
+    --sn-table-header-font-size: var(--sn-text-xs);
+    --sn-table-header-font-weight: 600;
+    --sn-table-header-letter-spacing: 0.04em;
+    --sn-table-cell-padding: 8px 12px;
+    --sn-table-cell-color: var(--sn-text);
+    --sn-table-cell-border: var(--sn-border-subtle);
+    --sn-table-row-hover-bg: var(--sn-surface-hover);
+    --sn-table-motion: var(--sn-motion-base);
+    --sn-table-stack-row-padding: 4px;
+    --sn-table-stack-cell-padding: 4px 12px;
+  }
+
+  .sn-table-native th {
+    padding: var(--sn-table-cell-padding);
+    font-size: var(--sn-table-header-font-size);
+    font-weight: var(--sn-table-header-font-weight);
+    letter-spacing: var(--sn-table-header-letter-spacing);
+    text-transform: var(--sn-table-header-text-transform, uppercase);
+    text-align: start;
+    color: var(--sn-table-header-color);
+    border-bottom: 1px solid var(--sn-table-header-border);
+    background: var(--sn-table-header-bg);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .sn-table-native td {
+    padding: var(--sn-table-cell-padding);
+    color: var(--sn-table-cell-color);
+    border-bottom: 1px solid var(--sn-table-cell-border);
+  }
+
+  .sn-table-native--striped tbody tr:nth-child(even) {
+    background: var(--sn-table-row-hover-bg);
+  }
+
+  .sn-table-native--hover tbody tr:hover {
+    background: var(--sn-table-row-hover-bg);
+  }
+
+  /* Stacked rows ([stack]="'sm' | 'md' | 'lg'"). Media queries cannot read tokens,
+     so each breakpoint repeats the same rules. */
+  @media (max-width: 639.98px) {
+    .sn-table-native-stack-sm thead {
+      display: none;
+    }
+    .sn-table-native-stack-sm tr {
+      display: block;
+      padding-block: var(--sn-table-stack-row-padding);
+      border-bottom: 1px solid var(--sn-table-cell-border);
+    }
+    .sn-table-native-stack-sm td {
+      display: block;
+      padding: var(--sn-table-stack-cell-padding);
+      border-bottom: 0;
+    }
+    .sn-table-native-stack-sm td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      font-size: var(--sn-table-header-font-size);
+      font-weight: var(--sn-table-header-font-weight);
+      color: var(--sn-table-header-color);
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .sn-table-native-stack-md thead {
+      display: none;
+    }
+    .sn-table-native-stack-md tr {
+      display: block;
+      padding-block: var(--sn-table-stack-row-padding);
+      border-bottom: 1px solid var(--sn-table-cell-border);
+    }
+    .sn-table-native-stack-md td {
+      display: block;
+      padding: var(--sn-table-stack-cell-padding);
+      border-bottom: 0;
+    }
+    .sn-table-native-stack-md td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      font-size: var(--sn-table-header-font-size);
+      font-weight: var(--sn-table-header-font-weight);
+      color: var(--sn-table-header-color);
+    }
+  }
+
+  @media (max-width: 1023.98px) {
+    .sn-table-native-stack-lg thead {
+      display: none;
+    }
+    .sn-table-native-stack-lg tr {
+      display: block;
+      padding-block: var(--sn-table-stack-row-padding);
+      border-bottom: 1px solid var(--sn-table-cell-border);
+    }
+    .sn-table-native-stack-lg td {
+      display: block;
+      padding: var(--sn-table-stack-cell-padding);
+      border-bottom: 0;
+    }
+    .sn-table-native-stack-lg td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      font-size: var(--sn-table-header-font-size);
+      font-weight: var(--sn-table-header-font-weight);
+      color: var(--sn-table-header-color);
+    }
+  }
+
+  .sn-sort-header {
+    cursor: pointer;
+    transition: color var(--sn-table-motion);
+  }
+
+  .sn-sort-header::after {
+    content: '↑';
+    display: inline-block;
+    margin-inline-start: 4px;
+    opacity: 0.35;
+    transition: opacity var(--sn-table-motion), transform var(--sn-table-motion);
+  }
+
+  .sn-sort-header--asc,
+  .sn-sort-header--desc {
+    color: var(--sn-color-primary);
+  }
+
+  .sn-sort-header--asc::after {
+    content: '↑';
+    opacity: 1;
+  }
+
+  .sn-sort-header--desc::after {
+    content: '↓';
+    opacity: 1;
+  }
+
+  .sn-sort-header:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: calc(-1 * var(--sn-focus-ring-offset));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-table-expand-icon,
+    .sn-sort-header,
+    .sn-sort-header::after,
+    tr.cdk-drop-list-dragging .sn-table-row:not(.cdk-drag-placeholder),
+    tbody.cdk-drop-list-dragging .sn-table-row:not(.cdk-drag-placeholder) {
+      transition: none;
+    }
+  }
+}

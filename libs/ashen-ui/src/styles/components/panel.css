@@ -1,0 +1,139 @@
+@layer components {
+  .sn-panel {
+    --sn-panel-bg: var(--sn-surface-panel);
+    --sn-panel-border-color: var(--sn-border);
+    --sn-panel-border-width: 1px;
+    --sn-panel-border-radius: var(--sn-radius-tile);
+    --sn-panel-backdrop-filter: var(--sn-backdrop-filter, none);
+
+    --sn-panel-header-padding: 10px 14px;
+    --sn-panel-header-gap: 8px;
+    --sn-panel-header-border-color: var(--sn-border);
+
+    --sn-panel-icon-color: var(--sn-text-subtle);
+    --sn-panel-icon-size: 18px;
+
+    --sn-panel-title-font-size: var(--sn-text-sm);
+    --sn-panel-title-font-weight: var(--sn-font-weight-semibold);
+    --sn-panel-title-color: var(--sn-text);
+
+    --sn-panel-toggle-size: 24px;
+    --sn-panel-toggle-color: var(--sn-text-subtle);
+    --sn-panel-toggle-border-radius: var(--sn-radius-sm);
+    --sn-panel-toggle-icon-transition: transform var(--sn-motion-slow);
+
+    --sn-panel-content-padding: 12px 14px;
+    --sn-panel-content-font-size: var(--sn-text-sm);
+    --sn-panel-content-color: var(--sn-text-muted);
+    --sn-panel-content-transition-duration: var(--sn-motion-slow);
+
+    display: block;
+    min-width: 0;
+    background: var(--sn-panel-bg);
+    border: var(--sn-panel-border-width) solid var(--sn-panel-border-color);
+    border-radius: var(--sn-panel-border-radius);
+    backdrop-filter: var(--sn-panel-backdrop-filter);
+    -webkit-backdrop-filter: var(--sn-panel-backdrop-filter);
+    overflow: hidden;
+  }
+
+  .sn-panel-header {
+    display: flex;
+    align-items: center;
+    gap: var(--sn-panel-header-gap);
+    padding: var(--sn-panel-header-padding);
+    border-bottom: 1px solid var(--sn-panel-header-border-color);
+  }
+
+  .sn-panel-header--collapsed {
+    border-bottom: none;
+  }
+
+  .sn-panel-icon {
+    flex-shrink: 0;
+    color: var(--sn-panel-icon-color);
+    font-size: var(--sn-panel-icon-size);
+  }
+
+  .sn-panel-title {
+    flex: 1;
+    font-size: var(--sn-panel-title-font-size);
+    font-weight: var(--sn-panel-title-font-weight);
+    color: var(--sn-panel-title-color);
+  }
+
+  .sn-panel-actions {
+    display: contents;
+  }
+
+  .sn-panel-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--sn-panel-toggle-size);
+    height: var(--sn-panel-toggle-size);
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--sn-panel-toggle-color);
+    cursor: pointer;
+    border-radius: var(--sn-panel-toggle-border-radius);
+  }
+
+  .sn-panel-toggle:hover {
+    background: var(--sn-surface-hover);
+  }
+
+  .sn-panel-toggle:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-panel-toggle-icon {
+    transition: var(--sn-panel-toggle-icon-transition);
+  }
+
+  .sn-panel-toggle-icon--collapsed {
+    transform: rotate(-90deg);
+  }
+
+  .sn-panel-content-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+  }
+
+  .sn-panel-content-wrapper--animated {
+  }
+
+  .sn-panel-content-wrapper--expanded {
+    grid-template-rows: 1fr;
+  }
+
+  .sn-panel-content {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .sn-panel-content-body {
+    padding: var(--sn-panel-content-padding);
+    font-size: var(--sn-panel-content-font-size);
+    color: var(--sn-panel-content-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-panel-toggle-icon {
+      transition: none;
+    }
+
+    .sn-panel.sn-panel-animate .sn-panel-content-wrapper--animated {
+      transition: none;
+    }
+  }
+
+  /* Gate the animated transition until after first render so a preselected
+     collapsed state snaps into place instead of animating. */
+  .sn-panel.sn-panel-animate .sn-panel-content-wrapper--animated {
+    transition: grid-template-rows var(--sn-panel-content-transition-duration, var(--sn-motion-slow));
+  }
+}

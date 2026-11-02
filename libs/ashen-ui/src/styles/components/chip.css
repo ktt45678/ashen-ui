@@ -1,0 +1,110 @@
+@layer components {
+  .sn-chip {
+    --sn-chip-bg: var(--sn-surface-hover);
+    --sn-chip-icon-size: 14px;
+    --sn-chip-border: var(--sn-border);
+    --sn-chip-text: var(--sn-text);
+    --sn-chip-selected-bg: var(--sn-selected-bg);
+    --sn-chip-selected-border: var(--sn-color-primary);
+    --sn-chip-selected-text: var(--sn-selected-text);
+    --sn-chip-border-width: 1px;
+    --sn-chip-radius: var(--sn-radius-pill);
+    --sn-chip-font-size: var(--sn-text-xs);
+    --sn-chip-font-weight: var(--sn-font-weight-medium);
+    --sn-chip-label-line-height: 1;
+    /* Nunito's glyphs paint 1px below their line box at this size. */
+    --sn-chip-label-offset: -1px;
+    --sn-chip-remove-size: 14px;
+    --sn-chip-remove-icon-size: 12px;
+    --sn-chip-remove-opacity: 0.7;
+  }
+
+  .sn-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sn-chip-gap, 6px);
+    padding: var(--sn-chip-padding, 4px 10px);
+    border-radius: var(--sn-chip-radius);
+    background: var(--sn-chip-bg);
+    border: var(--sn-chip-border-width) solid var(--sn-chip-border);
+    color: var(--sn-chip-text);
+
+    font-size: var(--sn-chip-font-size);
+    font-weight: var(--sn-chip-font-weight);
+    font-family: var(--sn-font-ui);
+
+    cursor: default;
+    user-select: none;
+    vertical-align: middle;
+    outline: none;
+
+    transition:
+      background-color var(--sn-motion-base),
+      border-color var(--sn-motion-base);
+  }
+
+  /* Label line box equals the em box so flex centering centers the glyphs
+     optically (same fix as the radio-button dot). */
+  .sn-chip-label {
+    line-height: var(--sn-chip-label-line-height);
+    transform: translateY(var(--sn-chip-label-offset));
+  }
+
+  .sn-chip.sn-chip--selected {
+    background: var(--sn-chip-selected-bg);
+    border-color: var(--sn-chip-selected-border);
+    color: var(--sn-chip-selected-text);
+  }
+
+  .sn-chip:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  .sn-chip-icon {
+    font-size: var(--sn-chip-icon-size);
+    line-height: 1;
+    color: inherit;
+  }
+
+  .sn-chip-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--sn-chip-remove-size);
+    height: var(--sn-chip-remove-size);
+    padding: 0;
+    margin-inline-end: -2px;
+
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    background: transparent;
+    color: inherit;
+    opacity: var(--sn-chip-remove-opacity);
+    transition: opacity var(--sn-motion-base);
+  }
+
+  .sn-chip-remove-icon {
+    font-size: var(--sn-chip-remove-icon-size);
+  }
+
+  .sn-chip-remove:hover {
+    opacity: 1;
+  }
+
+  .sn-chip-remove:focus-visible {
+    outline: var(--sn-focus-ring-width) solid var(--sn-focus-ring-color);
+    outline-offset: var(--sn-focus-ring-applied-offset);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-chip {
+      transition: none;
+    }
+    .sn-chip-remove {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@layer components {
+  .sn-confirm-dialog {
+    display: contents;
+  }
+
+  .sn-confirm-dialog-body {
+    display: flex;
+    gap: var(--sn-confirm-dialog-body-gap, var(--sn-space-3, 0.75rem));
+    align-items: flex-start;
+  }
+
+  .sn-confirm-dialog-message {
+    font-size: var(--sn-text-sm, 0.875rem);
+    color: var(--sn-text-muted);
+    line-height: var(--sn-leading-normal, 1.5);
+  }
+
+  .sn-dialog-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sn-confirm-dialog-actions-gap, 0.75rem);
+    margin-top: var(--sn-confirm-dialog-actions-margin-top, 1.25rem);
+  }
+
+  .sn-confirm-dialog-icon {
+    --sn-confirm-dialog-icon-size: var(--sn-confirm-dialog-icon-font-size, 1.375rem);
+    font-size: var(--sn-confirm-dialog-icon-size);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .sn-confirm-dialog-icon--primary {
+    color: var(--sn-color-primary);
+  }
+
+  .sn-confirm-dialog-icon--error {
+    color: var(--sn-color-error);
+  }
+
+  .sn-confirm-dialog-icon--warning {
+    color: var(--sn-color-warning);
+  }
+
+  .sn-confirm-dialog-icon--success {
+    color: var(--sn-color-success);
+  }
+}

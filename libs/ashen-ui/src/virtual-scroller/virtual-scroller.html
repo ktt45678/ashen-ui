@@ -1,0 +1,24 @@
+<cdk-virtual-scroll-viewport
+  [itemSize]="itemHeight()"
+  [minBufferPx]="minBufferPx()"
+  [maxBufferPx]="maxBufferPx()"
+  [style.height.px]="height()"
+  class="sn-virtual-scroller-viewport"
+  (scrolledIndexChange)="onScrolledIndexChange($event)"
+>
+  <div
+    *cdkVirtualFor="let item of items(); let i = index"
+    class="sn-virtual-scroller-item"
+    [class]="itemClassExtra()"
+    [style.height.px]="itemHeight()"
+  >
+    @if (itemDef(); as def) {
+      <ng-template
+        [ngTemplateOutlet]="def.templateRef"
+        [ngTemplateOutletContext]="{ $implicit: item, index: i }"
+      />
+    } @else {
+      <div class="sn-virtual-scroller-default-row">{{ '' + item }}</div>
+    }
+  </div>
+</cdk-virtual-scroll-viewport>

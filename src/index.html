@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ashen UI</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ashen UI, an Angular component library built on signals and the CDK.">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script>
+    // Apply the persisted theme before first paint so a stored dark/glass
+    // theme doesn't flash the default (light) colors while Angular bootstraps.
+    (function () {
+      try {
+        var t = localStorage.getItem('sn-theme');
+        if (t === 'dark' || t === 'glass') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) { /* storage unavailable */ }
+      // Boot guard: hide the app and disable transitions until the first
+      // route has rendered (App removes the attribute; 4s safety fallback).
+      document.documentElement.setAttribute('data-sn-app-boot', '');
+      setTimeout(function () {
+        document.documentElement.removeAttribute('data-sn-app-boot');
+      }, 4000);
+    })();
+  </script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<header class="page-header">
+  <h1 class="page-title">Ashen UI</h1>
+  <p class="page-lead">
+    A production-grade Angular component library built for dense, professional desktop
+    applications. Three themes - light, dark, glass - via CSS custom properties.
+    No zone.js.
+  </p>
+</header>
+
+<section class="card-grid">
+  <a class="feature-card" routerLink="/guides/getting-started">
+    <h3 class="card-title">Getting started</h3>
+    <p class="card-desc">Install the package, import the styles, use your first component.</p>
+  </a>
+  <a class="feature-card" routerLink="/guides/theming">
+    <h3 class="card-title">Theming</h3>
+    <p class="card-desc">Two-tier CSS variable system. Switch themes at runtime via <code>data-theme</code>.</p>
+  </a>
+  <a class="feature-card" routerLink="/guides/configuration">
+    <h3 class="card-title">Configuration</h3>
+    <p class="card-desc">Application-wide component defaults, motion policy, validation display, and translation.</p>
+  </a>
+</section>
+
+<section class="info-section">
+  <h2 class="section-title">Design principles</h2>
+  <ul class="principle-list">
+    <li><strong>CSS variables all the way down.</strong> Zero hardcoded values in component CSS - every color, radius, and spacing resolves through a <code>--sn-*</code> custom property.</li>
+    <li><strong>Composable, not prop-driven.</strong> Complex components expose sub-components rather than configuration objects. Omit a sub-component from the template and its region simply does not render.</li>
+    <li><strong>Directive-first.</strong> <code>button[snButton]</code>, <code>input[snInputText]</code> - native semantics, accessibility, and SEO for free.</li>
+    <li><strong>Angular 20+ idioms.</strong> Signals, <code>input()</code>/<code>output()</code>/<code>model()</code>, OnPush, zoneless change detection.</li>
+  </ul>
+</section>

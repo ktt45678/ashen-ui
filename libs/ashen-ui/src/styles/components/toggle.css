@@ -1,0 +1,111 @@
+@layer components {
+  .sn-toggle-wrapper {
+    --sn-toggle-track-bg: var(--sn-border-strong);
+    --sn-toggle-track-bg-checked: var(--sn-color-primary-solid);
+    --sn-toggle-track-bg-hover: var(--sn-toggle-track-bg);
+    --sn-toggle-track-bg-checked-hover: var(--sn-toggle-track-bg-checked);
+    --sn-toggle-thumb-bg: rgb(255, 255, 255);
+    --sn-toggle-label-color: var(--sn-text);
+    --sn-toggle-label-size: var(--sn-label-size, var(--sn-text-sm));
+    --sn-toggle-transition: var(--sn-motion-slow, 0.2s ease);
+
+    display: flex;
+    align-items: center;
+    gap: var(--sn-toggle-label-gap);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .sn-toggle-wrapper.sn-toggle-disabled {
+    cursor: not-allowed;
+    opacity: var(--sn-disabled-opacity);
+  }
+
+  .sn-toggle-track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--sn-toggle-track-bg);
+    border-radius: var(--sn-toggle-track-border-radius);
+    flex-shrink: 0;
+    --sn-toggle-track-w: var(--sn-toggle-track-width-md);
+    --sn-toggle-thumb-size: var(--sn-toggle-thumb-size-md);
+    width: var(--sn-toggle-track-width-md);
+    height: var(--sn-toggle-track-height-md);
+  }
+
+  .sn-toggle-track.sn-toggle-track-sm {
+    --sn-toggle-track-w: var(--sn-toggle-track-width-sm);
+    --sn-toggle-thumb-size: var(--sn-toggle-thumb-size-sm);
+    width: var(--sn-toggle-track-width-sm);
+    height: var(--sn-toggle-track-height-sm);
+  }
+
+  .sn-toggle-track.sn-toggle-track-lg {
+    --sn-toggle-track-w: var(--sn-toggle-track-width-lg);
+    --sn-toggle-thumb-size: var(--sn-toggle-thumb-size-lg);
+    width: var(--sn-toggle-track-width-lg);
+    height: var(--sn-toggle-track-height-lg);
+  }
+
+  .sn-toggle-wrapper.sn-toggle-checked .sn-toggle-track {
+    background-color: var(--sn-toggle-track-bg-checked);
+  }
+
+  .sn-toggle-wrapper:not(.sn-toggle-disabled):hover .sn-toggle-track {
+    background-color: var(--sn-toggle-track-bg-hover);
+  }
+
+  .sn-toggle-wrapper.sn-toggle-checked:not(.sn-toggle-disabled):hover .sn-toggle-track {
+    background-color: var(--sn-toggle-track-bg-checked-hover);
+  }
+
+  /* Thumb centering: one composite transform keeps both axes subpixel-correct. */
+  .sn-toggle-thumb {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 0;
+    background-color: var(--sn-toggle-thumb-bg);
+    border-radius: 50%;
+    box-shadow: var(--sn-shadow-sm);
+    transform: translate(var(--sn-toggle-thumb-offset), -50%);
+    width: var(--sn-toggle-thumb-size);
+    height: var(--sn-toggle-thumb-size);
+  }
+
+  .sn-toggle-wrapper.sn-toggle-checked .sn-toggle-thumb {
+    transform: translate(calc(var(--sn-toggle-track-w) - 100% - var(--sn-toggle-thumb-offset)), -50%);
+  }
+
+  /* RTL: thumb starts at the inline-start (visual right) and slides the other
+     way, so negate the horizontal translate on both resting and checked. */
+  [dir='rtl'] .sn-toggle-thumb {
+    transform: translate(calc(-1 * var(--sn-toggle-thumb-offset)), -50%);
+  }
+  [dir='rtl'] .sn-toggle-wrapper.sn-toggle-checked .sn-toggle-thumb {
+    transform: translate(calc(-1 * (var(--sn-toggle-track-w) - 100% - var(--sn-toggle-thumb-offset))), -50%);
+  }
+
+  /* Gate state transitions until after first render so a preselected checked
+     value snaps into place instead of animating from the unchecked state. */
+  .sn-toggle-wrapper.sn-toggle-animate .sn-toggle-track {
+    transition: background-color var(--sn-toggle-transition);
+  }
+
+  .sn-toggle-wrapper.sn-toggle-animate .sn-toggle-thumb {
+    transition: transform var(--sn-toggle-transition);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sn-toggle-wrapper.sn-toggle-animate .sn-toggle-track,
+    .sn-toggle-wrapper.sn-toggle-animate .sn-toggle-thumb {
+      transition: none;
+    }
+  }
+
+  .sn-toggle-label {
+    font-size: var(--sn-toggle-label-size);
+    color: var(--sn-toggle-label-color);
+    line-height: 1;
+  }
+}
