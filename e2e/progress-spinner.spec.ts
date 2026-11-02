@@ -55,9 +55,9 @@ test.describe('ProgressSpinner', () => {
     await expect(d.locator('sn-progress-spinner').first()).toHaveClass(/\bsn-progress-spinner--material\b/);
   });
 
-  test('material indeterminate SVG uses material rotation class', async ({ page }) => {
+  test('material indeterminate renders the clipped half-circle arcs', async ({ page }) => {
     const d = demo(page, 'Material variant');
-    await expect(d.locator('.sn-progress-spinner-svg--rotate-material').first()).toBeVisible();
+    await expect(d.locator('.sn-progress-spinner-material-clipper-start svg').first()).toBeVisible();
   });
 
   test('custom color variant renders an SVG element', async ({ page }) => {

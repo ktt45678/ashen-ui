@@ -167,6 +167,13 @@ describe('ConfirmDialog component', () => {
     expect(getPanel()).toBeTruthy();
   });
 
+  it('marks the panel as a confirmation panel', async () => {
+    const fixture = TestBed.createComponent(BasicHost);
+    await openDialog(fixture);
+    expect(getPanel()!.classList).toContain('sn-dialog-panel--confirm');
+    expect(getPanel()!.classList).toContain('sn-dialog-panel--sm');
+  });
+
   it('renders the header as dialog title', async () => {
     const fixture = TestBed.createComponent(BasicHost);
     await openDialog(fixture);

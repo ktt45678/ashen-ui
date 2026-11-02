@@ -448,6 +448,13 @@ describe('DialogService', () => {
     expect(value).toBe(false);
   });
 
+  it('confirm() marks the panel as a confirmation panel', async () => {
+    service.confirm({ message: 'Proceed?' }).subscribe();
+    await flush();
+
+    expect(panel()!.classList).toContain('sn-dialog-panel--confirm');
+  });
+
   it('confirm() marks the reject button as the initial focus target', async () => {
     service.confirm({ message: 'Proceed?' }).subscribe();
     await flush();

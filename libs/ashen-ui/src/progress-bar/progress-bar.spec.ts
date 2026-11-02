@@ -199,25 +199,21 @@ describe('ProgressBar', () => {
     expect(track).toBeTruthy();
   });
 
-  it('renders stop dot in material determinate mode', async () => {
+  it('scales the material primary bar to the value', async () => {
     const fixture = TestBed.createComponent(MaterialDeterminateHost);
     await fixture.whenStable();
-    const dot = fixture.nativeElement.querySelector('.sn-progress-bar-stop-dot');
-    expect(dot).toBeTruthy();
+    const bar: HTMLElement = fixture.nativeElement.querySelector('.sn-progress-bar-bar--primary');
+    expect(bar.style.transform).toBe('scaleX(0.64)');
+    expect(fixture.nativeElement.querySelector('.sn-progress-bar-bar--secondary')).toBeNull();
   });
 
-  it('renders track remainder in material determinate mode', async () => {
-    const fixture = TestBed.createComponent(MaterialDeterminateHost);
-    await fixture.whenStable();
-    const rem = fixture.nativeElement.querySelector('.sn-progress-bar-track-remainder');
-    expect(rem).toBeTruthy();
-  });
-
-  it('renders material indeterminate fill class', async () => {
+  it('renders both material bars without an inline transform when indeterminate', async () => {
     const fixture = TestBed.createComponent(MaterialIndeterminateHost);
     await fixture.whenStable();
-    const fill = fixture.nativeElement.querySelector('.sn-progress-bar-fill--indeterminate-material');
-    expect(fill).toBeTruthy();
+    const primary: HTMLElement = fixture.nativeElement.querySelector('.sn-progress-bar-bar--primary');
+    expect(primary.style.transform).toBe('');
+    expect(fixture.nativeElement.querySelector('.sn-progress-bar-bar--secondary')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('[role="progressbar"]').hasAttribute('aria-valuenow')).toBe(false);
   });
 
   it('clamps value above 100', async () => {

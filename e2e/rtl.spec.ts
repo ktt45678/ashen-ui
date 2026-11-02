@@ -10,8 +10,11 @@ import { ROUTES } from './support/pages';
 
 async function setDirection(page: Page, direction: 'ltr' | 'rtl'): Promise<void> {
   const label = direction === 'rtl' ? 'RTL' : 'LTR';
-  await page.getByRole('navigation', { name: 'Text direction' }).getByRole('button', { name: label }).click();
+  await page.locator('app-header').getByRole('button', { name: 'Settings' }).click();
+  await page.getByRole('group', { name: 'Text direction' }).getByRole('button', { name: label }).click();
   await expect(page.locator('html')).toHaveAttribute('dir', direction);
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog', { name: 'Settings' })).toBeHidden();
 }
 
 test.describe('rtl', () => {

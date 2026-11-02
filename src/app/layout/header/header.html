@@ -13,26 +13,52 @@
     </button>
     <a class="wordmark" routerLink="/" aria-label="Ashen UI home">Ashen UI</a>
   </div>
-  <div class="header-controls">
-    <nav class="theme-switcher" aria-label="Text direction">
-      @for (d of directions; track d.value) {
-        <button
-          class="theme-btn"
-          [class.active]="themeService.dir() === d.value"
-          (click)="themeService.setDir(d.value)"
-          [attr.aria-pressed]="themeService.dir() === d.value"
-        >{{ d.label }}</button>
-      }
-    </nav>
-    <nav class="theme-switcher" aria-label="Theme">
-      @for (t of themes; track t.value) {
-        <button
-          class="theme-btn"
-          [class.active]="themeService.theme() === t.value"
-          (click)="themeService.set(t.value)"
-          [attr.aria-pressed]="themeService.theme() === t.value"
-        >{{ t.label }}</button>
-      }
-    </nav>
-  </div>
+  <sn-popover [snAttrs]="{ panel: { 'aria-label': 'Settings' } }">
+    <button
+      snButton
+      variant="icon"
+      icon="settings"
+      class="settings-trigger"
+      aria-label="Settings"
+      title="Settings"
+      snPopoverTrigger
+    ></button>
+    <ng-template snPopoverContent>
+      <div class="settings-panel">
+        <div class="settings-group" role="group" aria-labelledby="settings-theme-label">
+          <span class="settings-label" id="settings-theme-label">Theme</span>
+          <div class="segmented">
+            @for (t of themes; track t.value) {
+              <button
+                type="button"
+                class="segmented-btn"
+                [class.active]="themeService.theme() === t.value"
+                (click)="themeService.set(t.value)"
+                [attr.aria-pressed]="themeService.theme() === t.value"
+              >
+                <sn-icon class="segmented-icon">{{ t.icon }}</sn-icon>
+                {{ t.label }}
+              </button>
+            }
+          </div>
+        </div>
+        <div class="settings-group" role="group" aria-labelledby="settings-dir-label">
+          <span class="settings-label" id="settings-dir-label">Text direction</span>
+          <div class="segmented">
+            @for (d of directions; track d.value) {
+              <button
+                type="button"
+                class="segmented-btn"
+                [class.active]="themeService.dir() === d.value"
+                (click)="themeService.setDir(d.value)"
+                [attr.aria-pressed]="themeService.dir() === d.value"
+              >
+                {{ d.label }}
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </sn-popover>
 </div>

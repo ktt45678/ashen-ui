@@ -1,75 +1,82 @@
 [data-theme='glass'] {
   color-scheme: dark;
-  --sn-backdrop-filter: blur(24px);
+  --sn-backdrop-filter: blur(24px) saturate(160%);
   --sn-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
 
-  --sn-color-primary: rgb(51, 173, 230);
-  --sn-color-primary-border: rgb(41, 153, 210);
-  --sn-color-primary-focus: rgb(31, 133, 190);
-  --sn-color-primary-soft: rgba(51, 173, 230, 0.18);
-  --sn-color-secondary: rgb(173, 181, 189);
-  --sn-color-secondary-border: rgb(145, 151, 157);
-  --sn-color-secondary-focus: rgb(121, 127, 132);
-  --sn-color-success: rgb(120, 200, 150);
-  --sn-color-success-border: rgb(95, 170, 120);
-  --sn-color-success-focus: rgb(75, 150, 100);
-  --sn-color-error: rgb(240, 120, 130);
-  --sn-color-error-border: rgb(210, 90, 100);
-  --sn-color-error-focus: rgb(190, 70, 80);
-  --sn-color-warning: rgb(255, 220, 120);
-  --sn-color-warning-border: rgb(235, 200, 100);
-  --sn-color-warning-focus: rgb(215, 180, 80);
-  --sn-color-info: rgb(150, 230, 255);
-  --sn-color-info-border: rgb(120, 200, 230);
-  --sn-color-info-focus: rgb(100, 180, 210);
-  --sn-color-primary-hover: var(--sn-color-primary-border);
-  --sn-color-primary-active: var(--sn-color-primary-focus);
-  --sn-color-primary-solid: var(--sn-color-primary);
-  --sn-color-primary-solid-hover: var(--sn-color-primary-border);
-  --sn-color-primary-solid-active: var(--sn-color-primary-focus);
-  --sn-color-secondary-hover: var(--sn-color-secondary-border);
-  --sn-color-secondary-active: var(--sn-color-secondary-focus);
-  --sn-color-secondary-solid: var(--sn-color-secondary);
-  --sn-color-secondary-solid-hover: var(--sn-color-secondary-border);
-  --sn-color-secondary-solid-active: var(--sn-color-secondary-focus);
-  --sn-color-success-hover: var(--sn-color-success-border);
-  --sn-color-success-active: var(--sn-color-success-focus);
-  --sn-color-success-solid: var(--sn-color-success);
-  --sn-color-success-solid-hover: var(--sn-color-success-border);
-  --sn-color-success-solid-active: var(--sn-color-success-focus);
-  --sn-color-error-hover: var(--sn-color-error-border);
-  --sn-color-error-active: var(--sn-color-error-focus);
-  --sn-color-error-solid: var(--sn-color-error);
-  --sn-color-error-solid-hover: var(--sn-color-error-border);
-  --sn-color-error-solid-active: var(--sn-color-error-focus);
-  --sn-color-warning-hover: var(--sn-color-warning-border);
-  --sn-color-warning-active: var(--sn-color-warning-focus);
-  --sn-color-warning-solid: var(--sn-color-warning);
-  --sn-color-warning-solid-hover: var(--sn-color-warning-border);
-  --sn-color-warning-solid-active: var(--sn-color-warning-focus);
-  --sn-color-info-hover: var(--sn-color-info-border);
-  --sn-color-info-active: var(--sn-color-info-focus);
-  --sn-color-info-solid: var(--sn-color-info);
-  --sn-color-info-solid-hover: var(--sn-color-info-border);
-  --sn-color-info-solid-active: var(--sn-color-info-focus);
+  /* Same scheme as the dark theme: light accents for text and outlines,
+     deeper solid fills that carry white labels. */
+  --sn-color-primary: rgb(118, 192, 250);
+  --sn-color-primary-hover: rgb(146, 207, 252);
+  --sn-color-primary-active: rgb(174, 221, 253);
+  --sn-color-primary-border: var(--sn-color-primary-hover);
+  --sn-color-primary-focus: var(--sn-color-primary-active);
+  --sn-color-primary-solid: rgb(37, 117, 214);
+  --sn-color-primary-solid-hover: rgb(30, 100, 190);
+  --sn-color-primary-solid-active: rgb(24, 82, 160);
+  --sn-color-primary-soft: rgba(118, 192, 250, 0.18);
+  --sn-color-secondary: rgb(196, 202, 222);
+  --sn-color-secondary-hover: rgb(212, 217, 232);
+  --sn-color-secondary-active: rgb(228, 231, 241);
+  --sn-color-secondary-border: var(--sn-color-secondary-hover);
+  --sn-color-secondary-focus: var(--sn-color-secondary-active);
+  --sn-color-secondary-solid: rgba(255, 255, 255, 0.16);
+  --sn-color-secondary-solid-hover: rgba(255, 255, 255, 0.22);
+  --sn-color-secondary-solid-active: rgba(255, 255, 255, 0.28);
+  --sn-color-secondary-soft: rgba(196, 202, 222, 0.16);
+  --sn-color-success: rgb(112, 211, 157);
+  --sn-color-success-hover: rgb(139, 225, 177);
+  --sn-color-success-active: rgb(166, 236, 196);
+  --sn-color-success-border: var(--sn-color-success-hover);
+  --sn-color-success-focus: var(--sn-color-success-active);
+  --sn-color-success-solid: rgb(34, 128, 80);
+  --sn-color-success-solid-hover: rgb(26, 106, 66);
+  --sn-color-success-solid-active: rgb(19, 85, 52);
+  --sn-color-success-soft: rgba(112, 211, 157, 0.16);
+  --sn-color-error: rgb(255, 139, 151);
+  --sn-color-error-hover: rgb(255, 166, 176);
+  --sn-color-error-active: rgb(255, 193, 201);
+  --sn-color-error-border: var(--sn-color-error-hover);
+  --sn-color-error-focus: var(--sn-color-error-active);
+  --sn-color-error-solid: rgb(198, 58, 78);
+  --sn-color-error-solid-hover: rgb(168, 45, 63);
+  --sn-color-error-solid-active: rgb(136, 33, 49);
+  --sn-color-error-soft: rgba(255, 139, 151, 0.16);
+  --sn-color-warning: rgb(255, 208, 112);
+  --sn-color-warning-hover: rgb(255, 220, 145);
+  --sn-color-warning-active: rgb(255, 231, 178);
+  --sn-color-warning-border: var(--sn-color-warning-hover);
+  --sn-color-warning-focus: var(--sn-color-warning-active);
+  --sn-color-warning-solid: rgb(150, 98, 0);
+  --sn-color-warning-solid-hover: rgb(124, 81, 0);
+  --sn-color-warning-solid-active: rgb(98, 64, 0);
+  --sn-color-warning-soft: rgba(255, 208, 112, 0.16);
+  --sn-color-info: rgb(120, 222, 238);
+  --sn-color-info-hover: rgb(148, 231, 243);
+  --sn-color-info-active: rgb(178, 240, 249);
+  --sn-color-info-border: var(--sn-color-info-hover);
+  --sn-color-info-focus: var(--sn-color-info-active);
+  --sn-color-info-solid: rgb(0, 120, 148);
+  --sn-color-info-solid-hover: rgb(0, 98, 120);
+  --sn-color-info-solid-active: rgb(0, 78, 96);
+  --sn-color-info-soft: rgba(120, 222, 238, 0.16);
 
-  --sn-text: rgba(255, 255, 255, 0.92);
-  --sn-text-muted: rgba(255, 255, 255, 0.72);
-  --sn-text-subtle: rgba(255, 255, 255, 0.55);
-  --sn-text-inverse: rgb(10, 10, 18);
+  --sn-text: rgba(255, 255, 255, 0.94);
+  --sn-text-muted: rgba(255, 255, 255, 0.74);
+  --sn-text-subtle: rgba(255, 255, 255, 0.56);
+  --sn-text-inverse: rgb(12, 14, 26);
   --sn-text-disabled: rgba(255, 255, 255, 0.38);
-  --sn-text-on-primary: rgb(6, 26, 38);
+  --sn-text-on-primary: rgb(255, 255, 255);
   --sn-text-on-secondary: var(--sn-text-on-primary);
   --sn-text-on-success: var(--sn-text-on-primary);
   --sn-text-on-error: var(--sn-text-on-primary);
   --sn-text-on-warning: var(--sn-text-on-primary);
   --sn-text-on-info: var(--sn-text-on-primary);
-  --sn-text-on-primary-soft: var(--sn-text-on-primary);
-  --sn-text-on-secondary-soft: var(--sn-text-on-primary);
-  --sn-text-on-success-soft: var(--sn-text-on-primary);
-  --sn-text-on-error-soft: var(--sn-text-on-primary);
-  --sn-text-on-warning-soft: var(--sn-text-on-primary);
-  --sn-text-on-info-soft: var(--sn-text-on-primary);
+  --sn-text-on-primary-soft: var(--sn-color-primary);
+  --sn-text-on-secondary-soft: var(--sn-color-secondary);
+  --sn-text-on-success-soft: var(--sn-color-success);
+  --sn-text-on-error-soft: var(--sn-color-error);
+  --sn-text-on-warning-soft: var(--sn-color-warning);
+  --sn-text-on-info-soft: var(--sn-color-info);
 
   --sn-surface-canvas: rgb(10, 10, 18);
   --sn-surface-panel: rgba(255, 255, 255, 0.08);
@@ -78,7 +85,7 @@
   --sn-surface-grid: transparent;
   --sn-surface-tile: rgba(255, 255, 255, 0.10);
   --sn-surface-tile-active: rgba(255, 255, 255, 0.18);
-  --sn-surface-tile-editing: rgba(51, 173, 230, 0.16);
+  --sn-surface-tile-editing: rgba(118, 192, 250, 0.16);
   --sn-surface-glass: rgba(255, 255, 255, 0.08);
   --sn-surface-hover: rgba(255, 255, 255, 0.12);
 
@@ -87,15 +94,15 @@
   --sn-border-strong: rgba(255, 255, 255, 0.28);
   --sn-control-border: var(--sn-border-strong);
   --sn-border-focus: var(--sn-color-primary);
-  --sn-border-invalid: var(--sn-color-error-border);
+  --sn-border-invalid: var(--sn-color-error);
 
   --sn-input-bg: rgba(255, 255, 255, 0.08);
   --sn-input-placeholder: rgba(255, 255, 255, 0.45);
   --sn-select-panel-bg: rgba(30, 32, 48, 0.9);
-  --sn-select-option-selected-bg: rgba(51, 173, 230, 0.25);
-  --sn-select-option-selected-text: rgb(150, 220, 255);
+  --sn-select-option-selected-bg: rgba(118, 192, 250, 0.22);
+  --sn-select-option-selected-text: var(--sn-color-primary);
 
-  --sn-focus-ring-color: rgba(51, 173, 230, 0.7);
+  --sn-focus-ring-color: rgba(118, 192, 250, 0.7);
   --sn-focus-ring-width: 2px;
   --sn-focus-ring-offset: 2px;
 
@@ -104,27 +111,13 @@
   --sn-disabled-text: rgba(255, 255, 255, 0.38);
   --sn-disabled-border: rgba(255, 255, 255, 0.08);
 
-  /* ── Completing the theme contract ──────────────────────────────
-     Every token below was missing, and a missing token does not fall back to
-     something neutral; it inherits the LIGHT value from :root. On a dark
-     glass canvas that meant light message panels, a light scrollbar and light
-     dialog/drawer/menu backgrounds. Found by scripts/validate-theme.mjs, which
-     now holds this file to the same contract as the built-in dark theme.
-
-     Most of these resolve through this theme's own tokens, so they pick up the
-     glass surfaces rather than hard-coding a second palette. */
-
+  /* Tokens a theme must set, or the light value from :root leaks through. */
   --sn-color-invalid: var(--sn-color-error);
-  --sn-color-secondary-soft: rgba(173, 181, 189, 0.14);
-  --sn-color-success-soft: rgba(120, 200, 150, 0.14);
-  --sn-color-error-soft: rgba(240, 120, 130, 0.14);
-  --sn-color-warning-soft: rgba(255, 220, 120, 0.14);
-  --sn-color-info-soft: rgba(150, 230, 255, 0.14);
 
-  /* Translucent, because --sn-surface-panel is translucent in this theme. */
-  --sn-dialog-bg: var(--sn-surface-panel);
-  --sn-drawer-bg: var(--sn-surface-panel);
-  --sn-menu-bg: var(--sn-surface-panel);
+  /* Overlays sit on a dark mask, so they need a tinted frost to stay legible. */
+  --sn-dialog-bg: rgba(26, 28, 46, 0.72);
+  --sn-drawer-bg: rgba(26, 28, 46, 0.78);
+  --sn-menu-bg: rgba(30, 32, 52, 0.82);
 
   --sn-message-info-bg: color-mix(in srgb, var(--sn-color-info) 14%, var(--sn-surface-panel));
   --sn-message-info-text: color-mix(in srgb, var(--sn-text) 55%, var(--sn-color-info) 45%);
@@ -145,7 +138,25 @@
   --sn-scrollbar-thumb-hover: rgba(255, 255, 255, 0.35);
 }
 
-/* ── Glass tooltip - inverted: opaque dark bg, near-white text ─── */
+/* The showcase shell: a colored canvas gives the frosted surfaces something to blur. */
+[data-theme='glass'] {
+  --doc-app-bg:
+    radial-gradient(56rem 40rem at 0% -10%, rgba(56, 140, 235, 0.42), transparent 70%),
+    radial-gradient(52rem 40rem at 100% 10%, rgba(150, 100, 240, 0.36), transparent 70%),
+    radial-gradient(60rem 44rem at 60% 115%, rgba(230, 90, 160, 0.28), transparent 70%),
+    var(--sn-surface-canvas);
+  --doc-chrome-bg: rgba(16, 18, 34, 0.55);
+  --doc-chrome-filter: var(--sn-backdrop-filter);
+  --doc-drawer-bg: rgba(18, 20, 38, 0.9);
+  --doc-backdrop-bg: rgba(4, 6, 14, 0.55);
+  --doc-well-bg: rgba(0, 0, 0, 0.22);
+}
+
+[data-theme='glass'] .sn-popover-panel {
+  --sn-popover-bg: var(--sn-menu-bg);
+}
+
+/* Inverted tooltip: dark bubble, light text. */
 [data-theme='glass'] .sn-tooltip-bubble {
   --sn-tooltip-bg: var(--sn-text-inverse);
   --sn-tooltip-color: var(--sn-text);

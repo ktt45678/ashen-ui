@@ -33,7 +33,25 @@
 }
 
 <ng-template #matSpinner>
-  <svg class="sn-button-spinner" viewBox="0 0 24 24" aria-hidden="true">
-    <circle class="sn-button-spinner-arc" cx="12" cy="12" r="10" />
-  </svg>
+  <span class="sn-button-spinner" aria-hidden="true">
+    <span class="sn-progress-spinner-material">
+      <span class="sn-progress-spinner-material-layer">
+        @for (segment of materialSegments; track segment) {
+          <span [class]="'sn-progress-spinner-material-' + segment">
+            <svg viewBox="0 0 24 24" class="sn-progress-spinner-material-arc">
+              <circle
+                class="sn-progress-spinner-material-circle"
+                cx="12" cy="12"
+                stroke="currentColor"
+                [attr.r]="spinnerRadius"
+                [attr.stroke-width]="spinnerStrokeWidth"
+                [attr.stroke-dasharray]="spinnerCircumference"
+                [attr.stroke-dashoffset]="spinnerCircumference / 2"
+              />
+            </svg>
+          </span>
+        }
+      </span>
+    </span>
+  </span>
 </ng-template>

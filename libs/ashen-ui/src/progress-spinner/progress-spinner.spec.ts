@@ -27,6 +27,13 @@ class DeterminateHost {}
 class MaterialIndeterminateHost {}
 
 @Component({
+  template: `<sn-progress-spinner variant="material" [value]="25" />`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [ProgressSpinner],
+})
+class MaterialDeterminateHost {}
+
+@Component({
   template: `<sn-progress-spinner [size]="24" color="var(--sn-color-warning)" [value]="30" />`,
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ProgressSpinner],
@@ -189,18 +196,34 @@ describe('ProgressSpinner', () => {
     expect(el.classList).toContain('sn-progress-spinner--material');
   });
 
-  it('applies material rotation class in material indeterminate mode', async () => {
+  it('renders the clipped half-circles and gap patch in material indeterminate mode', async () => {
     const fixture = TestBed.createComponent(MaterialIndeterminateHost);
     await fixture.whenStable();
-    const svg = fixture.nativeElement.querySelector('svg');
-    expect(svg.classList).toContain('sn-progress-spinner-svg--rotate-material');
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('.sn-progress-spinner-material-clipper-start svg')).toBeTruthy();
+    expect(el.querySelector('.sn-progress-spinner-material-gap-patch svg')).toBeTruthy();
+    expect(el.querySelector('.sn-progress-spinner-material-clipper-end svg')).toBeTruthy();
   });
 
-  it('renders material arc circle in material indeterminate mode', async () => {
+  it('draws a half-circle arc with Material geometry when indeterminate', async () => {
     const fixture = TestBed.createComponent(MaterialIndeterminateHost);
     await fixture.whenStable();
-    const arc = fixture.nativeElement.querySelector('.sn-progress-spinner-arc--material');
-    expect(arc).toBeTruthy();
+    const circle: SVGCircleElement = fixture.nativeElement.querySelector('circle');
+    const radius = (24 - 2) / 2;
+    const circumference = 2 * Math.PI * radius;
+    expect(circle.getAttribute('r')).toBe(String(radius));
+    expect(circle.getAttribute('stroke-width')).toBe('2');
+    expect(parseFloat(circle.getAttribute('stroke-dasharray')!)).toBeCloseTo(circumference, 3);
+    expect(parseFloat(circle.getAttribute('stroke-dashoffset')!)).toBeCloseTo(circumference / 2, 3);
+  });
+
+  it('offsets the material determinate stroke by the remaining fraction', async () => {
+    const fixture = TestBed.createComponent(MaterialDeterminateHost);
+    await fixture.whenStable();
+    const circles = fixture.nativeElement.querySelectorAll('circle');
+    expect(circles.length).toBe(1);
+    const circumference = 2 * Math.PI * 11;
+    expect(parseFloat(circles[0].getAttribute('stroke-dashoffset'))).toBeCloseTo(circumference * 0.75, 3);
   });
 
   it('sets the size on the host element via inline style', async () => {

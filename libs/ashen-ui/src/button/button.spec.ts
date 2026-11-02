@@ -167,6 +167,13 @@ class LoadingHost {
 }
 
 @Component({
+  template: `<button snButton loading loadingVariant="material">Save</button>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [Button],
+})
+class MaterialLoadingHost {}
+
+@Component({
   template: `<button snButton icon="add">With icon</button>`,
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [Button],
@@ -421,6 +428,29 @@ describe('Button', () => {
     const spinner = fixture.nativeElement.querySelector('.sn-icon.sn-spin');
     expect(spinner).toBeTruthy();
     expect(spinner.textContent?.trim()).toBe('progress_activity');
+  });
+
+  it('renders the Material spinner structure for loadingVariant="material"', async () => {
+    const fixture = TestBed.createComponent(MaterialLoadingHost);
+    await fixture.whenStable();
+    const spinner: HTMLElement = fixture.nativeElement.querySelector('.sn-button-spinner');
+    expect(spinner.getAttribute('aria-hidden')).toBe('true');
+    expect(fixture.nativeElement.querySelector('.sn-spin')).toBeNull();
+    const segments = Array.from(
+      spinner.querySelectorAll('.sn-progress-spinner-material-layer > span'),
+      (el) => el.className,
+    );
+    expect(segments).toEqual([
+      'sn-progress-spinner-material-clipper-start',
+      'sn-progress-spinner-material-gap-patch',
+      'sn-progress-spinner-material-clipper-end',
+    ]);
+    for (const circle of Array.from(spinner.querySelectorAll('circle'))) {
+      expect(circle.getAttribute('stroke')).toBe('currentColor');
+      expect(Number(circle.getAttribute('stroke-dashoffset'))).toBeCloseTo(
+        Number(circle.getAttribute('stroke-dasharray')) / 2,
+      );
+    }
   });
 
   it('removes aria-busy when loading=false', async () => {

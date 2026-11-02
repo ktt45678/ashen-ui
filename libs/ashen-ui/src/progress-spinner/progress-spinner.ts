@@ -17,13 +17,14 @@ import {
   resolveSnClass,
   SnCommonIntl,
   snDefault,
+  snDefaults,
 } from 'ashen-ui/core';
 import { SN_PROGRESS_SPINNER_DEFAULTS } from './progress-spinner-defaults';
 
 export type ProgressSpinnerVariant =
   /** The library's own look. */
   | 'default'
-  /** The Material look: a continuously accelerating indeterminate animation. */
+  /** The Angular Material look: no track, and an arc that grows and shrinks while it spins. */
   | 'material';
 
 const PROGRESS_SPINNER_RESERVED_ATTRS: Readonly<Record<string, readonly string[]>> = {
@@ -32,6 +33,9 @@ const PROGRESS_SPINNER_RESERVED_ATTRS: Readonly<Record<string, readonly string[]
 };
 
 const TWO_PI_R = 2 * Math.PI * 10;
+const VIEWBOX_SIZE = 24;
+const DEFAULT_STROKE_WIDTH = 3.5;
+const MATERIAL_STROKE_WIDTH = 2;
 
 @Component({
   selector: 'sn-progress-spinner',
@@ -59,7 +63,8 @@ const TWO_PI_R = 2 * Math.PI * 10;
 })
 export class ProgressSpinner implements SnPartSource {
   readonly size = input(snDefault(SN_PROGRESS_SPINNER_DEFAULTS, 'size', 32), { transform: numberAttribute });
-  readonly strokeWidth = input(snDefault(SN_PROGRESS_SPINNER_DEFAULTS, 'strokeWidth', 3.5), { transform: numberAttribute });
+  /** Stroke width in viewBox units (the box is 24 wide). Defaults to `3.5`, or `2` for the material variant. */
+  readonly strokeWidth = input<number | undefined>(snDefaults(SN_PROGRESS_SPINNER_DEFAULTS)?.strokeWidth, { transform: (v) => (v === undefined || v === null ? undefined : numberAttribute(v)) });
   readonly value = input<number | undefined>(undefined, { transform: (v) => (v === undefined || v === null ? undefined : numberAttribute(v)) });
   readonly variant = input<ProgressSpinnerVariant>(snDefault(SN_PROGRESS_SPINNER_DEFAULTS, 'variant', 'default'));
   readonly color = input<string | undefined>(undefined);
@@ -86,7 +91,19 @@ export class ProgressSpinner implements SnPartSource {
 
   protected readonly pctFraction = computed(() => this.clampedPct() / 100);
 
-  protected readonly circumference = TWO_PI_R;
+  protected readonly materialSegments = ['clipper-start', 'gap-patch', 'clipper-end'] as const;
+
+  protected readonly resolvedStrokeWidth = computed(() =>
+    this.strokeWidth() ?? (this.variant() === 'material' ? MATERIAL_STROKE_WIDTH : DEFAULT_STROKE_WIDTH),
+  );
+
+  protected readonly materialRadius = computed(() => (VIEWBOX_SIZE - this.resolvedStrokeWidth()) / 2);
+
+  protected readonly materialCircumference = computed(() => 2 * Math.PI * this.materialRadius());
+
+  protected readonly materialDashOffset = computed(() =>
+    this.materialCircumference() * (1 - this.pctFraction()),
+  );
 
   protected readonly fillDash = computed(() => {
     if (!this.isDeterminate()) return `${0.25 * TWO_PI_R} ${TWO_PI_R}`;
@@ -94,25 +111,7 @@ export class ProgressSpinner implements SnPartSource {
     return `${frac * TWO_PI_R} ${TWO_PI_R}`;
   });
 
-  protected readonly trackDash = computed(() => {
-    const frac = this.pctFraction();
-    const gap = TWO_PI_R * 0.055;
-    const vLen = frac * TWO_PI_R;
-    const trackLen = Math.max(0, TWO_PI_R - vLen - (frac > 0 && frac < 1 ? 2 * gap : 0));
-    return `${trackLen} ${TWO_PI_R - trackLen}`;
-  });
-
-  protected readonly trackDashOffset = computed(() => {
-    const frac = this.pctFraction();
-    const gap = TWO_PI_R * 0.055;
-    const vLen = frac * TWO_PI_R;
-    return -(vLen + (frac > 0 ? gap : 0));
-  });
-
-  protected readonly svgClass = computed(() => {
-    if (this.isDeterminate()) return '';
-    return this.variant() === 'material' ? 'sn-progress-spinner-svg--rotate-material' : 'sn-progress-spinner-svg--rotate';
-  });
+  protected readonly svgClass = computed(() => (this.isDeterminate() ? '' : 'sn-progress-spinner-svg--rotate'));
 
   protected readonly svgStyle = computed(() => {
     return this.isDeterminate() ? 'rotate(-90deg)' : undefined;

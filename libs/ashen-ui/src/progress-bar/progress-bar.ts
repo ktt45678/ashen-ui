@@ -20,7 +20,7 @@ import {
 export type ProgressBarVariant =
   /** The library's own look. */
   | 'default'
-  /** The Material look: a continuously accelerating indeterminate animation. */
+  /** The Angular Material look: a thin square track and its two-bar indeterminate animation. */
   | 'material';
 
 const PROGRESS_BAR_RESERVED_ATTRS: Readonly<Record<string, readonly string[]>> = {
@@ -77,10 +77,9 @@ export class ProgressBar implements SnPartSource {
     this.indeterminate() ? null : this.pct(),
   );
 
-  protected readonly materialFillOffset = computed(() => {
-    const p = this.pct();
-    return p > 0 ? `calc(${p}% + 4px)` : '0';
-  });
+  protected readonly materialTransform = computed(() =>
+    this.indeterminate() ? null : `scaleX(${this.pct() / 100})`,
+  );
 
   protected readonly snClassResolved = computed(() =>
     resolveSnClass(this.snClass(), 'root', true),

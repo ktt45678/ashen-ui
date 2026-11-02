@@ -47,6 +47,7 @@
     box-shadow: var(--sn-dialog-shadow);
     max-width: min(var(--sn-dialog-max-width-medium, 32rem), calc(100vw - 2 * var(--sn-dialog-container-padding, 1.5rem)));
     max-height: 90vh;
+    max-height: 90dvh;
     width: 100%;
     overflow: hidden;
     pointer-events: auto;
@@ -96,6 +97,15 @@
     --sn-dialog-header-padding: 0.5rem 1.5rem;
     --sn-dialog-body-padding: 0 1.5rem 1.5rem;
     --sn-dialog-footer-padding: 1rem 1.5rem;
+  }
+
+  /* Confirmations are short, so header and footer dividers only add noise. */
+  .sn-dialog-panel--confirm {
+    --sn-dialog-header-border: var(--sn-confirm-dialog-header-border, none);
+    --sn-dialog-footer-border: var(--sn-confirm-dialog-footer-border, none);
+    --sn-dialog-header-padding: var(--sn-confirm-dialog-header-padding, var(--sn-confirm-dialog-gutter) var(--sn-confirm-dialog-gutter) 0.75rem);
+    --sn-dialog-body-padding: var(--sn-confirm-dialog-body-padding, 0 var(--sn-confirm-dialog-gutter) var(--sn-confirm-dialog-gutter));
+    --sn-dialog-footer-padding: var(--sn-confirm-dialog-footer-padding, 0 var(--sn-confirm-dialog-gutter) var(--sn-confirm-dialog-gutter));
   }
 
   .sn-dialog-header {
@@ -183,6 +193,15 @@
      children of the footer and pick up its gap/justification. */
   .sn-dialog-footer > .sn-dialog-footer-slot {
     display: contents;
+  }
+
+  @media (max-width: 599.98px) {
+    /* Phone-width action rows read better as equal-width buttons. */
+    .sn-dialog-footer > .sn-button,
+    .sn-dialog-footer-slot > .sn-button,
+    .sn-dialog-confirm-actions > .sn-button {
+      flex: var(--sn-dialog-mobile-action-flex, 1 1 0);
+    }
   }
 
   @keyframes sn-dialog-backdrop-in {

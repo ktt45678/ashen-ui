@@ -1,47 +1,45 @@
 @if (variant() === 'material') {
-  <svg
-    viewBox="0 0 24 24"
-    snPart="svg"
-    [attr.width]="size()"
-    [attr.height]="size()"
-    [class]="svgClass() + ' ' + svgClassExtra()"
-    [style.transform]="svgStyle()"
-    aria-hidden="true"
-  >
-    @if (isDeterminate()) {
-      @if (pctFraction() < 1) {
-        <circle
-          cx="12" cy="12" r="10"
-          fill="none"
-          stroke="var(--sn-progress-spinner-track-color)"
-          [attr.stroke-width]="strokeWidth()"
-          stroke-linecap="round"
-          [attr.stroke-dasharray]="trackDash()"
-          [attr.stroke-dashoffset]="trackDashOffset()"
-        />
-      }
-      @if (pctFraction() > 0) {
-        <circle
-          cx="12" cy="12" r="10"
-          fill="none"
-          [attr.stroke]="fillColor()"
-          [attr.stroke-width]="strokeWidth()"
-          stroke-linecap="round"
-          [attr.stroke-dasharray]="fillDash()"
-          class="sn-progress-spinner-fill"
-        />
-      }
-    } @else {
+  @if (isDeterminate()) {
+    <svg
+      viewBox="0 0 24 24"
+      snPart="svg"
+      class="sn-progress-spinner-material-determinate"
+      [class]="svgClassExtra()"
+      [attr.width]="size()"
+      [attr.height]="size()"
+      aria-hidden="true"
+    >
       <circle
-        class="sn-progress-spinner-arc--material"
-        cx="12" cy="12" r="10"
-        fill="none"
+        class="sn-progress-spinner-material-circle"
+        cx="12" cy="12"
+        [attr.r]="materialRadius()"
         [attr.stroke]="fillColor()"
-        [attr.stroke-width]="strokeWidth()"
-        stroke-linecap="round"
+        [attr.stroke-width]="resolvedStrokeWidth()"
+        [attr.stroke-dasharray]="materialCircumference()"
+        [attr.stroke-dashoffset]="materialDashOffset()"
       />
-    }
-  </svg>
+    </svg>
+  } @else {
+    <div class="sn-progress-spinner-material" snPart="svg" [class]="svgClassExtra()" aria-hidden="true">
+      <div class="sn-progress-spinner-material-layer">
+        @for (segment of materialSegments; track segment) {
+          <div [class]="'sn-progress-spinner-material-' + segment">
+            <svg viewBox="0 0 24 24" class="sn-progress-spinner-material-arc">
+              <circle
+                class="sn-progress-spinner-material-circle"
+                cx="12" cy="12"
+                [attr.r]="materialRadius()"
+                [attr.stroke]="fillColor()"
+                [attr.stroke-width]="resolvedStrokeWidth()"
+                [attr.stroke-dasharray]="materialCircumference()"
+                [attr.stroke-dashoffset]="materialCircumference() / 2"
+              />
+            </svg>
+          </div>
+        }
+      </div>
+    </div>
+  }
 } @else {
   <svg
     viewBox="0 0 24 24"
@@ -56,13 +54,13 @@
       cx="12" cy="12" r="10"
       fill="none"
       stroke="var(--sn-progress-spinner-track-color)"
-      [attr.stroke-width]="strokeWidth()"
+      [attr.stroke-width]="resolvedStrokeWidth()"
     />
     <circle
       cx="12" cy="12" r="10"
       fill="none"
       [attr.stroke]="fillColor()"
-      [attr.stroke-width]="strokeWidth()"
+      [attr.stroke-width]="resolvedStrokeWidth()"
       stroke-linecap="round"
       [attr.stroke-dasharray]="fillDash()"
       [style.transition]="isDeterminate() ? 'stroke-dasharray var(--sn-motion-slow)' : null"

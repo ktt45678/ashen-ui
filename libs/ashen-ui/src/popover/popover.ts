@@ -258,12 +258,17 @@ export class Popover implements OnDestroy, SnPartSource {
     const ox = this.offsetX();
     const oy = this.offsetY();
     switch (this.position()) {
-      case 'bottom': { const gap = oy ?? 6; const shift = ox ?? 0; return [
-        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: gap, offsetX: shift },
-        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -gap, offsetX: shift }]; }
-      case 'top': { const gap = oy ?? 6; const shift = ox ?? 0; return [
-        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -gap, offsetX: shift },
-        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: gap, offsetX: shift }]; }
+      case 'bottom':
+      case 'top': {
+        const gap = oy ?? 6;
+        const shift = ox ?? 0;
+        // End-aligned fallbacks keep a panel opened near the inline-end edge on screen.
+        const below: ConnectedPosition[] = (['start', 'end'] as const).map((x) => (
+          { originX: x, originY: 'bottom', overlayX: x, overlayY: 'top', offsetY: gap, offsetX: shift }));
+        const above: ConnectedPosition[] = (['start', 'end'] as const).map((x) => (
+          { originX: x, originY: 'top', overlayX: x, overlayY: 'bottom', offsetY: -gap, offsetX: shift }));
+        return this.position() === 'bottom' ? [...below, ...above] : [...above, ...below];
+      }
       case 'left': { const gap = ox ?? 6; const shift = oy ?? 0; return [
         { originX: 'start', originY: 'top', overlayX: 'end', overlayY: 'top', offsetX: -gap, offsetY: shift },
         { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top', offsetX: gap, offsetY: shift }]; }

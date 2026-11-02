@@ -16,7 +16,7 @@
       </header>
 
       @if (surface.inputs.length || surface.models.length) {
-        <table class="api-table">
+        <table class="api-table api-table--stack">
           <thead>
             <tr>
               <th>Input</th>
@@ -34,7 +34,7 @@
                     <span class="doc-api-required">required</span>
                   }
                 </td>
-                <td>
+                <td data-label="Type">
                   <code>{{ member.type }}</code>
                   @if (unionFor(member.type); as union) {
                     <span class="doc-api-values">
@@ -44,8 +44,8 @@
                     </span>
                   }
                 </td>
-                <td><code>{{ memberDefault(member) }}</code></td>
-                <td>
+                <td data-label="Default"><code>{{ memberDefault(member) }}</code></td>
+                <td data-label="Description">
                   @for (part of describe(member.description); track $index) {
                     @if (part.code) {
                       <code>{{ part.text }}</code>
@@ -61,7 +61,7 @@
       }
 
       @if (surface.outputs.length) {
-        <table class="api-table">
+        <table class="api-table api-table--stack">
           <thead>
             <tr>
               <th>Output</th>
@@ -73,8 +73,8 @@
             @for (member of surface.outputs; track member.bindingName) {
               <tr>
                 <td><code class="doc-api-name">{{ member.bindingName }}</code></td>
-                <td><code>{{ member.type }}</code></td>
-                <td>
+                <td data-label="Type"><code>{{ member.type }}</code></td>
+                <td data-label="Description">
                   @for (part of describe(member.description); track $index) {
                     @if (part.code) {
                       <code>{{ part.text }}</code>
@@ -116,7 +116,7 @@
         <h3 class="doc-api-symbol">Accepted values</h3>
       </header>
       @for (type of types(); track type.name) {
-        <table class="api-table doc-api-union">
+        <table class="api-table api-table--stack doc-api-union">
           <thead>
             <tr>
               <th>{{ type.name }}</th>
@@ -127,7 +127,7 @@
             @for (item of type.values; track item.value) {
               <tr>
                 <td><code class="doc-api-value">'{{ item.value }}'</code></td>
-                <td>{{ item.description }}</td>
+                <td data-label="Meaning">{{ item.description }}</td>
               </tr>
             }
           </tbody>
@@ -146,7 +146,7 @@
       <header class="doc-api-surface-header">
         <h3 class="doc-api-symbol">Built-in text</h3>
       </header>
-      <table class="api-table">
+      <table class="api-table api-table--stack">
         <thead>
           <tr>
             <th>Group</th>
@@ -157,9 +157,9 @@
         <tbody>
           @for (item of intl(); track item.group + item.key) {
             <tr>
-              <td><code>{{ item.group }}</code></td>
-              <td><code class="doc-api-name">{{ item.key }}</code></td>
-              <td>{{ item.englishDefault }}</td>
+              <td data-label="Group"><code>{{ item.group }}</code></td>
+              <td data-label="Key"><code class="doc-api-name">{{ item.key }}</code></td>
+              <td data-label="English default">{{ item.englishDefault }}</td>
             </tr>
           }
         </tbody>
@@ -169,7 +169,7 @@
 }
 
 @if (section() === 'theming' && data()) {
-  <table class="api-table">
+  <table class="api-table api-table--stack">
     <thead>
       <tr>
         <th>Token</th>
@@ -181,8 +181,8 @@
       @for (token of tokens(); track token.name) {
         <tr>
           <td><code class="doc-api-name">{{ token.name }}</code></td>
-          <td><code>{{ token.default ?? 'unset' }}</code></td>
-          <td>{{ token.source }}</td>
+          <td data-label="Default"><code>{{ token.default ?? 'unset' }}</code></td>
+          <td data-label="Source">{{ token.source }}</td>
         </tr>
       }
     </tbody>

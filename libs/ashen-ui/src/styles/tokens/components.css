@@ -142,6 +142,7 @@
   --sn-dialog-close-radius: var(--sn-radius-sm);
   --sn-dialog-title-font-size: 1.25rem;
   --sn-dialog-title-font-weight: 600;
+  --sn-confirm-dialog-gutter: 1.5rem;
 
   /* Drawer */
   --sn-drawer-width: 20rem;
@@ -159,4 +160,16 @@
   --sn-color-picker-swatch-height: 2.25rem;
   --sn-color-picker-sv-area-height: 10rem;
   --sn-color-picker-slider-height: 1.5rem;
+}
+
+/* Phone-width dialogs. Kept on :root so a theme's own values still win. */
+@media (max-width: 599.98px) {
+  :root {
+    --sn-dialog-container-padding: 1rem;
+    --sn-dialog-header-padding: 1.25rem;
+    --sn-dialog-body-padding: 1.25rem;
+    --sn-dialog-footer-padding: 1.25rem;
+    --sn-dialog-title-font-size: 1.125rem;
+    --sn-confirm-dialog-gutter: 1.25rem;
+  }
 }

@@ -17,6 +17,10 @@ import {
 import { IconTemplate } from 'ashen-ui/core';
 import { SN_BUTTON_DEFAULTS } from './button-defaults';
 
+const SPINNER_VIEWBOX_SIZE = 24;
+// Material draws the stroke at a tenth of the diameter.
+const SPINNER_STROKE_WIDTH = 2.4;
+
 export type ButtonVariant =
   /** Filled, the default call to action. */
   | 'base'
@@ -129,10 +133,14 @@ export class Button {
 
   protected readonly isIconVariant = computed(() => this.variant().startsWith('icon'));
 
-  /** Show the Material-style SVG spinner (arc grow/shrink) instead of the spinning icon. */
   protected readonly showMaterialSpinner = computed(
     () => this.loading() && this.loadingVariant() === 'material',
   );
+
+  protected readonly materialSegments = ['clipper-start', 'gap-patch', 'clipper-end'] as const;
+  protected readonly spinnerStrokeWidth = SPINNER_STROKE_WIDTH;
+  protected readonly spinnerRadius = (SPINNER_VIEWBOX_SIZE - SPINNER_STROKE_WIDTH) / 2;
+  protected readonly spinnerCircumference = 2 * Math.PI * this.spinnerRadius;
 
   protected readonly snClassResolved = computed(() =>
     resolveSnClass(this.snClass(), 'root', true),

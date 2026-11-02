@@ -2,8 +2,10 @@
   display: block;
   width: 220px;
   flex-shrink: 0;
-  border-right: 1px solid var(--sn-border);
-  background: var(--sn-surface-panel);
+  border-inline-end: 1px solid var(--sn-border);
+  background: var(--doc-chrome-bg);
+  backdrop-filter: var(--doc-chrome-filter);
+  -webkit-backdrop-filter: var(--doc-chrome-filter);
   overflow-y: auto;
   padding: var(--sn-space-4) 0;
 }

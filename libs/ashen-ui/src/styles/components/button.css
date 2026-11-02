@@ -1,8 +1,7 @@
 @layer components {
   .sn-button {
     --sn-button-spinner-rotate-duration: 0.8s;
-    --sn-button-spinner-material-rotate-duration: 1.6s;
-    --sn-button-spinner-material-arc-duration: 1.4s;
+    --sn-button-spinner-material-duration: var(--sn-progress-spinner-material-duration);
     --sn-button-solid-bg: var(--sn-color-primary-solid);
     --sn-button-solid-hover-bg: var(--sn-color-primary-solid-hover);
     --sn-button-solid-active-bg: var(--sn-color-primary-solid-active);
@@ -354,38 +353,23 @@
     }
   }
 
+  /* Reuses the ProgressSpinner material structure and keyframes. */
   .sn-button-spinner {
+    --sn-progress-spinner-material-duration: var(--sn-button-spinner-material-duration);
+
+    position: relative;
     width: 1.15em;
     height: 1.15em;
     flex-shrink: 0;
-    animation: sn-button-spinner-rotate var(--sn-button-spinner-material-rotate-duration) linear infinite;
-  }
-
-  .sn-button-spinner-arc {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 3;
-    stroke-linecap: round;
-    transform-origin: center;
-    animation: sn-button-spinner-arc var(--sn-button-spinner-material-arc-duration) ease-in-out infinite;
-  }
-
-  @keyframes sn-button-spinner-rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  /* Dash period 4 + 59 = 63 == the -63 closing offset, so the arc loop is seamless. */
-  @keyframes sn-button-spinner-arc {
-    0%   { stroke-dasharray: 4 59; stroke-dashoffset: 0; }
-    50%  { stroke-dasharray: 44 59; stroke-dashoffset: -14; }
-    100% { stroke-dasharray: 4 59; stroke-dashoffset: -63; }
+    overflow: hidden;
+    line-height: 0;
+    direction: ltr;
+    /* The button centers text, which would also center the static position of the absolute layers. */
+    text-align: left;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sn-spin,
-    .sn-button-spinner,
-    .sn-button-spinner-arc {
+    .sn-spin {
       animation: none;
     }
   }

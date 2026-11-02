@@ -13,7 +13,6 @@ import { DocApi } from '../../../shared/doc-api/doc-api';
 @Component({
   selector: 'app-dialog-demo-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'doc-page' },
   imports: [Button],
   template: `
     <p style="margin:0 0 1.25rem;color:var(--sn-text-muted)">
@@ -33,6 +32,7 @@ export class DialogDemoContent {
 @Component({
   selector: 'app-dialog-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'doc-page' },
   imports: [Dialog, DialogFooter, DialogTitle, DialogClose, Button, Icon, DocExample, DocApi],
   templateUrl: './dialog-page.html',
   styleUrl: './dialog-page.scss',

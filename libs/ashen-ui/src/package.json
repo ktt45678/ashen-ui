@@ -1,6 +1,6 @@
 {
   "name": "ashen-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Angular component library built on signals and the CDK, zoneless and OnPush, themed through CSS custom properties.",
   "keywords": [
     "angular",

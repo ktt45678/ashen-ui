@@ -69,7 +69,7 @@
   padding: 0.05em 0.35em;
   border: 1px solid var(--sn-border);
   border-radius: var(--sn-radius-sm);
-  background: var(--sn-surface-canvas);
+  background: var(--doc-well-bg);
   font-family: var(--sn-font-mono);
   font-size: 0.7rem;
   white-space: nowrap;
@@ -109,8 +109,12 @@
 
 .doc-api-parts li {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--sn-space-2);
+  gap: 0 var(--sn-space-2);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .doc-api-part-symbol {

@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: var(--sn-surface-canvas);
+  height: 100dvh;
+  background: var(--doc-app-bg);
   color: var(--sn-text);
   font-family: var(--sn-font-ui);
 }
@@ -38,21 +39,27 @@
     position: fixed;
     top: 3rem; // header height
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
     z-index: 90;
-    transform: translateX(-100%);
+    width: min(280px, 85vw);
+    background: var(--doc-drawer-bg);
+    transform: translateX(calc(-100% * var(--sn-dir, 1)));
+    visibility: hidden;
+    transition: transform var(--sn-motion-slow), visibility 0s 0.2s;
     transition: transform var(--sn-motion-base, 220ms ease);
-    box-shadow: var(--sn-shadow-lg, 0 12px 32px rgba(0, 0, 0, 0.24));
+    box-shadow: var(--sn-shadow-modal);
   }
   .docs-shell.nav-open app-sidenav {
     transform: translateX(0);
+    visibility: visible;
+    transition: transform var(--sn-motion-slow);
   }
   .docs-nav-backdrop {
     display: block;
     position: fixed;
     inset: 3rem 0 0 0;
     border: none;
-    background: rgba(0, 0, 0, 0.4);
+    background: var(--doc-backdrop-bg);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--sn-motion-base, 220ms ease);

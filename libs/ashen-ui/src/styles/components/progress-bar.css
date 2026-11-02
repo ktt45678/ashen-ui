@@ -2,16 +2,18 @@
   .sn-progress-bar {
     --sn-progress-bar-color: var(--sn-color-primary);
     --sn-progress-bar-indeterminate-duration: 1.2s;
-    --sn-progress-bar-material-duration: 2.4s;
+    --sn-progress-bar-material-duration: 2s;
+    --sn-progress-bar-material-animation-multiplier: 1;
     --sn-progress-bar-track-bg: var(--sn-border);
     --sn-progress-bar-track-height: 8px;
-    --sn-progress-bar-material-height: 6px;
+    --sn-progress-bar-material-height: 4px;
+    --sn-progress-bar-material-radius: 0;
+    --sn-progress-bar-material-easing: cubic-bezier(0.4, 0, 0.6, 1);
     --sn-progress-bar-radius: var(--sn-radius-pill);
     --sn-progress-bar-value-font-size: var(--sn-text-xs);
     --sn-progress-bar-value-color: var(--sn-text-muted);
     --sn-progress-bar-value-min-width: 34px;
     --sn-progress-bar-transition: width var(--sn-motion-slow);
-    --sn-progress-bar-stop-dot-size: 4px;
 
     display: flex;
     align-items: center;
@@ -48,59 +50,128 @@
     to { left: 100%; }
   }
 
+  /* Ported from Angular Material's linear progress (MDC): two bars that each
+     translate and scale on their own curve. */
   .sn-progress-bar-track--material {
     height: var(--sn-progress-bar-material-height);
+    border-radius: var(--sn-progress-bar-material-radius);
     background: transparent;
-    /* Clip the indeterminate sliding fill (right: -50% at keyframe peaks) so it
-       never spills past the rounded track edge. */
-    overflow: hidden;
   }
 
-  .sn-progress-bar-track-bg {
+  .sn-progress-bar-buffer {
     position: absolute;
     inset: 0;
-    border-radius: var(--sn-progress-bar-radius);
     background: var(--sn-progress-bar-track-bg);
   }
 
-  .sn-progress-bar-fill--material {
-    transition: var(--sn-progress-bar-transition);
+  .sn-progress-bar-bar {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--sn-motion-slow) var(--sn-progress-bar-material-easing);
   }
 
-  .sn-progress-bar-track-remainder {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    inset-inline-end: 10px;
-    border-radius: var(--sn-progress-bar-radius);
-    background: var(--sn-progress-bar-track-bg);
-    transition: inset-inline-start var(--sn-motion-slow);
+  [dir='rtl'] .sn-progress-bar-bar {
+    transform-origin: right center;
   }
 
-  .sn-progress-bar-stop-dot {
+  .sn-progress-bar-bar-inner {
     position: absolute;
-    top: 1px;
-    inset-inline-end: 0;
-    width: var(--sn-progress-bar-stop-dot-size);
-    height: var(--sn-progress-bar-stop-dot-size);
-    border-radius: 50%;
+    inset: 0;
     background: var(--sn-progress-bar-color);
   }
 
-  .sn-progress-bar-fill--indeterminate-material {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    border-radius: var(--sn-progress-bar-radius);
-    background: var(--sn-progress-bar-color);
-    animation: sn-progress-material var(--sn-progress-bar-material-duration) linear infinite;
+  .sn-progress-bar--indeterminate .sn-progress-bar-bar {
+    transform: none;
+    transition: none;
+    animation: var(--sn-progress-bar-material-translate) calc(var(--sn-progress-bar-material-duration) * var(--sn-progress-bar-material-animation-multiplier)) infinite linear;
   }
 
-  @keyframes sn-progress-material {
-    0%     { left: -20%; right: 100%; }
-    49.99% { left: 100%; right: -50%; }
-    50%    { left: -20%; right: 100%; }
-    100%   { left: 100%; right: -50%; }
+  .sn-progress-bar--indeterminate .sn-progress-bar-bar-inner {
+    animation: var(--sn-progress-bar-material-scale) calc(var(--sn-progress-bar-material-duration) * var(--sn-progress-bar-material-animation-multiplier)) infinite linear;
+  }
+
+  .sn-progress-bar--indeterminate .sn-progress-bar-bar--primary {
+    --sn-progress-bar-material-translate: sn-progress-primary-translate;
+    --sn-progress-bar-material-scale: sn-progress-primary-scale;
+    inset-inline-start: -145.166611%;
+  }
+
+  .sn-progress-bar--indeterminate .sn-progress-bar-bar--secondary {
+    --sn-progress-bar-material-translate: sn-progress-secondary-translate;
+    --sn-progress-bar-material-scale: sn-progress-secondary-scale;
+    inset-inline-start: -54.888891%;
+  }
+
+  @keyframes sn-progress-primary-translate {
+    0% { transform: translateX(0); }
+    20% {
+      animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+      transform: translateX(0);
+    }
+    59.15% {
+      animation-timing-function: cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);
+      transform: translateX(calc(83.67142% * var(--sn-dir, 1)));
+    }
+    100% { transform: translateX(calc(200.611057% * var(--sn-dir, 1))); }
+  }
+
+  @keyframes sn-progress-primary-scale {
+    0% { transform: scaleX(0.08); }
+    36.65% {
+      animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
+      transform: scaleX(0.08);
+    }
+    69.15% {
+      animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
+      transform: scaleX(0.661479);
+    }
+    100% { transform: scaleX(0.08); }
+  }
+
+  @keyframes sn-progress-secondary-translate {
+    0% {
+      animation-timing-function: cubic-bezier(0.15, 0, 0.515058, 0.409685);
+      transform: translateX(0);
+    }
+    25% {
+      animation-timing-function: cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);
+      transform: translateX(calc(37.651913% * var(--sn-dir, 1)));
+    }
+    48.35% {
+      animation-timing-function: cubic-bezier(0.4, 0.627035, 0.6, 0.902026);
+      transform: translateX(calc(84.386165% * var(--sn-dir, 1)));
+    }
+    100% { transform: translateX(calc(160.277782% * var(--sn-dir, 1))); }
+  }
+
+  @keyframes sn-progress-secondary-scale {
+    0% {
+      animation-timing-function: cubic-bezier(0.205028, 0.057051, 0.57661, 0.453971);
+      transform: scaleX(0.08);
+    }
+    19.15% {
+      animation-timing-function: cubic-bezier(0.152313, 0.196432, 0.648374, 1.004315);
+      transform: scaleX(0.457104);
+    }
+    44.15% {
+      animation-timing-function: cubic-bezier(0.257759, -0.003163, 0.211762, 1.38179);
+      transform: scaleX(0.72796);
+    }
+    100% { transform: scaleX(0.08); }
+  }
+
+  @media (forced-colors: active) {
+    .sn-progress-bar-track--material {
+      outline: 1px solid CanvasText;
+    }
+
+    .sn-progress-bar-bar-inner {
+      background: CanvasText;
+    }
   }
 
   .sn-progress-bar-value {
@@ -113,9 +184,13 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sn-progress-bar-fill--indeterminate,
-    .sn-progress-bar-fill--indeterminate-material {
+    .sn-progress-bar-fill--indeterminate {
       animation: none;
+    }
+
+    /* Material slows the animation instead of stopping it, so the bar still reads as busy. */
+    .sn-progress-bar {
+      --sn-progress-bar-material-animation-multiplier: 2;
     }
   }
 }

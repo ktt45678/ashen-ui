@@ -5,7 +5,7 @@ import type { ProgressSpinnerVariant } from './progress-spinner';
 export interface SnProgressSpinnerDefaults {
   /** Width and height in px. Component default: `32`. */
   size?: number;
-  /** Stroke width in viewBox units (the box is 24 wide). Component default: `3.5`. */
+  /** Stroke width in viewBox units (the box is 24 wide). Component default: `3.5`, or `2` for the material variant. */
   strokeWidth?: number;
   /** Component default: `'default'`. */
   variant?: ProgressSpinnerVariant;

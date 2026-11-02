@@ -74,7 +74,7 @@ function classify(name) {
   if (name === '--sn-menu-min-width') return ['spacing', bare];
 
   // Dimensions and shorthands no Tailwind namespace can consume. Checked early so they never fall through to `color`.
-  if (/(padding|margin|spacing|gap|width|height|offset|track-|thumb-|min-|max-)/.test(bare)) return null;
+  if (/(padding|margin|gutter|spacing|gap|width|height|offset|track-|thumb-|min-|max-)/.test(bare)) return null;
 
   if (/(^|-)(border-)?radius($|-)/.test(bare)) {
     return ['radius', bare.replace(/-?(border-)?radius/, '').replace(/^-|-$/g, '')];

@@ -8,23 +8,19 @@
     aria-valuemin="0"
     aria-valuemax="100"
   >
+    <div class="sn-progress-bar-buffer"></div>
+    <div
+      class="sn-progress-bar-bar sn-progress-bar-bar--primary"
+      snPart="fill"
+      [class]="fillClassExtra()"
+      [style.transform]="materialTransform()"
+    >
+      <span class="sn-progress-bar-bar-inner"></span>
+    </div>
     @if (indeterminate()) {
-      <div class="sn-progress-bar-track-bg"></div>
-      <div class="sn-progress-bar-fill sn-progress-bar-fill--indeterminate-material" snPart="fill" [class]="fillClassExtra()"></div>
-    } @else {
-      @if (pct() > 0) {
-        <div
-          class="sn-progress-bar-fill sn-progress-bar-fill--material"
-          snPart="fill"
-          [class]="fillClassExtra()"
-          [style.width.%]="pct()"
-        ></div>
-      }
-      <div
-        class="sn-progress-bar-track-remainder"
-        [style.inset-inline-start]="materialFillOffset()"
-      ></div>
-      <div class="sn-progress-bar-stop-dot"></div>
+      <div class="sn-progress-bar-bar sn-progress-bar-bar--secondary">
+        <span class="sn-progress-bar-bar-inner"></span>
+      </div>
     }
   </div>
 } @else {

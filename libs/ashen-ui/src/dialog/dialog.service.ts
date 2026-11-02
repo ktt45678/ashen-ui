@@ -175,6 +175,7 @@ export class DialogService {
     const ref = this.open<SnDialogConfirm, boolean, SnConfirmDialogData>(SnDialogConfirm, {
       size: 'sm',
       width: data.width,
+      panelClass: 'sn-dialog-panel--confirm',
       header: data.header ?? this.confirmIntl.header,
       data,
       closable: data.closable,

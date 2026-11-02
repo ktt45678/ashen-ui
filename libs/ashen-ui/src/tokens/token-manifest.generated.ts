@@ -92,6 +92,7 @@ export interface SnGlobalTokens {
   '--sn-color-warning-solid': string | number;
   '--sn-color-warning-solid-active': string | number;
   '--sn-color-warning-solid-hover': string | number;
+  '--sn-confirm-dialog-gutter': string | number;
   '--sn-control-border': string | number;
   '--sn-control-height-lg': string | number;
   '--sn-control-height-md': string | number;
@@ -368,11 +369,11 @@ export interface SnButtonTokens {
   '--sn-button-solid-bg': string | number;
   '--sn-button-solid-hover-bg': string | number;
   '--sn-button-solid-text': string | number;
-  '--sn-button-spinner-material-arc-duration': string | number;
-  '--sn-button-spinner-material-rotate-duration': string | number;
+  '--sn-button-spinner-material-duration': string | number;
   '--sn-button-spinner-rotate-duration': string | number;
   '--sn-button-text': string | number;
   '--sn-icon-button-icon-size': string | number;
+  '--sn-progress-spinner-material-duration': string | number;
 }
 export interface SnCardTokens {
   '--sn-card-backdrop-filter': string | number;
@@ -499,6 +500,11 @@ export interface SnDatePickerTokens {
   '--sn-date-picker-primary': string | number;
 }
 export interface SnDialogTokens {
+  '--sn-confirm-dialog-body-padding': string | number;
+  '--sn-confirm-dialog-footer-border': string | number;
+  '--sn-confirm-dialog-footer-padding': string | number;
+  '--sn-confirm-dialog-header-border': string | number;
+  '--sn-confirm-dialog-header-padding': string | number;
   '--sn-dialog-backdrop-filter': string | number;
   '--sn-dialog-body-padding': string | number;
   '--sn-dialog-border': string | number;
@@ -506,10 +512,13 @@ export interface SnDialogTokens {
   '--sn-dialog-enter-duration': string | number;
   '--sn-dialog-exit-duration': string | number;
   '--sn-dialog-font-family': string | number;
+  '--sn-dialog-footer-border': string | number;
   '--sn-dialog-footer-gap': string | number;
   '--sn-dialog-footer-padding': string | number;
   '--sn-dialog-footer-slot-padding-top': string | number;
+  '--sn-dialog-header-border': string | number;
   '--sn-dialog-header-padding': string | number;
+  '--sn-dialog-mobile-action-flex': string | number;
   '--sn-dialog-shadow': string | number;
   '--sn-glass-shadow': string | number;
   '--sn-z-index-modal': string | number;
@@ -836,10 +845,14 @@ export interface SnPopoverTokens {
 export interface SnProgressBarTokens {
   '--sn-progress-bar-color': string | number;
   '--sn-progress-bar-indeterminate-duration': string | number;
+  '--sn-progress-bar-material-animation-multiplier': string | number;
   '--sn-progress-bar-material-duration': string | number;
+  '--sn-progress-bar-material-easing': string | number;
   '--sn-progress-bar-material-height': string | number;
+  '--sn-progress-bar-material-radius': string | number;
+  '--sn-progress-bar-material-scale': string | number;
+  '--sn-progress-bar-material-translate': string | number;
   '--sn-progress-bar-radius': string | number;
-  '--sn-progress-bar-stop-dot-size': string | number;
   '--sn-progress-bar-track-bg': string | number;
   '--sn-progress-bar-track-height': string | number;
   '--sn-progress-bar-transition': string | number;
@@ -849,8 +862,12 @@ export interface SnProgressBarTokens {
 }
 export interface SnProgressSpinnerTokens {
   '--sn-progress-spinner-color': string | number;
-  '--sn-progress-spinner-material-arc-duration': string | number;
-  '--sn-progress-spinner-material-rotate-duration': string | number;
+  '--sn-progress-spinner-material-animation-multiplier': string | number;
+  '--sn-progress-spinner-material-cycle': string | number;
+  '--sn-progress-spinner-material-duration': string | number;
+  '--sn-progress-spinner-material-easing': string | number;
+  '--sn-progress-spinner-material-swing': string | number;
+  '--sn-progress-spinner-material-value-transition': string | number;
   '--sn-progress-spinner-rotate-duration': string | number;
   '--sn-progress-spinner-track-color': string | number;
 }

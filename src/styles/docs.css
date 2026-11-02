@@ -2,6 +2,16 @@
    Page shell, API tables and the code palette. Every component page used to
    restate this block in its own SCSS; they now only keep their demo helpers. */
 
+/* Zero specificity so a theme such as glass can override the shell. */
+:where(:root) {
+  --doc-app-bg: var(--sn-surface-canvas);
+  --doc-chrome-bg: var(--sn-surface-panel);
+  --doc-chrome-filter: none;
+  --doc-drawer-bg: var(--sn-surface-panel);
+  --doc-backdrop-bg: rgba(0, 0, 0, 0.4);
+  --doc-well-bg: var(--sn-surface-canvas);
+}
+
 :root {
   --doc-measure: 68rem;
 
@@ -22,12 +32,14 @@
 }
 
 /* ── Page shell ──────────────────────────────────────────── */
+/* Prose rules skip doc-example so live demos, such as an inline dialog title,
+   render with library styles only. */
 .doc-page {
   display: block;
   max-width: var(--doc-measure);
 }
 
-.doc-page-header {
+.doc-page .page-header {
   margin-bottom: var(--sn-space-6);
 }
 
@@ -51,7 +63,7 @@
   scroll-margin-top: var(--sn-space-6);
 }
 
-.doc-page h2 {
+.doc-page h2:not(doc-example *) {
   margin: 0 0 var(--sn-space-4);
   padding-bottom: var(--sn-space-2);
   border-bottom: 1px solid var(--sn-border);
@@ -59,14 +71,14 @@
   color: var(--sn-text);
 }
 
-.doc-page h3 {
+.doc-page h3:not(doc-example *) {
   margin: var(--sn-space-5) 0 var(--sn-space-2);
   font-size: var(--sn-text-sm);
   font-weight: var(--sn-font-weight-semibold);
   color: var(--sn-text);
 }
 
-.doc-page p {
+.doc-page p:not(doc-example *) {
   margin: 0 0 var(--sn-space-3);
   max-width: 72ch;
   color: var(--sn-text-muted);
@@ -74,7 +86,7 @@
   line-height: var(--sn-leading-normal);
 }
 
-.doc-page ul {
+.doc-page ul:not(doc-example *) {
   margin: 0 0 var(--sn-space-3);
   padding-inline-start: var(--sn-space-5);
   max-width: 72ch;
@@ -83,14 +95,14 @@
   line-height: var(--sn-leading-normal);
 }
 
-.doc-page li {
+.doc-page li:not(doc-example *) {
   margin-bottom: var(--sn-space-2);
 }
 
 .doc-page :not(pre) > code {
   padding: 0.1em 0.35em;
   border-radius: var(--sn-radius-sm);
-  background: var(--sn-surface-canvas);
+  background: var(--doc-well-bg);
   font-family: var(--sn-font-mono);
   font-size: 0.85em;
 }
@@ -122,9 +134,49 @@
 }
 
 @media (max-width: 860px) {
-  .api-table {
+  .api-table:not(.api-table--stack) {
     display: block;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Phones: each row becomes a small card, with the header text as cell labels. */
+@media (max-width: 640px) {
+  .api-table--stack,
+  .api-table--stack tbody,
+  .api-table--stack tr,
+  .api-table--stack td {
+    display: block;
+  }
+  .api-table--stack thead {
+    display: none;
+  }
+  .api-table--stack tr {
+    padding: var(--sn-space-3) 0;
+    border-bottom: 1px solid var(--sn-border);
+  }
+  .api-table--stack td {
+    position: relative;
+    padding: var(--sn-space-1) 0;
+    border-bottom: none;
+    overflow-wrap: anywhere;
+  }
+  .api-table--stack td[data-label] {
+    padding-inline-start: 6.5rem;
+  }
+  .api-table--stack td[data-label]:empty {
+    display: none;
+  }
+  .api-table--stack td[data-label]::before {
+    content: attr(data-label);
+    position: absolute;
+    inset-inline-start: 0;
+    top: calc(var(--sn-space-1) + 0.15em);
+    color: var(--sn-text-subtle);
+    font-size: 0.65rem;
+    font-weight: var(--sn-font-weight-semibold);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 }

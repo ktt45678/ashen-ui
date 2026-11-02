@@ -312,7 +312,7 @@ export const COMPONENT_API = {
             "type": "boolean",
             "required": false,
             "default": "false",
-            "description": "Sizes a non-icon variant as a square (a circle with `shape=\"pill\"`) around a\nlone icon, so an outlined or text button can carry just an icon. Give the\nbutton an `aria-label`. The icon variants are already square."
+            "description": "Sizes a non-icon variant as a square (a circle with `shape=\"pill\"`) around a\r\nlone icon, so an outlined or text button can carry just an icon. Give the\r\nbutton an `aria-label`. The icon variants are already square."
           },
           {
             "category": "inputs",
@@ -623,13 +623,8 @@ export const COMPONENT_API = {
         "source": "component"
       },
       {
-        "name": "--sn-button-spinner-material-arc-duration",
-        "default": "1.4s",
-        "source": "component"
-      },
-      {
-        "name": "--sn-button-spinner-material-rotate-duration",
-        "default": "1.6s",
+        "name": "--sn-button-spinner-material-duration",
+        "default": "var(--sn-progress-spinner-material-duration)",
         "source": "component"
       },
       {
@@ -7400,8 +7395,8 @@ export const COMPONENT_API = {
       },
       {
         "name": "--sn-dialog-footer-border",
-        "default": null,
-        "source": null
+        "default": "var(--sn-confirm-dialog-footer-border, none)",
+        "source": "component"
       },
       {
         "name": "--sn-dialog-footer-gap",
@@ -7425,8 +7420,8 @@ export const COMPONENT_API = {
       },
       {
         "name": "--sn-dialog-header-border",
-        "default": null,
-        "source": null
+        "default": "var(--sn-confirm-dialog-header-border, none)",
+        "source": "component"
       },
       {
         "name": "--sn-dialog-header-padding",
@@ -7446,6 +7441,11 @@ export const COMPONENT_API = {
       {
         "name": "--sn-dialog-max-width-small",
         "default": "24rem",
+        "source": "component"
+      },
+      {
+        "name": "--sn-dialog-mobile-action-flex",
+        "default": "1 1 0",
         "source": "component"
       },
       {
@@ -7963,6 +7963,36 @@ export const COMPONENT_API = {
       {
         "name": "--sn-confirm-dialog-body-gap",
         "default": "var(--sn-space-3, 0.75rem)",
+        "source": "component"
+      },
+      {
+        "name": "--sn-confirm-dialog-body-padding",
+        "default": "0 var(--sn-confirm-dialog-gutter) var(--sn-confirm-dialog-gutter)",
+        "source": "component"
+      },
+      {
+        "name": "--sn-confirm-dialog-footer-border",
+        "default": "none",
+        "source": "component"
+      },
+      {
+        "name": "--sn-confirm-dialog-footer-padding",
+        "default": "0 var(--sn-confirm-dialog-gutter) var(--sn-confirm-dialog-gutter)",
+        "source": "component"
+      },
+      {
+        "name": "--sn-confirm-dialog-gutter",
+        "default": null,
+        "source": null
+      },
+      {
+        "name": "--sn-confirm-dialog-header-border",
+        "default": "none",
+        "source": "component"
+      },
+      {
+        "name": "--sn-confirm-dialog-header-padding",
+        "default": "var(--sn-confirm-dialog-gutter) var(--sn-confirm-dialog-gutter) 0.75rem",
         "source": "component"
       },
       {
@@ -11623,7 +11653,7 @@ export const COMPONENT_API = {
           },
           {
             "value": "material",
-            "description": "The Material look: a continuously accelerating indeterminate animation."
+            "description": "The Angular Material look: a thin square track and its two-bar indeterminate animation."
           }
         ]
       }
@@ -11640,23 +11670,43 @@ export const COMPONENT_API = {
         "source": "component"
       },
       {
+        "name": "--sn-progress-bar-material-animation-multiplier",
+        "default": "1",
+        "source": "component"
+      },
+      {
         "name": "--sn-progress-bar-material-duration",
-        "default": "2.4s",
+        "default": "2s",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-bar-material-easing",
+        "default": "cubic-bezier(0.4, 0, 0.6, 1)",
         "source": "component"
       },
       {
         "name": "--sn-progress-bar-material-height",
-        "default": "6px",
+        "default": "4px",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-bar-material-radius",
+        "default": "0",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-bar-material-scale",
+        "default": "sn-progress-primary-scale",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-bar-material-translate",
+        "default": "sn-progress-primary-translate",
         "source": "component"
       },
       {
         "name": "--sn-progress-bar-radius",
         "default": "var(--sn-radius-pill)",
-        "source": "component"
-      },
-      {
-        "name": "--sn-progress-bar-stop-dot-size",
-        "default": "4px",
         "source": "component"
       },
       {
@@ -11714,10 +11764,10 @@ export const COMPONENT_API = {
             "category": "inputs",
             "name": "strokeWidth",
             "bindingName": "strokeWidth",
-            "type": "number",
+            "type": "number | undefined",
             "required": false,
             "default": null,
-            "description": ""
+            "description": "Stroke width in viewBox units (the box is 24 wide). Defaults to `3.5`, or `2` for the material variant."
           },
           {
             "category": "inputs",
@@ -11797,7 +11847,7 @@ export const COMPONENT_API = {
           },
           {
             "value": "material",
-            "description": "The Material look: a continuously accelerating indeterminate animation."
+            "description": "The Angular Material look: no track, and an arc that grows and shrinks while it spins."
           }
         ]
       }
@@ -11809,13 +11859,33 @@ export const COMPONENT_API = {
         "source": "component"
       },
       {
-        "name": "--sn-progress-spinner-material-arc-duration",
-        "default": "1.4s",
+        "name": "--sn-progress-spinner-material-animation-multiplier",
+        "default": "1",
         "source": "component"
       },
       {
-        "name": "--sn-progress-spinner-material-rotate-duration",
-        "default": "1.6s",
+        "name": "--sn-progress-spinner-material-cycle",
+        "default": "calc(var(--sn-progress-spinner-material-duration) * var(--sn-progress-spinner-material-animation-multiplier))",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-spinner-material-duration",
+        "default": "1333ms",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-spinner-material-easing",
+        "default": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-spinner-material-swing",
+        "default": "sn-spinner-material-start",
+        "source": "component"
+      },
+      {
+        "name": "--sn-progress-spinner-material-value-transition",
+        "default": "stroke-dashoffset 500ms cubic-bezier(0, 0, 0.2, 1)",
         "source": "component"
       },
       {
